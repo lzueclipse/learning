@@ -5,6 +5,6 @@
 ![图1](https://raw.githubusercontent.com/lzueclipse/learning/master/ceph/day0001/1.png "图1")
 
 如图1所示，用Vmware/VirtualBox 创建6台虚拟机，每台虚拟机4个CPU， 8GB内存，双网卡，4块硬盘。
-https://github.com/lzueclipse/learning/blob/master/ceph/day0001/1.png
+![图1](https://github.com/lzueclipse/learning/blob/master/ceph/day0001/1.png "图1")
 
 ##2. 
