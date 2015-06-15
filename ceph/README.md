@@ -1,7 +1,7 @@
 # learning
 Daily study update, lzueclipse
-This is an H1
-=============
 
-This is an H2
--------------
+##Day one
+How to install Ceph with ceph-deploy [Install Ceph with ceph-depply](./day01.md) page for details.
+
+##Day two
