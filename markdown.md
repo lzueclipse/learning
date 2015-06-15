@@ -24,3 +24,31 @@ This is an H2
 > Here's some example code:
 >
 >     return shell_exec("echo $input | $markdown_script");
+
+
+*   Red
+*   Green
+*   Blue
+
+1.  Bird
+2.  McHale
+3.  Parish
+
+
+* * *
+***
+*****
+- - -
+---------------------------------------
+
+
+*单星号*
+
+_单下划线_
+
+**双星号**
+
+__双下划线__
+
+
+
