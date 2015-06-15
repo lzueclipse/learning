@@ -13,33 +13,21 @@
 ####1.2 检查fdisk -l输出
 ```
 Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-
+...
 
 Disk /dev/sda: 32.2 GB, 32212254720 bytes, 62914560 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-Disk label type: dos
-Disk identifier: 0x000cb598
-
+...
    Device Boot      Start         End      Blocks   Id  System
 /dev/sda1   *        2048    52430847    26214400   83  Linux
 /dev/sda2        52430848    60819455     4194304   82  Linux swap / Solaris
 
 Disk /dev/sdb: 21.5 GB, 21474836480 bytes, 41943040 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
-
+...
 
 Disk /dev/sdd: 21.5 GB, 21474836480 bytes, 41943040 sectors
-Units = sectors of 1 * 512 = 512 bytes
-Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes
+...
 ```
+可以看出，该CentOS 有4块硬盘，CentOS安装在/dev/sda1，另外的sdb,sdc,sdd我们将用于Ceph OSD。
 
 
 ####1. Clone出另外5台虚拟机，并配置IP地址，host name
