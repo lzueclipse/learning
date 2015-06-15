@@ -11,7 +11,8 @@
 简单，略去
 
 ####1.2 检查fdisk -l输出
-`Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
+```
+Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
 Units = sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
@@ -37,7 +38,8 @@ I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disk /dev/sdd: 21.5 GB, 21474836480 bytes, 41943040 sectors
 Units = sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
-I/O size (minimum/optimal): 512 bytes / 512 bytes`
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+```
 
 
 ####1. Clone出另外5台虚拟机，并配置IP地址，host name
