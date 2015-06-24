@@ -1,7 +1,7 @@
 # System Performance, tools and test
 
 ##Day one
-[gstack and flame graph](./gstack_flamegraph/) 
+[gstack and flame graph](./0001_gstack_flamegraph/) 
 
 采用gstack每分钟取样一次，输出到test.gs中。
 利用cat test.gs |./stackcollapse-gstack.pl |./flamegraph.pl > test.svg
