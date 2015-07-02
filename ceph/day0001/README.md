@@ -6,11 +6,11 @@
 
 如图1所示，用Vmware/VirtualBox 创建1台虚拟机，每台虚拟机4个CPU， 8GB内存，双网卡，4块硬盘。
 
-####1.1 安装CentOS 7
+#####1.1 安装CentOS 7
 注意在第一块硬盘安装CentOS（/dev/sda）。
 简单，略去
 
-####1.2 检查fdisk -l输出
+#####1.2 检查fdisk -l输出
 ```
 
 Disk /dev/sda: 32.2 GB, 32212254720 bytes, 62914560 sectors
