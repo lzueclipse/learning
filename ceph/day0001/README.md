@@ -125,3 +125,9 @@ ssh-copy-id node3
 在node1,node2,node3执行如下命令：
 
 rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+
+###4.在node1,node2,node3安装ceph-deploy
+
+yum install ceph-deploy
+
+
