@@ -113,7 +113,9 @@ IPV6_PRIVACY=no
 1)在node1, ssh-keygen, 当提示输入密码时，不输入密码
 
 2)用ssh-copy-id 将node1的ssh key 拷贝到node2, node3，命令如下：
+
 ssh-copy-id node2
+
 ssh-copy-id node3
 
 此时在node1上测试"ssh node2" 或 "ssh node3"，可以发现可以不用输入账号/密码即可登录。
