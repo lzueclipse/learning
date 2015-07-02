@@ -89,13 +89,14 @@ IPV6_PRIVACY=no
 简单，略去
 所以最终，6台虚拟机如下：
 
-| hostname   | cpu     | memory   | eth0 IP        | eth1 IP       |
-| ---------- | ------- | -------- | -------------- | ------------- |
-| node1      | 4 core  | 8GB      | 10.200.29.191  | 10.200.29.192 |
+| hostname   | cpu     | memory   | hard disk       | eth0 IP        | eth1 IP        |
+| ---------- | ------- | -------- | --------------- | -------------- | -------------- |
+| node1      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.191  | 192.168.29.191 |
+| node2      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.192  | 192.168.29.192 |
+| node3      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.193  | 192.168.29.193 |
+| node4      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.194  | 192.168.29.194 |
+| node5      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.195  | 192.168.29.195 |
+| node6      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.196  | 192.168.29.196 |
 
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
 
 ###2. 
