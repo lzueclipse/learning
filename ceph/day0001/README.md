@@ -135,6 +135,8 @@ yum install ceph-deploy
 
 ###4.利用ceph-deploy，在node1,node2,node3三个节点上安装ceph
 
+#####4.1 创建一个cluster,名字叫作ceph;生成初始ceph.conf和ceph.mon.keyring
+
 ```
 [root@node1 ~]# ceph-deploy new node1
 [ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
@@ -156,5 +158,16 @@ yum install ceph-deploy
 [ceph_deploy.new][DEBUG ] Writing monitor keyring to ceph.mon.keyring...
 [ceph_deploy.new][DEBUG ] Writing initial config to ceph.conf...
 ```
+
+#####4.2 创建/etc/ceph目录
+
+```
+[root@node1 ~]# mkdir /etc/ceph
+```
+
+#####4.3 安装ceph
+
+在3个节点node1, node2, node3安装ceph
+
 
 
