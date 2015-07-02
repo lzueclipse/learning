@@ -133,7 +133,7 @@ rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch
 yum install ceph-deploy
 
 
-###4.利用ceph-deploy，在node1,node2,node3三个节点上安装ceph
+###4.利用ceph-deploy，在node1,node2,node3三个节点上安装ceph Hammer版本
 
 #####4.1 创建一个cluster,名字叫作ceph;生成初始ceph.conf和ceph.mon.keyring
 
@@ -165,11 +165,11 @@ yum install ceph-deploy
 [root@node1 ~]# mkdir /etc/ceph
 ```
 
-#####4.3 安装ceph
+#####4.3 安装ceph Hammer版本
 
-在3个节点node1, node2, node3安装ceph。
+在3个节点node1, node2, node3安装ceph Hammer版本。
 
-通过安装log可以看到，在3个节点上安装了ceph，并安装了很多依赖包。
+通过安装log可以看到，在3个节点上安装了ceph Hammer版本，并安装了很多依赖包。
 
 ```
 [root@node1 ~]# ceph-deploy install --release hammer node1 node2 node3
