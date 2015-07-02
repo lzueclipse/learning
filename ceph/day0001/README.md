@@ -12,8 +12,6 @@
 
 ####1.2 检查fdisk -l输出
 ```
-Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
-...
 
 Disk /dev/sda: 32.2 GB, 32212254720 bytes, 62914560 sectors
 ...
@@ -24,13 +22,70 @@ Disk /dev/sda: 32.2 GB, 32212254720 bytes, 62914560 sectors
 Disk /dev/sdb: 21.5 GB, 21474836480 bytes, 41943040 sectors
 ...
 
+Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
+...
+
 Disk /dev/sdd: 21.5 GB, 21474836480 bytes, 41943040 sectors
 ...
 ```
 可以看出，该CentOS 有4块硬盘，CentOS安装在/dev/sda1，另外的sdb,sdc,sdd我们将用于Ceph OSD。
 
 
-####1. Clone出另外5台虚拟机，并配置IP地址，host name
+####1.3 检查hostname, cat /etc/hostname
+
+```
+node1
+```
+
+####1.4 检查两块网卡IP配置
+cat /etc/sysconfig/network-scripts/ifcfg-ens192
+
+```
+TYPE="Ethernet"
+BOOTPROTO="none"
+DEFROUTE="yes"
+IPV4_FAILURE_FATAL="no"
+IPV6INIT="yes"
+IPV6_AUTOCONF="yes"
+IPV6_DEFROUTE="yes"
+IPV6_FAILURE_FATAL="no"
+NAME="eth0"
+UUID="f8b3e56b-074d-4a0b-a98c-213a83823f4a"
+DEVICE="ens192"
+ONBOOT="yes"
+IPADDR="10.200.29.191"
+PREFIX="24"
+GATEWAY="10.200.29.254"
+DNS1="143.127.251.16"
+IPV6_PEERDNS="yes"
+IPV6_PEERROUTES="yes"
+IPV6_PRIVACY="no"
+```
+
+cat /etc/sysconfig/network-scripts/ifcfg-ens224
+
+```
+TYPE=Ethernet
+BOOTPROTO=none
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+NAME=eth2
+UUID=7e3b2f64-1cc5-461d-a2f6-2e4eb9f08c2d
+DEVICE=ens224
+ONBOOT=yes
+IPADDR=192.168.29.191
+PREFIX=24
+GATEWAY=192.168.29.254
+IPV6_PEERDNS=yes
+IPV6_PEERROUTES=yes
+IPV6_PRIVACY=no
+```
+
+####1.5 Clone出另外5台虚拟机，并配置IP地址，host name
 简单，略去
 
 ###2. 
