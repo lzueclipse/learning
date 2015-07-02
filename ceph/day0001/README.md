@@ -31,13 +31,13 @@ Disk /dev/sdd: 21.5 GB, 21474836480 bytes, 41943040 sectors
 可以看出，该CentOS 有4块硬盘，CentOS安装在/dev/sda1，另外的sdb,sdc,sdd我们将用于Ceph OSD。
 
 
-####1.3 检查hostname, cat /etc/hostname
+#####1.3 检查hostname, cat /etc/hostname
 
 ```
 node1
 ```
 
-####1.4 检查两块网卡IP配置
+#####1.4 检查两块网卡IP配置
 cat /etc/sysconfig/network-scripts/ifcfg-ens192
 
 ```
@@ -85,7 +85,7 @@ IPV6_PEERROUTES=yes
 IPV6_PRIVACY=no
 ```
 
-####1.5 Clone出另外5台虚拟机，并配置IP地址，host name
+#####1.5 Clone出另外5台虚拟机，并配置IP地址，host name
 简单，略去
 所以最终，6台虚拟机如下：
 
@@ -98,7 +98,7 @@ IPV6_PRIVACY=no
 | node5      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.195  | 192.168.29.195 |
 | node6      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.196  | 192.168.29.196 |
 
-####1.6 将如下加入所有6台虚拟机的/etc/hosts
+#####1.6 将如下加入所有6台虚拟机的/etc/hosts
 
 ```
 10.200.29.191 node1
@@ -120,3 +120,8 @@ ssh-copy-id node3
 
 此时在node1上测试"ssh node2" 或 "ssh node3"，可以发现可以不用输入账号/密码即可登录。
 
+###3.在node1,node2,node3安装EPEL
+
+在node1,node2,node3执行如下命令：
+
+rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
