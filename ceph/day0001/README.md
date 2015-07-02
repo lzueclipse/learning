@@ -133,3 +133,28 @@ rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch
 yum install ceph-deploy
 
 
+###4.利用ceph-deploy，在node1,node2,node3三个节点上安装ceph
+
+```
+[root@node1 ~]# ceph-deploy new node1
+[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
+[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy new node1
+[ceph_deploy.new][DEBUG ] Creating new cluster named ceph
+[ceph_deploy.new][INFO  ] making sure passwordless SSH succeeds
+[node1][DEBUG ] connected to host: node1
+[node1][DEBUG ] detect platform information from remote host
+[node1][DEBUG ] detect machine type
+[node1][DEBUG ] find the location of an executable
+[node1][INFO  ] Running command: /usr/sbin/ip link show
+[node1][INFO  ] Running command: /usr/sbin/ip addr show
+[node1][DEBUG ] IP addresses found: ['10.200.29.191', '192.168.29.191']
+[ceph_deploy.new][DEBUG ] Resolving host node1
+[ceph_deploy.new][DEBUG ] Monitor node1 at 10.200.29.191
+[ceph_deploy.new][DEBUG ] Monitor initial members are ['node1']
+[ceph_deploy.new][DEBUG ] Monitor addrs are ['10.200.29.191']
+[ceph_deploy.new][DEBUG ] Creating a random mon key...
+[ceph_deploy.new][DEBUG ] Writing monitor keyring to ceph.mon.keyring...
+[ceph_deploy.new][DEBUG ] Writing initial config to ceph.conf...
+```
+
+
