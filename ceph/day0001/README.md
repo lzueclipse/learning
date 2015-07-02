@@ -167,7 +167,831 @@ yum install ceph-deploy
 
 #####4.3 安装ceph
 
-在3个节点node1, node2, node3安装ceph
+在3个节点node1, node2, node3安装ceph。
 
+通过安装log可以看到，在3个节点上安装了ceph，并安装了很多依赖包。
 
+```
+[root@node1 ~]# ceph-deploy install --release hammer node1 node2 node3
+[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
+[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy install --release hammer node1 node2 node3
+[ceph_deploy.install][DEBUG ] Installing stable version hammer on cluster ceph hosts node1 node2 node3
+[ceph_deploy.install][DEBUG ] Detecting platform for host node1 ...
+[node1][DEBUG ] connected to host: node1
+[node1][DEBUG ] detect platform information from remote host
+[node1][DEBUG ] detect machine type
+[ceph_deploy.install][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[node1][INFO  ] installing ceph on node1
+[node1][INFO  ] Running command: yum clean all
+[node1][DEBUG ] Loaded plugins: fastestmirror, langpacks
+[node1][DEBUG ] Cleaning repos: base epel extras updates
+[node1][DEBUG ] Cleaning up everything
+[node1][DEBUG ] Cleaning up list of fastest mirrors
+[node1][INFO  ] adding EPEL repository
+[node1][INFO  ] Running command: yum -y install epel-release
+[node1][DEBUG ] Loaded plugins: fastestmirror, langpacks
+[node1][WARNIN] http://ftp.kddilabs.jp/Linux/packages/fedora/epel/7/x86_64/repodata/00619915ead1b54a0477f4cdcdf79e683faddea8102e33f0ade2c91c87fda30e-primary.sqlite.xz: [Errno 14] HTTP Error 404 - Not Found
+[node1][WARNIN] Trying other mirror.
+[node1][DEBUG ] Determining fastest mirrors
+[node1][DEBUG ]  * base: mirrors.btte.net
+[node1][DEBUG ]  * epel: ftp.kddilabs.jp
+[node1][DEBUG ]  * extras: mirrors.zju.edu.cn
+[node1][DEBUG ]  * updates: mirrors.zju.edu.cn
+[node1][DEBUG ] Package epel-release-7-5.noarch already installed and latest version
+[node1][DEBUG ] Nothing to do
+[node1][INFO  ] Running command: yum -y install yum-priorities
+[node1][DEBUG ] Loaded plugins: fastestmirror, langpacks
+[node1][DEBUG ] Loading mirror speeds from cached hostfile
+[node1][DEBUG ]  * base: mirrors.btte.net
+[node1][DEBUG ]  * epel: ftp.kddilabs.jp
+[node1][DEBUG ]  * extras: mirrors.zju.edu.cn
+[node1][DEBUG ]  * updates: mirrors.zju.edu.cn
+[node1][DEBUG ] Resolving Dependencies
+[node1][DEBUG ] --> Running transaction check
+[node1][DEBUG ] ---> Package yum-plugin-priorities.noarch 0:1.1.31-29.el7 will be installed
+[node1][DEBUG ] --> Finished Dependency Resolution
+[node1][DEBUG ]
+[node1][DEBUG ] Dependencies Resolved
+[node1][DEBUG ]
+[node1][DEBUG ] ================================================================================
+[node1][DEBUG ]  Package                     Arch         Version              Repository  Size
+[node1][DEBUG ] ================================================================================
+[node1][DEBUG ] Installing:
+[node1][DEBUG ]  yum-plugin-priorities       noarch       1.1.31-29.el7        base        24 k
+[node1][DEBUG ]
+[node1][DEBUG ] Transaction Summary
+[node1][DEBUG ] ================================================================================
+[node1][DEBUG ] Install  1 Package
+[node1][DEBUG ]
+[node1][DEBUG ] Total download size: 24 k
+[node1][DEBUG ] Installed size: 28 k
+[node1][DEBUG ] Downloading packages:
+[node1][DEBUG ] Running transaction check
+[node1][DEBUG ] Running transaction test
+[node1][DEBUG ] Transaction test succeeded
+[node1][DEBUG ] Running transaction
+[node1][DEBUG ]   Installing : yum-plugin-priorities-1.1.31-29.el7.noarch                   1/1
+[node1][DEBUG ]   Verifying  : yum-plugin-priorities-1.1.31-29.el7.noarch                   1/1
+[node1][DEBUG ]
+[node1][DEBUG ] Installed:
+[node1][DEBUG ]   yum-plugin-priorities.noarch 0:1.1.31-29.el7
+[node1][DEBUG ]
+[node1][DEBUG ] Complete!
+[node1][DEBUG ] Configure Yum priorities to include obsoletes
+[node1][WARNIN] check_obsoletes has been enabled for Yum priorities plugin
+[node1][INFO  ] Running command: rpm --import https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc
+[node1][INFO  ] Running command: rpm -Uvh --replacepkgs http://ceph.com/rpm-hammer/el7/noarch/ceph-release-1-0.el7.noarch.rpm
+[node1][DEBUG ] Retrieving http://ceph.com/rpm-hammer/el7/noarch/ceph-release-1-0.el7.noarch.rpm
+[node1][DEBUG ] Preparing...                          ########################################
+[node1][DEBUG ] Updating / installing...
+[node1][DEBUG ] ceph-release-1-1.el7                  ########################################
+[node1][WARNIN] ensuring that /etc/yum.repos.d/ceph.repo contains a high priority
+[node1][WARNIN] altered ceph.repo priorities to contain: priority=1
+[node1][INFO  ] Running command: yum -y install ceph ceph-radosgw
+[node1][DEBUG ] Loaded plugins: fastestmirror, langpacks, priorities
+[node1][DEBUG ] Loading mirror speeds from cached hostfile
+[node1][DEBUG ]  * base: mirrors.btte.net
+[node1][DEBUG ]  * epel: ftp.kddilabs.jp
+[node1][DEBUG ]  * extras: mirrors.zju.edu.cn
+[node1][DEBUG ]  * updates: mirrors.zju.edu.cn
+[node1][DEBUG ] 36 packages excluded due to repository priority protections
+[node1][DEBUG ] Resolving Dependencies
+[node1][DEBUG ] --> Running transaction check
+[node1][DEBUG ] ---> Package ceph.x86_64 1:0.94.2-0.el7 will be installed
+[node1][DEBUG ] --> Processing Dependency: librbd1 = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: python-cephfs = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: ceph-common = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: librados2 = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: python-rados = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: libcephfs1 = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: python-rbd = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: python-flask for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: python-requests for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: hdparm for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: libboost_program_options-mt.so.1.53.0()(64bit) for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: libtcmalloc.so.4()(64bit) for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: libleveldb.so.1()(64bit) for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Processing Dependency: libcephfs.so.1()(64bit) for package: 1:ceph-0.94.2-0.el7.x86_64
+[node1][DEBUG ] ---> Package ceph-radosgw.x86_64 1:0.94.2-0.el7 will be installed
+[node1][DEBUG ] --> Processing Dependency: libfcgi.so.0()(64bit) for package: 1:ceph-radosgw-0.94.2-0.el7.x86_64
+[node1][DEBUG ] --> Running transaction check
+[node1][DEBUG ] ---> Package boost-program-options.x86_64 0:1.53.0-23.el7 will be installed
+[node1][DEBUG ] ---> Package ceph-common.x86_64 1:0.94.2-0.el7 will be installed
+[node1][DEBUG ] --> Processing Dependency: redhat-lsb-core for package: 1:ceph-common-0.94.2-0.el7.x86_64
+[node1][DEBUG ] ---> Package fcgi.x86_64 0:2.4.0-22.el7 will be installed
+[node1][DEBUG ] ---> Package gperftools-libs.x86_64 0:2.1-1.el7 will be installed
+[node1][DEBUG ] --> Processing Dependency: libunwind.so.8()(64bit) for package: gperftools-libs-2.1-1.el7.x86_64
+[node1][DEBUG ] ---> Package hdparm.x86_64 0:9.43-5.el7 will be installed
+[node1][DEBUG ] ---> Package leveldb.x86_64 0:1.12.0-5.el7 will be installed
+[node1][DEBUG ] ---> Package libcephfs1.x86_64 1:0.94.2-0.el7 will be installed
+[node1][DEBUG ] ---> Package librados2.x86_64 1:0.80.7-2.el7 will be updated
+[node1][DEBUG ] ---> Package librados2.x86_64 1:0.94.2-0.el7 will be an update
+[node1][DEBUG ] ---> Package librbd1.x86_64 1:0.80.7-2.el7 will be updated
+[node1][DEBUG ] ---> Package librbd1.x86_64 1:0.94.2-0.el7 will be an update
+[node1][DEBUG ] ---> Package python-cephfs.x86_64 1:0.94.2-0.el7 will be installed
+[node1][DEBUG ] ---> Package python-flask.noarch 1:0.10.1-3.el7 will be installed
+[node1][DEBUG ] --> Processing Dependency: python-itsdangerous for package: 1:python-flask-0.10.1-3.el7.noarch
+[node1][DEBUG ] --> Processing Dependency: python-werkzeug for package: 1:python-flask-0.10.1-3.el7.noarch
+[node1][DEBUG ] --> Processing Dependency: python-jinja2 for package: 1:python-flask-0.10.1-3.el7.noarch
+[node1][DEBUG ] ---> Package python-rados.x86_64 1:0.94.2-0.el7 will be installed
+[node1][DEBUG ] ---> Package python-rbd.x86_64 1:0.94.2-0.el7 will be installed
+[node1][DEBUG ] ---> Package python-requests.noarch 0:1.1.0-8.el7 will be installed
+[node1][DEBUG ] --> Processing Dependency: python-urllib3 for package: python-requests-1.1.0-8.el7.noarch
+[node1][DEBUG ] --> Running transaction check
+[node1][DEBUG ] ---> Package libunwind.x86_64 0:1.1-3.el7 will be installed
+[node1][DEBUG ] ---> Package python-itsdangerous.noarch 0:0.23-1.el7 will be installed
+[node1][DEBUG ] ---> Package python-jinja2.noarch 0:2.7.2-2.el7 will be installed
+[node1][DEBUG ] --> Processing Dependency: python-babel >= 0.8 for package: python-jinja2-2.7.2-2.el7.noarch
+[node1][DEBUG ] ---> Package python-urllib3.noarch 0:1.5-8.el7 will be installed
+[node1][DEBUG ] ---> Package python-werkzeug.noarch 0:0.9.1-1.el7 will be installed
+[node1][DEBUG ] ---> Package redhat-lsb-core.x86_64 0:4.1-27.el7.centos.1 will be installed
+[node1][DEBUG ] --> Processing Dependency: redhat-lsb-submod-security(x86-64) = 4.1-27.el7.centos.1 for package: redhat-lsb-core-4.1-27.el7.centos.1.x86_64
+[node1][DEBUG ] --> Processing Dependency: spax for package: redhat-lsb-core-4.1-27.el7.centos.1.x86_64
+[node1][DEBUG ] --> Running transaction check
+[node1][DEBUG ] ---> Package python-babel.noarch 0:0.9.6-8.el7 will be installed
+[node1][DEBUG ] ---> Package redhat-lsb-submod-security.x86_64 0:4.1-27.el7.centos.1 will be installed
+[node1][DEBUG ] ---> Package spax.x86_64 0:1.5.2-11.el7 will be installed
+[node1][DEBUG ] --> Finished Dependency Resolution
+[node1][DEBUG ]
+[node1][DEBUG ] Dependencies Resolved
+[node1][DEBUG ]
+[node1][DEBUG ] ================================================================================
+[node1][DEBUG ]  Package                     Arch    Version                 Repository    Size
+[node1][DEBUG ] ================================================================================
+[node1][DEBUG ] Installing:
+[node1][DEBUG ]  ceph                        x86_64  1:0.94.2-0.el7          Ceph          20 M
+[node1][DEBUG ]  ceph-radosgw                x86_64  1:0.94.2-0.el7          Ceph         2.2 M
+[node1][DEBUG ] Installing for dependencies:
+[node1][DEBUG ]  boost-program-options       x86_64  1.53.0-23.el7           base         155 k
+[node1][DEBUG ]  ceph-common                 x86_64  1:0.94.2-0.el7          Ceph         6.3 M
+[node1][DEBUG ]  fcgi                        x86_64  2.4.0-22.el7            Ceph          45 k
+[node1][DEBUG ]  gperftools-libs             x86_64  2.1-1.el7               Ceph         267 k
+[node1][DEBUG ]  hdparm                      x86_64  9.43-5.el7              base          83 k
+[node1][DEBUG ]  leveldb                     x86_64  1.12.0-5.el7            Ceph         158 k
+[node1][DEBUG ]  libcephfs1                  x86_64  1:0.94.2-0.el7          Ceph         1.8 M
+[node1][DEBUG ]  libunwind                   x86_64  1.1-3.el7               epel          61 k
+[node1][DEBUG ]  python-babel                noarch  0.9.6-8.el7             base         1.4 M
+[node1][DEBUG ]  python-cephfs               x86_64  1:0.94.2-0.el7          Ceph          11 k
+[node1][DEBUG ]  python-flask                noarch  1:0.10.1-3.el7          Ceph-noarch  204 k
+[node1][DEBUG ]  python-itsdangerous         noarch  0.23-1.el7              Ceph-noarch   23 k
+[node1][DEBUG ]  python-jinja2               noarch  2.7.2-2.el7             base         515 k
+[node1][DEBUG ]  python-rados                x86_64  1:0.94.2-0.el7          Ceph          28 k
+[node1][DEBUG ]  python-rbd                  x86_64  1:0.94.2-0.el7          Ceph          18 k
+[node1][DEBUG ]  python-requests             noarch  1.1.0-8.el7             base          70 k
+[node1][DEBUG ]  python-urllib3              noarch  1.5-8.el7               base          41 k
+[node1][DEBUG ]  python-werkzeug             noarch  0.9.1-1.el7             Ceph-noarch  562 k
+[node1][DEBUG ]  redhat-lsb-core             x86_64  4.1-27.el7.centos.1     base          38 k
+[node1][DEBUG ]  redhat-lsb-submod-security  x86_64  4.1-27.el7.centos.1     base          15 k
+[node1][DEBUG ]  spax                        x86_64  1.5.2-11.el7            base         259 k
+[node1][DEBUG ] Updating for dependencies:
+[node1][DEBUG ]  librados2                   x86_64  1:0.94.2-0.el7          Ceph         1.7 M
+[node1][DEBUG ]  librbd1                     x86_64  1:0.94.2-0.el7          Ceph         1.8 M
+[node1][DEBUG ]
+[node1][DEBUG ] Transaction Summary
+[node1][DEBUG ] ================================================================================
+[node1][DEBUG ] Install  2 Packages (+21 Dependent packages)
+[node1][DEBUG ] Upgrade             (  2 Dependent packages)
+[node1][DEBUG ]
+[node1][DEBUG ] Total download size: 37 M
+[node1][DEBUG ] Downloading packages:
+[node1][DEBUG ] No Presto metadata available for Ceph
+[node1][DEBUG ] --------------------------------------------------------------------------------
+[node1][DEBUG ] Total                                              1.3 MB/s |  37 MB  00:29
+[node1][DEBUG ] Running transaction check
+[node1][DEBUG ] Running transaction test
+[node1][DEBUG ] Transaction test succeeded
+[node1][DEBUG ] Running transaction
+[node1][WARNIN] Warning: RPMDB altered outside of yum.
+[node1][DEBUG ]   Updating   : 1:librados2-0.94.2-0.el7.x86_64                             1/27
+[node1][DEBUG ]   Installing : 1:python-rados-0.94.2-0.el7.x86_64                          2/27
+[node1][DEBUG ]   Updating   : 1:librbd1-0.94.2-0.el7.x86_64                               3/27
+[node1][DEBUG ]   Installing : 1:python-rbd-0.94.2-0.el7.x86_64                            4/27
+[node1][DEBUG ]   Installing : 1:libcephfs1-0.94.2-0.el7.x86_64                            5/27
+[node1][DEBUG ]   Installing : 1:python-cephfs-0.94.2-0.el7.x86_64                         6/27
+[node1][DEBUG ]   Installing : python-werkzeug-0.9.1-1.el7.noarch                          7/27
+[node1][DEBUG ]   Installing : boost-program-options-1.53.0-23.el7.x86_64                  8/27
+[node1][DEBUG ]   Installing : python-urllib3-1.5-8.el7.noarch                             9/27
+[node1][DEBUG ]   Installing : python-requests-1.1.0-8.el7.noarch                         10/27
+[node1][DEBUG ]   Installing : libunwind-1.1-3.el7.x86_64                                 11/27
+[node1][DEBUG ]   Installing : gperftools-libs-2.1-1.el7.x86_64                           12/27
+[node1][DEBUG ]   Installing : python-babel-0.9.6-8.el7.noarch                            13/27
+[node1][DEBUG ]   Installing : python-jinja2-2.7.2-2.el7.noarch                           14/27
+[node1][DEBUG ]   Installing : fcgi-2.4.0-22.el7.x86_64                                   15/27
+[node1][DEBUG ]   Installing : leveldb-1.12.0-5.el7.x86_64                                16/27
+[node1][DEBUG ]   Installing : hdparm-9.43-5.el7.x86_64                                   17/27
+[node1][DEBUG ]   Installing : spax-1.5.2-11.el7.x86_64                                   18/27
+[node1][DEBUG ]   Installing : redhat-lsb-submod-security-4.1-27.el7.centos.1.x86_64      19/27
+[node1][DEBUG ]   Installing : redhat-lsb-core-4.1-27.el7.centos.1.x86_64                 20/27
+[node1][DEBUG ]   Installing : 1:ceph-common-0.94.2-0.el7.x86_64                          21/27
+[node1][DEBUG ]   Installing : python-itsdangerous-0.23-1.el7.noarch                      22/27
+[node1][DEBUG ]   Installing : 1:python-flask-0.10.1-3.el7.noarch                         23/27
+[node1][DEBUG ]   Installing : 1:ceph-0.94.2-0.el7.x86_64                                 24/27
+[node1][DEBUG ]   Installing : 1:ceph-radosgw-0.94.2-0.el7.x86_64                         25/27
+[node1][DEBUG ]   Cleanup    : 1:librbd1-0.80.7-2.el7.x86_64                              26/27
+[node1][DEBUG ]   Cleanup    : 1:librados2-0.80.7-2.el7.x86_64                            27/27
+[node1][DEBUG ]   Verifying  : 1:python-flask-0.10.1-3.el7.noarch                          1/27
+[node1][DEBUG ]   Verifying  : python-itsdangerous-0.23-1.el7.noarch                       2/27
+[node1][DEBUG ]   Verifying  : redhat-lsb-submod-security-4.1-27.el7.centos.1.x86_64       3/27
+[node1][DEBUG ]   Verifying  : spax-1.5.2-11.el7.x86_64                                    4/27
+[node1][DEBUG ]   Verifying  : hdparm-9.43-5.el7.x86_64                                    5/27
+[node1][DEBUG ]   Verifying  : 1:python-rbd-0.94.2-0.el7.x86_64                            6/27
+[node1][DEBUG ]   Verifying  : leveldb-1.12.0-5.el7.x86_64                                 7/27
+[node1][DEBUG ]   Verifying  : 1:python-cephfs-0.94.2-0.el7.x86_64                         8/27
+[node1][DEBUG ]   Verifying  : python-requests-1.1.0-8.el7.noarch                          9/27
+[node1][DEBUG ]   Verifying  : 1:librbd1-0.94.2-0.el7.x86_64                              10/27
+[node1][DEBUG ]   Verifying  : 1:ceph-0.94.2-0.el7.x86_64                                 11/27
+[node1][DEBUG ]   Verifying  : 1:python-rados-0.94.2-0.el7.x86_64                         12/27
+[node1][DEBUG ]   Verifying  : gperftools-libs-2.1-1.el7.x86_64                           13/27
+[node1][DEBUG ]   Verifying  : fcgi-2.4.0-22.el7.x86_64                                   14/27
+[node1][DEBUG ]   Verifying  : python-babel-0.9.6-8.el7.noarch                            15/27
+[node1][DEBUG ]   Verifying  : libunwind-1.1-3.el7.x86_64                                 16/27
+[node1][DEBUG ]   Verifying  : 1:ceph-common-0.94.2-0.el7.x86_64                          17/27
+[node1][DEBUG ]   Verifying  : 1:libcephfs1-0.94.2-0.el7.x86_64                           18/27
+[node1][DEBUG ]   Verifying  : python-jinja2-2.7.2-2.el7.noarch                           19/27
+[node1][DEBUG ]   Verifying  : 1:librados2-0.94.2-0.el7.x86_64                            20/27
+[node1][DEBUG ]   Verifying  : python-urllib3-1.5-8.el7.noarch                            21/27
+[node1][DEBUG ]   Verifying  : boost-program-options-1.53.0-23.el7.x86_64                 22/27
+[node1][DEBUG ]   Verifying  : redhat-lsb-core-4.1-27.el7.centos.1.x86_64                 23/27
+[node1][DEBUG ]   Verifying  : python-werkzeug-0.9.1-1.el7.noarch                         24/27
+[node1][DEBUG ]   Verifying  : 1:ceph-radosgw-0.94.2-0.el7.x86_64                         25/27
+[node1][DEBUG ]   Verifying  : 1:librbd1-0.80.7-2.el7.x86_64                              26/27
+[node1][DEBUG ]   Verifying  : 1:librados2-0.80.7-2.el7.x86_64                            27/27
+[node1][DEBUG ]
+[node1][DEBUG ] Installed:
+[node1][DEBUG ]   ceph.x86_64 1:0.94.2-0.el7         ceph-radosgw.x86_64 1:0.94.2-0.el7
+[node1][DEBUG ]
+[node1][DEBUG ] Dependency Installed:
+[node1][DEBUG ]   boost-program-options.x86_64 0:1.53.0-23.el7
+[node1][DEBUG ]   ceph-common.x86_64 1:0.94.2-0.el7
+[node1][DEBUG ]   fcgi.x86_64 0:2.4.0-22.el7
+[node1][DEBUG ]   gperftools-libs.x86_64 0:2.1-1.el7
+[node1][DEBUG ]   hdparm.x86_64 0:9.43-5.el7
+[node1][DEBUG ]   leveldb.x86_64 0:1.12.0-5.el7
+[node1][DEBUG ]   libcephfs1.x86_64 1:0.94.2-0.el7
+[node1][DEBUG ]   libunwind.x86_64 0:1.1-3.el7
+[node1][DEBUG ]   python-babel.noarch 0:0.9.6-8.el7
+[node1][DEBUG ]   python-cephfs.x86_64 1:0.94.2-0.el7
+[node1][DEBUG ]   python-flask.noarch 1:0.10.1-3.el7
+[node1][DEBUG ]   python-itsdangerous.noarch 0:0.23-1.el7
+[node1][DEBUG ]   python-jinja2.noarch 0:2.7.2-2.el7
+[node1][DEBUG ]   python-rados.x86_64 1:0.94.2-0.el7
+[node1][DEBUG ]   python-rbd.x86_64 1:0.94.2-0.el7
+[node1][DEBUG ]   python-requests.noarch 0:1.1.0-8.el7
+[node1][DEBUG ]   python-urllib3.noarch 0:1.5-8.el7
+[node1][DEBUG ]   python-werkzeug.noarch 0:0.9.1-1.el7
+[node1][DEBUG ]   redhat-lsb-core.x86_64 0:4.1-27.el7.centos.1
+[node1][DEBUG ]   redhat-lsb-submod-security.x86_64 0:4.1-27.el7.centos.1
+[node1][DEBUG ]   spax.x86_64 0:1.5.2-11.el7
+[node1][DEBUG ]
+[node1][DEBUG ] Dependency Updated:
+[node1][DEBUG ]   librados2.x86_64 1:0.94.2-0.el7         librbd1.x86_64 1:0.94.2-0.el7
+[node1][DEBUG ]
+[node1][DEBUG ] Complete!
+[node1][INFO  ] Running command: ceph --version
+[node1][DEBUG ] ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
+[ceph_deploy.install][DEBUG ] Detecting platform for host node2 ...
+[node2][DEBUG ] connected to host: node2
+[node2][DEBUG ] detect platform information from remote host
+[node2][DEBUG ] detect machine type
+[ceph_deploy.install][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[node2][INFO  ] installing ceph on node2
+[node2][INFO  ] Running command: yum clean all
+[node2][DEBUG ] Loaded plugins: fastestmirror, langpacks
+[node2][DEBUG ] Cleaning repos: base epel extras updates
+[node2][DEBUG ] Cleaning up everything
+[node2][DEBUG ] Cleaning up list of fastest mirrors
+[node2][INFO  ] adding EPEL repository
+[node2][INFO  ] Running command: yum -y install epel-release
+[node2][DEBUG ] Loaded plugins: fastestmirror, langpacks
+[node2][WARNIN] http://ftp.kddilabs.jp/Linux/packages/fedora/epel/7/x86_64/repodata/c78d2138f322178579013b905c1fd09d1d03b91f9f04686d46973aeb57b39c9f-pkgtags.sqlite.gz: [Errno 14] HTTP Error 404 - Not Found
+[node2][WARNIN] Trying other mirror.
+[node2][DEBUG ] Determining fastest mirrors
+[node2][DEBUG ]  * base: mirrors.btte.net
+[node2][DEBUG ]  * epel: ftp.kddilabs.jp
+[node2][DEBUG ]  * extras: mirrors.zju.edu.cn
+[node2][DEBUG ]  * updates: mirrors.aliyun.com
+[node2][DEBUG ] Package epel-release-7-5.noarch already installed and latest version
+[node2][DEBUG ] Nothing to do
+[node2][INFO  ] Running command: yum -y install yum-priorities
+[node2][DEBUG ] Loaded plugins: fastestmirror, langpacks
+[node2][DEBUG ] Loading mirror speeds from cached hostfile
+[node2][DEBUG ]  * base: mirrors.btte.net
+[node2][DEBUG ]  * epel: ftp.kddilabs.jp
+[node2][DEBUG ]  * extras: mirrors.zju.edu.cn
+[node2][DEBUG ]  * updates: mirrors.aliyun.com
+[node2][DEBUG ] Resolving Dependencies
+[node2][DEBUG ] --> Running transaction check
+[node2][DEBUG ] ---> Package yum-plugin-priorities.noarch 0:1.1.31-29.el7 will be installed
+[node2][DEBUG ] --> Finished Dependency Resolution
+[node2][DEBUG ]
+[node2][DEBUG ] Dependencies Resolved
+[node2][DEBUG ]
+[node2][DEBUG ] ================================================================================
+[node2][DEBUG ]  Package                     Arch         Version              Repository  Size
+[node2][DEBUG ] ================================================================================
+[node2][DEBUG ] Installing:
+[node2][DEBUG ]  yum-plugin-priorities       noarch       1.1.31-29.el7        base        24 k
+[node2][DEBUG ]
+[node2][DEBUG ] Transaction Summary
+[node2][DEBUG ] ================================================================================
+[node2][DEBUG ] Install  1 Package
+[node2][DEBUG ]
+[node2][DEBUG ] Total download size: 24 k
+[node2][DEBUG ] Installed size: 28 k
+[node2][DEBUG ] Downloading packages:
+[node2][DEBUG ] Running transaction check
+[node2][DEBUG ] Running transaction test
+[node2][DEBUG ] Transaction test succeeded
+[node2][DEBUG ] Running transaction
+[node2][DEBUG ]   Installing : yum-plugin-priorities-1.1.31-29.el7.noarch                   1/1
+[node2][DEBUG ]   Verifying  : yum-plugin-priorities-1.1.31-29.el7.noarch                   1/1
+[node2][DEBUG ]
+[node2][DEBUG ] Installed:
+[node2][DEBUG ]   yum-plugin-priorities.noarch 0:1.1.31-29.el7
+[node2][DEBUG ]
+[node2][DEBUG ] Complete!
+[node2][DEBUG ] Configure Yum priorities to include obsoletes
+[node2][WARNIN] check_obsoletes has been enabled for Yum priorities plugin
+[node2][INFO  ] Running command: rpm --import https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc
+[node2][INFO  ] Running command: rpm -Uvh --replacepkgs http://ceph.com/rpm-hammer/el7/noarch/ceph-release-1-0.el7.noarch.rpm
+[node2][DEBUG ] Retrieving http://ceph.com/rpm-hammer/el7/noarch/ceph-release-1-0.el7.noarch.rpm
+[node2][DEBUG ] Preparing...                          ########################################
+[node2][DEBUG ] Updating / installing...
+[node2][DEBUG ] ceph-release-1-1.el7                  ########################################
+[node2][WARNIN] ensuring that /etc/yum.repos.d/ceph.repo contains a high priority
+[node2][WARNIN] altered ceph.repo priorities to contain: priority=1
+[node2][INFO  ] Running command: yum -y install ceph ceph-radosgw
+[node2][DEBUG ] Loaded plugins: fastestmirror, langpacks, priorities
+[node2][DEBUG ] Loading mirror speeds from cached hostfile
+[node2][DEBUG ]  * base: mirrors.btte.net
+[node2][DEBUG ]  * epel: ftp.kddilabs.jp
+[node2][DEBUG ]  * extras: mirrors.zju.edu.cn
+[node2][DEBUG ]  * updates: mirrors.aliyun.com
+[node2][DEBUG ] 36 packages excluded due to repository priority protections
+[node2][DEBUG ] Resolving Dependencies
+[node2][DEBUG ] --> Running transaction check
+[node2][DEBUG ] ---> Package ceph.x86_64 1:0.94.2-0.el7 will be installed
+[node2][DEBUG ] --> Processing Dependency: librbd1 = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: python-cephfs = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: ceph-common = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: librados2 = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: python-rados = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: libcephfs1 = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: python-rbd = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: python-flask for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: python-requests for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: hdparm for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: libboost_program_options-mt.so.1.53.0()(64bit) for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: libtcmalloc.so.4()(64bit) for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: libleveldb.so.1()(64bit) for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Processing Dependency: libcephfs.so.1()(64bit) for package: 1:ceph-0.94.2-0.el7.x86_64
+[node2][DEBUG ] ---> Package ceph-radosgw.x86_64 1:0.94.2-0.el7 will be installed
+[node2][DEBUG ] --> Processing Dependency: libfcgi.so.0()(64bit) for package: 1:ceph-radosgw-0.94.2-0.el7.x86_64
+[node2][DEBUG ] --> Running transaction check
+[node2][DEBUG ] ---> Package boost-program-options.x86_64 0:1.53.0-23.el7 will be installed
+[node2][DEBUG ] ---> Package ceph-common.x86_64 1:0.94.2-0.el7 will be installed
+[node2][DEBUG ] --> Processing Dependency: redhat-lsb-core for package: 1:ceph-common-0.94.2-0.el7.x86_64
+[node2][DEBUG ] ---> Package fcgi.x86_64 0:2.4.0-22.el7 will be installed
+[node2][DEBUG ] ---> Package gperftools-libs.x86_64 0:2.1-1.el7 will be installed
+[node2][DEBUG ] --> Processing Dependency: libunwind.so.8()(64bit) for package: gperftools-libs-2.1-1.el7.x86_64
+[node2][DEBUG ] ---> Package hdparm.x86_64 0:9.43-5.el7 will be installed
+[node2][DEBUG ] ---> Package leveldb.x86_64 0:1.12.0-5.el7 will be installed
+[node2][DEBUG ] ---> Package libcephfs1.x86_64 1:0.94.2-0.el7 will be installed
+[node2][DEBUG ] ---> Package librados2.x86_64 1:0.80.7-2.el7 will be updated
+[node2][DEBUG ] ---> Package librados2.x86_64 1:0.94.2-0.el7 will be an update
+[node2][DEBUG ] ---> Package librbd1.x86_64 1:0.80.7-2.el7 will be updated
+[node2][DEBUG ] ---> Package librbd1.x86_64 1:0.94.2-0.el7 will be an update
+[node2][DEBUG ] ---> Package python-cephfs.x86_64 1:0.94.2-0.el7 will be installed
+[node2][DEBUG ] ---> Package python-flask.noarch 1:0.10.1-3.el7 will be installed
+[node2][DEBUG ] --> Processing Dependency: python-itsdangerous for package: 1:python-flask-0.10.1-3.el7.noarch
+[node2][DEBUG ] --> Processing Dependency: python-werkzeug for package: 1:python-flask-0.10.1-3.el7.noarch
+[node2][DEBUG ] --> Processing Dependency: python-jinja2 for package: 1:python-flask-0.10.1-3.el7.noarch
+[node2][DEBUG ] ---> Package python-rados.x86_64 1:0.94.2-0.el7 will be installed
+[node2][DEBUG ] ---> Package python-rbd.x86_64 1:0.94.2-0.el7 will be installed
+[node2][DEBUG ] ---> Package python-requests.noarch 0:1.1.0-8.el7 will be installed
+[node2][DEBUG ] --> Processing Dependency: python-urllib3 for package: python-requests-1.1.0-8.el7.noarch
+[node2][DEBUG ] --> Running transaction check
+[node2][DEBUG ] ---> Package libunwind.x86_64 0:1.1-3.el7 will be installed
+[node2][DEBUG ] ---> Package python-itsdangerous.noarch 0:0.23-1.el7 will be installed
+[node2][DEBUG ] ---> Package python-jinja2.noarch 0:2.7.2-2.el7 will be installed
+[node2][DEBUG ] --> Processing Dependency: python-babel >= 0.8 for package: python-jinja2-2.7.2-2.el7.noarch
+[node2][DEBUG ] ---> Package python-urllib3.noarch 0:1.5-8.el7 will be installed
+[node2][DEBUG ] ---> Package python-werkzeug.noarch 0:0.9.1-1.el7 will be installed
+[node2][DEBUG ] ---> Package redhat-lsb-core.x86_64 0:4.1-27.el7.centos.1 will be installed
+[node2][DEBUG ] --> Processing Dependency: redhat-lsb-submod-security(x86-64) = 4.1-27.el7.centos.1 for package: redhat-lsb-core-4.1-27.el7.centos.1.x86_64
+[node2][DEBUG ] --> Processing Dependency: spax for package: redhat-lsb-core-4.1-27.el7.centos.1.x86_64
+[node2][DEBUG ] --> Running transaction check
+[node2][DEBUG ] ---> Package python-babel.noarch 0:0.9.6-8.el7 will be installed
+[node2][DEBUG ] ---> Package redhat-lsb-submod-security.x86_64 0:4.1-27.el7.centos.1 will be installed
+[node2][DEBUG ] ---> Package spax.x86_64 0:1.5.2-11.el7 will be installed
+[node2][DEBUG ] --> Finished Dependency Resolution
+[node2][DEBUG ]
+[node2][DEBUG ] Dependencies Resolved
+[node2][DEBUG ]
+[node2][DEBUG ] ================================================================================
+[node2][DEBUG ]  Package                     Arch    Version                 Repository    Size
+[node2][DEBUG ] ================================================================================
+[node2][DEBUG ] Installing:
+[node2][DEBUG ]  ceph                        x86_64  1:0.94.2-0.el7          Ceph          20 M
+[node2][DEBUG ]  ceph-radosgw                x86_64  1:0.94.2-0.el7          Ceph         2.2 M
+[node2][DEBUG ] Installing for dependencies:
+[node2][DEBUG ]  boost-program-options       x86_64  1.53.0-23.el7           base         155 k
+[node2][DEBUG ]  ceph-common                 x86_64  1:0.94.2-0.el7          Ceph         6.3 M
+[node2][DEBUG ]  fcgi                        x86_64  2.4.0-22.el7            Ceph          45 k
+[node2][DEBUG ]  gperftools-libs             x86_64  2.1-1.el7               Ceph         267 k
+[node2][DEBUG ]  hdparm                      x86_64  9.43-5.el7              base          83 k
+[node2][DEBUG ]  leveldb                     x86_64  1.12.0-5.el7            Ceph         158 k
+[node2][DEBUG ]  libcephfs1                  x86_64  1:0.94.2-0.el7          Ceph         1.8 M
+[node2][DEBUG ]  libunwind                   x86_64  1.1-3.el7               epel          61 k
+[node2][DEBUG ]  python-babel                noarch  0.9.6-8.el7             base         1.4 M
+[node2][DEBUG ]  python-cephfs               x86_64  1:0.94.2-0.el7          Ceph          11 k
+[node2][DEBUG ]  python-flask                noarch  1:0.10.1-3.el7          Cep
+[node2][DEBUG ]  python-itsdangerous         noarch  0.23-1.el7              Cep
+[node2][DEBUG ]  python-jinja2               noarch  2.7.2-2.el7             bas
+[node2][DEBUG ]  python-rados                x86_64  1:0.94.2-0.el7          Cep
+[node2][DEBUG ]  python-rbd                  x86_64  1:0.94.2-0.el7          Cep
+[node2][DEBUG ]  python-requests             noarch  1.1.0-8.el7             bas
+[node2][DEBUG ]  python-urllib3              noarch  1.5-8.el7               bas
+[node2][DEBUG ]  python-werkzeug             noarch  0.9.1-1.el7             Cep
+[node2][DEBUG ]  redhat-lsb-core             x86_64  4.1-27.el7.centos.1     bas
+[node2][DEBUG ]  redhat-lsb-submod-security  x86_64  4.1-27.el7.centos.1     bas
+[node2][DEBUG ]  spax                        x86_64  1.5.2-11.el7            bas
+[node2][DEBUG ] Updating for dependencies:
+[node2][DEBUG ]  librados2                   x86_64  1:0.94.2-0.el7          Cep
+[node2][DEBUG ]  librbd1                     x86_64  1:0.94.2-0.el7          Cep
+[node2][DEBUG ]
+[node2][DEBUG ] Transaction Summary
+[node2][DEBUG ] ================================================================
+[node2][DEBUG ] Install  2 Packages (+21 Dependent packages)
+[node2][DEBUG ] Upgrade             (  2 Dependent packages)
+[node2][DEBUG ]
+[node2][DEBUG ] Total download size: 37 M
+[node2][DEBUG ] Downloading packages:
+[node2][DEBUG ] No Presto metadata available for Ceph
+[node2][DEBUG ] --------------------------------------------------------------------------------
+[node2][DEBUG ] Total                                              1.4 MB/s |  37 MB  00:27
+[node2][DEBUG ] Running transaction check
+[node2][DEBUG ] Running transaction test
+[node2][DEBUG ] Transaction test succeeded
+[node2][DEBUG ] Running transaction
+[node2][WARNIN] Warning: RPMDB altered outside of yum.
+[node2][DEBUG ]   Updating   : 1:librados2-0.94.2-0.el7.x86_64                             1/27
+[node2][DEBUG ]   Installing : 1:python-rados-0.94.2-0.el7.x86_64                          2/27
+[node2][DEBUG ]   Updating   : 1:librbd1-0.94.2-0.el7.x86_64                               3/27
+[node2][DEBUG ]   Installing : 1:python-rbd-0.94.2-0.el7.x86_64                            4/27
+[node2][DEBUG ]   Installing : 1:libcephfs1-0.94.2-0.el7.x86_64                            5/27
+[node2][DEBUG ]   Installing : 1:python-cephfs-0.94.2-0.el7.x86_64                         6/27
+[node2][DEBUG ]   Installing : python-werkzeug-0.9.1-1.el7.noarch                          7/27
+[node2][DEBUG ]   Installing : boost-program-options-1.53.0-23.el7.x86_64                  8/27
+[node2][DEBUG ]   Installing : python-urllib3-1.5-8.el7.noarch                             9/27
+[node2][DEBUG ]   Installing : python-requests-1.1.0-8.el7.noarch                         10/27
+[node2][DEBUG ]   Installing : libunwind-1.1-3.el7.x86_64                                 11/27
+[node2][DEBUG ]   Installing : gperftools-libs-2.1-1.el7.x86_64                           12/27
+[node2][DEBUG ]   Installing : python-babel-0.9.6-8.el7.noarch                            13/27
+[node2][DEBUG ]   Installing : python-jinja2-2.7.2-2.el7.noarch                           14/27
+[node2][DEBUG ]   Installing : fcgi-2.4.0-22.el7.x86_64                                   15/27
+[node2][DEBUG ]   Installing : leveldb-1.12.0-5.el7.x86_64                                16/27
+[node2][DEBUG ]   Installing : hdparm-9.43-5.el7.x86_64                                   17/27
+[node2][DEBUG ]   Installing : spax-1.5.2-11.el7.x86_64                                   18/27
+[node2][DEBUG ]   Installing : redhat-lsb-submod-security-4.1-27.el7.centos.1.x86_64      19/27
+[node2][DEBUG ]   Installing : redhat-lsb-core-4.1-27.el7.centos.1.x86_64                 20/27
+[node2][DEBUG ]   Installing : 1:ceph-common-0.94.2-0.el7.x86_64                          21/27
+[node2][DEBUG ]   Installing : python-itsdangerous-0.23-1.el7.noarch                      22/27
+[node2][DEBUG ]   Installing : 1:python-flask-0.10.1-3.el7.noarch                         23/27
+[node2][DEBUG ]   Installing : 1:ceph-0.94.2-0.el7.x86_64                                 24/27
+[node2][DEBUG ]   Installing : 1:ceph-radosgw-0.94.2-0.el7.x86_64                         25/27
+[node2][DEBUG ]   Cleanup    : 1:librbd1-0.80.7-2.el7.x86_64                              26/27
+[node2][DEBUG ]   Cleanup    : 1:librados2-0.80.7-2.el7.x86_64                            27/27
+[node2][DEBUG ]   Verifying  : 1:python-flask-0.10.1-3.el7.noarch                          1/27
+[node2][DEBUG ]   Verifying  : python-itsdangerous-0.23-1.el7.noarch                       2/27
+[node2][DEBUG ]   Verifying  : redhat-lsb-submod-security-4.1-27.el7.centos.1.x86_64       3/27
+[node2][DEBUG ]   Verifying  : spax-1.5.2-11.el7.x86_64                                    4/27
+[node2][DEBUG ]   Verifying  : hdparm-9.43-5.el7.x86_64                                    5/27
+[node2][DEBUG ]   Verifying  : 1:python-rbd-0.94.2-0.el7.x86_64                            6/27
+[node2][DEBUG ]   Verifying  : leveldb-1.12.0-5.el7.x86_64                                 7/27
+[node2][DEBUG ]   Verifying  : 1:python-cephfs-0.94.2-0.el7.x86_64                         8/27
+[node2][DEBUG ]   Verifying  : python-requests-1.1.0-8.el7.noarch                          9/27
+[node2][DEBUG ]   Verifying  : 1:librbd1-0.94.2-0.el7.x86_64                              10/27
+[node2][DEBUG ]   Verifying  : 1:ceph-0.94.2-0.el7.x86_64                                 11/27
+[node2][DEBUG ]   Verifying  : 1:python-rados-0.94.2-0.el7.x86_64                         12/27
+[node2][DEBUG ]   Verifying  : gperftools-libs-2.1-1.el7.x86_64                           13/27
+[node2][DEBUG ]   Verifying  : fcgi-2.4.0-22.el7.x86_64                                   14/27
+[node2][DEBUG ]   Verifying  : python-babel-0.9.6-8.el7.noarch                            15/27
+[node2][DEBUG ]   Verifying  : libunwind-1.1-3.el7.x86_64                                 16/27
+[node2][DEBUG ]   Verifying  : 1:ceph-common-0.94.2-0.el7.x86_64                          17/27
+[node2][DEBUG ]   Verifying  : 1:libcephfs1-0.94.2-0.el7.x86_64                           18/27
+[node2][DEBUG ]   Verifying  : python-jinja2-2.7.2-2.el7.noarch                           19/27
+[node2][DEBUG ]   Verifying  : 1:librados2-0.94.2-0.el7.x86_64                            20/27
+[node2][DEBUG ]   Verifying  : python-urllib3-1.5-8.el7.noarch                            21/27
+[node2][DEBUG ]   Verifying  : boost-program-options-1.53.0-23.el7.x86_64                 22/27
+[node2][DEBUG ]   Verifying  : redhat-lsb-core-4.1-27.el7.centos.1.x86_64                 23/27
+[node2][DEBUG ]   Verifying  : python-werkzeug-0.9.1-1.el7.noarch                         24/27
+[node2][DEBUG ]   Verifying  : 1:ceph-radosgw-0.94.2-0.el7.x86_64                         25/27
+[node2][DEBUG ]   Verifying  : 1:librbd1-0.80.7-2.el7.x86_64                              26/27
+[node2][DEBUG ]   Verifying  : 1:librados2-0.80.7-2.el7.x86_64                            27/27
+[node2][DEBUG ]
+[node2][DEBUG ] Installed:
+[node2][DEBUG ]   ceph.x86_64 1:0.94.2-0.el7         ceph-radosgw.x86_64 1:0.94.2-0.el7
+[node2][DEBUG ]
+[node2][DEBUG ] Dependency Installed:
+[node2][DEBUG ]   boost-program-options.x86_64 0:1.53.0-23.el7
+[node2][DEBUG ]   ceph-common.x86_64 1:0.94.2-0.el7
+[node2][DEBUG ]   fcgi.x86_64 0:2.4.0-22.el7
+[node2][DEBUG ]   gperftools-libs.x86_64 0:2.1-1.el7
+[node2][DEBUG ]   hdparm.x86_64 0:9.43-5.el7
+[node2][DEBUG ]   leveldb.x86_64 0:1.12.0-5.el7
+[node2][DEBUG ]   libcephfs1.x86_64 1:0.94.2-0.el7
+[node2][DEBUG ]   libunwind.x86_64 0:1.1-3.el7
+[node2][DEBUG ]   python-babel.noarch 0:0.9.6-8.el7
+[node2][DEBUG ]   python-cephfs.x86_64 1:0.94.2-0.el7
+[node2][DEBUG ]   python-flask.noarch 1:0.10.1-3.el7
+[node2][DEBUG ]   python-itsdangerous.noarch 0:0.23-1.el7
+[node2][DEBUG ]   python-jinja2.noarch 0:2.7.2-2.el7
+[node2][DEBUG ]   python-rados.x86_64 1:0.94.2-0.el7
+[node2][DEBUG ]   python-rbd.x86_64 1:0.94.2-0.el7
+[node2][DEBUG ]   python-requests.noarch 0:1.1.0-8.el7
+[node2][DEBUG ]   python-urllib3.noarch 0:1.5-8.el7
+[node2][DEBUG ]   python-werkzeug.noarch 0:0.9.1-1.el7
+[node2][DEBUG ]   redhat-lsb-core.x86_64 0:4.1-27.el7.centos.1
+[node2][DEBUG ]   redhat-lsb-submod-security.x86_64 0:4.1-27.el7.centos.1
+[node2][DEBUG ]   spax.x86_64 0:1.5.2-11.el7
+[node2][DEBUG ]
+[node2][DEBUG ] Dependency Updated:
+[node2][DEBUG ]   librados2.x86_64 1:0.94.2-0.el7         librbd1.x86_64 1:0.94.2-0.el7
+[node2][DEBUG ]
+[node2][DEBUG ] Complete!
+[node2][INFO  ] Running command: ceph --version
+[node2][DEBUG ] ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
+[ceph_deploy.install][DEBUG ] Detecting platform for host node3 ...
+[node3][DEBUG ] connected to host: node3
+[node3][DEBUG ] detect platform information from remote host
+[node3][DEBUG ] detect machine type
+[ceph_deploy.install][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[node3][INFO  ] installing ceph on node3
+[node3][INFO  ] Running command: yum clean all
+[node3][DEBUG ] Loaded plugins: fastestmirror, langpacks
+[node3][DEBUG ] Cleaning repos: base epel extras updates
+[node3][DEBUG ] Cleaning up everything
+[node3][DEBUG ] Cleaning up list of fastest mirrors
+[node3][INFO  ] adding EPEL repository
+[node3][INFO  ] Running command: yum -y install epel-release
+[node3][DEBUG ] Loaded plugins: fastestmirror, langpacks
+[node3][DEBUG ] Determining fastest mirrors
+[node3][DEBUG ]  * base: mirrors.btte.net
+[node3][DEBUG ]  * epel: ftp.kddilabs.jp
+[node3][DEBUG ]  * extras: mirrors.zju.edu.cn
+[node3][DEBUG ]  * updates: mirrors.aliyun.com
+[node3][DEBUG ] Package epel-release-7-5.noarch already installed and latest version
+[node3][DEBUG ] Nothing to do
+[node3][INFO  ] Running command: yum -y install yum-priorities
+[node3][DEBUG ] Loaded plugins: fastestmirror, langpacks
+[node3][DEBUG ] Loading mirror speeds from cached hostfile
+[node3][DEBUG ]  * base: mirrors.btte.net
+[node3][DEBUG ]  * epel: ftp.kddilabs.jp
+[node3][DEBUG ]  * extras: mirrors.zju.edu.cn
+[node3][DEBUG ]  * updates: mirrors.aliyun.com
+[node3][DEBUG ] Resolving Dependencies
+[node3][DEBUG ] --> Running transaction check
+[node3][DEBUG ] ---> Package yum-plugin-priorities.noarch 0:1.1.31-29.el7 will be installed
+[node3][DEBUG ] --> Finished Dependency Resolution
+[node3][DEBUG ]
+[node3][DEBUG ] Dependencies Resolved
+[node3][DEBUG ]
+[node3][DEBUG ] ================================================================================
+[node3][DEBUG ]  Package                     Arch         Version              Repository  Size
+[node3][DEBUG ] ================================================================================
+[node3][DEBUG ] Installing:
+[node3][DEBUG ]  yum-plugin-priorities       noarch       1.1.31-29.el7        base        24 k
+[node3][DEBUG ]
+[node3][DEBUG ] Transaction Summary
+[node3][DEBUG ] ================================================================================
+[node3][DEBUG ] Install  1 Package
+[node3][DEBUG ]
+[node3][DEBUG ] Total download size: 24 k
+[node3][DEBUG ] Installed size: 28 k
+[node3][DEBUG ] Downloading packages:
+[node3][DEBUG ] Running transaction check
+[node3][DEBUG ] Running transaction test
+[node3][DEBUG ] Transaction test succeeded
+[node3][DEBUG ] Running transaction
+[node3][DEBUG ]   Installing : yum-plugin-priorities-1.1.31-29.el7.noarch                   1/1
+[node3][DEBUG ]   Verifying  : yum-plugin-priorities-1.1.31-29.el7.noarch                   1/1
+[node3][DEBUG ]
+[node3][DEBUG ] Installed:
+[node3][DEBUG ]   yum-plugin-priorities.noarch 0:1.1.31-29.el7
+[node3][DEBUG ]
+[node3][DEBUG ] Complete!
+[node3][DEBUG ] Configure Yum priorities to include obsoletes
+[node3][WARNIN] check_obsoletes has been enabled for Yum priorities plugin
+[node3][INFO  ] Running command: rpm --import https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc
+[node3][INFO  ] Running command: rpm -Uvh --replacepkgs http://ceph.com/rpm-hammer/el7/noarch/ceph-release-1-0.el7.noarch.rpm
+[node3][DEBUG ] Retrieving http://ceph.com/rpm-hammer/el7/noarch/ceph-release-1-0.el7.noarch.rpm
+[node3][DEBUG ] Preparing...                          ########################################
+[node3][DEBUG ] Updating / installing...
+[node3][DEBUG ] ceph-release-1-1.el7                  ########################################
+[node3][WARNIN] ensuring that /etc/yum.repos.d/ceph.repo contains a high priority
+[node3][WARNIN] altered ceph.repo priorities to contain: priority=1
+[node3][INFO  ] Running command: yum -y install ceph ceph-radosgw
+[node3][DEBUG ] Loaded plugins: fastestmirror, langpacks, priorities
+[node3][DEBUG ] Loading mirror speeds from cached hostfile
+[node3][DEBUG ]  * base: mirrors.btte.net
+[node3][DEBUG ]  * epel: ftp.kddilabs.jp
+[node3][DEBUG ]  * extras: mirrors.zju.edu.cn
+[node3][DEBUG ]  * updates: mirrors.aliyun.com
+[node3][DEBUG ] 36 packages excluded due to repository priority protections
+[node3][DEBUG ] Resolving Dependencies
+[node3][DEBUG ] --> Running transaction check
+[node3][DEBUG ] ---> Package ceph.x86_64 1:0.94.2-0.el7 will be installed
+[node3][DEBUG ] --> Processing Dependency: librbd1 = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: python-cephfs = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: ceph-common = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: librados2 = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: python-rados = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: libcephfs1 = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: python-rbd = 1:0.94.2-0.el7 for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: python-flask for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: python-requests for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: hdparm for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: libboost_program_options-mt.so.1.53.0()(64bit) for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: libtcmalloc.so.4()(64bit) for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: libleveldb.so.1()(64bit) for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Processing Dependency: libcephfs.so.1()(64bit) for package: 1:ceph-0.94.2-0.el7.x86_64
+[node3][DEBUG ] ---> Package ceph-radosgw.x86_64 1:0.94.2-0.el7 will be installed
+[node3][DEBUG ] --> Processing Dependency: libfcgi.so.0()(64bit) for package: 1:ceph-radosgw-0.94.2-0.el7.x86_64
+[node3][DEBUG ] --> Running transaction check
+[node3][DEBUG ] ---> Package boost-program-options.x86_64 0:1.53.0-23.el7 will be installed
+[node3][DEBUG ] ---> Package ceph-common.x86_64 1:0.94.2-0.el7 will be installed
+[node3][DEBUG ] --> Processing Dependency: redhat-lsb-core for package: 1:ceph-common-0.94.2-0.el7.x86_64
+[node3][DEBUG ] ---> Package fcgi.x86_64 0:2.4.0-22.el7 will be installed
+[node3][DEBUG ] ---> Package gperftools-libs.x86_64 0:2.1-1.el7 will be installed
+[node3][DEBUG ] --> Processing Dependency: libunwind.so.8()(64bit) for package: gperftools-libs-2.1-1.el7.x86_64
+[node3][DEBUG ] ---> Package hdparm.x86_64 0:9.43-5.el7 will be installed
+[node3][DEBUG ] ---> Package leveldb.x86_64 0:1.12.0-5.el7 will be installed
+[node3][DEBUG ] ---> Package libcephfs1.x86_64 1:0.94.2-0.el7 will be installed
+[node3][DEBUG ] ---> Package librados2.x86_64 1:0.80.7-2.el7 will be updated
+[node3][DEBUG ] ---> Package librados2.x86_64 1:0.94.2-0.el7 will be an update
+[node3][DEBUG ] ---> Package librbd1.x86_64 1:0.80.7-2.el7 will be updated
+[node3][DEBUG ] ---> Package librbd1.x86_64 1:0.94.2-0.el7 will be an update
+[node3][DEBUG ] ---> Package python-cephfs.x86_64 1:0.94.2-0.el7 will be installed
+[node3][DEBUG ] ---> Package python-flask.noarch 1:0.10.1-3.el7 will be installed
+[node3][DEBUG ] --> Processing Dependency: python-itsdangerous for package: 1:python-flask-0.10.1-3.el7.noarch
+[node3][DEBUG ] --> Processing Dependency: python-werkzeug for package: 1:python-flask-0.10.1-3.el7.noarch
+[node3][DEBUG ] --> Processing Dependency: python-jinja2 for package: 1:python-flask-0.10.1-3.el7.noarch
+[node3][DEBUG ] ---> Package python-rados.x86_64 1:0.94.2-0.el7 will be installed
+[node3][DEBUG ] ---> Package python-rbd.x86_64 1:0.94.2-0.el7 will be installed
+[node3][DEBUG ] ---> Package python-requests.noarch 0:1.1.0-8.el7 will be installed
+[node3][DEBUG ] --> Processing Dependency: python-urllib3 for package: python-requests-1.1.0-8.el7.noarch
+[node3][DEBUG ] --> Running transaction check
+[node3][DEBUG ] ---> Package libunwind.x86_64 0:1.1-3.el7 will be installed
+[node3][DEBUG ] ---> Package python-itsdangerous.noarch 0:0.23-1.el7 will be installed
+[node3][DEBUG ] ---> Package python-jinja2.noarch 0:2.7.2-2.el7 will be installed
+[node3][DEBUG ] --> Processing Dependency: python-babel >= 0.8 for package: python-jinja2-2.7.2-2.el7.noarch
+[node3][DEBUG ] ---> Package python-urllib3.noarch 0:1.5-8.el7 will be installed
+[node3][DEBUG ] ---> Package python-werkzeug.noarch 0:0.9.1-1.el7 will be installed
+[node3][DEBUG ] ---> Package redhat-lsb-core.x86_64 0:4.1-27.el7.centos.1 will be installed
+[node3][DEBUG ] --> Processing Dependency: redhat-lsb-submod-security(x86-64) = 4.1-27.el7.centos.1 for package: redhat-lsb-core-4.1-27.el7.centos.1.x86_64
+[node3][DEBUG ] --> Processing Dependency: spax for package: redhat-lsb-core-4.1-27.el7.centos.1.x86_64
+[node3][DEBUG ] --> Running transaction check
+[node3][DEBUG ] ---> Package python-babel.noarch 0:0.9.6-8.el7 will be installed
+[node3][DEBUG ] ---> Package redhat-lsb-submod-security.x86_64 0:4.1-27.el7.centos.1 will be installed
+[node3][DEBUG ] ---> Package spax.x86_64 0:1.5.2-11.el7 will be installed
+[node3][DEBUG ] --> Finished Dependency Resolution
+[node3][DEBUG ]
+[node3][DEBUG ] Dependencies Resolved
+[node3][DEBUG ]
+[node3][DEBUG ] ================================================================================
+[node3][DEBUG ]  Package                     Arch    Version                 Repository    Size
+[node3][DEBUG ] ================================================================================
+[node3][DEBUG ] Installing:
+[node3][DEBUG ]  ceph                        x86_64  1:0.94.2-0.el7          Ceph          20 M
+[node3][DEBUG ]  ceph-radosgw                x86_64  1:0.94.2-0.el7          Ceph         2.2 M
+[node3][DEBUG ] Installing for dependencies:
+[node3][DEBUG ]  boost-program-options       x86_64  1.53.0-23.el7           base         155 k
+[node3][DEBUG ]  ceph-common                 x86_64  1:0.94.2-0.el7          Ceph         6.3 M
+[node3][DEBUG ]  fcgi                        x86_64  2.4.0-22.el7            Ceph          45 k
+[node3][DEBUG ]  gperftools-libs             x86_64  2.1-1.el7               Ceph         267 k
+[node3][DEBUG ]  hdparm                      x86_64  9.43-5.el7              base          83 k
+[node3][DEBUG ]  leveldb                     x86_64  1.12.0-5.el7            Ceph         158 k
+[node3][DEBUG ]  libcephfs1                  x86_64  1:0.94.2-0.el7          Ceph         1.8 M
+[node3][DEBUG ]  libunwind                   x86_64  1.1-3.el7               epel          61 k
+[node3][DEBUG ]  python-babel                noarch  0.9.6-8.el7             base         1.4 M
+[node3][DEBUG ]  python-cephfs               x86_64  1:0.94.2-0.el7          Ceph          11 k
+[node3][DEBUG ]  python-flask                noarch  1:0.10.1-3.el7          Ceph-noarch  204 k
+[node3][DEBUG ]  python-itsdangerous         noarch  0.23-1.el7              Ceph-noarch   23 k
+[node3][DEBUG ]  python-jinja2               noarch  2.7.2-2.el7             base         515 k
+[node3][DEBUG ]  python-rados                x86_64  1:0.94.2-0.el7          Ceph          28 k
+[node3][DEBUG ]  python-rbd                  x86_64  1:0.94.2-0.el7          Ceph          18 k
+[node3][DEBUG ]  python-requests             noarch  1.1.0-8.el7             base          70 k
+[node3][DEBUG ]  python-urllib3              noarch  1.5-8.el7               base          41 k
+[node3][DEBUG ]  python-werkzeug             noarch  0.9.1-1.el7             Ceph-noarch  562 k
+[node3][DEBUG ]  redhat-lsb-core             x86_64  4.1-27.el7.centos.1     base          38 k
+[node3][DEBUG ]  redhat-lsb-submod-security  x86_64  4.1-27.el7.centos.1     base          15 k
+[node3][DEBUG ]  spax                        x86_64  1.5.2-11.el7            base         259 k
+[node3][DEBUG ] Updating for dependencies:
+[node3][DEBUG ]  librados2                   x86_64  1:0.94.2-0.el7          Ceph         1.7 M
+[node3][DEBUG ]  librbd1                     x86_64  1:0.94.2-0.el7          Ceph         1.8 M
+[node3][DEBUG ]
+[node3][DEBUG ] Transaction Summary
+[node3][DEBUG ] ================================================================================
+[node3][DEBUG ] Install  2 Packages (+21 Dependent packages)
+[node3][DEBUG ] Upgrade             (  2 Dependent packages)
+[node3][DEBUG ]
+[node3][DEBUG ] Total download size: 37 M
+[node3][DEBUG ] Downloading packages:
+[node3][DEBUG ] No Presto metadata available for Ceph
+[node3][DEBUG ] --------------------------------------------------------------------------------
+[node3][DEBUG ] Total                                              1.3 MB/s |  37 MB  00:29
+[node3][DEBUG ] Running transaction check
+[node3][DEBUG ] Running transaction test
+[node3][DEBUG ] Transaction test succeeded
+[node3][DEBUG ] Running transaction
+[node3][WARNIN] Warning: RPMDB altered outside of yum.
+[node3][DEBUG ]   Updating   : 1:librados2-0.94.2-0.el7.x86_64                             1/27
+[node3][DEBUG ]   Installing : 1:python-rados-0.94.2-0.el7.x86_64                          2/27
+[node3][DEBUG ]   Updating   : 1:librbd1-0.94.2-0.el7.x86_64                               3/27
+[node3][DEBUG ]   Installing : 1:python-rbd-0.94.2-0.el7.x86_64                            4/27
+[node3][DEBUG ]   Installing : 1:libcephfs1-0.94.2-0.el7.x86_64                            5/27
+[node3][DEBUG ]   Installing : 1:python-cephfs-0.94.2-0.el7.x86_64                         6/27
+[node3][DEBUG ]   Installing : python-werkzeug-0.9.1-1.el7.noarch                          7/27
+[node3][DEBUG ]   Installing : boost-program-options-1.53.0-23.el7.x86_64                  8/27
+[node3][DEBUG ]   Installing : python-urllib3-1.5-8.el7.noarch                             9/27
+[node3][DEBUG ]   Installing : python-requests-1.1.0-8.el7.noarch                         10/27
+[node3][DEBUG ]   Installing : libunwind-1.1-3.el7.x86_64                                 11/27
+[node3][DEBUG ]   Installing : gperftools-libs-2.1-1.el7.x86_64                           12/27
+[node3][DEBUG ]   Installing : python-babel-0.9.6-8.el7.noarch                            13/27
+[node3][DEBUG ]   Installing : python-jinja2-2.7.2-2.el7.noarch                           14/27
+[node3][DEBUG ]   Installing : fcgi-2.4.0-22.el7.x86_64                                   15/27
+[node3][DEBUG ]   Installing : leveldb-1.12.0-5.el7.x86_64                                16/27
+[node3][DEBUG ]   Installing : hdparm-9.43-5.el7.x86_64                                   17/27
+[node3][DEBUG ]   Installing : spax-1.5.2-11.el7.x86_64                                   18/27
+[node3][DEBUG ]   Installing : redhat-lsb-submod-security-4.1-27.el7.centos.1.x86_64      19/27
+[node3][DEBUG ]   Installing : redhat-lsb-core-4.1-27.el7.centos.1.x86_64                 20/27
+[node3][DEBUG ]   Installing : 1:ceph-common-0.94.2-0.el7.x86_64                          21/27
+[node3][DEBUG ]   Installing : python-itsdangerous-0.23-1.el7.noarch                      22/27
+[node3][DEBUG ]   Installing : 1:python-flask-0.10.1-3.el7.noarch                         23/27
+[node3][DEBUG ]   Installing : 1:ceph-0.94.2-0.el7.x86_64                                 24/27
+[node3][DEBUG ]   Installing : 1:ceph-radosgw-0.94.2-0.el7.x86_64                         25/27
+[node3][DEBUG ]   Cleanup    : 1:librbd1-0.80.7-2.el7.x86_64                              26/27
+[node3][DEBUG ]   Cleanup    : 1:librados2-0.80.7-2.el7.x86_64                            27/27
+[node3][DEBUG ]   Verifying  : 1:python-flask-0.10.1-3.el7.noarch                          1/27
+[node3][DEBUG ]   Verifying  : python-itsdangerous-0.23-1.el7.noarch                       2/27
+[node3][DEBUG ]   Verifying  : redhat-lsb-submod-security-4.1-27.el7.centos.1.x86_64       3/27
+[node3][DEBUG ]   Verifying  : spax-1.5.2-11.el7.x86_64                                    4/27
+[node3][DEBUG ]   Verifying  : hdparm-9.43-5.el7.x86_64                                    5/27
+[node3][DEBUG ]   Verifying  : 1:python-rbd-0.94.2-0.el7.x86_64                            6/27
+[node3][DEBUG ]   Verifying  : leveldb-1.12.0-5.el7.x86_64                                 7/27
+[node3][DEBUG ]   Verifying  : 1:python-cephfs-0.94.2-0.el7.x86_64                         8/27
+[node3][DEBUG ]   Verifying  : python-requests-1.1.0-8.el7.noarch                          9/27
+[node3][DEBUG ]   Verifying  : 1:librbd1-0.94.2-0.el7.x86_64                              10/27
+[node3][DEBUG ]   Verifying  : 1:ceph-0.94.2-0.el7.x86_64                                 11/27
+[node3][DEBUG ]   Verifying  : 1:python-rados-0.94.2-0.el7.x86_64                         12/27
+[node3][DEBUG ]   Verifying  : gperftools-libs-2.1-1.el7.x86_64                           13/27
+[node3][DEBUG ]   Verifying  : fcgi-2.4.0-22.el7.x86_64                                   14/27
+[node3][DEBUG ]   Verifying  : python-babel-0.9.6-8.el7.noarch                            15/27
+[node3][DEBUG ]   Verifying  : libunwind-1.1-3.el7.x86_64                                 16/27
+[node3][DEBUG ]   Verifying  : 1:ceph-common-0.94.2-0.el7.x86_64                          17/27
+[node3][DEBUG ]   Verifying  : 1:libcephfs1-0.94.2-0.el7.x86_64                           18/27
+[node3][DEBUG ]   Verifying  : python-jinja2-2.7.2-2.el7.noarch                           19/27
+[node3][DEBUG ]   Verifying  : 1:librados2-0.94.2-0.el7.x86_64                            20/27
+[node3][DEBUG ]   Verifying  : python-urllib3-1.5-8.el7.noarch                            21/27
+[node3][DEBUG ]   Verifying  : boost-program-options-1.53.0-23.el7.x86_64                 22/27
+[node3][DEBUG ]   Verifying  : redhat-lsb-core-4.1-27.el7.centos.1.x86_64                 23/27
+[node3][DEBUG ]   Verifying  : python-werkzeug-0.9.1-1.el7.noarch                         24/27
+[node3][DEBUG ]   Verifying  : 1:ceph-radosgw-0.94.2-0.el7.x86_64                         25/27
+[node3][DEBUG ]   Verifying  : 1:librbd1-0.80.7-2.el7.x86_64                              26/27
+[node3][DEBUG ]   Verifying  : 1:librados2-0.80.7-2.el7.x86_64                            27/27
+[node3][DEBUG ]
+[node3][DEBUG ] Installed:
+[node3][DEBUG ]   ceph.x86_64 1:0.94.2-0.el7         ceph-radosgw.x86_64 1:0.94.2-0.el7
+[node3][DEBUG ]
+[node3][DEBUG ] Dependency Installed:
+[node3][DEBUG ]   boost-program-options.x86_64 0:1.53.0-23.el7
+[node3][DEBUG ]   ceph-common.x86_64 1:0.94.2-0.el7
+[node3][DEBUG ]   fcgi.x86_64 0:2.4.0-22.el7
+[node3][DEBUG ]   gperftools-libs.x86_64 0:2.1-1.el7
+[node3][DEBUG ]   hdparm.x86_64 0:9.43-5.el7
+[node3][DEBUG ]   leveldb.x86_64 0:1.12.0-5.el7
+[node3][DEBUG ]   libcephfs1.x86_64 1:0.94.2-0.el7
+[node3][DEBUG ]   libunwind.x86_64 0:1.1-3.el7
+[node3][DEBUG ]   python-babel.noarch 0:0.9.6-8.el7
+[node3][DEBUG ]   python-cephfs.x86_64 1:0.94.2-0.el7
+[node3][DEBUG ]   python-flask.noarch 1:0.10.1-3.el7
+[node3][DEBUG ]   python-itsdangerous.noarch 0:0.23-1.el7
+[node3][DEBUG ]   python-jinja2.noarch 0:2.7.2-2.el7
+[node3][DEBUG ]   python-rados.x86_64 1:0.94.2-0.el7
+[node3][DEBUG ]   python-rbd.x86_64 1:0.94.2-0.el7
+[node3][DEBUG ]   python-requests.noarch 0:1.1.0-8.el7
+[node3][DEBUG ]   python-urllib3.noarch 0:1.5-8.el7
+[node3][DEBUG ]   python-werkzeug.noarch 0:0.9.1-1.el7
+[node3][DEBUG ]   redhat-lsb-core.x86_64 0:4.1-27.el7.centos.1
+[node3][DEBUG ]   redhat-lsb-submod-security.x86_64 0:4.1-27.el7.centos.1
+[node3][DEBUG ]   spax.x86_64 0:1.5.2-11.el7
+[node3][DEBUG ]
+[node3][DEBUG ] Dependency Updated:
+[node3][DEBUG ]   librados2.x86_64 1:0.94.2-0.el7         librbd1.x86_64 1:0.94.2-0.el7
+[node3][DEBUG ]
+[node3][DEBUG ] Complete!
+[node3][INFO  ] Running command: ceph --version
+[node3][DEBUG ] ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
+```
 
