@@ -995,7 +995,7 @@ yum install ceph-deploy
 [node3][DEBUG ] ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 ```
 
-#####4.4 在3个节点node1,node2,node3上检查ceph是否被安装
+#####4.4 在3个节点node1,node2,node3上检查ceph binaries是否被安装
 
 ```
 [root@node1 ~]# ceph -v
@@ -1011,3 +1011,117 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 [root@node3 ~]# ceph -v
 ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 ```
+
+#####4.5 在node1上创建第一个monitor节点
+
+```
+[root@node1 ~]# ceph-deploy mon create-initial
+[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
+[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy mon create-initial
+[ceph_deploy.mon][DEBUG ] Deploying mon, cluster ceph hosts node1
+[ceph_deploy.mon][DEBUG ] detecting platform for host node1 ...
+[node1][DEBUG ] connected to host: node1
+[node1][DEBUG ] detect platform information from remote host
+[node1][DEBUG ] detect machine type
+[ceph_deploy.mon][INFO  ] distro info: CentOS Linux 7.1.1503 Core
+[node1][DEBUG ] determining if provided host has same hostname in remote
+[node1][DEBUG ] get remote short hostname
+[node1][DEBUG ] deploying mon to node1
+[node1][DEBUG ] get remote short hostname
+[node1][DEBUG ] remote hostname: node1
+[node1][DEBUG ] write cluster configuration to /etc/ceph/{cluster}.conf
+[node1][DEBUG ] create the mon path if it does not exist
+[node1][DEBUG ] checking for done path: /var/lib/ceph/mon/ceph-node1/done
+[node1][DEBUG ] done path does not exist: /var/lib/ceph/mon/ceph-node1/done
+[node1][INFO  ] creating keyring file: /var/lib/ceph/tmp/ceph-node1.mon.keyring
+[node1][DEBUG ] create the monitor keyring file
+[node1][INFO  ] Running command: ceph-mon --cluster ceph --mkfs -i node1 --keyring /var/lib/ceph/tmp/ceph-node1.mon.keyring
+[node1][DEBUG ] ceph-mon: mon.noname-a 10.200.29.191:6789/0 is local, renaming to mon.node1
+[node1][DEBUG ] ceph-mon: set fsid to 8c3fb7e2-6750-4e8e-b3f0-ad6afe25bb1a
+[node1][DEBUG ] ceph-mon: created monfs at /var/lib/ceph/mon/ceph-node1 for mon.node1
+[node1][INFO  ] unlinking keyring file /var/lib/ceph/tmp/ceph-node1.mon.keyring
+[node1][DEBUG ] create a done file to avoid re-doing the mon deployment
+[node1][DEBUG ] create the init path if it does not exist
+[node1][DEBUG ] locating the `service` executable...
+[node1][INFO  ] Running command: /usr/sbin/service ceph -c /etc/ceph/ceph.conf start mon.node1
+[node1][DEBUG ] === mon.node1 ===
+[node1][DEBUG ] Starting Ceph mon.node1 on node1...
+[node1][WARNIN] Running as unit run-31528.service.
+[node1][DEBUG ] Starting ceph-create-keys on node1...
+[node1][INFO  ] Running command: systemctl enable ceph
+[node1][WARNIN] ceph.service is not a native service, redirecting to /sbin/chkconfig.
+[node1][WARNIN] Executing /sbin/chkconfig ceph on
+[node1][WARNIN] The unit files have no [Install] section. They are not meant to be enabled
+[node1][WARNIN] using systemctl.
+[node1][WARNIN] Possible reasons for having this kind of units are:
+[node1][WARNIN] 1) A unit may be statically enabled by being symlinked from another unit's
+[node1][WARNIN]    .wants/ or .requires/ directory.
+[node1][WARNIN] 2) A unit's purpose may be to act as a helper for some other unit which has
+[node1][WARNIN]    a requirement dependency on it.
+[node1][WARNIN] 3) A unit may be started when needed via activation (socket, path, timer,
+[node1][WARNIN]    D-Bus, udev, scripted systemctl call, ...).
+[node1][INFO  ] Running command: ceph --cluster=ceph --admin-daemon /var/run/ceph/ceph-mon.node1.asok mon_status
+[node1][DEBUG ] ********************************************************************************
+[node1][DEBUG ] status for monitor: mon.node1
+[node1][DEBUG ] {
+[node1][DEBUG ]   "election_epoch": 2,
+[node1][DEBUG ]   "extra_probe_peers": [],
+[node1][DEBUG ]   "monmap": {
+[node1][DEBUG ]     "created": "0.000000",
+[node1][DEBUG ]     "epoch": 1,
+[node1][DEBUG ]     "fsid": "8c3fb7e2-6750-4e8e-b3f0-ad6afe25bb1a",
+[node1][DEBUG ]     "modified": "0.000000",
+[node1][DEBUG ]     "mons": [
+[node1][DEBUG ]       {
+[node1][DEBUG ]         "addr": "10.200.29.191:6789/0",
+[node1][DEBUG ]         "name": "node1",
+[node1][DEBUG ]         "rank": 0
+[node1][DEBUG ]       }
+[node1][DEBUG ]     ]
+[node1][DEBUG ]   },
+[node1][DEBUG ]   "name": "node1",
+[node1][DEBUG ]   "outside_quorum": [],
+[node1][DEBUG ]   "quorum": [
+[node1][DEBUG ]     0
+[node1][DEBUG ]   ],
+[node1][DEBUG ]   "rank": 0,
+[node1][DEBUG ]   "state": "leader",
+[node1][DEBUG ]   "sync_provider": []
+[node1][DEBUG ] }
+[node1][DEBUG ] ********************************************************************************
+[node1][INFO  ] monitor: mon.node1 is running
+[node1][INFO  ] Running command: ceph --cluster=ceph --admin-daemon /var/run/ceph/ceph-mon.node1.asok mon_status
+[ceph_deploy.mon][INFO  ] processing monitor mon.node1
+[node1][DEBUG ] connected to host: node1
+[node1][INFO  ] Running command: ceph --cluster=ceph --admin-daemon /var/run/ceph/ceph-mon.node1.asok mon_status
+[ceph_deploy.mon][INFO  ] mon.node1 monitor has reached quorum!
+[ceph_deploy.mon][INFO  ] all initial monitors are running and have formed quorum
+[ceph_deploy.mon][INFO  ] Running gatherkeys...
+[ceph_deploy.gatherkeys][DEBUG ] Checking node1 for /etc/ceph/ceph.client.admin.keyring
+[node1][DEBUG ] connected to host: node1
+[node1][DEBUG ] detect platform information from remote host
+[node1][DEBUG ] detect machine type
+[node1][DEBUG ] fetch remote file
+[ceph_deploy.gatherkeys][DEBUG ] Got ceph.client.admin.keyring key from node1.
+[ceph_deploy.gatherkeys][DEBUG ] Have ceph.mon.keyring
+[ceph_deploy.gatherkeys][DEBUG ] Checking node1 for /var/lib/ceph/bootstrap-osd/ceph.keyring
+[node1][DEBUG ] connected to host: node1
+[node1][DEBUG ] detect platform information from remote host
+[node1][DEBUG ] detect machine type
+[node1][DEBUG ] fetch remote file
+[ceph_deploy.gatherkeys][DEBUG ] Got ceph.bootstrap-osd.keyring key from node1.
+[ceph_deploy.gatherkeys][DEBUG ] Checking node1 for /var/lib/ceph/bootstrap-mds/ceph.keyring
+[node1][DEBUG ] connected to host: node1
+[node1][DEBUG ] detect platform information from remote host
+[node1][DEBUG ] detect machine type
+[node1][DEBUG ] fetch remote file
+[ceph_deploy.gatherkeys][DEBUG ] Got ceph.bootstrap-mds.keyring key from node1.
+[ceph_deploy.gatherkeys][DEBUG ] Checking node1 for /var/lib/ceph/bootstrap-rgw/ceph.keyring
+[node1][DEBUG ] connected to host: node1
+[node1][DEBUG ] detect platform information from remote host
+[node1][DEBUG ] detect machine type
+[node1][DEBUG ] fetch remote file
+[ceph_deploy.gatherkeys][DEBUG ] Got ceph.bootstrap-rgw.keyring key from node1.
+```
+
+
