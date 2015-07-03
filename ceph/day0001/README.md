@@ -1143,7 +1143,30 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
                   64 creating
 ```
 
-#####4.6 
+#####4.6 在node1创建object storage device(OSD)
+
+列出node1的磁盘信息,其中sdb1,sd
+
+```
+[root@node1 ~]# ceph-deploy disk list node1
+[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
+[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy disk list node1
+[node1][DEBUG ] connected to host: node1
+[node1][DEBUG ] detect platform information from remote host
+[node1][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[ceph_deploy.osd][DEBUG ] Listing disks on node1...
+[node1][DEBUG ] find the location of an executable
+[node1][INFO  ] Running command: /usr/sbin/ceph-disk list
+[node1][DEBUG ] /dev/sda :
+[node1][DEBUG ]  /dev/sda1 other, xfs, mounted on /
+[node1][DEBUG ]  /dev/sda2 swap, swap
+[node1][DEBUG ] /dev/sdb other, unknown
+[node1][DEBUG ] /dev/sdc other, unknown
+[node1][DEBUG ] /dev/sdd other, unknown
+[node1][DEBUG ] /dev/sr0 other, iso9660
+```
+
 #####4.7 
 #####4.8 
 #####4.9 
@@ -1152,13 +1175,3 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 #####4.12
 #####4.13
 #####4.14
-
-在node1上创建monitor
-
-```
-[root@node1 ~]# ceph-deploy mon create-initial
-[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
-[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy mon create-initial
-[ceph_deploy.mon][DEBUG ] Deploying mon, cluster ceph hosts node1
-[ceph_deploy.mon][DEBUG ] detecting platform for host node1 ...
-[node1][DEBUG ] connected to host: node1
