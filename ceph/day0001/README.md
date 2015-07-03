@@ -1014,6 +1014,8 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 
 #####4.5 在node1上创建第一个monitor节点
 
+在node1上创建monitor
+
 ```
 [root@node1 ~]# ceph-deploy mon create-initial
 [ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
@@ -1124,4 +1126,39 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 [ceph_deploy.gatherkeys][DEBUG ] Got ceph.bootstrap-rgw.keyring key from node1.
 ```
 
+检查monitor状态
 
+```
+[root@node1 ~]# ceph status
+    cluster 8c3fb7e2-6750-4e8e-b3f0-ad6afe25bb1a
+     health HEALTH_ERR
+            64 pgs stuck inactive
+            64 pgs stuck unclean
+            no osds
+     monmap e1: 1 mons at {node1=10.200.29.191:6789/0}
+            election epoch 2, quorum 0 node1
+     osdmap e1: 0 osds: 0 up, 0 in
+      pgmap v2: 64 pgs, 1 pools, 0 bytes data, 0 objects
+            0 kB used, 0 kB / 0 kB avail
+                  64 creating
+```
+
+#####4.6 
+#####4.7 
+#####4.8 
+#####4.9 
+#####4.10 
+#####4.11
+#####4.12
+#####4.13
+#####4.14
+
+在node1上创建monitor
+
+```
+[root@node1 ~]# ceph-deploy mon create-initial
+[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
+[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy mon create-initial
+[ceph_deploy.mon][DEBUG ] Deploying mon, cluster ceph hosts node1
+[ceph_deploy.mon][DEBUG ] detecting platform for host node1 ...
+[node1][DEBUG ] connected to host: node1
