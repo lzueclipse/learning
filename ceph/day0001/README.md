@@ -1,16 +1,16 @@
 #Deply Ceph with ceph-deploy tool
 
-###1. 准备虚拟机
+##1. 准备虚拟机
 
 ![图1](https://github.com/lzueclipse/learning/blob/master/ceph/day0001/1.png "图1")
 
 如图1所示，用Vmware/VirtualBox 创建1台虚拟机，每台虚拟机4个CPU， 8GB内存，双网卡，4块硬盘。
 
-#####1.1 安装CentOS 7
+###1.1 安装CentOS 7
 注意在第一块硬盘安装CentOS（/dev/sda）。
 简单，略去
 
-#####1.2 检查fdisk -l输出
+###1.2 检查fdisk -l输出
 ```
 
 Disk /dev/sda: 32.2 GB, 32212254720 bytes, 62914560 sectors
@@ -31,7 +31,7 @@ Disk /dev/sdd: 21.5 GB, 21474836480 bytes, 41943040 sectors
 可以看出，该CentOS 有4块硬盘，CentOS安装在/dev/sda1，另外的sdb,sdc,sdd我们将用于Ceph OSD。
 
 
-#####1.3 检查hostname, cat /etc/hostname
+###1.3 检查hostname, cat /etc/hostname
 
 ```
 node1
@@ -85,7 +85,7 @@ IPV6_PEERROUTES=yes
 IPV6_PRIVACY=no
 ```
 
-#####1.5 Clone出另外5台虚拟机，并配置IP地址，host name
+###1.5 Clone出另外5台虚拟机，并配置IP地址，host name
 简单，略去
 所以最终，6台虚拟机如下：
 
@@ -98,7 +98,7 @@ IPV6_PRIVACY=no
 | node5      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.195  | 192.168.29.195 |
 | node6      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.196  | 192.168.29.196 |
 
-#####1.6 将如下加入所有6台虚拟机的/etc/hosts
+###1.6 将如下加入所有6台虚拟机的/etc/hosts
 
 ```
 10.200.29.191 node1
@@ -109,7 +109,7 @@ IPV6_PRIVACY=no
 10.200.29.196 node6
 ```
 
-###2.配置ssh, 让node1可以无密码登录node2,node3
+##2.配置ssh, 让node1可以无密码登录node2,node3
 1)在node1, ssh-keygen, 当提示输入密码时，不输入密码
 
 2)用ssh-copy-id 将node1的ssh key 拷贝到node2, node3，命令如下：
@@ -120,7 +120,7 @@ ssh-copy-id node3
 
 此时在node1上测试"ssh node2" 或 "ssh node3"，可以发现可以不用输入账号/密码即可登录。
 
-###3.在node1,node2,node3安装EPEL
+##3.在node1,node2,node3安装EPEL
 
 在3个节点，node1,node2,node3执行如下命令：
 
