@@ -993,7 +993,7 @@ yum install ceph-deploy
 [node3][DEBUG ] ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 ```
 
-#####4.4 在3个节点node1,node2,node3上检查ceph binaries是否被安装
+##8. 在3个节点node1,node2,node3上检查ceph binaries是否被安装
 
 ```
 [root@node1 ~]# ceph -v
