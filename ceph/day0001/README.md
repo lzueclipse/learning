@@ -37,7 +37,7 @@ Disk /dev/sdd: 21.5 GB, 21474836480 bytes, 41943040 sectors
 node1
 ```
 
-#####1.4 检查两块网卡IP配置
+###1.4 检查两块网卡IP配置
 cat /etc/sysconfig/network-scripts/ifcfg-ens192
 
 ```
@@ -126,16 +126,14 @@ ssh-copy-id node3
 
 rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
 
-###4.在node1,node2,node3安装ceph-deploy
+##4.在node1安装ceph-deploy
 
-在3个节点，node1,node2,node3上安装ceph-deploy,命令为:
+在node1:
 
 yum install ceph-deploy
 
 
-###4.利用ceph-deploy，在node1,node2,node3三个节点上安装ceph Hammer版本
-
-#####4.1 创建一个cluster,名字叫作ceph;生成初始ceph.conf和ceph.mon.keyring
+##5. "ceph-deploy new"创建一个cluster,名字叫作ceph;生成初始ceph.conf和ceph.mon.keyring
 
 ```
 [root@node1 ~]# ceph-deploy new node1
@@ -159,13 +157,13 @@ yum install ceph-deploy
 [ceph_deploy.new][DEBUG ] Writing initial config to ceph.conf...
 ```
 
-#####4.2 创建/etc/ceph目录
+##6. 创建/etc/ceph目录
 
 ```
 [root@node1 ~]# mkdir /etc/ceph
 ```
 
-#####4.3 安装ceph Hammer版本
+##7 安装ceph Hammer版本
 
 在3个节点node1, node2, node3安装ceph Hammer版本。
 
