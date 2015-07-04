@@ -1434,7 +1434,7 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 其中第1个分区用作数据，第2个分区用作日志。
 
 可用fdisk查看。
-</font>
+<font>
 
 ```
 [root@node1 ~]# fdisk -l
@@ -1470,7 +1470,7 @@ Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
 
 <font color="red">
 可用mount查看/dev/sdb1, /dev/sdc1, /dev/sdd1的mount point。
-</font>
+<font>
 
 ```
 [root@node1 ~]# mount
