@@ -1477,8 +1477,27 @@ Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
 /dev/sdd1 on /var/lib/ceph/osd/ceph-2 type xfs (rw,noatime,seclabel,attr2,inode64,noquota)
 ```
 
+#####4.9 查看ceph status
 
-#####4.9 
+```
+[root@node1 ~]# ceph status
+    cluster 8c3fb7e2-6750-4e8e-b3f0-ad6afe25bb1a
+     health HEALTH_WARN
+            64 pgs degraded
+            64 pgs stuck degraded
+            64 pgs stuck inactive
+            64 pgs stuck unclean
+            64 pgs stuck undersized
+            64 pgs undersized
+            too few PGs per OSD (21 < min 30)
+     monmap e1: 1 mons at {node1=10.200.29.191:6789/0}
+            election epoch 2, quorum 0 node1
+     osdmap e13: 3 osds: 3 up, 3 in
+      pgmap v20: 64 pgs, 1 pools, 0 bytes data, 0 objects
+            101488 kB used, 45947 MB / 46046 MB avail
+                  64 undersized+degraded+peered
+```
+
 #####4.10 
 #####4.11
 #####4.12
