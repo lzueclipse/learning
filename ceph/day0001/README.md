@@ -1145,7 +1145,7 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 
 #####4.6 在node1创建object storage device(OSD)
 
-列出node1的磁盘信息,其中sdb1,sd
+列出node1的磁盘信息,其中sdb,sdc,sdd为未格式化将要用于OSD的硬盘。
 
 ```
 [root@node1 ~]# ceph-deploy disk list node1
@@ -1167,7 +1167,73 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 [node1][DEBUG ] /dev/sr0 other, iso9660
 ```
 
-#####4.7 
+#####4.7 用ceph-deploy disk zap 破坏掉node1节点sdb,sdc,sdd的分区表
+
+```
+[root@node1 ~]# ceph-deploy disk zap node1:sdb node1:sdc node1:sdd
+[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
+[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy disk zap node1:sdb node1:sdc node1:sdd
+[ceph_deploy.osd][DEBUG ] zapping /dev/sdb on node1
+[node1][DEBUG ] connected to host: node1
+[node1][DEBUG ] detect platform information from remote host
+[node1][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[node1][DEBUG ] zeroing last few blocks of device
+[node1][DEBUG ] find the location of an executable
+[node1][INFO  ] Running command: /usr/sbin/ceph-disk zap /dev/sdb
+[node1][DEBUG ]
+[node1][DEBUG ] ***************************************************************
+[node1][DEBUG ] Found invalid GPT and valid MBR; converting MBR to GPT format.
+[node1][DEBUG ] ***************************************************************
+[node1][DEBUG ]
+[node1][DEBUG ] GPT data structures destroyed! You may now partition the disk using fdisk or
+[node1][DEBUG ] other utilities.
+[node1][DEBUG ] Creating new GPT entries.
+[node1][DEBUG ] The operation has completed successfully.
+[node1][WARNIN] partx: specified range <1:0> does not make sense
+[ceph_deploy.osd][INFO  ] calling partx on zapped device /dev/sdb
+[ceph_deploy.osd][INFO  ] re-reading known partitions will display errors
+[node1][INFO  ] Running command: partx -a /dev/sdb
+[ceph_deploy.osd][DEBUG ] zapping /dev/sdc on node1
+[node1][DEBUG ] connected to host: node1
+[node1][DEBUG ] detect platform information from remote host
+[node1][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[node1][DEBUG ] zeroing last few blocks of device
+[node1][DEBUG ] find the location of an executable
+[node1][INFO  ] Running command: /usr/sbin/ceph-disk zap /dev/sdc
+[node1][DEBUG ]
+[node1][DEBUG ] ***************************************************************
+[node1][DEBUG ] Found invalid GPT and valid MBR; converting MBR to GPT format.
+[node1][DEBUG ] ***************************************************************
+[node1][DEBUG ]
+[node1][DEBUG ] GPT data structures destroyed! You may now partition the disk using fdisk or
+[node1][DEBUG ] other utilities.
+[node1][DEBUG ] Creating new GPT entries.
+[node1][DEBUG ] The operation has completed successfully.
+[node1][WARNIN] partx: specified range <1:0> does not make sense
+[ceph_deploy.osd][INFO  ] calling partx on zapped device /dev/sdc
+[ceph_deploy.osd][INFO  ] re-reading known partitions will display errors
+[node1][INFO  ] Running command: partx -a /dev/sdc
+[ceph_deploy.osd][DEBUG ] zapping /dev/sdd on node1
+[node1][DEBUG ] connected to host: node1
+[node1][DEBUG ] detect platform information from remote host
+[node1][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[node1][DEBUG ] zeroing last few blocks of device
+[node1][DEBUG ] find the location of an executable
+[node1][INFO  ] Running command: /usr/sbin/ceph-disk zap /dev/sdd
+[node1][DEBUG ] Creating new GPT entries.
+[node1][DEBUG ] GPT data structures destroyed! You may now partition the disk using fdisk or
+[node1][DEBUG ] other utilities.
+[node1][DEBUG ] Creating new GPT entries.
+[node1][DEBUG ] The operation has completed successfully.
+[node1][WARNIN] partx: specified range <1:0> does not make sense
+[ceph_deploy.osd][INFO  ] calling partx on zapped device /dev/sdd
+[ceph_deploy.osd][INFO  ] re-reading known partitions will display errors
+[node1][INFO  ] Running command: partx -a /dev/sdd
+```
+
 #####4.8 
 #####4.9 
 #####4.10 
