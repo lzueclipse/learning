@@ -1429,7 +1429,56 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 [ceph_deploy.osd][DEBUG ] Host node1 is now ready for osd use.
 ```
 
-"ceph-deploy osd create"会先格式化磁盘为xfs，然后
+<font color="red">
+"ceph-deploy osd create"会先格式化磁盘为xfs，然后针对每个磁盘创建两个分区。
+其中第1个分区用作数据，第2个分区用作日志。
+
+可用fdisk查看。
+</font>
+
+```
+[root@node1 ~]# fdisk -l
+Disk /dev/sdb: 21.5 GB, 21474836480 bytes, 41943040 sectors
+...
+...
+#         Start          End    Size  Type            Name
+ 1     10487808     41943006     15G  unknown         ceph data
+ 2         2048     10485760      5G  unknown         ceph journal
+
+Disk /dev/sda: 32.2 GB, 32212254720 bytes, 62914560 sectors
+...
+...
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *        2048    52430847    26214400   83  Linux
+/dev/sda2        52430848    60819455     4194304   82  Linux swap / Solaris
+
+Disk /dev/sdd: 21.5 GB, 21474836480 bytes, 41943040 sectors
+...
+...
+#         Start          End    Size  Type            Name
+ 1     10487808     41943006     15G  unknown         ceph data
+ 2         2048     10485760      5G  unknown         ceph journal
+
+Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
+...
+...
+#         Start          End    Size  Type            Name
+ 1     10487808     41943006     15G  unknown         ceph data
+ 2         2048     10485760      5G  unknown         ceph journal
+```
+
+
+<font color="red">
+可用mount查看/dev/sdb1, /dev/sdc1, /dev/sdd1的mount point。
+</font>
+
+```
+[root@node1 ~]# mount
+...
+/dev/sdb1 on /var/lib/ceph/osd/ceph-0 type xfs (rw,noatime,seclabel,attr2,inode64,noquota)
+/dev/sdc1 on /var/lib/ceph/osd/ceph-1 type xfs (rw,noatime,seclabel,attr2,inode64,noquota)
+/dev/sdd1 on /var/lib/ceph/osd/ceph-2 type xfs (rw,noatime,seclabel,attr2,inode64,noquota)
+```
 
 
 #####4.9 
