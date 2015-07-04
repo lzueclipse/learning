@@ -1010,9 +1010,11 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 ```
 
-#####4.5 在node1上创建第一个monitor节点
+##9. 在node1部署ceph
 
-在node1上创建monitor
+###9.1 在node1上创建第一个monitor节点
+
+**在node1上创建monitor**
 
 ```
 [root@node1 ~]# ceph-deploy mon create-initial
