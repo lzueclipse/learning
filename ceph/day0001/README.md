@@ -1429,10 +1429,11 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 [ceph_deploy.osd][DEBUG ] Host node1 is now ready for osd use.
 ```
 
-*"ceph-deploy osd create"会先格式化磁盘为xfs，然后针对每个磁盘创建两个分区。
-其中第1个分区用作数据，第2个分区用作日志。
+**"ceph-deploy osd create"会先格式化磁盘为xfs，然后针对每个磁盘创建两个分区。**
 
-可用fdisk查看。*
+**其中第1个分区用作数据，第2个分区用作日志。**
+
+**可用fdisk查看。**
 
 ```
 [root@node1 ~]# fdisk -l
@@ -1466,7 +1467,7 @@ Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
 ```
 
 
-*可用mount查看/dev/sdb1, /dev/sdc1, /dev/sdd1的mount point。*
+**可用mount查看/dev/sdb1, /dev/sdc1, /dev/sdd1的mount point。**
 
 ```
 [root@node1 ~]# mount
