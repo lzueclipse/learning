@@ -1477,7 +1477,7 @@ Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
 /dev/sdd1 on /var/lib/ceph/osd/ceph-2 type xfs (rw,noatime,seclabel,attr2,inode64,noquota)
 ```
 
-####9.5 查看ceph status
+####9.5 node1 查看ceph status
 
 ```
 [root@node1 ~]# ceph status
@@ -1498,4 +1498,36 @@ Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
                   64 undersized+degraded+peered
 ```
 
-##10 
+##10. 在node2,node3部署ceph
+
+####10.1 在node1,node2,node3上停止firewalld（底层用的也是iptables)，并禁用firewalld服务
+
+node1:
+
+```
+[root@node1 ~]# systemctl stop firewalld.service
+
+[root@node1 ~]# systemctl disable firewalld
+rm '/etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service'
+rm '/etc/systemd/system/basic.target.wants/firewalld.service'
+```
+
+node2:
+
+```
+[root@node1 ~]# ssh node2 systemctl stop firewalld.service
+
+[root@node1 ~]# ssh node2 systemctl disable firewalld
+rm '/etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service'
+rm '/etc/systemd/system/basic.target.wants/firewalld.service'
+```
+
+node3:
+
+```
+[root@node1 ~]# ssh node3 systemctl stop firewalld.service
+[root@node1 ~]#
+[root@node1 ~]# ssh node3 systemctl disable firewalld
+rm '/etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service'
+rm '/etc/systemd/system/basic.target.wants/firewalld.service'
+```
