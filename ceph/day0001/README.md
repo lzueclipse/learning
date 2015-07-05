@@ -1670,4 +1670,23 @@ node3:
 [node2][INFO  ] monitor: mon.node2 is running
 ```
 
-
+####10.3 查看ceph status
+```
+[root@node1 ~]# ceph status
+    cluster 8c3fb7e2-6750-4e8e-b3f0-ad6afe25bb1a
+     health HEALTH_WARN
+            64 pgs degraded
+            64 pgs stuck degraded
+            64 pgs stuck inactive
+            64 pgs stuck unclean
+            64 pgs stuck undersized
+            64 pgs undersized
+            too few PGs per OSD (21 < min 30)
+            clock skew detected on mon.node2, mon.node3
+     monmap e3: 3 mons at {node1=10.200.29.191:6789/0,node2=10.200.29.192:6789/0,node3=10.200.29.193:6789/0}
+            election epoch 8, quorum 0,1,2 node1,node2,node3
+     osdmap e13: 3 osds: 3 up, 3 in
+      pgmap v20: 64 pgs, 1 pools, 0 bytes data, 0 objects
+            101488 kB used, 45947 MB / 46046 MB avail
+                  64 undersized+degraded+peered
+```
