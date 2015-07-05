@@ -1726,3 +1726,532 @@ ln -s '/usr/lib/systemd/system/ntpd.service' '/etc/systemd/system/multi-user.tar
 [root@node1 ~]# ssh node3 ntpdate pool.ntp.org
  5 Jul 18:29:14 ntpdate[28235]: the NTP socket is in use, exiting
 ```
+
+####10.5 查看node2,node3磁盘
+
+```
+[root@node1 ~]# ceph-deploy  disk list node2 node3
+[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
+[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy disk list node2 node3
+[node2][DEBUG ] connected to host: node2
+[node2][DEBUG ] detect platform information from remote host
+[node2][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[ceph_deploy.osd][DEBUG ] Listing disks on node2...
+[node2][DEBUG ] find the location of an executable
+[node2][INFO  ] Running command: /usr/sbin/ceph-disk list
+[node2][DEBUG ] /dev/sda :
+[node2][DEBUG ]  /dev/sda1 other, xfs, mounted on /
+[node2][DEBUG ]  /dev/sda2 swap, swap
+[node2][DEBUG ] /dev/sdb other, unknown
+[node2][DEBUG ] /dev/sdc other, unknown
+[node2][DEBUG ] /dev/sdd other, unknown
+[node2][DEBUG ] /dev/sr0 other, iso9660
+[node3][DEBUG ] connected to host: node3
+[node3][DEBUG ] detect platform information from remote host
+[node3][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[ceph_deploy.osd][DEBUG ] Listing disks on node3...
+[node3][DEBUG ] find the location of an executable
+[node3][INFO  ] Running command: /usr/sbin/ceph-disk list
+[node3][DEBUG ] /dev/sda :
+[node3][DEBUG ]  /dev/sda1 other, xfs, mounted on /
+[node3][DEBUG ]  /dev/sda2 swap, swap
+[node3][DEBUG ] /dev/sdb other, unknown
+[node3][DEBUG ] /dev/sdc other, unknown
+[node3][DEBUG ] /dev/sdd other, unknown
+[node3][DEBUG ] /dev/sr0 other, iso9660
+```
+
+#### 10.6 擦出node2:sdb,node2:sdc,node2:sdd,node3:sdb,node3:sdc,node3:sdd
+
+```
+[root@node1 ~]# ceph-deploy disk zap node2:sdb node2:sdc node2:sdd node3:sdb node3:sdc node3:sdd
+[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
+[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy disk zap node2:sdb node2:sdc node2:sdd node3:sdb node3:sdc node3:sdd
+[ceph_deploy.osd][DEBUG ] zapping /dev/sdb on node2
+[node2][DEBUG ] connected to host: node2
+[node2][DEBUG ] detect platform information from remote host
+[node2][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[node2][DEBUG ] zeroing last few blocks of device
+[node2][DEBUG ] find the location of an executable
+[node2][INFO  ] Running command: /usr/sbin/ceph-disk zap /dev/sdb
+[node2][DEBUG ] Creating new GPT entries.
+[node2][DEBUG ] GPT data structures destroyed! You may now partition the disk using fdisk or
+[node2][DEBUG ] other utilities.
+[node2][DEBUG ] Creating new GPT entries.
+[node2][DEBUG ] The operation has completed successfully.
+[node2][WARNIN] partx: specified range <1:0> does not make sense
+[ceph_deploy.osd][INFO  ] calling partx on zapped device /dev/sdb
+[ceph_deploy.osd][INFO  ] re-reading known partitions will display errors
+[node2][INFO  ] Running command: partx -a /dev/sdb
+[ceph_deploy.osd][DEBUG ] zapping /dev/sdc on node2
+[node2][DEBUG ] connected to host: node2
+[node2][DEBUG ] detect platform information from remote host
+[node2][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[node2][DEBUG ] zeroing last few blocks of device
+[node2][DEBUG ] find the location of an executable
+[node2][INFO  ] Running command: /usr/sbin/ceph-disk zap /dev/sdc
+[node2][DEBUG ] Creating new GPT entries.
+[node2][DEBUG ] GPT data structures destroyed! You may now partition the disk using fdisk or
+[node2][DEBUG ] other utilities.
+[node2][DEBUG ] Creating new GPT entries.
+[node2][DEBUG ] The operation has completed successfully.
+[node2][WARNIN] partx: specified range <1:0> does not make sense
+[ceph_deploy.osd][INFO  ] calling partx on zapped device /dev/sdc
+[ceph_deploy.osd][INFO  ] re-reading known partitions will display errors
+[node2][INFO  ] Running command: partx -a /dev/sdc
+[ceph_deploy.osd][DEBUG ] zapping /dev/sdd on node2
+[node2][DEBUG ] connected to host: node2
+[node2][DEBUG ] detect platform information from remote host
+[node2][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[node2][DEBUG ] zeroing last few blocks of device
+[node2][DEBUG ] find the location of an executable
+[node2][INFO  ] Running command: /usr/sbin/ceph-disk zap /dev/sdd
+[node2][DEBUG ] Creating new GPT entries.
+[node2][DEBUG ] GPT data structures destroyed! You may now partition the disk using fdisk or
+[node2][DEBUG ] other utilities.
+[node2][DEBUG ] Creating new GPT entries.
+[node2][DEBUG ] The operation has completed successfully.
+[node2][WARNIN] partx: specified range <1:0> does not make sense
+[ceph_deploy.osd][INFO  ] calling partx on zapped device /dev/sdd
+[ceph_deploy.osd][INFO  ] re-reading known partitions will display errors
+[node2][INFO  ] Running command: partx -a /dev/sdd
+[ceph_deploy.osd][DEBUG ] zapping /dev/sdb on node3
+[node3][DEBUG ] connected to host: node3
+[node3][DEBUG ] detect platform information from remote host
+[node3][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[node3][DEBUG ] zeroing last few blocks of device
+[node3][DEBUG ] find the location of an executable
+[node3][INFO  ] Running command: /usr/sbin/ceph-disk zap /dev/sdb
+[node3][DEBUG ] Creating new GPT entries.
+[node3][DEBUG ] GPT data structures destroyed! You may now partition the disk using fdisk or
+[node3][DEBUG ] other utilities.
+[node3][DEBUG ] Creating new GPT entries.
+[node3][DEBUG ] The operation has completed successfully.
+[node3][WARNIN] partx: specified range <1:0> does not make sense
+[ceph_deploy.osd][INFO  ] calling partx on zapped device /dev/sdb
+[ceph_deploy.osd][INFO  ] re-reading known partitions will display errors
+[node3][INFO  ] Running command: partx -a /dev/sdb
+[ceph_deploy.osd][DEBUG ] zapping /dev/sdc on node3
+[node3][DEBUG ] connected to host: node3
+[node3][DEBUG ] detect platform information from remote host
+[node3][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[node3][DEBUG ] zeroing last few blocks of device
+[node3][DEBUG ] find the location of an executable
+[node3][INFO  ] Running command: /usr/sbin/ceph-disk zap /dev/sdc
+[node3][DEBUG ] Creating new GPT entries.
+[node3][DEBUG ] GPT data structures destroyed! You may now partition the disk using fdisk or
+[node3][DEBUG ] other utilities.
+[node3][DEBUG ] Creating new GPT entries.
+[node3][DEBUG ] The operation has completed successfully.
+[node3][WARNIN] partx: specified range <1:0> does not make sense
+[ceph_deploy.osd][INFO  ] calling partx on zapped device /dev/sdc
+[ceph_deploy.osd][INFO  ] re-reading known partitions will display errors
+[node3][INFO  ] Running command: partx -a /dev/sdc
+[ceph_deploy.osd][DEBUG ] zapping /dev/sdd on node3
+[node3][DEBUG ] connected to host: node3
+[node3][DEBUG ] detect platform information from remote host
+[node3][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[node3][DEBUG ] zeroing last few blocks of device
+[node3][DEBUG ] find the location of an executable
+[node3][INFO  ] Running command: /usr/sbin/ceph-disk zap /dev/sdd
+[node3][DEBUG ] Creating new GPT entries.
+[node3][DEBUG ] GPT data structures destroyed! You may now partition the disk using fdisk or
+[node3][DEBUG ] other utilities.
+[node3][DEBUG ] Creating new GPT entries.
+[node3][DEBUG ] The operation has completed successfully.
+[node3][WARNIN] partx: specified range <1:0> does not make sense
+[ceph_deploy.osd][INFO  ] calling partx on zapped device /dev/sdd
+[ceph_deploy.osd][INFO  ] re-reading known partitions will display errors
+[node3][INFO  ] Running command: partx -a /dev/sdd
+```
+
+####10.7 在node2,node3的sdb,sdc,sdd创建OSD
+
+```
+[root@node1 ~]# ceph-deploy osd create node2:sdb node2:sdc node2:sdd node3:sdb node3:sdc node3:sdd
+[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
+[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy osd create node2:sdb node2:sdc node2:sdd node3:sdb node3:sdc node3:sdd
+[ceph_deploy.osd][DEBUG ] Preparing cluster ceph disks node2:/dev/sdb: node2:/dev/sdc: node2:/dev/sdd: node3:/dev/sdb: node3:/dev/sdc: node3:/dev/sdd:
+[node2][DEBUG ] connected to host: node2
+[node2][DEBUG ] detect platform information from remote host
+[node2][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[ceph_deploy.osd][DEBUG ] Deploying osd to node2
+[node2][DEBUG ] write cluster configuration to /etc/ceph/{cluster}.conf
+[node2][INFO  ] Running command: udevadm trigger --subsystem-match=block --action=add
+[ceph_deploy.osd][DEBUG ] Preparing host node2 disk /dev/sdb journal None activate True
+[node2][INFO  ] Running command: ceph-disk -v prepare --fs-type xfs --cluster ceph -- /dev/sdb
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-osd --cluster=ceph --show-config-value=fsid
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_mkfs_options_xfs
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_fs_mkfs_options_xfs
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_mount_options_xfs
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_fs_mount_options_xfs
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-osd --cluster=ceph --show-config-value=osd_journal_size
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_cryptsetup_parameters
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_dmcrypt_key_size
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_dmcrypt_type
+[node2][WARNIN] INFO:ceph-disk:Will colocate journal with data on /dev/sdb
+[node2][WARNIN] DEBUG:ceph-disk:Creating journal partition num 2 size 5120 on /dev/sdb
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --new=2:0:5120M --change-name=2:ceph journal --partition-guid=2:785291d5-50d6-466a-9858-d5e87681108e --typecode=2:45b0969e-9b03-4f30-b4c6-b4b80ceff106 --mbrtogpt -- /dev/sdb
+[node2][DEBUG ] The operation has completed successfully.
+[node2][WARNIN] INFO:ceph-disk:calling partx on prepared device /dev/sdb
+[node2][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdb
+[node2][WARNIN] partx: /dev/sdb: error adding partition 2
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/udevadm settle
+[node2][WARNIN] DEBUG:ceph-disk:Journal is GPT partition /dev/disk/by-partuuid/785291d5-50d6-466a-9858-d5e87681108e
+[node2][WARNIN] DEBUG:ceph-disk:Journal is GPT partition /dev/disk/by-partuuid/785291d5-50d6-466a-9858-d5e87681108e
+[node2][WARNIN] DEBUG:ceph-disk:Creating osd partition on /dev/sdb
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --largest-new=1 --change-name=1:ceph data --partition-guid=1:5fe8f917-f082-4d08-8dc6-519d30b59f03 --typecode=1:89c57f98-2fe5-4dc0-89c1-f3ad0ceff2be -- /dev/sdb
+[node2][DEBUG ] The operation has completed successfully.
+[node2][WARNIN] INFO:ceph-disk:calling partx on created device /dev/sdb
+[node2][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdb
+[node2][WARNIN] partx: /dev/sdb: error adding partitions 1-2
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/udevadm settle
+[node2][WARNIN] DEBUG:ceph-disk:Creating xfs fs on /dev/sdb1
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/mkfs -t xfs -f -i size=2048 -- /dev/sdb1
+[node2][DEBUG ] meta-data=/dev/sdb1              isize=2048   agcount=4, agsize=982975 blks
+[node2][DEBUG ]          =                       sectsz=512   attr=2, projid32bit=1
+[node2][DEBUG ]          =                       crc=0        finobt=0
+[node2][DEBUG ] data     =                       bsize=4096   blocks=3931899, imaxpct=25
+[node2][DEBUG ]          =                       sunit=0      swidth=0 blks
+[node2][DEBUG ] naming   =version 2              bsize=4096   ascii-ci=0 ftype=0
+[node2][DEBUG ] log      =internal log           bsize=4096   blocks=2560, version=2
+[node2][DEBUG ]          =                       sectsz=512   sunit=0 blks, lazy-count=1
+[node2][DEBUG ] realtime =none                   extsz=4096   blocks=0, rtextents=0
+[node2][WARNIN] DEBUG:ceph-disk:Mounting /dev/sdb1 on /var/lib/ceph/tmp/mnt.FzaYzl with options noatime,inode64
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/mount -t xfs -o noatime,inode64 -- /dev/sdb1 /var/lib/ceph/tmp/mnt.FzaYzl
+[node2][WARNIN] DEBUG:ceph-disk:Preparing osd data dir /var/lib/ceph/tmp/mnt.FzaYzl
+[node2][WARNIN] DEBUG:ceph-disk:Creating symlink /var/lib/ceph/tmp/mnt.FzaYzl/journal -> /dev/disk/by-partuuid/785291d5-50d6-466a-9858-d5e87681108e
+[node2][WARNIN] DEBUG:ceph-disk:Unmounting /var/lib/ceph/tmp/mnt.FzaYzl
+[node2][WARNIN] INFO:ceph-disk:Running command: /bin/umount -- /var/lib/ceph/tmp/mnt.FzaYzl
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --typecode=1:4fbd7e29-9d25-41b8-afd0-062c0ceff05d -- /dev/sdb
+[node2][DEBUG ] The operation has completed successfully.
+[node2][WARNIN] INFO:ceph-disk:calling partx on prepared device /dev/sdb
+[node2][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdb
+[node2][WARNIN] partx: /dev/sdb: error adding partitions 1-2
+[node2][INFO  ] Running command: udevadm trigger --subsystem-match=block --action=add
+[node2][INFO  ] checking OSD status...
+[node2][INFO  ] Running command: ceph --cluster=ceph osd stat --format=json
+[ceph_deploy.osd][DEBUG ] Host node2 is now ready for osd use.
+[node2][DEBUG ] connected to host: node2
+[node2][DEBUG ] detect platform information from remote host
+[node2][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[ceph_deploy.osd][DEBUG ] Preparing host node2 disk /dev/sdc journal None activate True
+[node2][INFO  ] Running command: ceph-disk -v prepare --fs-type xfs --cluster ceph -- /dev/sdc
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-osd --cluster=ceph --show-config-value=fsid
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_mkfs_options_xfs
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_fs_mkfs_options_xfs
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_mount_options_xfs
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_fs_mount_options_xfs
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-osd --cluster=ceph --show-config-value=osd_journal_size
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_cryptsetup_parameters
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_dmcrypt_key_size
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_dmcrypt_type
+[node2][WARNIN] INFO:ceph-disk:Will colocate journal with data on /dev/sdc
+[node2][WARNIN] DEBUG:ceph-disk:Creating journal partition num 2 size 5120 on /dev/sdc
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --new=2:0:5120M --change-name=2:ceph journal --partition-guid=2:ba3ae1c1-391f-49ea-b970-935b58d63586 --typecode=2:45b0969e-9b03-4f30-b4c6-b4b80ceff106 --mbrtogpt -- /dev/sdc
+[node2][DEBUG ] The operation has completed successfully.
+[node2][WARNIN] INFO:ceph-disk:calling partx on prepared device /dev/sdc
+[node2][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdc
+[node2][WARNIN] partx: /dev/sdc: error adding partition 2
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/udevadm settle
+[node2][WARNIN] DEBUG:ceph-disk:Journal is GPT partition /dev/disk/by-partuuid/ba3ae1c1-391f-49ea-b970-935b58d63586
+[node2][WARNIN] DEBUG:ceph-disk:Journal is GPT partition /dev/disk/by-partuuid/ba3ae1c1-391f-49ea-b970-935b58d63586
+[node2][WARNIN] DEBUG:ceph-disk:Creating osd partition on /dev/sdc
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --largest-new=1 --change-name=1:ceph data --partition-guid=1:a21c86c1-2a32-4cc8-9d63-df7f56824a2f --typecode=1:89c57f98-2fe5-4dc0-89c1-f3ad0ceff2be -- /dev/sdc
+[node2][DEBUG ] The operation has completed successfully.
+[node2][WARNIN] INFO:ceph-disk:calling partx on created device /dev/sdc
+[node2][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdc
+[node2][WARNIN] partx: /dev/sdc: error adding partitions 1-2
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/udevadm settle
+[node2][WARNIN] DEBUG:ceph-disk:Creating xfs fs on /dev/sdc1
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/mkfs -t xfs -f -i size=2048 -- /dev/sdc1
+[node2][DEBUG ] meta-data=/dev/sdc1              isize=2048   agcount=4, agsize=982975 blks
+[node2][DEBUG ]          =                       sectsz=512   attr=2, projid32bit=1
+[node2][DEBUG ]          =                       crc=0        finobt=0
+[node2][DEBUG ] data     =                       bsize=4096   blocks=3931899, imaxpct=25
+[node2][DEBUG ]          =                       sunit=0      swidth=0 blks
+[node2][DEBUG ] naming   =version 2              bsize=4096   ascii-ci=0 ftype=0
+[node2][DEBUG ] log      =internal log           bsize=4096   blocks=2560, version=2
+[node2][DEBUG ]          =                       sectsz=512   sunit=0 blks, lazy-count=1
+[node2][DEBUG ] realtime =none                   extsz=4096   blocks=0, rtextents=0
+[node2][WARNIN] DEBUG:ceph-disk:Mounting /dev/sdc1 on /var/lib/ceph/tmp/mnt.sVDUB7 with options noatime,inode64
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/mount -t xfs -o noatime,inode64 -- /dev/sdc1 /var/lib/ceph/tmp/mnt.sVDUB7
+[node2][WARNIN] DEBUG:ceph-disk:Preparing osd data dir /var/lib/ceph/tmp/mnt.sVDUB7
+[node2][WARNIN] DEBUG:ceph-disk:Creating symlink /var/lib/ceph/tmp/mnt.sVDUB7/journal -> /dev/disk/by-partuuid/ba3ae1c1-391f-49ea-b970-935b58d63586
+[node2][WARNIN] DEBUG:ceph-disk:Unmounting /var/lib/ceph/tmp/mnt.sVDUB7
+[node2][WARNIN] INFO:ceph-disk:Running command: /bin/umount -- /var/lib/ceph/tmp/mnt.sVDUB7
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --typecode=1:4fbd7e29-9d25-41b8-afd0-062c0ceff05d -- /dev/sdc
+[node2][DEBUG ] The operation has completed successfully.
+[node2][WARNIN] INFO:ceph-disk:calling partx on prepared device /dev/sdc
+[node2][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdc
+[node2][WARNIN] partx: /dev/sdc: error adding partitions 1-2
+[node2][INFO  ] Running command: udevadm trigger --subsystem-match=block --action=add
+[node2][INFO  ] checking OSD status...
+[node2][INFO  ] Running command: ceph --cluster=ceph osd stat --format=json
+[ceph_deploy.osd][DEBUG ] Host node2 is now ready for osd use.
+[node2][DEBUG ] connected to host: node2
+[node2][DEBUG ] detect platform information from remote host
+[node2][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[ceph_deploy.osd][DEBUG ] Preparing host node2 disk /dev/sdd journal None activate True
+[node2][INFO  ] Running command: ceph-disk -v prepare --fs-type xfs --cluster ceph -- /dev/sdd
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-osd --cluster=ceph --show-config-value=fsid
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_mkfs_options_xfs
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_fs_mkfs_options_xfs
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_mount_options_xfs
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_fs_mount_options_xfs
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-osd --cluster=ceph --show-config-value=osd_journal_size
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_cryptsetup_parameters
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_dmcrypt_key_size
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_dmcrypt_type
+[node2][WARNIN] INFO:ceph-disk:Will colocate journal with data on /dev/sdd
+[node2][WARNIN] DEBUG:ceph-disk:Creating journal partition num 2 size 5120 on /dev/sdd
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --new=2:0:5120M --change-name=2:ceph journal --partition-guid=2:1f6ce9af-f953-48a2-8ce4-25d3e71ef403 --typecode=2:45b0969e-9b03-4f30-b4c6-b4b80ceff106 --mbrtogpt -- /dev/sdd
+[node2][DEBUG ] The operation has completed successfully.
+[node2][WARNIN] INFO:ceph-disk:calling partx on prepared device /dev/sdd
+[node2][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdd
+[node2][WARNIN] partx: /dev/sdd: error adding partition 2
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/udevadm settle
+[node2][WARNIN] DEBUG:ceph-disk:Journal is GPT partition /dev/disk/by-partuuid/1f6ce9af-f953-48a2-8ce4-25d3e71ef403
+[node2][WARNIN] DEBUG:ceph-disk:Journal is GPT partition /dev/disk/by-partuuid/1f6ce9af-f953-48a2-8ce4-25d3e71ef403
+[node2][WARNIN] DEBUG:ceph-disk:Creating osd partition on /dev/sdd
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --largest-new=1 --change-name=1:ceph data --partition-guid=1:d5f0f83b-4a64-49ad-91be-2c7e9bea1b33 --typecode=1:89c57f98-2fe5-4dc0-89c1-f3ad0ceff2be -- /dev/sdd
+[node2][DEBUG ] The operation has completed successfully.
+[node2][WARNIN] INFO:ceph-disk:calling partx on created device /dev/sdd
+[node2][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdd
+[node2][WARNIN] partx: /dev/sdd: error adding partitions 1-2
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/udevadm settle
+[node2][WARNIN] DEBUG:ceph-disk:Creating xfs fs on /dev/sdd1
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/mkfs -t xfs -f -i size=2048 -- /dev/sdd1
+[node2][DEBUG ] meta-data=/dev/sdd1              isize=2048   agcount=4, agsize=982975 blks
+[node2][DEBUG ]          =                       sectsz=512   attr=2, projid32bit=1
+[node2][DEBUG ]          =                       crc=0        finobt=0
+[node2][DEBUG ] data     =                       bsize=4096   blocks=3931899, imaxpct=25
+[node2][DEBUG ]          =                       sunit=0      swidth=0 blks
+[node2][DEBUG ] naming   =version 2              bsize=4096   ascii-ci=0 ftype=0
+[node2][DEBUG ] log      =internal log           bsize=4096   blocks=2560, version=2
+[node2][DEBUG ]          =                       sectsz=512   sunit=0 blks, lazy-count=1
+[node2][DEBUG ] realtime =none                   extsz=4096   blocks=0, rtextents=0
+[node2][WARNIN] DEBUG:ceph-disk:Mounting /dev/sdd1 on /var/lib/ceph/tmp/mnt.jGPUjf with options noatime,inode64
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/bin/mount -t xfs -o noatime,inode64 -- /dev/sdd1 /var/lib/ceph/tmp/mnt.jGPUjf
+[node2][WARNIN] DEBUG:ceph-disk:Preparing osd data dir /var/lib/ceph/tmp/mnt.jGPUjf
+[node2][WARNIN] DEBUG:ceph-disk:Creating symlink /var/lib/ceph/tmp/mnt.jGPUjf/journal -> /dev/disk/by-partuuid/1f6ce9af-f953-48a2-8ce4-25d3e71ef403
+[node2][WARNIN] DEBUG:ceph-disk:Unmounting /var/lib/ceph/tmp/mnt.jGPUjf
+[node2][WARNIN] INFO:ceph-disk:Running command: /bin/umount -- /var/lib/ceph/tmp/mnt.jGPUjf
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --typecode=1:4fbd7e29-9d25-41b8-afd0-062c0ceff05d -- /dev/sdd
+[node2][DEBUG ] The operation has completed successfully.
+[node2][WARNIN] INFO:ceph-disk:calling partx on prepared device /dev/sdd
+[node2][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node2][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdd
+[node2][WARNIN] partx: /dev/sdd: error adding partitions 1-2
+[node2][INFO  ] Running command: udevadm trigger --subsystem-match=block --action=add
+[node2][INFO  ] checking OSD status...
+[node2][INFO  ] Running command: ceph --cluster=ceph osd stat --format=json
+[ceph_deploy.osd][DEBUG ] Host node2 is now ready for osd use.
+[node3][DEBUG ] connected to host: node3
+[node3][DEBUG ] detect platform information from remote host
+[node3][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[ceph_deploy.osd][DEBUG ] Deploying osd to node3
+[node3][DEBUG ] write cluster configuration to /etc/ceph/{cluster}.conf
+[node3][WARNIN] osd keyring does not exist yet, creating one
+[node3][DEBUG ] create a keyring file
+[node3][INFO  ] Running command: udevadm trigger --subsystem-match=block --action=add
+[ceph_deploy.osd][DEBUG ] Preparing host node3 disk /dev/sdb journal None activate True
+[node3][INFO  ] Running command: ceph-disk -v prepare --fs-type xfs --cluster ceph -- /dev/sdb
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-osd --cluster=ceph --show-config-value=fsid
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_mkfs_options_xfs
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_fs_mkfs_options_xfs
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_mount_options_xfs
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_fs_mount_options_xfs
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-osd --cluster=ceph --show-config-value=osd_journal_size
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_cryptsetup_parameters
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_dmcrypt_key_size
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_dmcrypt_type
+[node3][WARNIN] INFO:ceph-disk:Will colocate journal with data on /dev/sdb
+[node3][WARNIN] DEBUG:ceph-disk:Creating journal partition num 2 size 5120 on /dev/sdb
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --new=2:0:5120M --change-name=2:ceph journal --partition-guid=2:5ee0a3ee-ac3d-4947-923d-7df08be8eb55 --typecode=2:45b0969e-9b03-4f30-b4c6-b4b80ceff106 --mbrtogpt -- /dev/sdb
+[node3][DEBUG ] The operation has completed successfully.
+[node3][WARNIN] INFO:ceph-disk:calling partx on prepared device /dev/sdb
+[node3][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdb
+[node3][WARNIN] partx: /dev/sdb: error adding partition 2
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/udevadm settle
+[node3][WARNIN] DEBUG:ceph-disk:Journal is GPT partition /dev/disk/by-partuuid/5ee0a3ee-ac3d-4947-923d-7df08be8eb55
+[node3][WARNIN] DEBUG:ceph-disk:Journal is GPT partition /dev/disk/by-partuuid/5ee0a3ee-ac3d-4947-923d-7df08be8eb55
+[node3][WARNIN] DEBUG:ceph-disk:Creating osd partition on /dev/sdb
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --largest-new=1 --change-name=1:ceph data --partition-guid=1:745644bd-6cbf-404e-ab24-468625ecda64 --typecode=1:89c57f98-2fe5-4dc0-89c1-f3ad0ceff2be -- /dev/sdb
+[node3][DEBUG ] The operation has completed successfully.
+[node3][WARNIN] INFO:ceph-disk:calling partx on created device /dev/sdb
+[node3][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdb
+[node3][WARNIN] partx: /dev/sdb: error adding partitions 1-2
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/udevadm settle
+[node3][WARNIN] DEBUG:ceph-disk:Creating xfs fs on /dev/sdb1
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/mkfs -t xfs -f -i size=2048 -- /dev/sdb1
+[node3][DEBUG ] meta-data=/dev/sdb1              isize=2048   agcount=4, agsize=982975 blks
+[node3][DEBUG ]          =                       sectsz=512   attr=2, projid32bit=1
+[node3][DEBUG ]          =                       crc=0        finobt=0
+[node3][DEBUG ] data     =                       bsize=4096   blocks=3931899, imaxpct=25
+[node3][DEBUG ]          =                       sunit=0      swidth=0 blks
+[node3][DEBUG ] naming   =version 2              bsize=4096   ascii-ci=0 ftype=0
+[node3][DEBUG ] log      =internal log           bsize=4096   blocks=2560, version=2
+[node3][DEBUG ]          =                       sectsz=512   sunit=0 blks, lazy-count=1
+[node3][DEBUG ] realtime =none                   extsz=4096   blocks=0, rtextents=0
+[node3][WARNIN] DEBUG:ceph-disk:Mounting /dev/sdb1 on /var/lib/ceph/tmp/mnt.vTEvsL with options noatime,inode64
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/mount -t xfs -o noatime,inode64 -- /dev/sdb1 /var/lib/ceph/tmp/mnt.vTEvsL
+[node3][WARNIN] DEBUG:ceph-disk:Preparing osd data dir /var/lib/ceph/tmp/mnt.vTEvsL
+[node3][WARNIN] DEBUG:ceph-disk:Creating symlink /var/lib/ceph/tmp/mnt.vTEvsL/journal -> /dev/disk/by-partuuid/5ee0a3ee-ac3d-4947-923d-7df08be8eb55
+[node3][WARNIN] DEBUG:ceph-disk:Unmounting /var/lib/ceph/tmp/mnt.vTEvsL
+[node3][WARNIN] INFO:ceph-disk:Running command: /bin/umount -- /var/lib/ceph/tmp/mnt.vTEvsL
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --typecode=1:4fbd7e29-9d25-41b8-afd0-062c0ceff05d -- /dev/sdb
+[node3][DEBUG ] The operation has completed successfully.
+[node3][WARNIN] INFO:ceph-disk:calling partx on prepared device /dev/sdb
+[node3][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdb
+[node3][WARNIN] partx: /dev/sdb: error adding partitions 1-2
+[node3][INFO  ] Running command: udevadm trigger --subsystem-match=block --action=add
+[node3][INFO  ] checking OSD status...
+[node3][INFO  ] Running command: ceph --cluster=ceph osd stat --format=json
+[ceph_deploy.osd][DEBUG ] Host node3 is now ready for osd use.
+[node3][DEBUG ] connected to host: node3
+[node3][DEBUG ] detect platform information from remote host
+[node3][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[ceph_deploy.osd][DEBUG ] Preparing host node3 disk /dev/sdc journal None activate True
+[node3][INFO  ] Running command: ceph-disk -v prepare --fs-type xfs --cluster ceph -- /dev/sdc
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-osd --cluster=ceph --show-config-value=fsid
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_mkfs_options_xfs
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_fs_mkfs_options_xfs
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_mount_options_xfs
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_fs_mount_options_xfs
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-osd --cluster=ceph --show-config-value=osd_journal_size
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_cryptsetup_parameters
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_dmcrypt_key_size
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_dmcrypt_type
+[node3][WARNIN] INFO:ceph-disk:Will colocate journal with data on /dev/sdc
+[node3][WARNIN] DEBUG:ceph-disk:Creating journal partition num 2 size 5120 on /dev/sdc
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --new=2:0:5120M --change-name=2:ceph journal --partition-guid=2:4ffda82f-72e3-4208-950b-d1cc857d5083 --typecode=2:45b0969e-9b03-4f30-b4c6-b4b80ceff106 --mbrtogpt -- /dev/sdc
+[node3][DEBUG ] The operation has completed successfully.
+[node3][WARNIN] INFO:ceph-disk:calling partx on prepared device /dev/sdc
+[node3][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdc
+[node3][WARNIN] partx: /dev/sdc: error adding partition 2
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/udevadm settle
+[node3][WARNIN] DEBUG:ceph-disk:Journal is GPT partition /dev/disk/by-partuuid/4ffda82f-72e3-4208-950b-d1cc857d5083
+[node3][WARNIN] DEBUG:ceph-disk:Journal is GPT partition /dev/disk/by-partuuid/4ffda82f-72e3-4208-950b-d1cc857d5083
+[node3][WARNIN] DEBUG:ceph-disk:Creating osd partition on /dev/sdc
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --largest-new=1 --change-name=1:ceph data --partition-guid=1:d035a268-0913-4b61-bc8d-33157664a5cc --typecode=1:89c57f98-2fe5-4dc0-89c1-f3ad0ceff2be -- /dev/sdc
+[node3][DEBUG ] The operation has completed successfully.
+[node3][WARNIN] INFO:ceph-disk:calling partx on created device /dev/sdc
+[node3][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdc
+[node3][WARNIN] partx: /dev/sdc: error adding partitions 1-2
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/udevadm settle
+[node3][WARNIN] DEBUG:ceph-disk:Creating xfs fs on /dev/sdc1
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/mkfs -t xfs -f -i size=2048 -- /dev/sdc1
+[node3][DEBUG ] meta-data=/dev/sdc1              isize=2048   agcount=4, agsize=982975 blks
+[node3][DEBUG ]          =                       sectsz=512   attr=2, projid32bit=1
+[node3][DEBUG ]          =                       crc=0        finobt=0
+[node3][DEBUG ] data     =                       bsize=4096   blocks=3931899, imaxpct=25
+[node3][DEBUG ]          =                       sunit=0      swidth=0 blks
+[node3][DEBUG ] naming   =version 2              bsize=4096   ascii-ci=0 ftype=0
+[node3][DEBUG ] log      =internal log           bsize=4096   blocks=2560, version=2
+[node3][DEBUG ]          =                       sectsz=512   sunit=0 blks, lazy-count=1
+[node3][DEBUG ] realtime =none                   extsz=4096   blocks=0, rtextents=0
+[node3][WARNIN] DEBUG:ceph-disk:Mounting /dev/sdc1 on /var/lib/ceph/tmp/mnt.5sNo6e with options noatime,inode64
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/mount -t xfs -o noatime,inode64 -- /dev/sdc1 /var/lib/ceph/tmp/mnt.5sNo6e
+[node3][WARNIN] DEBUG:ceph-disk:Preparing osd data dir /var/lib/ceph/tmp/mnt.5sNo6e
+[node3][WARNIN] DEBUG:ceph-disk:Creating symlink /var/lib/ceph/tmp/mnt.5sNo6e/journal -> /dev/disk/by-partuuid/4ffda82f-72e3-4208-950b-d1cc857d5083
+[node3][WARNIN] DEBUG:ceph-disk:Unmounting /var/lib/ceph/tmp/mnt.5sNo6e
+[node3][WARNIN] INFO:ceph-disk:Running command: /bin/umount -- /var/lib/ceph/tmp/mnt.5sNo6e
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --typecode=1:4fbd7e29-9d25-41b8-afd0-062c0ceff05d -- /dev/sdc
+[node3][DEBUG ] The operation has completed successfully.
+[node3][WARNIN] INFO:ceph-disk:calling partx on prepared device /dev/sdc
+[node3][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdc
+[node3][WARNIN] partx: /dev/sdc: error adding partitions 1-2
+[node3][INFO  ] Running command: udevadm trigger --subsystem-match=block --action=add
+[node3][INFO  ] checking OSD status...
+[node3][INFO  ] Running command: ceph --cluster=ceph osd stat --format=json
+[ceph_deploy.osd][DEBUG ] Host node3 is now ready for osd use.
+[node3][DEBUG ] connected to host: node3
+[node3][DEBUG ] detect platform information from remote host
+[node3][DEBUG ] detect machine type
+[ceph_deploy.osd][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[ceph_deploy.osd][DEBUG ] Preparing host node3 disk /dev/sdd journal None activate True
+[node3][INFO  ] Running command: ceph-disk -v prepare --fs-type xfs --cluster ceph -- /dev/sdd
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-osd --cluster=ceph --show-config-value=fsid
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_mkfs_options_xfs
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_fs_mkfs_options_xfs
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_mount_options_xfs
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_fs_mount_options_xfs
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-osd --cluster=ceph --show-config-value=osd_journal_size
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_cryptsetup_parameters
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_dmcrypt_key_size
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/ceph-conf --cluster=ceph --name=osd. --lookup osd_dmcrypt_type
+[node3][WARNIN] INFO:ceph-disk:Will colocate journal with data on /dev/sdd
+[node3][WARNIN] DEBUG:ceph-disk:Creating journal partition num 2 size 5120 on /dev/sdd
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --new=2:0:5120M --change-name=2:ceph journal --partition-guid=2:eee29dff-d737-46d2-ac73-f257d39af5ee --typecode=2:45b0969e-9b03-4f30-b4c6-b4b80ceff106 --mbrtogpt -- /dev/sdd
+[node3][DEBUG ] The operation has completed successfully.
+[node3][WARNIN] INFO:ceph-disk:calling partx on prepared device /dev/sdd
+[node3][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdd
+[node3][WARNIN] partx: /dev/sdd: error adding partition 2
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/udevadm settle
+[node3][WARNIN] DEBUG:ceph-disk:Journal is GPT partition /dev/disk/by-partuuid/eee29dff-d737-46d2-ac73-f257d39af5ee
+[node3][WARNIN] DEBUG:ceph-disk:Journal is GPT partition /dev/disk/by-partuuid/eee29dff-d737-46d2-ac73-f257d39af5ee
+[node3][WARNIN] DEBUG:ceph-disk:Creating osd partition on /dev/sdd
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --largest-new=1 --change-name=1:ceph data --partition-guid=1:281879eb-c283-4f26-91e3-2d5b02a80f86 --typecode=1:89c57f98-2fe5-4dc0-89c1-f3ad0ceff2be -- /dev/sdd
+[node3][DEBUG ] The operation has completed successfully.
+[node3][WARNIN] INFO:ceph-disk:calling partx on created device /dev/sdd
+[node3][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdd
+[node3][WARNIN] partx: /dev/sdd: error adding partitions 1-2
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/udevadm settle
+[node3][WARNIN] DEBUG:ceph-disk:Creating xfs fs on /dev/sdd1
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/mkfs -t xfs -f -i size=2048 -- /dev/sdd1
+[node3][DEBUG ] meta-data=/dev/sdd1              isize=2048   agcount=4, agsize=982975 blks
+[node3][DEBUG ]          =                       sectsz=512   attr=2, projid32bit=1
+[node3][DEBUG ]          =                       crc=0        finobt=0
+[node3][DEBUG ] data     =                       bsize=4096   blocks=3931899, imaxpct=25
+[node3][DEBUG ]          =                       sunit=0      swidth=0 blks
+[node3][DEBUG ] naming   =version 2              bsize=4096   ascii-ci=0 ftype=0
+[node3][DEBUG ] log      =internal log           bsize=4096   blocks=2560, version=2
+[node3][DEBUG ]          =                       sectsz=512   sunit=0 blks, lazy-count=1
+[node3][DEBUG ] realtime =none                   extsz=4096   blocks=0, rtextents=0
+[node3][WARNIN] DEBUG:ceph-disk:Mounting /dev/sdd1 on /var/lib/ceph/tmp/mnt.9wurtK with options noatime,inode64
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/bin/mount -t xfs -o noatime,inode64 -- /dev/sdd1 /var/lib/ceph/tmp/mnt.9wurtK
+[node3][WARNIN] DEBUG:ceph-disk:Preparing osd data dir /var/lib/ceph/tmp/mnt.9wurtK
+[node3][WARNIN] DEBUG:ceph-disk:Creating symlink /var/lib/ceph/tmp/mnt.9wurtK/journal -> /dev/disk/by-partuuid/eee29dff-d737-46d2-ac73-f257d39af5ee
+[node3][WARNIN] DEBUG:ceph-disk:Unmounting /var/lib/ceph/tmp/mnt.9wurtK
+[node3][WARNIN] INFO:ceph-disk:Running command: /bin/umount -- /var/lib/ceph/tmp/mnt.9wurtK
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/sgdisk --typecode=1:4fbd7e29-9d25-41b8-afd0-062c0ceff05d -- /dev/sdd
+[node3][DEBUG ] The operation has completed successfully.
+[node3][WARNIN] INFO:ceph-disk:calling partx on prepared device /dev/sdd
+[node3][WARNIN] INFO:ceph-disk:re-reading known partitions will display errors
+[node3][WARNIN] INFO:ceph-disk:Running command: /usr/sbin/partx -a /dev/sdd
+[node3][WARNIN] partx: /dev/sdd: error adding partitions 1-2
+[node3][INFO  ] Running command: udevadm trigger --subsystem-match=block --action=add
+[node3][INFO  ] checking OSD status...
+[node3][INFO  ] Running command: ceph --cluster=ceph osd stat --format=json
+[ceph_deploy.osd][DEBUG ] Host node3 is now ready for osd use.
+```
