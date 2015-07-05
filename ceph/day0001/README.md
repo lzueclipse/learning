@@ -1690,3 +1690,39 @@ node3:
             101488 kB used, 45947 MB / 46046 MB avail
                   64 undersized+degraded+peered
 ```
+
+####10.4 在node1,node2,node3使能并启动ntp服务,并作一次同步
+node1:
+
+```
+[root@node1 ~]# systemctl enable ntpd
+ln -s '/usr/lib/systemd/system/ntpd.service' '/etc/systemd/system/multi-user.target.wants/ntpd.service'
+[root@node1 ~]#
+[root@node1 ~]# systemctl start ntpd
+[root@node1 ~]#
+[root@node1 ~]# ntpdate pool.ntp.org
+ 5 Jul 18:25:41 ntpdate[14196]: the NTP socket is in use, exiting
+```
+node2:
+
+```
+[root@node1 ~]# ssh node2 systemctl enable ntpd
+ln -s '/usr/lib/systemd/system/ntpd.service' '/etc/systemd/system/multi-user.target.wants/ntpd.service'
+[root@node1 ~]#
+[root@node1 ~]# ssh node2 systemctl start ntpd
+[root@node1 ~]#
+[root@node1 ~]# ssh node2 ntpdate pool.ntp.org
+ 5 Jul 18:27:46 ntpdate[948]: the NTP socket is in use, exiting
+```
+
+node3:
+
+```
+[root@node1 ~]# ssh node3 systemctl enable ntpd
+ln -s '/usr/lib/systemd/system/ntpd.service' '/etc/systemd/system/multi-user.target.wants/ntpd.service'
+[root@node1 ~]#
+[root@node1 ~]# ssh node3 systemctl start ntpd
+[root@node1 ~]#
+[root@node1 ~]# ssh node3 ntpdate pool.ntp.org
+ 5 Jul 18:29:14 ntpdate[28235]: the NTP socket is in use, exiting
+```
