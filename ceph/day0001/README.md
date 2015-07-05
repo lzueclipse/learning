@@ -2255,3 +2255,19 @@ ln -s '/usr/lib/systemd/system/ntpd.service' '/etc/systemd/system/multi-user.tar
 [node3][INFO  ] Running command: ceph --cluster=ceph osd stat --format=json
 [ceph_deploy.osd][DEBUG ] Host node3 is now ready for osd use.
 ```
+
+##11. 再检查ceph status
+
+```
+[root@node1 ~]# ceph status
+    cluster 8c3fb7e2-6750-4e8e-b3f0-ad6afe25bb1a
+     health HEALTH_WARN
+            too few PGs per OSD (21 < min 30)
+            clock skew detected on mon.node2, mon.node3
+     monmap e3: 3 mons at {node1=10.200.29.191:6789/0,node2=10.200.29.192:6789/0,node3=10.200.29.193:6789/0}
+            election epoch 8, quorum 0,1,2 node1,node2,node3
+     osdmap e43: 9 osds: 9 up, 9 in
+      pgmap v84: 64 pgs, 1 pools, 0 bytes data, 0 objects
+            304 MB used, 134 GB / 134 GB avail
+                  64 active+clean
+```
