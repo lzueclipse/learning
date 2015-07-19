@@ -163,7 +163,7 @@ yum install ceph-deploy
 [root@node1 ~]# mkdir /etc/ceph
 ```
 
-##7 安装ceph Hammer版本二进制
+##7 在3个节点node1,node2,node3, 安装ceph Hammer版本二进制
 
 在3个节点node1, node2, node3安装ceph Hammer版本的二进制，注意仅仅是安装了相应的RPM包。
 
