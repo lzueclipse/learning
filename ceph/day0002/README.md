@@ -6,6 +6,13 @@
 
 如图1所示，Ceph主要模块图。
 
+###1.1. RADOS
+全称是Reliable Automatic Distributed Object Store，是Ceph的基础。
+
+在底层，Ceph是以object来存储的。
+
+
+
 ###1.1. Monitors
 
 ###1.2. OSD
