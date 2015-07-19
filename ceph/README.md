@@ -4,6 +4,7 @@
 [How to install Ceph with ceph-deploy](./day0001/) .
 
 ##Day two
+[Ceph arichitecture/Ceph internals/Ceph essentials] (./day0002/).
 
 ###参考文献:
 
