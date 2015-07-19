@@ -11,11 +11,23 @@
 
 在底层，Ceph是以object来存储的。
 
+RADOS负责数据的可靠性和一致性(错误发现，错误恢复，data replication)。
 
-
-###1.1. Monitors
+LIBRADOS对外提供了访问RADOS的接口。
 
 ###1.2. OSD
+
+![图2](https://github.com/lzueclipse/learning/blob/master/ceph/day0002/2.png "图2")
+
+全称是Object Storage Device，是真正存放数据的。
+
+一般一个物理硬盘，会绑定一个OSD daemon。
+
+###1.3. MON
+
+Monitor，主要维护系统运行所需的一些状态信息，包括：
+
+OSD map，MON map， PG map，CRUSH Map。 
 
 ###1.3. librados
 
