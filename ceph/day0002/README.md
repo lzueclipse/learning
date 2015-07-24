@@ -117,9 +117,25 @@ ID WEIGHT  TYPE NAME      UP/DOWN REWEIGHT PRIMARY-AFFINITY
 
 Monitor，主要维护系统运行所需的一些状态信息，包括：
 
-OSD map，MON map， PG map，CRUSH Map。 
+#####2.2.1 MON map
+维护了所有monitor node的信息。
+```
+[root@node1 ~]# ceph mon dump
+dumped monmap epoch 3
+epoch 3
+fsid 8c3fb7e2-6750-4e8e-b3f0-ad6afe25bb1a
+last_changed 2015-07-05 15:40:05.539170
+created 0.000000
+0: 10.200.29.191:6789/0 mon.node1
+1: 10.200.29.192:6789/0 mon.node2
+2: 10.200.29.193:6789/0 mon.node3
+```
+ 
+OSD map，
+PG map，
+CRUSH Map。 
 
-###2.3
+###2.3. LIBRADOS
 
 LIBRADOS对外提供了访问RADOS的接口。
 ###1.4. RBD
