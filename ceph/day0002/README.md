@@ -244,7 +244,246 @@ osdstat kbused  kbavail kb      hb in   hb out
  sum    324084  141132120       141456204
 ```
 
-CRUSH Map。 
+#####2.2.4. CRUSH Map。 
+维护了CRUSH ruleset的信息。
+```
+[root@node1 ~]# ceph osd crush dump
+{
+    "devices": [
+        {
+            "id": 0,
+            "name": "osd.0"
+        },
+        {
+            "id": 1,
+            "name": "osd.1"
+        },
+        {
+            "id": 2,
+            "name": "osd.2"
+        },
+        {
+            "id": 3,
+            "name": "osd.3"
+        },
+        {
+            "id": 4,
+            "name": "osd.4"
+        },
+        {
+            "id": 5,
+            "name": "osd.5"
+        },
+        {
+            "id": 6,
+            "name": "osd.6"
+        },
+        {
+            "id": 7,
+            "name": "osd.7"
+        },
+        {
+            "id": 8,
+            "name": "osd.8"
+        }
+    ],
+    "types": [
+        {
+            "type_id": 0,
+            "name": "osd"
+        },
+        {
+            "type_id": 1,
+            "name": "host"
+        },
+        {
+            "type_id": 2,
+            "name": "chassis"
+        },
+        {
+            "type_id": 3,
+            "name": "rack"
+        },
+        {
+            "type_id": 4,
+            "name": "row"
+        },
+        {
+            "type_id": 5,
+            "name": "pdu"
+        },
+        {
+            "type_id": 6,
+            "name": "pod"
+        },
+        {
+            "type_id": 7,
+            "name": "room"
+        },
+        {
+            "type_id": 8,
+            "name": "datacenter"
+        },
+        {
+            "type_id": 9,
+            "name": "region"
+        },
+        {
+            "type_id": 10,
+            "name": "root"
+        }
+    ],
+    "buckets": [
+        {
+            "id": -1,
+            "name": "default",
+            "type_id": 10,
+            "type_name": "root",
+            "weight": 5895,
+            "alg": "straw",
+            "hash": "rjenkins1",
+            "items": [
+                {
+                    "id": -2,
+                    "weight": 1965,
+                    "pos": 0
+                },
+                {
+                    "id": -3,
+                    "weight": 1965,
+                    "pos": 1
+                },
+                {
+                    "id": -4,
+                    "weight": 1965,
+                    "pos": 2
+                }
+            ]
+        },
+        {
+            "id": -2,
+            "name": "node1",
+            "type_id": 1,
+            "type_name": "host",
+            "weight": 1965,
+            "alg": "straw",
+            "hash": "rjenkins1",
+            "items": [
+                {
+                    "id": 0,
+                    "weight": 655,
+                    "pos": 0
+                },
+                {
+                    "id": 1,
+                    "weight": 655,
+                    "pos": 1
+                },
+                {
+                    "id": 2,
+                    "weight": 655,
+                    "pos": 2
+                }
+            ]
+        },
+        {
+            "id": -3,
+            "name": "node2",
+            "type_id": 1,
+            "type_name": "host",
+            "weight": 1965,
+            "alg": "straw",
+            "hash": "rjenkins1",
+            "items": [
+                {
+                    "id": 3,
+                    "weight": 655,
+                    "pos": 0
+                },
+                {
+                    "id": 4,
+                    "weight": 655,
+                    "pos": 1
+                },
+                {
+                    "id": 5,
+                    "weight": 655,
+                    "pos": 2
+                }
+            ]
+        },
+        {
+            "id": -4,
+            "name": "node3",
+            "type_id": 1,
+            "type_name": "host",
+            "weight": 1965,
+            "alg": "straw",
+            "hash": "rjenkins1",
+            "items": [
+                {
+                    "id": 6,
+                    "weight": 655,
+                    "pos": 0
+                },
+                {
+                    "id": 7,
+                    "weight": 655,
+                    "pos": 1
+                },
+                {
+                    "id": 8,
+                    "weight": 655,
+                    "pos": 2
+                }
+            ]
+        }
+    ],
+    "rules": [
+        {
+            "rule_id": 0,
+            "rule_name": "replicated_ruleset",
+            "ruleset": 0,
+            "type": 1,
+            "min_size": 1,
+            "max_size": 10,
+            "steps": [
+                {
+                    "op": "take",
+                    "item": -1,
+                    "item_name": "default"
+                },
+                {
+                    "op": "chooseleaf_firstn",
+                    "num": 0,
+                    "type": "host"
+                },
+                {
+                    "op": "emit"
+                }
+            ]
+        }
+    ],
+    "tunables": {
+        "choose_local_tries": 0,
+        "choose_local_fallback_tries": 0,
+        "choose_total_tries": 50,
+        "chooseleaf_descend_once": 1,
+        "chooseleaf_vary_r": 0,
+        "straw_calc_version": 1,
+        "allowed_bucket_algs": 22,
+        "profile": "unknown",
+        "optimal_tunables": 0,
+        "legacy_tunables": 0,
+        "require_feature_tunables": 1,
+        "require_feature_tunables2": 1,
+        "require_feature_tunables3": 0,
+        "has_v2_rules": 0,
+        "has_v3_rules": 0,
+        "has_v4_buckets": 0
+    }
+}
+```
 
 ###2.3. LIBRADOS
 
