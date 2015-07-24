@@ -579,14 +579,19 @@ created 0.000000
 1: 10.200.29.192:6789/0 mon.node2
 2: 10.200.29.193:6789/0 mon.node3
 ```
-###2.3. LIBRADOS
 
+###2.3. LIBRADOS
 LIBRADOS对外提供了访问RADOS的接口。
-###1.4. RBD
+
+###2.4. RBD
+
+![图4](https://github.com/lzueclipse/learning/blob/master/ceph/day0002/4.png "图4")
 
 全称是RADOS block device。
 
 提供块存储，支持thin provisioning和snapshots。
+
+如图4所示，支持KRBD和Librbd（python)的形式访问RBD。
 
 ###1.5. RGW
 
