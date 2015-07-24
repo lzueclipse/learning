@@ -555,7 +555,30 @@ inline_data     disabled
     }
 }
 ```
-
+```
+[root@node1 ~]# service ceph status mon
+=== mon.node1 ===
+mon.node1: running {"version":"0.94.2"}
+```
+```
+[root@node1 ~]# ceph mon stat
+e3: 3 mons at {node1=10.200.29.191:6789/0,node2=10.200.29.192:6789/0,node3=10.200.29.193:6789/0}, election epoch 28, quorum 0,1,2 node1,node2,node3
+```
+```
+[root@node1 ~]# ceph mon_status
+{"name":"node1","rank":0,"state":"leader","election_epoch":28,"quorum":[0,1,2],"outside_quorum":[],"extra_probe_peers":["10.200.29.192:6789\/0"],"sync_provider":[],"monmap":{"epoch":3,"fsid":"8c3fb7e2-6750-4e8e-b3f0-ad6afe25bb1a","modified":"2015-07-05 15:40:05.539170","created":"0.000000","mons":[{"rank":0,"name":"node1","addr":"10.200.29.191:6789\/0"},{"rank":1,"name":"node2","addr":"10.200.29.192:6789\/0"},{"rank":2,"name":"node3","addr":"10.200.29.193:6789\/0"}]}}
+```
+```
+[root@node1 ~]# ceph mon dump
+dumped monmap epoch 3
+epoch 3
+fsid 8c3fb7e2-6750-4e8e-b3f0-ad6afe25bb1a
+last_changed 2015-07-05 15:40:05.539170
+created 0.000000
+0: 10.200.29.191:6789/0 mon.node1
+1: 10.200.29.192:6789/0 mon.node2
+2: 10.200.29.193:6789/0 mon.node3
+```
 ###2.3. LIBRADOS
 
 LIBRADOS对外提供了访问RADOS的接口。
