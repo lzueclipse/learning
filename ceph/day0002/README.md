@@ -15,6 +15,22 @@ RADOS负责数据的可靠性和一致性(错误发现，错误恢复，data rep
 
 LIBRADOS对外提供了访问RADOS的接口。
 
+相关命令：
+
+```
+[root@node1 ~]# rados lspools
+rbd
+```
+
+```
+[root@node1 ~]# rados df
+pool name                 KB      objects       clones     degraded      unfound           rd        rd KB           wr        wr KB
+rbd                        0            0            0            0           0            0            0            0            0
+  total used          324084            0
+  total avail      141132120
+  total space      141456204
+```
+
 ###1.2. OSD
 
 ![图2](https://github.com/lzueclipse/learning/blob/master/ceph/day0002/2.png "图2")
@@ -29,12 +45,28 @@ Monitor，主要维护系统运行所需的一些状态信息，包括：
 
 OSD map，MON map， PG map，CRUSH Map。 
 
-###1.3. librados
+###1.4. RBD
 
-###1.4. Ceph Gateway
+全称是RADOS block device。
 
-###1.5. RBD
+提供块存储，支持thin provisioning和snapshots。
+
+###1.5. RGW
+
+全称是RADOS Gateway，提供对象存储。
+
+其RESTFUL API接口，兼容Amazon S3和OpenStack Swift，
 
 ###1.6. Ceph FS
 
-###1.7. 
+Ceph File System。
+
+提供兼容POSIX的分布式文件系统
+
+###1.7. MDS
+
+全称Metadata Server。
+
+用于存储Ceph FS中的元数据。
+
+
