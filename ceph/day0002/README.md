@@ -2,13 +2,13 @@
 
 #本章会先粗略构建一个big picture，然后后续章节会展开详细介绍
 
-##1. Ceph主要模块
+##1. Ceph架构以及主要模块
 
 ![图1](https://github.com/lzueclipse/learning/blob/master/ceph/day0002/1.png "图1")
 
 如图1所示，Ceph主要模块图。
 
-###1.1. RADOS
+##2. RADOS
 全称是Reliable Automatic Distributed Object Store，是Ceph的基础。
 
 在底层，Ceph是以object来存储的。
@@ -17,7 +17,6 @@ RADOS负责数据的可靠性和一致性(错误发现，错误恢复，data rep
 当Ceph cluster收到一个write request，CRUSH（Controlled Replication Under Scalable Hash）算法计算出
 将要写入的OSD位置，RADOS会收到这个位置信息，并根据系统配置的CRUSH rulset进行replication。
 
-LIBRADOS对外提供了访问RADOS的接口。
 
 相关命令：
 
@@ -39,7 +38,7 @@ rbd                        0            0            0            0           0 
   total space      141456204
 ```
 
-###1.2. OSD
+###2.1. OSD
 
 ![图2](https://github.com/lzueclipse/learning/blob/master/ceph/day0002/2.png "图2")
 
@@ -53,12 +52,15 @@ rbd                        0            0            0            0           0 
 
 从Ceph Firefly release(0.80)，除了replication，还支持Erasure coding（纠删码）。
 
-###1.3. MON
+###2.2. MON
 
 Monitor，主要维护系统运行所需的一些状态信息，包括：
 
 OSD map，MON map， PG map，CRUSH Map。 
 
+###2.3
+
+LIBRADOS对外提供了访问RADOS的接口。
 ###1.4. RBD
 
 全称是RADOS block device。
