@@ -593,13 +593,17 @@ LIBRADOS对外提供了访问RADOS的接口。
 
 如图4所示，支持KRBD和Librbd（python)的形式访问RBD。
 
-###1.5. RGW
+###2.5. RGW
+
+![图5](https://github.com/lzueclipse/learning/blob/master/ceph/day0002/5.png "图5")
 
 全称是RADOS Gateway，提供对象存储。
 
 其RESTFUL API接口，兼容Amazon S3和OpenStack Swift，
 
-###1.6. Ceph FS
+
+
+###2.6. Ceph FS
 
 Ceph File System。
 
