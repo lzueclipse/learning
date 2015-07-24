@@ -55,6 +55,7 @@ rbd                        0            0            0            0           0 
 #####2.1.1. OSD选用的文件系统
 
 OSD daemon要求文件系统支持扩展属性(XATTRS)，这些扩展属性被用来存储object state, snapshot, metadata, ACL等内部信息。
+
 目前官方推荐使用XFS。
 Ext4的XATTRS过小，Btrfs不建议用在生产环境。
 
