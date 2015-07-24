@@ -115,7 +115,7 @@ ID WEIGHT  TYPE NAME      UP/DOWN REWEIGHT PRIMARY-AFFINITY
 
 ###2.2. MON
 
-Monitor，主要维护系统运行所需的一些状态信息，包括：
+Monitor，可以有多个（奇数个），采用Paxos算法作为选举算法，主要维护系统运行所需的一些状态信息。
 
 #####2.2.1 MON map
 维护了所有monitor node的信息。
@@ -244,7 +244,7 @@ osdstat kbused  kbavail kb      hb in   hb out
  sum    324084  141132120       141456204
 ```
 
-#####2.2.4. CRUSH Map。 
+#####2.2.4. CRUSH Map 
 维护了CRUSH ruleset的信息。
 ```
 [root@node1 ~]# ceph osd crush dump
@@ -510,6 +510,50 @@ stopped
 data_pools
 metadata_pool   0
 inline_data     disabled
+```
+
+#####2.2.6. MON commands
+```
+[root@node1 ~]# ceph daemon mon.node1 mon_status
+{
+    "name": "node1",
+    "rank": 0,
+    "state": "leader",
+    "election_epoch": 28,
+    "quorum": [
+        0,
+        1,
+        2
+    ],
+    "outside_quorum": [],
+    "extra_probe_peers": [
+        "10.200.29.192:6789\/0"
+    ],
+    "sync_provider": [],
+    "monmap": {
+        "epoch": 3,
+        "fsid": "8c3fb7e2-6750-4e8e-b3f0-ad6afe25bb1a",
+        "modified": "2015-07-05 15:40:05.539170",
+        "created": "0.000000",
+        "mons": [
+            {
+                "rank": 0,
+                "name": "node1",
+                "addr": "10.200.29.191:6789\/0"
+            },
+            {
+                "rank": 1,
+                "name": "node2",
+                "addr": "10.200.29.192:6789\/0"
+            },
+            {
+                "rank": 2,
+                "name": "node3",
+                "addr": "10.200.29.193:6789\/0"
+            }
+        ]
+    }
+}
 ```
 
 ###2.3. LIBRADOS
