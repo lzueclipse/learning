@@ -1,5 +1,7 @@
 #Ceph Architecture/Ceph Components/Ceph internals/Ceph essentials
 
+#本章会先粗略构建一个big picture，然后后续章节会展开详细介绍
+
 ##1. Ceph主要模块
 
 ![图1](https://github.com/lzueclipse/learning/blob/master/ceph/day0002/1.png "图1")
