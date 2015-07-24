@@ -27,6 +27,10 @@ rbd
 ```
 
 ```
+[root@node1 ~]# rados -p rbd ls
+```
+
+```
 [root@node1 ~]# rados df
 pool name                 KB      objects       clones     degraded      unfound           rd        rd KB           wr        wr KB
 rbd                        0            0            0            0           0            0            0            0            0
@@ -42,6 +46,12 @@ rbd                        0            0            0            0           0 
 全称是Object Storage Device，是真正存放数据的。
 
 一般一个物理硬盘，会绑定一个OSD daemon。
+
+对于每一个object，有一个primary copy，和几个secondary copy。
+每一个OSD是某些object的primary OSD，同时又是其他某些object的secondary OSD；
+对于某一个object，当它的primary OSD挂掉后，其secondary OSD是需要提升为primary OSD的。
+
+从Ceph Firefly release(0.80)，除了replication，还支持Erasure coding（纠删码）。
 
 ###1.3. MON
 
