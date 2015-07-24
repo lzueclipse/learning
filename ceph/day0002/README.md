@@ -1,4 +1,4 @@
-#Ceph Architecture/Ceph Components/Ceph internals/Ceph essentials
+#Ceph Architecture/Ceph Components
 
 ##本章会先粗略构建一个big picture，然后后续章节会展开详细介绍
 

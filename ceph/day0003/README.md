@@ -1,2 +1,2 @@
-#Ceph arichitecture/Ceph internals/Ceph essentials
+#Ceph internals/Ceph essentials
 
