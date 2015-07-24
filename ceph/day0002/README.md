@@ -14,6 +14,8 @@
 在底层，Ceph是以object来存储的。
 
 RADOS负责数据的可靠性和一致性(错误发现，错误恢复，data replication)。
+当Ceph cluster收到一个write request，CRUSH（Controlled Replication Under Scalable Hash）算法计算出
+将要写入的OSD位置，RADOS会收到这个位置信息，并根据系统配置的CRUSH rulset进行replication。
 
 LIBRADOS对外提供了访问RADOS的接口。
 
