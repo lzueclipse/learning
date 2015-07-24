@@ -1,6 +1,6 @@
 #Ceph Architecture/Ceph Components/Ceph internals/Ceph essentials
 
-#本章会先粗略构建一个big picture，然后后续章节会展开详细介绍
+##本章会先粗略构建一个big picture，然后后续章节会展开详细介绍
 
 ##1. Ceph架构以及主要模块
 
@@ -51,6 +51,12 @@ rbd                        0            0            0            0           0 
 对于某一个object，当它的primary OSD挂掉后，其secondary OSD是需要提升为primary OSD的。
 
 从Ceph Firefly release(0.80)，除了replication，还支持Erasure coding（纠删码）。
+
+#####2.1.1. OSD选用的文件系统
+
+OSD daemon要求文件系统支持扩展属性(XATTRS)，这些扩展属性被用来存储object state, snapshot, metadata, ACL等内部信息。
+目前官方推荐使用XFS。
+Ext4的XATTRS过小，Btrfs不建议用在生产环境。
 
 ###2.2. MON
 
