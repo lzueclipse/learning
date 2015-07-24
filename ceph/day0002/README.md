@@ -79,7 +79,6 @@ osd.1: running {"version":"0.94.2"}
 === osd.2 ===
 osd.2: running {"version":"0.94.2"}
 ```
-
 ```
 [root@node1 ~]# ceph osd ls
 0
@@ -92,12 +91,10 @@ osd.2: running {"version":"0.94.2"}
 7
 8
 ```
-
 ```
 [root@node1 ~]# ceph osd stat
      osdmap e68: 9 osds: 9 up, 9 in
 ```
-
 ```
 [root@node1 ~]# ceph osd  tree
 ID WEIGHT  TYPE NAME      UP/DOWN REWEIGHT PRIMARY-AFFINITY
