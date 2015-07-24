@@ -485,6 +485,33 @@ osdstat kbused  kbavail kb      hb in   hb out
 }
 ```
 
+#####2.2.5. MDS map
+维护了MDS信息。
+```
+[root@node1 ~]# ceph mds dump
+dumped mdsmap epoch 1
+epoch   1
+flags   0
+created 0.000000
+modified        2015-07-03 11:41:21.879452
+tableserver     0
+root    0
+session_timeout 0
+session_autoclose       0
+max_file_size   0
+last_failure    0
+last_failure_osd_epoch  0
+compat  compat={},rocompat={},incompat={}
+max_mds 0
+in
+up      {}
+failed
+stopped
+data_pools
+metadata_pool   0
+inline_data     disabled
+```
+
 ###2.3. LIBRADOS
 
 LIBRADOS对外提供了访问RADOS的接口。
