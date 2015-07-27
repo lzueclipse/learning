@@ -602,7 +602,7 @@ LIBRADOS对外提供了访问RADOS的接口。
 其RESTFUL API接口，兼容Amazon S3和OpenStack Swift，
 
 
-###2.6. Ceph FS
+##3. Ceph FS
 
 Ceph File System。
 
@@ -610,7 +610,7 @@ Ceph File System。
 
 不成熟，不要用于生产环境，我暂时不去涉及这块。
 
-###2.7. MDS
+##4. MDS
 
 全称Metadata Server。
 
