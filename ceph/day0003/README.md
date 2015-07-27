@@ -15,7 +15,8 @@ Ceph的底层就是一个Object Store，所有数据均以Object存放。
 1)伪随机分布算法
  
 2)可以基于Rule配置
-  可以调整Replication count；可以调整Topology（如机房，机柜，服务器等信息）；可以调整权重等。
+ 
+例如可以调整Replication count；可以调整Topology（如机房，机柜，服务器等信息）；可以调整权重等。
 
 ####2.1.1. CRUSH 查询
 
@@ -30,6 +31,10 @@ Ceph的底层就是一个Object Store，所有数据均以Object存放。
 3)CRUSH根据PGID, Cluster State, CRUSH Ruleset计算出对应的Primary OSD和Secondary OSD。
 
 ####2.1.2. CRUSH Hierarchy
+
+![图2](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/2.png "图2")
+
+对应图2所示，CRUSH Hierarchy包括disk, node, rack, row, switch, power circuit, room, data center等。
 
 ####2.1.3. 
 
