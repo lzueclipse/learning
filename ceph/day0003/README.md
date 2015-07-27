@@ -8,7 +8,7 @@ Ceph的底层就是一个Object Store，所有数据均以Object存放。
 
 ##2.数据布局
 
-####2.1 CRUSH算法
+###2.1 CRUSH算法
 
 全称是Controlled Replication Under Scalable Hash。
 
@@ -19,7 +19,7 @@ Ceph的底层就是一个Object Store，所有数据均以Object存放。
 
 #####2.1.1 
 
-####2.2. PG
+###2.2. PG
 
-####2.3. Pools
+###2.3. Pools
 
