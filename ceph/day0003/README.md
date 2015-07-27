@@ -28,13 +28,15 @@ Ceph的底层就是一个Object Store，所有数据均以Object存放。
 
 2)根据Object name和Pool ID计算出 PGID(Place Group ID)
 
-3)CRUSH根据PGID, Cluster State, CRUSH Ruleset计算出对应的Primary OSD和Secondary OSD。
+3)CRUSH根据PGID, Cluster State, CRUSH map计算出对应的Primary OSD和Secondary OSD。
 
 ####2.1.2. CRUSH Hierarchy
 
 ![图2](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/2.png "图2")
 
-对应图2所示，CRUSH Hierarchy包括disk, node, rack, row, switch, power circuit, room, data center等。
+对应图2所示，CRUSH Hierarchy包括osd(osd weight), node, rack, row, switch, power circuit, room, data center等。
+
+为了数据安全，在规划CRUSH Map的时候，尽量考虑到把数据分散在不同的rack，不同的switch....，甚至于不同的data center。
 
 ####2.1.3. 
 
@@ -42,3 +44,4 @@ Ceph的底层就是一个Object Store，所有数据均以Object存放。
 
 ###2.3. Pools
 
+###2.4. 两个例子，挂掉1个OSD以及添加1个OSD
