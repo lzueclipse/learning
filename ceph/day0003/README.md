@@ -51,5 +51,6 @@ Ceph的底层就是一个Object Store，所有数据均以Object存放。
 
 ###2.2. PG
 
+
 ###2.3. Pools
 
