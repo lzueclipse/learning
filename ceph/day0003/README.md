@@ -39,15 +39,22 @@ Ceph的底层就是一个Object Store，所有数据均以Object存放。
 为了数据安全，在规划CRUSH Map的时候，尽量考虑到把数据分散在不同的rack，不同的switch....，甚至于不同的data center。
 
 ####2.1.3. 例子：一个OSD挂掉后的恢复
-1)当一个OSD挂掉后，其它OSD（后续需要明确哪些OSD，猜测是同一个Replication Placement Group内的OSD）在规定时间内没收到心跳，就通知Monitor。
-  
-  Monitor把这个OSD标记为Down。
+1)当一个OSD挂掉后，其它OSD（后续需要明确哪些OSD，目前仅粗略知道是同一个Replication Placement Group内的OSD）
+
+在规定时间内没收到心跳，就通知Monitor。 Monitor把这个OSD标记为Down。
 
 2)如果挂掉的OSD在Replication Placement Group中是Primary的，那么同一Placement Group中的某个OSD会被提升为Primary
 
 3)当挂掉的OSD在规定的时间内没恢复，为了维持Replication数满足要求，Ceph会给该Placement Group增加一个新OSD，
 
   Primary OSD会把相关数据Replicate到新的OSD。
+
+####2.1.4. 例子：添加一些新的OSD
+会触发老的数据Reblance到新的OSD。Reblance结束后，会删除被Replicate的老的数据。
+
+为了降低过多数据的Reblance，可以把新OSD的weight设为0，随后慢慢增加。
+
+这样避免性能下降的太厉害。
 
 ###2.2. PG
 
