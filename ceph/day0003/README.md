@@ -56,6 +56,19 @@ Ceph的底层就是一个Object Store，所有数据均以Object存放。
 
 这样避免性能下降的太厉害。
 
+####2.1.5. 编辑CRUSH Map
+
+1)取出当前系统的CRUSH Map
+```
+[root@node1 ~]# ceph osd getcrushmap -o crushmap.txt
+got crush map from osdmap epoch 180
+```
+
+得到的crushmap.txt是一个二进制文件。
+
+2)反编译crushmap.txt
+
+
 ###2.2. PG
 
 
