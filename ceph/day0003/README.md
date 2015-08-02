@@ -254,5 +254,28 @@ pgp_num: 64
 ####2.2.4. 在一个PG中，某OSD是Primary的，同时在其它PG中该OSD可能是是Secondary或Tertiary
 ![图6](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/6.png "图6")
 
-###2.3. Pools
+###2.3. Pool
 
+####2.3.1. 什么是Pool
+
+1)用来存储object的logical partition
+
+2)可设置自己的owership/access权限
+
+3)可设置自己的replicas number (或者Erasure Code的配置)
+
+4)可设置自己的PG数
+
+5)可设置自己的CRUSH rule
+
+6)Pool中的PG动态map到OSD
+
+####2.3.2. 创建一个pool，并写些数据
+
+1)创建一个名字叫web-services的pool，PG number和PGP number都是128
+```
+[root@node1 day0003]# ceph osd pool create web-services 128 128
+pool 'web-services' created
+```
+
+###3. Ceph data management
