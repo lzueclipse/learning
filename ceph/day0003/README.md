@@ -212,15 +212,15 @@ rule replicated_ruleset {
 
 ####2.2.1. 什么是PG
 
-![图5](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/5.png "图5")
-
 全称是Palcement Group。
 
 1)是一个object的逻辑集合
 
 2)同一PG下的Object被Replicate到相同的OSD
 
-3)根据Pool ID，Object name计算出Placement Group ID。
+3)根据Pool ID，Object name计算出Placement Group ID (图1所示)。
+
+![图5](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/5.png "图5")
 
 ###2.3. Pools
 
