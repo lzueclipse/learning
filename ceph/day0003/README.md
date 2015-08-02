@@ -311,4 +311,32 @@ osd.6 up   in  weight 1 up_from 160 up_thru 181 down_at 159 last_clean_interval 
 osd.7 up   in  weight 1 up_from 158 up_thru 181 down_at 157 last_clean_interval [130,155) 192.168.1.142:6800/2283 192.168.1.142:6801/2283 192.168.1.142:6802/2283 192.168.1.142:6803/2283 exists,up dbd4f4cc-a2e8-40a5-9d8f-2a7100a3c0e1
 osd.8 up   in  weight 1 up_from 163 up_thru 181 down_at 162 last_clean_interval [132,155) 192.168.1.142:6808/3002 192.168.1.142:6809/3002 192.168.1.142:6810/3002 192.168.1.142:6811/3002 exists,up 851391b4-c258-4b4c-af62-a56319aee1f2
 ```
+
+3)设置replication数为2
+```
+[root@node1 day0003]# ceph osd pool set web-services size 2
+set pool 1 size to 2
+```
+
+可检查下是否改变：
+```
+[root@node1 day0003]# ceph osd dump
+epoch 184
+fsid cad73756-0719-4bb1-a1da-aafbde55725a
+created 2015-07-26 16:58:30.595358
+modified 2015-08-02 20:09:51.177796
+flags
+pool 0 'rbd' replicated size 3 min_size 2 crush_ruleset 0 object_hash rjenkins pg_num 64 pgp_num 64 last_change 1 flags hashpspool stripe_width 0
+pool 1 'web-services' replicated size 2 min_size 2 crush_ruleset 0 object_hash rjenkins pg_num 128 pgp_num 128 last_change 183 flags hashpspool stripe_width 0
+max_osd 9
+osd.0 up   in  weight 1 up_from 167 up_thru 183 down_at 166 last_clean_interval [138,155) 192.168.1.140:6808/3052 192.168.1.140:6809/3052 192.168.1.140:6810/3052 192.168.1.140:6811/3052 exists,up 8ece204d-b1a9-4b34-90f7-9459d364428c
+osd.1 up   in  weight 1 up_from 164 up_thru 183 down_at 163 last_clean_interval [141,155) 192.168.1.140:6804/2735 192.168.1.140:6805/2735 192.168.1.140:6806/2735 192.168.1.140:6807/2735 exists,up 539a9c0c-65cd-495f-bfe0-73855dd39fa6
+osd.2 up   in  weight 1 up_from 158 up_thru 183 down_at 157 last_clean_interval [135,155) 192.168.1.140:6800/2385 192.168.1.140:6801/2385 192.168.1.140:6802/2385 192.168.1.140:6803/2385 exists,up a813f1fe-198b-4f1a-a3fb-212d36af9a06
+osd.3 up   in  weight 1 up_from 175 up_thru 183 down_at 156 last_clean_interval [149,155) 192.168.1.141:6804/2633 192.168.1.141:6805/2633 192.168.1.141:6806/2633 192.168.1.141:6807/2633 exists,up d6aec060-1a69-4d8c-9915-19097869424a
+osd.4 up   in  weight 1 up_from 172 up_thru 183 down_at 156 last_clean_interval [144,155) 192.168.1.141:6800/2273 192.168.1.141:6801/2273 192.168.1.141:6802/2273 192.168.1.141:6803/2273 exists,up 60e01360-cb14-4971-9bc4-523b65bef964
+osd.5 up   in  weight 1 up_from 178 up_thru 183 down_at 156 last_clean_interval [152,155) 192.168.1.141:6808/2931 192.168.1.141:6809/2931 192.168.1.141:6810/2931 192.168.1.141:6811/2931 exists,up 75bfe3a3-87aa-49dc-b0f3-c0a70d3368a4
+osd.6 up   in  weight 1 up_from 160 up_thru 183 down_at 159 last_clean_interval [127,155) 192.168.1.142:6804/2509 192.168.1.142:6805/2509 192.168.1.142:6806/2509 192.168.1.142:6807/2509 exists,up 4d6d9f42-7cc9-45db-adb3-7510f73dbcc1
+osd.7 up   in  weight 1 up_from 158 up_thru 183 down_at 157 last_clean_interval [130,155) 192.168.1.142:6800/2283 192.168.1.142:6801/2283 192.168.1.142:6802/2283 192.168.1.142:6803/2283 exists,up dbd4f4cc-a2e8-40a5-9d8f-2a7100a3c0e1
+osd.8 up   in  weight 1 up_from 163 up_thru 183 down_at 162 last_clean_interval [132,155) 192.168.1.142:6808/3002 192.168.1.142:6809/3002 192.168.1.142:6810/3002 192.168.1.142:6811/3002 exists,up 851391b4-c258-4b4c-af62-a56319aee1f2
+```
 ###3. Ceph data management
