@@ -200,6 +200,14 @@ rule replicated_ruleset {
 # ceph osd crush move rack01 root=default
 ```
 
+5)修改后的Layout
+```
+#ceph osd tree
+```
+
+![图3](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/3.png "图3")
+
+
 ###2.2. PG
 
 
