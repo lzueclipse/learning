@@ -205,11 +205,20 @@ rule replicated_ruleset {
 #ceph osd tree
 ```
 
-![图3](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/3.png "图3")
+![图4](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/3.png "图4")
 
 
 ###2.2. PG
 
+####2.2.1. 什么是PG
+
+全称是Palcement Group。
+
+1)是一个object的逻辑集合
+
+2)同一PG下的Object被Replicate到相同的OSD
+
+3)
 
 ###2.3. Pools
 
