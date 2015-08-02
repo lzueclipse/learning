@@ -186,6 +186,20 @@ rule replicated_ruleset {
 # ceph osd crush add-bucket rack03 rack
 ```
 
+3)把Host move到相应的Rack
+```
+# ceph osd crush move node1 rack=rack01
+# ceph osd crush move node2 rack=rack02
+# ceph osd crush move node3 rack=rack03
+```
+
+4)把Rack move到默认的root节点下
+```
+# ceph osd crush move rack03 root=default
+# ceph osd crush move rack02 root=default
+# ceph osd crush move rack01 root=default
+```
+
 ###2.2. PG
 
 
