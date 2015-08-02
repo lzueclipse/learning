@@ -170,6 +170,15 @@ rule replicated_ruleset {
 [root@node1 ~]# ceph osd setcrushmap -i crushmap-compiled
 ```
 
+####2.1.6. 定制Cluster Layout
+
+1)修改前的Layout
+```
+#ceph osd tree
+```
+
+![图3](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/1.png "图3")
+
 ###2.2. PG
 
 
