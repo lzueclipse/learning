@@ -233,9 +233,16 @@ Total PGs = (Total_number_of_OSD * 100) / max_replication_count
 Total PGs for 1 Pool= ((Total_number_of_OSD * 100) / max_replication_count) / pool count
 ```
 
-####2.2.3. 修改PG number
+####2.2.3. 修改PG number 和PGP number
 
 PGP is the total number of placement groups for placement purposes. 应该等于PG number。
+
+```
+[root@node1 day0003]# ceph osd pool get rbd pg_num
+pg_num: 64
+[root@node1 day0003]# ceph osd pool get rbd pgp_num
+pgp_num: 64
+```
 
 ###2.3. Pools
 
