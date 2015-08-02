@@ -67,7 +67,95 @@ got crush map from osdmap epoch 180
 得到的crushmap.txt是一个二进制文件。
 
 2)反编译crushmap.txt
+```
+[root@node1 ~]# crushtool -d crushmap.txt -o crushmap-decompile
+```
 
+得到一个文本文件crushmap-decompile。
+```
+[root@node1 ~]# cat crushmap-decompile
+# begin crush map
+tunable choose_local_tries 0
+tunable choose_local_fallback_tries 0
+tunable choose_total_tries 50
+tunable chooseleaf_descend_once 1
+tunable straw_calc_version 1
+
+# devices
+device 0 osd.0
+device 1 osd.1
+device 2 osd.2
+device 3 osd.3
+device 4 osd.4
+device 5 osd.5
+device 6 osd.6
+device 7 osd.7
+device 8 osd.8
+
+# types
+type 0 osd
+type 1 host
+type 2 chassis
+type 3 rack
+type 4 row
+type 5 pdu
+type 6 pod
+type 7 room
+type 8 datacenter
+type 9 region
+type 10 root
+
+# buckets
+host node1 {
+        id -2           # do not change unnecessarily
+        # weight 0.030
+        alg straw
+        hash 0  # rjenkins1
+        item osd.0 weight 0.010
+        item osd.1 weight 0.010
+        item osd.2 weight 0.010
+}
+host node2 {
+        id -3           # do not change unnecessarily
+        # weight 0.030
+        alg straw
+        hash 0  # rjenkins1
+        item osd.3 weight 0.010
+        item osd.4 weight 0.010
+        item osd.5 weight 0.010
+}
+host node3 {
+        id -4           # do not change unnecessarily
+        # weight 0.030
+        alg straw
+        hash 0  # rjenkins1
+        item osd.6 weight 0.010
+        item osd.7 weight 0.010
+        item osd.8 weight 0.010
+}
+root default {
+        id -1           # do not change unnecessarily
+        # weight 0.090
+        alg straw
+        hash 0  # rjenkins1
+        item node1 weight 0.030
+        item node2 weight 0.030
+        item node3 weight 0.030
+}
+
+# rules
+rule replicated_ruleset {
+        ruleset 0
+        type replicated
+        min_size 1
+        max_size 10
+        step take default
+        step chooseleaf firstn 0 type host
+        step emit
+}
+
+# end crush map
+```
 
 ###2.2. PG
 
