@@ -339,4 +339,29 @@ osd.6 up   in  weight 1 up_from 160 up_thru 183 down_at 159 last_clean_interval 
 osd.7 up   in  weight 1 up_from 158 up_thru 183 down_at 157 last_clean_interval [130,155) 192.168.1.142:6800/2283 192.168.1.142:6801/2283 192.168.1.142:6802/2283 192.168.1.142:6803/2283 exists,up dbd4f4cc-a2e8-40a5-9d8f-2a7100a3c0e1
 osd.8 up   in  weight 1 up_from 163 up_thru 183 down_at 162 last_clean_interval [132,155) 192.168.1.142:6808/3002 192.168.1.142:6809/3002 192.168.1.142:6810/3002 192.168.1.142:6811/3002 exists,up 851391b4-c258-4b4c-af62-a56319aee1f2
 ```
+
+4)rename pool
+```
+[root@node1 day0003]# ceph osd pool rename web-services frontend-services
+pool 'web-services' renamed to 'frontend-services'
+```
+
+查看所有pool：
+```
+[root@node1 day0003]# ceph osd lspools
+0 rbd,1 frontend-services,
+```
+
+5)向frontend-services pool存入一个object，做snapshot，删除原始object，用snapshot恢复
+
+向frontend-services pool存入1个object:
+```
+[root@node1 day0003]# rados -p frontend-services put object1 /etc/hosts
+```
+
+
+
+6)
+
+7)
 ###3. Ceph data management
