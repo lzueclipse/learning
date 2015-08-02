@@ -177,7 +177,14 @@ rule replicated_ruleset {
 #ceph osd tree
 ```
 
-![图3](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/1.png "图3")
+![图3](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/3.png "图3")
+
+2)添加几个Rack（Rack是Host的上一层级）
+```
+# ceph osd crush add-bucket rack01 rack
+# ceph osd crush add-bucket rack02 rack
+# ceph osd crush add-bucket rack03 rack
+```
 
 ###2.2. PG
 
