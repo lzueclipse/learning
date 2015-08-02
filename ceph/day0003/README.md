@@ -233,5 +233,9 @@ Total PGs = (Total_number_of_OSD * 100) / max_replication_count
 Total PGs for 1 Pool= ((Total_number_of_OSD * 100) / max_replication_count) / pool count
 ```
 
+####2.2.3. 修改PG number
+
+PGP is the total number of placement groups for placement purposes. 应该等于PG number。
+
 ###2.3. Pools
 
