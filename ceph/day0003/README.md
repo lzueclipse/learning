@@ -205,7 +205,7 @@ rule replicated_ruleset {
 #ceph osd tree
 ```
 
-![图4](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/3.png "图4")
+![图4](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/4.png "图4")
 
 
 ###2.2. PG
@@ -218,7 +218,7 @@ rule replicated_ruleset {
 
 2)同一PG下的Object被Replicate到相同的OSD
 
-3)
+![图5](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/5.png "图5")
 
 ###2.3. Pools
 
