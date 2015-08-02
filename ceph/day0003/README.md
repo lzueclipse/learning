@@ -220,7 +220,18 @@ rule replicated_ruleset {
 
 3)根据Pool ID，Object name计算出Placement Group ID (图1所示)。
 
+4)便于追踪和管理海量的Object
+
 ![图5](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/5.png "图5")
+
+####2.2.2. PG number
+```
+Total PGs = (Total_number_of_OSD * 100) / max_replication_count
+```
+
+```
+Total PGs for 1 Pool= ((Total_number_of_OSD * 100) / max_replication_count) / pool count
+```
 
 ###2.3. Pools
 
