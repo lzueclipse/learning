@@ -167,7 +167,7 @@ rule replicated_ruleset {
 
 5)为Ceph设置新的CRUSH Map
 ```
-ceph osd setcrushmap -i crushmap-compiled
+[root@node1 ~]# ceph osd setcrushmap -i crushmap-compiled
 ```
 
 ###2.2. PG
