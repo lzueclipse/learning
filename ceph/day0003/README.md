@@ -157,6 +157,19 @@ rule replicated_ruleset {
 # end crush map
 ```
 
+3)编辑crushmap-decompile
+
+4)重新编译crushmap-decompile
+
+```
+[root@node1 ~]# crushtool -c crushmap-decompile -o crushmap-compiled
+```
+
+5)为Ceph设置新的CRUSH Map
+```
+ceph osd setcrushmap -i crushmap-compiled
+```
+
 ###2.2. PG
 
 
