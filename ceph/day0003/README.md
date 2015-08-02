@@ -251,5 +251,8 @@ pgp_num: 64
 # ceph osd pool set rbd pgp_num 256
 ```
 
+####2.2.4. 在一个PG中，某OSD是Primary的，同时在其它PG中该OSD可能是是Secondary或Tertiary
+![图6](https://github.com/lzueclipse/learning/blob/master/ceph/day0003/6.png "图6")
+
 ###2.3. Pools
 
