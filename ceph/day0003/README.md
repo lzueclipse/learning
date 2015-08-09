@@ -455,6 +455,10 @@ osdmap e211 pool 'HPC_Pool' (2) object 'object1' -> pg 2.bac5debc (2.3c) -> up (
 ```
 osdmap e211: OSD map version ID or OSD epoch。
 
-HPC_Pool: Pool name。
+'HPC_Pool' (2): Pool name is HPC_Pool，pool ID is 2。
+
+object 'object1': object1 is the object name。
+
+
 
 
