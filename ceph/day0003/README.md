@@ -428,3 +428,9 @@ root@node1 learning]# echo "I am a test file" >> /tmp/test.txt
 [root@node1 learning]# ceph osd pool create HPC_Pool 128 128
 pool 'HPC_Pool' created
 ```
+
+设置HPC_Pool的replication size 为 3：
+```
+[root@node1 learning]# ceph osd pool set HPC_Pool size 3
+set pool 2 size to 3
+```
