@@ -453,12 +453,18 @@ object1
 [root@node1 learning]# ceph osd map HPC_Pool object1
 osdmap e211 pool 'HPC_Pool' (2) object 'object1' -> pg 2.bac5debc (2.3c) -> up ([7,5], p7) acting ([7,5], p7)
 ```
+
+```
 osdmap e211: OSD map version ID or OSD epoch。
 
 'HPC_Pool' (2): Pool name is HPC_Pool，pool ID is 2。
 
 object 'object1': object1 is the object name。
 
+pg 2.bac5debc (2.3c): object1's Placement Group number， 2.3c
 
+up ([7,5], p7): PG 2.3c 包含osd.7, osd.5,其中 osd.7是primary。 疑问？？？我已经设置replication size 为3，为什么此处还是2？
 
+acting ([7,5], p7): osd.7, osd.5在同一acting set，osd.7是priamry OSD，osd.5是secondary OSD。
+```
 
