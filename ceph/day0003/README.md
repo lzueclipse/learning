@@ -365,6 +365,36 @@ pool 'web-services' renamed to 'frontend-services'
 object1
 ```
 
+创建snapshot:
+```
+[root@node1 learning]# rados  mksnap snapshot1 -p frontend-services
+created pool frontend-services snap snapshot1
+```
+
+查看snapshot:
+```
+[root@node1 learning]# rados lssnap -p frontend-services
+1       snapshot1       2015.08.09 16:57:16
+1 snaps
+```
+
+删除object1:
+```
+[root@node1 learning]# rados rm object1 -p frontend-services
+```
+
+查看object1是否已经被删除：
+```
+[root@node1 learning]# rados ls -p frontend-services
+```
+
+在snapshot里查找object1:
+```
+[root@node1 learning]# rados listsnaps object1 -p frontend-services
+object1:
+cloneid snaps   size    overlap
+1       1       259     []
+```
 
 6)
 
