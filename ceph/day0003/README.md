@@ -453,4 +453,8 @@ object1
 [root@node1 learning]# ceph osd map HPC_Pool object1
 osdmap e211 pool 'HPC_Pool' (2) object 'object1' -> pg 2.bac5debc (2.3c) -> up ([7,5], p7) acting ([7,5], p7)
 ```
+osdmap e211: OSD map version ID or OSD epoch。
+
+HPC_Pool: Pool name。
+
 
