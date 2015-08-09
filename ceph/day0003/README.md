@@ -396,7 +396,22 @@ cloneid snaps   size    overlap
 1       1       259     []
 ```
 
-6)
+回滚object1:
+```
+[root@node1 learning]# rados rollback object1 snapshot1 -p frontend-services
+rolled back pool frontend-services to snapshot snapshot1
+```
 
-7)
+查看object1 是否已经恢复：
+```
+[root@node1 learning]# rados ls -p frontend-services
+object1
+```
+
+6)删除frontend-services
+```
+[root@node1 learning]# ceph osd pool delete frontend-services frontend-services --yes-i-really-really-mean-it
+pool 'frontend-services' removed
+```
+
 ###3. Ceph data management
