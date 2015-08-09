@@ -436,8 +436,15 @@ set pool 2 size to 3
 ```
 
 2)将/tmp/test.txt存入HPC_Pool中
+
+存入：
 ```
 [root@node1 learning]# rados put object1 /tmp/test.txt -p HPC_Pool
 ```
 
+查看：
+```
+[root@node1 learning]# rados ls -p HPC_Pool
+object1
+```
 
