@@ -469,6 +469,7 @@ acting ([7,5], p7): osd.7, osd.5在同一acting set，osd.7是priamry OSD，osd.
 ```
 
 4)查看所有OSD
+知道osd.7在node3上
 ```
 [root@node1 learning]# ceph osd tree
 ID WEIGHT  TYPE NAME      UP/DOWN REWEIGHT PRIMARY-AFFINITY
@@ -487,3 +488,39 @@ ID WEIGHT  TYPE NAME      UP/DOWN REWEIGHT PRIMARY-AFFINITY
  8 0.00999         osd.8       up  1.00000          1.00000
 [root@node1 learning]#
 ```
+
+5)登陆到node3上，检查object1
+
+登陆node3:
+```
+ssh node3
+```
+
+查看node3 df信息，知道osd.7挂在目录/var/lib/ceph/osd/ceph-7 ：
+```
+[root@node3 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2        18G  1.6G   17G   9% /
+devtmpfs        912M     0  912M   0% /dev
+tmpfs           921M     0  921M   0% /dev/shm
+tmpfs           921M  8.5M  912M   1% /run
+tmpfs           921M     0  921M   0% /sys/fs/cgroup
+/dev/sdb1        15G   37M   15G   1% /var/lib/ceph/osd/ceph-6
+/dev/sdc1        15G   37M   15G   1% /var/lib/ceph/osd/ceph-7
+/dev/sdd1        15G   37M   15G   1% /var/lib/ceph/osd/ceph-8
+```
+
+cd 到 /var/lib/ceph/osd/ceph-7/current, 找到PG 2.3c所在目录，并进去查看 object1：
+```
+[root@node3 ~]# cd /var/lib/ceph/osd/ceph-7/current
+[root@node3 current]# ls -l |grep 2.3c
+drwxr-xr-x. 2 root root    63 Aug  9 18:13 2.3c_head
+[root@node3 current]# cd 2.3c_head/
+[root@node3 2.3c_head]# ls
+__head_0000003C__2  object1__head_BAC5DEBC__2
+
+[root@node3 2.3c_head]# cat object1__head_BAC5DEBC__2
+I am a test file
+```
+
+看到了object1的内容。
