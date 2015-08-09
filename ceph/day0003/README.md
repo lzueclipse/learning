@@ -359,6 +359,11 @@ pool 'web-services' renamed to 'frontend-services'
 [root@node1 day0003]# rados -p frontend-services put object1 /etc/hosts
 ```
 
+查看object1:
+```
+[root@node1 ~]# rados -p frontend-services ls
+object1
+```
 
 
 6)
