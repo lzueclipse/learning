@@ -469,4 +469,21 @@ acting ([7,5], p7): osd.7, osd.5在同一acting set，osd.7是priamry OSD，osd.
 ```
 
 4)查看所有OSD
-
+```
+[root@node1 learning]# ceph osd tree
+ID WEIGHT  TYPE NAME      UP/DOWN REWEIGHT PRIMARY-AFFINITY
+-1 0.08995 root default
+-2 0.02998     host node1
+ 0 0.00999         osd.0       up  1.00000          1.00000
+ 1 0.00999         osd.1     down        0          1.00000
+ 2 0.00999         osd.2       up  1.00000          1.00000
+-3 0.02998     host node2
+ 3 0.00999         osd.3       up  1.00000          1.00000
+ 4 0.00999         osd.4       up  1.00000          1.00000
+ 5 0.00999         osd.5       up  1.00000          1.00000
+-4 0.02998     host node3
+ 6 0.00999         osd.6       up  1.00000          1.00000
+ 7 0.00999         osd.7       up  1.00000          1.00000
+ 8 0.00999         osd.8       up  1.00000          1.00000
+[root@node1 learning]#
+```
