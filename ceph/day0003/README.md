@@ -468,3 +468,5 @@ up ([7,5], p7): PG 2.3c 包含osd.7, osd.5,其中 osd.7是primary。 疑问？�
 acting ([7,5], p7): osd.7, osd.5在同一acting set，osd.7是priamry OSD，osd.5是secondary OSD。
 ```
 
+4)查看所有OSD
+
