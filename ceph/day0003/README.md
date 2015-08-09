@@ -415,3 +415,10 @@ pool 'frontend-services' removed
 ```
 
 ###3. Ceph data management
+
+1)穿件用于测试的文件，创建HPC_Pool Ceph Pool，设置HPC_Pool的replication size 为3
+
+创建用于测试的文件：
+```
+root@node1 learning]# echo "I am a test file" >> /tmp/test.txt
+```
