@@ -422,3 +422,9 @@ pool 'frontend-services' removed
 ```
 root@node1 learning]# echo "I am a test file" >> /tmp/test.txt
 ```
+
+创建HPC_Pool：
+```
+[root@node1 learning]# ceph osd pool create HPC_Pool 128 128
+pool 'HPC_Pool' created
+```
