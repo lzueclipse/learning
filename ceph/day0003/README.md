@@ -434,3 +434,10 @@ pool 'HPC_Pool' created
 [root@node1 learning]# ceph osd pool set HPC_Pool size 3
 set pool 2 size to 3
 ```
+
+2)将/tmp/test.txt存入HPC_Pool中
+```
+[root@node1 learning]# rados put object1 /tmp/test.txt -p HPC_Pool
+```
+
+
