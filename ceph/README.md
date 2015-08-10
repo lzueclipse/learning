@@ -10,7 +10,7 @@
 [Ceph internals/Ceph essentials] (./day0003/)
 
 ##Day four
-[Storage Provisioning with Ceph] (./day0003/)
+[Storage Provisioning with Ceph] (./day0004/)
 
 
 ###参考文献:
