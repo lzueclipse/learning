@@ -8,10 +8,25 @@
 #include <openssl/md5.h>
 #include <list>
 
-typedef unsigned char FP;
+#define __STDC_FORMAT_MACROS 
+#include <inttypes.h>
+
+/* Test on CentOS 7.1
+ * 
+ * yum install openssl
+ * yum install openssl-devel
+ *
+ * g++ -g -o malloc_test.o malloc_test.cpp -lcrypto
+ */
+
+typedef struct fp_t
+{
+	unsigned char inside_uchar[16];
+}FP;
 
 #define LEN 2048
-#define MAXNUM 50000000
+#define MAXNUM 200
+//50000000
 #define SLEEP 20
 
 void output_top()
@@ -33,16 +48,42 @@ void output_top()
    pclose(in);
 }
 
-void int_to_md5(int input,  )
+void print_md5(FP fp)
 {
+	int i;
+	char buf[33]={'\0'};
+	char tmp[3]={'\0'};
+
+	for( i=0; i<16; i++ ){
+		snprintf(tmp, sizeof(tmp), "%02x", fp.inside_uchar[i]);
+		strcat(buf,tmp);
+	}
+	printf("%s\n",buf);
+}
+
+void int_to_md5(uint64_t input, FP &output )
+{
+	char data[LEN] = {'\0'};
+    snprintf(data, sizeof(data), "%" PRIu64, input);
+	
+	MD5_CTX ctx;
+	MD5_Init(&ctx);
+	
+	MD5_Update(&ctx,data,strlen(data));
+	
+	MD5_Final(output.inside_uchar,&ctx);
+
+	print_md5(output);
 }
 
 void test_map()
 {
   uint64_t i = 0;
   std::list<uint64_t> my_list;
+  FP my_fp;
   for(i = 0; i < MAXNUM; ++i) {
-    my_list.push_back(i);
+	  int_to_md5(i, my_fp);
+	  print_md5(my_fp);
   }
   printf("Insert data into std::map, output of 'top':\n");
   output_top();
