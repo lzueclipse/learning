@@ -4,5 +4,5 @@
 
 Ceph支持Object存储（兼容S3和Swift），块存储（RBD），文件存储（CephFS）。
 
-##1. Object
+##1. The RADOS Block Device （RBD，块存储）
 
