@@ -37,24 +37,46 @@ void test_map()
   for(i = 0; i < MAXNUM; ++i) {
     my_list.push_back(i);
   }
-  printf("After pushing data, output of 'top'\n");
+  printf("Insert data into std::map, output of 'top':\n");
   output_top();
   
+  printf("-------------------------------------------------------------------------------------\n");
+  
   my_list.clear();
-  sleep(2);
-  printf("After clearing data and sleep 2s, output of 'top'\n");
+  sleep(SLEEP);
+  printf("Delete data from std::map, sleep ( %u )seconds, output of 'top':\n", SLEEP);
   output_top();
 }
 
-void test_cache()
+void test_mycache()
 {
 }
 
-int main(int argc, char **argv) {
+void usage(char *prog)
+{
+	printf("Usage: %s [test_map | test_mycache]\n", prog);
+	exit(-1);
+}
 
-  if(argc != 1)
-  {
-  }
+int main(int argc, char **argv) 
+{
+    if(argc != 2)
+    {
+		usage(argv[0]);
+    }
+
+    if(strcmp(argv[1], "test_map") == 0)
+    {
+	    test_map();
+    }
+    else if(strcmp(argv[1], "test_mycache") == 0)
+    {
+	    test_mycache();
+    }
+    else
+    {
+	    usage(argv[0]);
+    }
 
   return 0;
 }
