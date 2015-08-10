@@ -5,7 +5,10 @@
 #include <sys/types.h>
 #include <string.h>
 #include <malloc.h>
+#include <openssl/md5.h>
 #include <list>
+
+typedef unsigned char FP;
 
 #define LEN 2048
 #define MAXNUM 50000000
@@ -28,6 +31,10 @@ void output_top()
    }
 
    pclose(in);
+}
+
+void int_to_md5(int input,  )
+{
 }
 
 void test_map()
