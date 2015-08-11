@@ -39,7 +39,7 @@ void display_mallinfo()
 
     mi = mallinfo();
 
-    printf("----Malloc info----\n");
+    printf("Malloc debug info:\n");
     printf("Total non-mmapped bytes (arena), (Bytes):       %u\n", mi.arena);
     printf("# of free chunks (ordblks), (Number):           %u\n", mi.ordblks);
     printf("# of free fastbin blocks (smblks), (Number):    %u\n", mi.smblks);
@@ -125,6 +125,9 @@ void test_map()
     time_t my_end;
     double seconds;
     
+    printf("-------------------------------------------------------------------------------------\n");
+    printf("At the beginning:\n");
+    display_mallinfo();
     time_t my_start = time(NULL);
     for(i = 0; i < MAXNUM; ++i) {
         int_to_md5(i, my_fp);
@@ -134,8 +137,6 @@ void test_map()
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
     
-    printf("-------------------------------------------------------------------------------------\n");
-    display_mallinfo();
 
     printf("-------------------------------------------------------------------------------------\n");
     printf("Insert all FPs into std::map, map.size=%" PRIu64 "\n", my_map.size());

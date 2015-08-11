@@ -29,4 +29,4 @@
 
 >\[9] mallinfo, <http://sdutlinux.org/t/1295> 
 
->\[10] mallinfo, <http://man7.org/linux/man-pages/man3/mallinfo.3.html>
+>\[10]man mallinfo
