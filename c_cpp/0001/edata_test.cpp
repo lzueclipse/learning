@@ -1,14 +1,10 @@
 #include <unistd.h>
-#include <sys/mman.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <string.h>
 #include <malloc.h>
-#include <openssl/md5.h>
-#include <map>
-#define __STDC_FORMAT_MACROS 
 #include <inttypes.h>
 #include <time.h>
 
