@@ -1,15 +1,15 @@
-#Linux下，STL map存储大量小片(small chunk)数据，map析构后，内存不释放问题；并初步探讨glibc malloc internal。
+##Linux下，STL map存储大量小片(small chunk)数据，map析构后，内存不释放问题；并初步探讨glibc malloc internal。
 
-##1.
+###1.
 
-##2.
+###2.
 
-##3.
+###3.
 
-##4.
+###4.
 
 
-##10. 参考文献:
+###5. 参考文献:
 
 >\[1] 频繁分配释放内存导致的性能问题的分析, <http://bbs.csdn.net/topics/330179712>
 
