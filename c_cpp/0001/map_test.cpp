@@ -125,15 +125,17 @@ void test_map()
     seconds = difftime(my_end, my_start);
 
     printf("-------------------------------------------------------------------------------------\n");
-    printf("Insert (%" PRIu64  ") FPs into std::map, cost (%.f) seconds, output of 'top':\n", my_map.size(), seconds);
+    printf("Insert all FPs into std::map, map.size=%" PRIu64 "\n", my_map.size());
+    printf("Cost %.f seconds, output of 'top':\n", seconds);
     output_top();
   
     printf("-------------------------------------------------------------------------------------\n");
   
     my_map.clear();
+    printf("Delete all FPs from std::map, map.size=%" PRIu64 "\n", my_map.size());
     /* sleep and monitor */
     sleep(SLEEP);
-    printf("Delete all FPs from std::map(size=%" PRIu64 "), sleep (%u)seconds, output of 'top':\n", my_map.size(), SLEEP);
+    printf("Sleep %u seconds, output of 'top':\n", SLEEP);
     printf("-------------------------------------------------------------------------------------\n");
     output_top();
 }
