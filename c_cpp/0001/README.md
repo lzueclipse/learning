@@ -26,3 +26,5 @@
 >\[7] Malloc parameters, <http://www.gnu.org/software/libc/manual/html_node/Malloc-Tunable-Parameters.html>
 
 >\[8] malloc_text.c <https://github.com/metroxinjing/side_projects/blob/master/memory_management/malloc_test.c>
+
+>\[9] mallinfo, <http://sdutlinux.org/t/1295>
