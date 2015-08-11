@@ -26,30 +26,30 @@ extern int _edata;
 
 int main(int argc, char **argv) 
 {
-	char *A, *B;
+    char *A, *B;
 
     printf("-----------------------------------------------------\n");
-	printf("Before malloc A:\n");
-	printf("&_edata=%10p, _edata=%d\n", &_edata, _edata);
-	A =  (char *) malloc(MAX);
-	if(A != NULL)
-	{
-	    memset(A, 1, MAX);
-	}
-	printf("After malloc A & memset A:\n");
-	printf("&_edata=%10p, _edata=%d\n", &_edata, _edata);
+    printf("Before malloc A:\n");
+    printf("&_edata=%10p, _edata=%d\n", &_edata, _edata);
+    A =  (char *) malloc(MAX);
+    if(A != NULL)
+    {
+        memset(A, 1, MAX);
+    }
+    printf("After malloc A & memset A:\n");
+    printf("&_edata=%10p, _edata=%d\n", &_edata, _edata);
     
-	printf("-----------------------------------------------------\n");
-	printf("Before malloc B:\n");
-	printf("&_edata=%10p, _edata=%d\n", &_edata, _edata);
-	B =  (char *) malloc(2 * MAX);
-	if(B != NULL)
-	{
-	    memset(B, 1, 2 * MAX);
-	}
-	printf("After malloc B & memset B:\n");
-	printf("&_edata=%10p, _edata=%d\n", &_edata, _edata);
-	printf("-----------------------------------------------------\n");
+    printf("-----------------------------------------------------\n");
+    printf("Before malloc B:\n");
+    printf("&_edata=%10p, _edata=%d\n", &_edata, _edata);
+    B =  (char *) malloc(2 * MAX);
+    if(B != NULL)
+    {
+        memset(B, 1, 2 * MAX);
+    }
+    printf("After malloc B & memset B:\n");
+    printf("&_edata=%10p, _edata=%d\n", &_edata, _edata);
+    printf("-----------------------------------------------------\n");
     
-	return 0;
+    return 0;
 }
