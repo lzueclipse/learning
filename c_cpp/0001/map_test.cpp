@@ -40,16 +40,16 @@ void display_mallinfo()
     mi = mallinfo();
 
     printf("Malloc debug info:\n");
-    printf("Total non-mmapped bytes (arena), (Bytes):       %u\n", mi.arena);
-    printf("# of free chunks (ordblks), (Number):           %u\n", mi.ordblks);
-    printf("# of free fastbin blocks (smblks), (Number):    %u\n", mi.smblks);
-    printf("# of mapped regions (hblks), (Number):          %u\n", mi.hblks);
-    printf("Bytes in mapped regions (hblkhd), (Bytes):      %u\n", mi.hblkhd);
-    printf("Max. total allocated space (usmblks), (Bytes):  %u\n", mi.usmblks);
-    printf("Free bytes held in fastbins (fsmblks), (Bytes): %u\n", mi.fsmblks);
-    printf("Total allocated space (uordblks), (Bytes):      %u\n", mi.uordblks);
-    printf("Total free space (fordblks), (Bytes):           %u\n", mi.fordblks);
-    printf("Topmost releasable block (keepcost), (Bytes):   %u\n", mi.keepcost);
+    printf("Total non-mmapped bytes (arena),         (Bytes):  %u\n", mi.arena);
+    printf("Number of free chunks (ordblks),        (Number):  %u\n", mi.ordblks);
+    printf("Number of free fastbin blocks (smblks), (Number):  %u\n", mi.smblks);
+    printf("Number of mapped regions (hblks),       (Number):  %u\n", mi.hblks);
+    printf("Bytes in mapped regions (hblkhd),        (Bytes):  %u\n", mi.hblkhd);
+    printf("Max. total allocated space (usmblks),    (Bytes):  %u\n", mi.usmblks);
+    printf("Free bytes held in fastbins (fsmblks),   (Bytes):  %u\n", mi.fsmblks);
+    printf("Total allocated space (uordblks),        (Bytes):  %u\n", mi.uordblks);
+    printf("Total free space (fordblks),             (Bytes):  %u\n", mi.fordblks);
+    printf("Topmost releasable block (keepcost),     (Bytes):  %u\n", mi.keepcost);
                                                         
     //printf("\nmalloc_stats: \n");
     //malloc_stats(); 
@@ -126,7 +126,7 @@ void test_map()
     double seconds;
     
     printf("-------------------------------------------------------------------------------------\n");
-    printf("At the beginning:\n");
+    printf("At the beginning, map.size=%" PRIu64 "\n", my_map.size());
     display_mallinfo();
     time_t my_start = time(NULL);
     for(i = 0; i < MAXNUM; ++i) {
