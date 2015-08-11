@@ -33,7 +33,7 @@ After malloc B & memset B:
 
 可以看到&_edata 没有发生变化。。。
 
-####2.2. 参考文献"[2 GLIBC内存分配机制引发的'内存泄露'](http://www.nosqlnotes.net/archives/105)"引用了"[1] http://bbs.csdn.net/topics/330179712"
+####2.2. 参考文献"[2 GLIBC内存分配机制引发的'内存泄露'](http://www.nosqlnotes.net/archives/105)"引用了"[1](http://bbs.csdn.net/topics/330179712)"
 
 ##3. 参考文献:
 
