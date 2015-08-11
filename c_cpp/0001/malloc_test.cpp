@@ -7,7 +7,6 @@
 #include <malloc.h>
 #include <openssl/md5.h>
 #include <list>
-
 #define __STDC_FORMAT_MACROS 
 #include <inttypes.h>
 
@@ -19,31 +18,33 @@
  * g++ -g -o malloc_test.o malloc_test.cpp -lcrypto
  */
 
-typedef struct fp_t
-{
-	unsigned char inside_uchar[16];
-}FP;
-
 #define LEN 2048
 #define MAXNUM 200
 //50000000
 #define SLEEP 20
 
+typedef struct
+{
+	unsigned char digest[16];
+}md5_digest_t;
+
 void output_top()
 {
-   FILE *in;
-   char buf[LEN];
-   char cmd[LEN];
+	FILE *in;
+    char buf[LEN];
+    char cmd[LEN];
    
-   memset(cmd, 0, sizeof(cmd));
-   snprintf(cmd, sizeof(cmd), "top -p %d -n 1  |grep %d", getpid(), getpid());
-   if(!(in = popen(cmd, "r"))){
-     exit(1);
-   }
+    memset(cmd, 0, sizeof(cmd));
+    snprintf(cmd, sizeof(cmd), "top -p %d -n 1  |grep %d", getpid(), getpid());
+    if(!(in = popen(cmd, "r")))
+	{
+		exit(1);
+    }
    
-   while(fgets(buf, sizeof(buf), in)!=NULL){
-     printf("%s", buf);
-   }
+    while(fgets(buf, sizeof(buf), in)!=NULL)
+	{
+       printf("%s", buf);
+    }
 
    pclose(in);
 }
