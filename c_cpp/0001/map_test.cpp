@@ -39,10 +39,11 @@ void display_mallinfo()
 
     mi = mallinfo();
 
-    printf("\nTotal non-mmapped bytes (arena), (Bytes):       %u\n", mi.arena);
-    printf("# of free chunks (ordblks), (Number):            %u\n", mi.ordblks);
-    printf("# of free fastbin blocks (smblks), (Number):     %u\n", mi.smblks);
-    printf("# of mapped regions (hblks), (Number):           %u\n", mi.hblks);
+    printf("----Malloc info----\n");
+    printf("Total non-mmapped bytes (arena), (Bytes):       %u\n", mi.arena);
+    printf("# of free chunks (ordblks), (Number):           %u\n", mi.ordblks);
+    printf("# of free fastbin blocks (smblks), (Number):    %u\n", mi.smblks);
+    printf("# of mapped regions (hblks), (Number):          %u\n", mi.hblks);
     printf("Bytes in mapped regions (hblkhd), (Bytes):      %u\n", mi.hblkhd);
     printf("Max. total allocated space (usmblks), (Bytes):  %u\n", mi.usmblks);
     printf("Free bytes held in fastbins (fsmblks), (Bytes): %u\n", mi.fsmblks);
@@ -75,19 +76,6 @@ void output_top()
     pclose(in);
 }
 
-
-void print_md5(md5_digest_t fp)
-{
-    int i;
-    char buf[33]={'\0'};
-    char tmp[3]={'\0'};
-
-    for( i=0; i<16; i++ ){
-        snprintf(tmp, sizeof(tmp), "%02x", fp.digest_uchar[i]);
-        strcat(buf,tmp);
-    }
-    printf("%s\n",buf);
-}
 
 void int_to_md5(uint64_t input, md5_digest_t &output )
 {
@@ -140,12 +128,14 @@ void test_map()
     time_t my_start = time(NULL);
     for(i = 0; i < MAXNUM; ++i) {
         int_to_md5(i, my_fp);
-        //print_md5(my_fp);
         my_map[my_fp] = i;
     }
 
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
+    
+    printf("-------------------------------------------------------------------------------------\n");
+    display_mallinfo();
 
     printf("-------------------------------------------------------------------------------------\n");
     printf("Insert all FPs into std::map, map.size=%" PRIu64 "\n", my_map.size());
@@ -158,8 +148,9 @@ void test_map()
     my_map.clear();
     printf("Delete all FPs from std::map, map.size=%" PRIu64 "\n", my_map.size());
     /* sleep and monitor */
+    printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);
-    printf("Sleep %u seconds, output of 'top':\n", SLEEP);
+    printf("output of 'top':\n");
     output_top();
     display_mallinfo();
     printf("-------------------------------------------------------------------------------------\n");
