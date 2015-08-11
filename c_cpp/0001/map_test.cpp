@@ -20,6 +20,8 @@
  * g++ -g -o map_test.o map_test.cpp -lcrypto
  */
 
+extern char edata;
+
 #define LEN 2048
 #define MAXNUM 10000000
 #define SLEEP 20
@@ -126,7 +128,7 @@ void test_map()
     double seconds;
     
     printf("-------------------------------------------------------------------------------------\n");
-    printf("At the beginning, map.size=%" PRIu64 "\n", my_map.size());
+    printf("At the beginning, map.size=%" PRIu64 ", &edata=%10p\n", my_map.size(), &edata);
     display_mallinfo();
     printf("-------------------------------------------------------------------------------------\n");
     
@@ -146,7 +148,7 @@ void test_map()
     printf("-------------------------------------------------------------------------------------\n");
   
     my_map.clear();
-    printf("Delete all FPs from std::map, map.size=%" PRIu64 "\n", my_map.size());
+    printf("Delete all FPs from std::map, map.size=%" PRIu64 ", &edata=%10p\n", my_map.size(), &edata);
     /* sleep and monitor */
     printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);
@@ -155,7 +157,7 @@ void test_map()
     display_mallinfo();
     printf("-------------------------------------------------------------------------------------\n");
     
-	printf("Malloc_trim(0), ret=%d\n", malloc_trim(0));
+	printf("Malloc_trim(0), ret=%d, &edata=%10p\n", malloc_trim(0), &edata);
     /* sleep and monitor */
     printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);
