@@ -20,8 +20,6 @@
  * g++ -g -o map_test.o map_test.cpp -lcrypto
  */
 
-extern char _edata;
-
 #define LEN 2048
 #define MAXNUM 10000000
 #define SLEEP 20
@@ -128,7 +126,7 @@ void test_map()
     double seconds;
     
     printf("-------------------------------------------------------------------------------------\n");
-    printf("At the beginning, map.size=%" PRIu64 ", &_edata=%10p\n", my_map.size(), &_edata);
+    printf("At the beginning, map.size=%" PRIu64 "\n", my_map.size());
     display_mallinfo();
     printf("-------------------------------------------------------------------------------------\n");
     
@@ -141,14 +139,14 @@ void test_map()
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
 
-    printf("Insert all FPs into std::map, map.size=%" PRIu64 ", %p\n", my_map.size(), &_edata);
+    printf("Insert all FPs into std::map, map.size=%" PRIu64 "\n", my_map.size());
     printf("Cost %.f seconds, output of 'top':\n", seconds);
     output_top();
     display_mallinfo();
     printf("-------------------------------------------------------------------------------------\n");
   
     my_map.clear();
-    printf("Delete all FPs from std::map, map.size=%" PRIu64 ", &_edata=%10p\n", my_map.size(), &_edata);
+    printf("Delete all FPs from std::map, map.size=%" PRIu64 "\n", my_map.size());
     /* sleep and monitor */
     printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);
@@ -157,7 +155,7 @@ void test_map()
     display_mallinfo();
     printf("-------------------------------------------------------------------------------------\n");
     
-	printf("Malloc_trim(0), ret=%d, &_edata=%10p\n", malloc_trim(0), &_edata);
+	printf("Malloc_trim(0), ret=%d\n", malloc_trim(0));
     /* sleep and monitor */
     printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);
