@@ -20,42 +20,10 @@
  * g++ -g -o map_test.o map_test.cpp -lcrypto
  */
 
-extern char _edata;
+extern int _edata;
 
 #define LEN 2048
-#define MAXNUM 10000000
-#define SLEEP 20
-
-typedef struct
-{
-    union
-    {
-        unsigned char digest_uchar[16];
-        uint32_t digest_uint[4];
-    };
-}md5_digest_t;
-
-void display_mallinfo()
-{
-    struct mallinfo mi;
-
-    mi = mallinfo();
-
-    printf("Malloc debug info:\n");
-    printf("Total non-mmapped bytes (arena),         (Bytes):  %u\n", mi.arena);
-    printf("Number of free chunks (ordblks),        (Number):  %u\n", mi.ordblks);
-    printf("Number of free fastbin blocks (smblks), (Number):  %u\n", mi.smblks);
-    printf("Number of mapped regions (hblks),       (Number):  %u\n", mi.hblks);
-    printf("Bytes in mapped regions (hblkhd),        (Bytes):  %u\n", mi.hblkhd);
-    printf("Max. total allocated space (usmblks),    (Bytes):  %u\n", mi.usmblks);
-    printf("Free bytes held in fastbins (fsmblks),   (Bytes):  %u\n", mi.fsmblks);
-    printf("Total allocated space (uordblks),        (Bytes):  %u\n", mi.uordblks);
-    printf("Total free space (fordblks),             (Bytes):  %u\n", mi.fordblks);
-    printf("Topmost releasable block (keepcost),     (Bytes):  %u\n", mi.keepcost);
-                                                        
-    //printf("\nmalloc_stats: \n");
-    //malloc_stats(); 
-}
+#define MAX 100000
 
 void output_top()
 {
@@ -79,96 +47,15 @@ void output_top()
 }
 
 
-void int_to_md5(uint64_t input, md5_digest_t &output )
-{
-    char data[LEN] = {'\0'};
-    snprintf(data, sizeof(data), "%" PRIu64, input);
-    
-    MD5_CTX ctx;
-    MD5_Init(&ctx);
-    
-    MD5_Update(&ctx,data,strlen(data));
-    
-    MD5_Final(output.digest_uchar,&ctx);
-}
-
-struct md5_less : public std::less<md5_digest_t>
-{
-    bool operator()(const md5_digest_t& a, const md5_digest_t& b) const
-    {
-        if(a.digest_uint[0] < b.digest_uint[0])
-        {
-            return true;
-        }
-        else if(a.digest_uint[1] < b.digest_uint[1])
-        {
-            return true;
-        }
-        else if(a.digest_uint[2] < b.digest_uint[2])
-        {
-            return true;
-        }
-        else if(a.digest_uint[3] < b.digest_uint[3])
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-};
-
-void test_map()
-{
-    uint64_t i = 0;
-    std::map< md5_digest_t, uint64_t, md5_less> my_map;
-    md5_digest_t my_fp;
-    time_t my_end;
-    double seconds;
-    
-    printf("-------------------------------------------------------------------------------------\n");
-    printf("At the beginning, map.size=%" PRIu64 ", &_edata=%10p\n", my_map.size(), &_edata);
-    display_mallinfo();
-    printf("-------------------------------------------------------------------------------------\n");
-    
-	time_t my_start = time(NULL);
-    for(i = 0; i < MAXNUM; ++i) {
-        int_to_md5(i, my_fp);
-        my_map[my_fp] = i;
-    }
-
-    my_end = time(NULL);
-    seconds = difftime(my_end, my_start);
-
-    printf("Insert all FPs into std::map, map.size=%" PRIu64 ", %p\n", my_map.size(), &_edata);
-    printf("Cost %.f seconds, output of 'top':\n", seconds);
-    output_top();
-    display_mallinfo();
-    printf("-------------------------------------------------------------------------------------\n");
-  
-    my_map.clear();
-    printf("Delete all FPs from std::map, map.size=%" PRIu64 ", &_edata=%10p\n", my_map.size(), &_edata);
-    /* sleep and monitor */
-    printf("Sleep %u seconds, ", SLEEP); 
-    sleep(SLEEP);
-    printf("output of 'top':\n");
-    output_top();
-    display_mallinfo();
-    printf("-------------------------------------------------------------------------------------\n");
-    
-	printf("Malloc_trim(0), ret=%d, &_edata=%10p\n", malloc_trim(0), &_edata);
-    /* sleep and monitor */
-    printf("Sleep %u seconds, ", SLEEP); 
-    sleep(SLEEP);
-    printf("output of 'top':\n");
-    output_top();
-    display_mallinfo();
-	printf("-------------------------------------------------------------------------------------\n");
-}
-
 int main(int argc, char **argv) 
 {
-    test_map();
+	char *a, *b,*c;
+
+	a =  (char *) malloc(MAX);
+	printf("&_edata=%p, _edata=%d\n", &_edata, _edata);
+	output_top();
+	memset(a, 0, LEN);
+	printf("&_edata=%p, _edata=%d\n", &_edata, _edata);
+	output_top();
     return 0;
 }
