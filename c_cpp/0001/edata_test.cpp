@@ -14,10 +14,8 @@
 
 /* Test on CentOS 7.1
  * 
- * yum install openssl
- * yum install openssl-devel
  *
- * g++ -g -o map_test.o map_test.cpp -lcrypto
+ * g++ -g -o edata_test.o edata_test.cpp
  */
 
 extern int _edata;
