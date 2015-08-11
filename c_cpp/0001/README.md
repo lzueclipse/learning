@@ -1,6 +1,5 @@
 #Linux下，STL map存储大量小片(small chunk)数据，map析构后，内存不释放问题；并初步探讨glibc malloc internal。
 
-
 ##1.
 
 ##2.
