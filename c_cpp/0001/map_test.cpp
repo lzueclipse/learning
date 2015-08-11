@@ -21,7 +21,7 @@
  */
 
 #define LEN 2048
-#define MAXNUM 50000000
+#define MAXNUM 10000000
 #define SLEEP 20
 
 typedef struct
@@ -128,7 +128,9 @@ void test_map()
     printf("-------------------------------------------------------------------------------------\n");
     printf("At the beginning, map.size=%" PRIu64 "\n", my_map.size());
     display_mallinfo();
-    time_t my_start = time(NULL);
+    printf("-------------------------------------------------------------------------------------\n");
+    
+	time_t my_start = time(NULL);
     for(i = 0; i < MAXNUM; ++i) {
         int_to_md5(i, my_fp);
         my_map[my_fp] = i;
@@ -136,14 +138,11 @@ void test_map()
 
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
-    
 
-    printf("-------------------------------------------------------------------------------------\n");
     printf("Insert all FPs into std::map, map.size=%" PRIu64 "\n", my_map.size());
     printf("Cost %.f seconds, output of 'top':\n", seconds);
     output_top();
     display_mallinfo();
-  
     printf("-------------------------------------------------------------------------------------\n");
   
     my_map.clear();
@@ -155,6 +154,15 @@ void test_map()
     output_top();
     display_mallinfo();
     printf("-------------------------------------------------------------------------------------\n");
+    
+	printf("Malloc_trim(0), ret=%d\n", malloc_trim(0));
+    /* sleep and monitor */
+    printf("Sleep %u seconds, ", SLEEP); 
+    sleep(SLEEP);
+    printf("output of 'top':\n");
+    output_top();
+    display_mallinfo();
+	printf("-------------------------------------------------------------------------------------\n");
 }
 
 int main(int argc, char **argv) 
