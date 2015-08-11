@@ -27,4 +27,4 @@
 
 >\[8] malloc_text.c <https://github.com/metroxinjing/side_projects/blob/master/memory_management/malloc_test.c>
 
->\[9] mallinfo, <http://sdutlinux.org/t/1295>
+>\[9] mallinfo, <http://sdutlinux.org/t/1295> <http://man7.org/linux/man-pages/man3/mallinfo.3.html>
