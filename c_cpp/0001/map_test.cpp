@@ -127,6 +127,8 @@ void test_map()
     
     printf("-------------------------------------------------------------------------------------\n");
     printf("At the beginning, map.size=%" PRIu64 "\n", my_map.size());
+    printf("Output of 'top':\n");
+    output_top();
     display_mallinfo();
     printf("-------------------------------------------------------------------------------------\n");
     

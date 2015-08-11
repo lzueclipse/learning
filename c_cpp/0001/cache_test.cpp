@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <sys/mman.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -20,8 +21,8 @@
  */
 
 #define LEN 2048
-#define MAXNUM 50000000
-#define SLEEP 60
+#define MAXNUM 10000000
+#define SLEEP 20
 
 typedef struct
 {
@@ -31,6 +32,28 @@ typedef struct
         uint32_t digest_uint[4];
     };
 }md5_digest_t;
+
+void display_mallinfo()
+{
+    struct mallinfo mi;
+
+    mi = mallinfo();
+
+    printf("Malloc debug info:\n");
+    printf("Total non-mmapped bytes (arena),         (Bytes):  %u\n", mi.arena);
+    printf("Number of free chunks (ordblks),        (Number):  %u\n", mi.ordblks);
+    printf("Number of free fastbin blocks (smblks), (Number):  %u\n", mi.smblks);
+    printf("Number of mapped regions (hblks),       (Number):  %u\n", mi.hblks);
+    printf("Bytes in mapped regions (hblkhd),        (Bytes):  %u\n", mi.hblkhd);
+    printf("Max. total allocated space (usmblks),    (Bytes):  %u\n", mi.usmblks);
+    printf("Free bytes held in fastbins (fsmblks),   (Bytes):  %u\n", mi.fsmblks);
+    printf("Total allocated space (uordblks),        (Bytes):  %u\n", mi.uordblks);
+    printf("Total free space (fordblks),             (Bytes):  %u\n", mi.fordblks);
+    printf("Topmost releasable block (keepcost),     (Bytes):  %u\n", mi.keepcost);
+                                                        
+    //printf("\nmalloc_stats: \n");
+    //malloc_stats(); 
+}
 
 void output_top()
 {
@@ -53,18 +76,6 @@ void output_top()
     pclose(in);
 }
 
-void print_md5(md5_digest_t fp)
-{
-    int i;
-    char buf[33]={'\0'};
-    char tmp[3]={'\0'};
-
-    for( i=0; i<16; i++ ){
-        snprintf(tmp, sizeof(tmp), "%02x", fp.digest_uchar[i]);
-        strcat(buf,tmp);
-    }
-    printf("%s\n",buf);
-}
 
 void int_to_md5(uint64_t input, md5_digest_t &output )
 {
@@ -114,30 +125,46 @@ void test_map()
     time_t my_end;
     double seconds;
     
-    time_t my_start = time(NULL);
+    printf("-------------------------------------------------------------------------------------\n");
+    printf("At the beginning, map.size=%" PRIu64 "\n", my_map.size());
+    printf("Output of 'top':\n");
+    output_top();
+    display_mallinfo();
+    printf("-------------------------------------------------------------------------------------\n");
+    
+	time_t my_start = time(NULL);
     for(i = 0; i < MAXNUM; ++i) {
         int_to_md5(i, my_fp);
-        //print_md5(my_fp);
         my_map[my_fp] = i;
     }
 
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
 
-    printf("-------------------------------------------------------------------------------------\n");
     printf("Insert all FPs into std::map, map.size=%" PRIu64 "\n", my_map.size());
     printf("Cost %.f seconds, output of 'top':\n", seconds);
     output_top();
-  
+    display_mallinfo();
     printf("-------------------------------------------------------------------------------------\n");
   
     my_map.clear();
     printf("Delete all FPs from std::map, map.size=%" PRIu64 "\n", my_map.size());
     /* sleep and monitor */
+    printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);
-    printf("Sleep %u seconds, output of 'top':\n", SLEEP);
-    printf("-------------------------------------------------------------------------------------\n");
+    printf("output of 'top':\n");
     output_top();
+    display_mallinfo();
+    printf("-------------------------------------------------------------------------------------\n");
+    
+	printf("Malloc_trim(0), ret=%d\n", malloc_trim(0));
+    /* sleep and monitor */
+    printf("Sleep %u seconds, ", SLEEP); 
+    sleep(SLEEP);
+    printf("output of 'top':\n");
+    output_top();
+    display_mallinfo();
+	printf("-------------------------------------------------------------------------------------\n");
 }
 
 int main(int argc, char **argv) 
