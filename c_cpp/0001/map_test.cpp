@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <sys/mman.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -21,7 +22,7 @@
 
 #define LEN 2048
 #define MAXNUM 50000000
-#define SLEEP 60
+#define SLEEP 20
 
 typedef struct
 {
@@ -31,6 +32,27 @@ typedef struct
         uint32_t digest_uint[4];
     };
 }md5_digest_t;
+
+void display_mallinfo()
+{
+    struct mallinfo mi;
+
+    mi = mallinfo();
+
+    printf("\nTotal non-mmapped bytes (arena):       %d\n", mi.arena);
+    printf("# of free chunks (ordblks):            %d\n", mi.ordblks);
+    printf("# of free fastbin blocks (smblks):     %d\n", mi.smblks);
+    printf("# of mapped regions (hblks):           %d\n", mi.hblks);
+    printf("Bytes in mapped regions (hblkhd):      %d\n", mi.hblkhd);
+    printf("Max. total allocated space (usmblks):  %d\n", mi.usmblks);
+    printf("Free bytes held in fastbins (fsmblks): %d\n", mi.fsmblks);
+    printf("Total allocated space (uordblks):      %d\n", mi.uordblks);
+    printf("Total free space (fordblks):           %d\n", mi.fordblks);
+    printf("Topmost releasable block (keepcost):   %d\n", mi.keepcost);
+                                                        
+    printf("malloc_stats: \n");
+    malloc_stats(); 
+}
 
 void output_top()
 {
@@ -52,6 +74,7 @@ void output_top()
 
     pclose(in);
 }
+
 
 void print_md5(md5_digest_t fp)
 {
@@ -128,6 +151,7 @@ void test_map()
     printf("Insert all FPs into std::map, map.size=%" PRIu64 "\n", my_map.size());
     printf("Cost %.f seconds, output of 'top':\n", seconds);
     output_top();
+    display_mallinfo();
   
     printf("-------------------------------------------------------------------------------------\n");
   
@@ -136,8 +160,9 @@ void test_map()
     /* sleep and monitor */
     sleep(SLEEP);
     printf("Sleep %u seconds, output of 'top':\n", SLEEP);
-    printf("-------------------------------------------------------------------------------------\n");
     output_top();
+    display_mallinfo();
+    printf("-------------------------------------------------------------------------------------\n");
 }
 
 int main(int argc, char **argv) 
