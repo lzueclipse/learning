@@ -39,19 +39,19 @@ void display_mallinfo()
 
     mi = mallinfo();
 
-    printf("\nTotal non-mmapped bytes (arena):       %d\n", mi.arena);
-    printf("# of free chunks (ordblks):            %d\n", mi.ordblks);
-    printf("# of free fastbin blocks (smblks):     %d\n", mi.smblks);
-    printf("# of mapped regions (hblks):           %d\n", mi.hblks);
-    printf("Bytes in mapped regions (hblkhd):      %d\n", mi.hblkhd);
-    printf("Max. total allocated space (usmblks):  %d\n", mi.usmblks);
-    printf("Free bytes held in fastbins (fsmblks): %d\n", mi.fsmblks);
-    printf("Total allocated space (uordblks):      %d\n", mi.uordblks);
-    printf("Total free space (fordblks):           %d\n", mi.fordblks);
-    printf("Topmost releasable block (keepcost):   %d\n", mi.keepcost);
+    printf("\nTotal non-mmapped bytes (arena):       %u\n", mi.arena);
+    printf("# of free chunks (ordblks):            %u\n", mi.ordblks);
+    printf("# of free fastbin blocks (smblks):     %u\n", mi.smblks);
+    printf("# of mapped regions (hblks):           %u\n", mi.hblks);
+    printf("Bytes in mapped regions (hblkhd):      %u\n", mi.hblkhd);
+    printf("Max. total allocated space (usmblks):  %u\n", mi.usmblks);
+    printf("Free bytes held in fastbins (fsmblks): %u\n", mi.fsmblks);
+    printf("Total allocated space (uordblks):      %u\n", mi.uordblks);
+    printf("Total free space (fordblks):           %u\n", mi.fordblks);
+    printf("Topmost releasable block (keepcost):   %u\n", mi.keepcost);
                                                         
-    printf("malloc_stats: \n");
-    malloc_stats(); 
+    //printf("\nmalloc_stats: \n");
+    //malloc_stats(); 
 }
 
 void output_top()
