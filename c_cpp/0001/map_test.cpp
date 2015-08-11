@@ -16,7 +16,7 @@
  * yum install openssl
  * yum install openssl-devel
  *
- * g++ -g -o malloc_test.o malloc_test.cpp -lcrypto
+ * g++ -g -o map_test.o map_test.cpp -lcrypto
  */
 
 #define LEN 2048
@@ -140,35 +140,8 @@ void test_map()
     output_top();
 }
 
-void test_mycache()
-{
-}
-
-void usage(char *prog)
-{
-    printf("Usage: %s [test_map | test_mycache]\n", prog);
-    exit(-1);
-}
-
 int main(int argc, char **argv) 
 {
-    if(argc != 2)
-    {
-        usage(argv[0]);
-    }
-
-    if(strcmp(argv[1], "test_map") == 0)
-    {
-        test_map();
-    }
-    else if(strcmp(argv[1], "test_mycache") == 0)
-    {
-        test_mycache();
-    }
-    else
-    {
-        usage(argv[0]);
-    }
-
-  return 0;
+    test_map();
+    return 0;
 }
