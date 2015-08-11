@@ -8,7 +8,7 @@
 
 ##2. 某些参考文献是错误的
 
-####2.1. 参考文献"[1](http://bbs.csdn.net/topics/330179712)"的错误
+####2.1. 参考文献"[1 频繁分配释放内存导致的性能问题的分析](http://bbs.csdn.net/topics/330179712)"的错误
 brk是将数据段(.data)的最高地址指针"_edata" 往高地址推。
 
 该文章给出的图似乎也能自圆其说。
@@ -33,7 +33,7 @@ After malloc B & memset B:
 
 可以看到&_edata 没有发生变化。。。
 
-####2.2. 参考文献"[2](http://www.nosqlnotes.net/archives/105)"引用了[1]
+####2.2. 参考文献"[2 GLIBC内存分配机制引发的'内存泄露'](http://www.nosqlnotes.net/archives/105)"引用了"[1] http://bbs.csdn.net/topics/330179712"
 
 ##3. 参考文献:
 
