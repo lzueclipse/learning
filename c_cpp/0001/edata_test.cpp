@@ -23,39 +23,35 @@
 extern int _edata;
 
 #define LEN 2048
-#define MAX 100000
-
-void output_top()
-{
-    FILE *in;
-    char buf[LEN];
-    char cmd[LEN];
-   
-    memset(cmd, 0, sizeof(cmd));
-    snprintf(cmd, sizeof(cmd), "top -p %d -n 1  |grep %d", getpid(), getpid());
-    if(!(in = popen(cmd, "r")))
-    {
-        exit(1);
-    }
-   
-    while(fgets(buf, sizeof(buf), in)!=NULL)
-    {
-       printf("%s", buf);
-    }
-
-    pclose(in);
-}
+#define MAX 100000000
 
 
 int main(int argc, char **argv) 
 {
-	char *a, *b,*c;
+	char *A, *B;
 
-	a =  (char *) malloc(MAX);
-	printf("&_edata=%p, _edata=%d\n", &_edata, _edata);
-	output_top();
-	memset(a, 0, LEN);
-	printf("&_edata=%p, _edata=%d\n", &_edata, _edata);
-	output_top();
-    return 0;
+    printf("-----------------------------------------------------\n");
+	printf("Before malloc A:\n");
+	printf("&_edata=%10p, _edata=%d\n", &_edata, _edata);
+	A =  (char *) malloc(MAX);
+	if(A != NULL)
+	{
+	    memset(A, 1, MAX);
+	}
+	printf("After malloc A & memset A:\n");
+	printf("&_edata=%10p, _edata=%d\n", &_edata, _edata);
+    
+	printf("-----------------------------------------------------\n");
+	printf("Before malloc B:\n");
+	printf("&_edata=%10p, _edata=%d\n", &_edata, _edata);
+	B =  (char *) malloc(2 * MAX);
+	if(B != NULL)
+	{
+	    memset(B, 1, 2 * MAX);
+	}
+	printf("After malloc B & memset B:\n");
+	printf("&_edata=%10p, _edata=%d\n", &_edata, _edata);
+	printf("-----------------------------------------------------\n");
+    
+	return 0;
 }
