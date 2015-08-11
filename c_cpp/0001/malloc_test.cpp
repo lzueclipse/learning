@@ -49,20 +49,20 @@ void output_top()
    pclose(in);
 }
 
-void print_md5(FP fp)
+void print_md5(md5_digest_t fp)
 {
     int i;
     char buf[33]={'\0'};
     char tmp[3]={'\0'};
 
     for( i=0; i<16; i++ ){
-        snprintf(tmp, sizeof(tmp), "%02x", fp.inside_uchar[i]);
+        snprintf(tmp, sizeof(tmp), "%02x", fp.digest[i]);
         strcat(buf,tmp);
     }
     printf("%s\n",buf);
 }
 
-void int_to_md5(uint64_t input, FP &output )
+void int_to_md5(uint64_t input, md5_digest_t &output )
 {
     char data[LEN] = {'\0'};
     snprintf(data, sizeof(data), "%" PRIu64, input);
@@ -72,29 +72,27 @@ void int_to_md5(uint64_t input, FP &output )
     
     MD5_Update(&ctx,data,strlen(data));
     
-    MD5_Final(output.inside_uchar,&ctx);
-
-    print_md5(output);
+    MD5_Final(output.digest,&ctx);
 }
 
 void test_map()
 {
-  uint64_t i = 0;
-  std::list<uint64_t> my_list;
-  FP my_fp;
-  for(i = 0; i < MAXNUM; ++i) {
-      int_to_md5(i, my_fp);
-      print_md5(my_fp);
-  }
-  printf("Insert data into std::map, output of 'top':\n");
-  output_top();
+    uint64_t i = 0;
+    std::list<uint64_t> my_list;
+    md5_digets_t my_fp;
+    for(i = 0; i < MAXNUM; ++i) {
+        int_to_md5(i, my_fp);
+        print_md5(my_fp);
+    }
+    printf("Insert data into std::map, output of 'top':\n");
+    output_top();
   
-  printf("-------------------------------------------------------------------------------------\n");
+    printf("-------------------------------------------------------------------------------------\n");
   
-  my_list.clear();
-  sleep(SLEEP);
-  printf("Delete data from std::map, sleep ( %u )seconds, output of 'top':\n", SLEEP);
-  output_top();
+    my_list.clear();
+    sleep(SLEEP);
+    printf("Delete data from std::map, sleep ( %u )seconds, output of 'top':\n", SLEEP);
+    output_top();
 }
 
 void test_mycache()
