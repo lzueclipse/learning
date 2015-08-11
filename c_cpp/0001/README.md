@@ -9,11 +9,10 @@
 ##2. 某些参考文献是错误的
 
 ####2.1. 参考文献"[1 频繁分配释放内存导致的性能问题的分析](http://bbs.csdn.net/topics/330179712)"的错误
-brk是将数据段(.data)的最高地址指针"_edata" 往高地址推。
 
-该文章给出的图似乎也能自圆其说。
+文章认为brk是将数据段(.data)的最高地址指针"_edata" 往高地址推。
 
-但是我进行了测试，在glibc里不是这样的。
+但是我进行了测试，在glibc里不是这样的(不知该文章针对哪个malloc实现)。
 
 编译代码"[edata_test.cpp](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/edata_test.cpp)" 得到输出：
 
