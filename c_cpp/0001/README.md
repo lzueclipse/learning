@@ -55,3 +55,7 @@ After malloc B & memset B:
 >\[9] mallinfo, <http://sdutlinux.org/t/1295> 
 
 >\[10]man mallinfo
+
+>\[11]malloc.c, <http://osxr.org/glibc/source/malloc/malloc.c?v=glibc-2.17>
+
+>\[12]malloc.c, <http://code.metager.de/source/xref/gnu/glibc/malloc/malloc.c>
