@@ -14,7 +14,7 @@
  * g++ -g -o edata_test.o edata_test.cpp
  */
 
-extern int _edata;
+extern unsigned long _edata;
 
 #define LEN 2048
 #define MAX 100000000
