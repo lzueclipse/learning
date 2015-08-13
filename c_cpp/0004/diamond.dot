@@ -1,5 +1,5 @@
 digraph {
-	p -> {libd1 libd2};
-	libd1 -> libbase[label="version1"];
-	libd2 -> libbase[label="version2"];
+	p -> {libvendor1 libvendor2};
+	libvendor1 -> libopensource[label="v1"];
+	libvendor2 -> libopensource[label="v2"];
 }
