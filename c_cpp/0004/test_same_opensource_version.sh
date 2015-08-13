@@ -1,42 +1,35 @@
-gcc -fPIC -Wall -pedantic   -c -o d1.o d1.c
-cc -fPIC -Wall -pedantic   -c -o base1.o base1.c
-gcc -shared \
-		-Wl,--default-symver \
-		-Wl,-soname,libbase.so.1 \
-		-o libbase.so.1.0 base1.o
-ldconfig -N -f ld.so.conf
-ln -fs libbase.so.1 libbase.so  # library to link with
-gcc -Wl,-rpath=. -L. \
-		-Wl,--default-symver \
-		-Wl,-soname,libd1.so \
-		-shared -o libd1.so d1.o -lbase
-rm libbase.so
-cc -fPIC -Wall -pedantic   -c -o d2.o d2.c
-cc -fPIC -Wall -pedantic   -c -o base2.o base2.c
-gcc -shared \
-		-Wl,--default-symver \
-		-Wl,-soname,libbase.so.2 \
-		-o libbase.so.2.0 base2.o
-ldconfig -N -f ld.so.conf
-ln -fs libbase.so.2 libbase.so  # library to link with
-gcc -Wl,-rpath=. -L. \
-		-Wl,--default-symver \
-		-Wl,-soname,libd2.so \
-		-shared -o libd2.so d2.o -lbase -ld1
-rm libbase.so
-cc -fPIC -Wall -pedantic   -c -o p.o p.c
-cc -Wl,-rpath=. -o p p.o -L. -Wl,-rpath=. -ld1 -ld2
-base version 2> init
-base version 1> init
-d1> init
-d2> init
-d1()
- d2_print()
-  base version 2> d1
-d2()
- d1_print()
-  base version 1> d2
-d2> fini
-d1> fini
-base version 1> fini
-base version 2> fini
+#!/bin/sh
+
+#remove *.o libopensource.so.*
+rm -f ./*.o
+rm -rf ./vendor1
+rm -rf ./vendor2
+
+#To generate ./vendor1/libopensource.so.1.0, libvendor1.so
+#Use opensource1.c, vendor1.c
+cp opensource1.c opensource.c
+gcc -shared -fPIC -o vendor1.o vendor1.c
+gcc -shared -fPIC -o opensource.o opensource.c
+gcc -shared -fPIC -Wl,--default-symver -Wl,-soname,libopensource.so.1 -o libopensource.so.1.0 opensource.o
+mkdir ./vendor1
+mv opensource.o ./vendor1
+mv libopensource.so.1.0 ./vendor1
+cd ./vendor1
+ln -s libopensource.so.1.0 libopensource.so
+cd ..
+gcc -Wl,-rpath=. -L. -L ./vendor1 -Wl,--default-symver -Wl,-soname,libvendor1.so -shared -o libvendor1.so vendor1.o -lopensource
+
+
+#use opensource2.c, to generate libopensource.so.1.0
+cp opensource2.c opensource.c
+gcc -shared -fPIC -o vendor2.o vendor2.c
+gcc -shared -fPIC -o opensource.o opensource.c
+gcc -shared -fPIC -Wl,--default-symver -Wl,-soname,libopensource.so.1 -o libopensource.so.1.0 opensource.o
+mkdir ./vendor2
+mv opensource.o ./vendor2
+mv libopensource.so.1.0 ./vendor2
+cd ./vendor2
+ln -s libopensource.so.1.0 libopensource.so
+cd ..
+
+

@@ -3,6 +3,6 @@
 void vendor1()
 {
     printf("vendor 1\n");
-    opensource_print("vendor 1 ")
+    opensource_print("vendor 1 ");
 }
 
