@@ -1,9 +1,10 @@
-void d1();
-void d2();
-int
-main()
+#include <stdio.h>
+
+extern void vendor1();
+extern void vendor2();
+int main()
 {
-  d1();
-  d2();
+  vendor1();
+  vendor2();
   return 0;
 }
