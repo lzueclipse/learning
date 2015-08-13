@@ -2,7 +2,7 @@
 
 void vendor1()
 {
-    printf("vendor1  11111111111111111111\n");
-    base_print("")
+    printf("vendor 1\n");
+    opensource_print("vendor 1 ")
 }
 
