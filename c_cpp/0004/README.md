@@ -166,6 +166,13 @@ Dynamic section at offset 0xde8 contains 27 entries:
 ```
 
 6)用LD_DEBUG 来debug 加载和绑定的过程
+```
+[root@localhost 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main
+opensource v1 print, called by vendor 1
+opensource v1 print, called by vendor 2
+```
+首先看输出，从结果看，仅仅调用了libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
+完整的
 
 
 ####3.2 符号表带版本信息的
