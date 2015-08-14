@@ -39,6 +39,6 @@ rm -f *.o
 rm -f ./vendor2/*.o
 
 #main.c
-gcc -Wl,-rpath=. -o main.o main.c -L. -Wl,-rpath=. -L. -L./vendor1 -lvendor1 -lvendor2
+gcc -Wl,-rpath=./:./vendor1:./vendor2 -o main.o main.c  -Wl,-rpath=. -L. -L./vendor1 -L./vendor2 -lvendor1 -lvendor2 -lopensource 
 
 echo "success"
