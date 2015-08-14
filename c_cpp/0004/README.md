@@ -13,9 +13,9 @@ libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.s
 
 但是这两个厂家提供给我们的都是自己编译维护的libopensource.so。
 
-我们遇到的问题是，虽然两个厂家提供的libopensource.so是相同版本，但是互相不兼容，导致我们遇到的现象时，只有其中一个厂家的库能正常工作，
+我们遇到的问题是，虽然两个厂家提供的libopensource.so是相同版本，但是互相不兼容，导致我们遇到的现象是：
 
-因为只有一个厂家提供的libopensource.so被加载。
+只有其中一个厂家的库能正常工作，因为只有一个厂家提供的libopensource.so被加载, 另外一个厂家的共享库使用了不是自己提供的libopensource.so。
 
 这个问题扩展展开来：
 
