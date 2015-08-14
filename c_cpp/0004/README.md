@@ -30,6 +30,20 @@ libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.s
 ##2.相关代码
 具体代码在github中。
 
+C源代码：
+
+"[main.c](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/main.c)"
+"[vendor1.c](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/vendor1.c)"
+"[vendor2.c](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/vendor2.c)"
+"[opensource_v1.c](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/opensource_v1.c)"
+"[opensource_v2.c](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/opensource_v2.c)"
+
+用于控制编译的Shell脚本（4个实验，每个使用一个脚本，为了便于说清）:
+
+"[force_soname_to_different_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_different_without_default_symver.sh)"  
+"[force_soname_to_different_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_different_with_default_symver.sh)"
+"[force_soname_to_same_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_same_without_default_symver.sh)"
+"[force_soname_to_same_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_same_with_default_symver.sh)"
 
 
 ##3.情形一，生成libopensource.so的版本
