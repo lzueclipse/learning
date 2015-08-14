@@ -69,6 +69,10 @@ opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实
 我们用[force_soname_to_different_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_different_without_default_symver.sh) 
 来编译。
 
+```
+sh force_soname_to_different_without_default_symver.sh
+```
+
 ####3.2 符号表带版本信息的
 
 
@@ -79,44 +83,5 @@ opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实
 ##5. 参考文献
 >\[1] 一篇blog，<https://blog.habets.se/2012/05/Shared-libraries-diamond-problem>
 
->\[2] Google， <www.google.com>
-
-##4.libopensource.so的版本相同，如何加载和绑定
-
-
-
-##5. 参考文献
->\[1] 一篇blog，<https://blog.habets.se/2012/05/Shared-libraries-diamond-problem>
-
->\[2] Google， <www.google.com>
-
-
-##5. 参考文献
->\[1] 一篇blog，<https://blog.habets.se/2012/05/Shared-libraries-diamond-problem>
-
->\[2] Google， <www.google.com>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+>\[2] Google
 
