@@ -7,11 +7,10 @@ rm -rf ./opensource_v2
 
 #To generate ./opensource_v1/libopensource.so.1.0, libvendor1.so
 #Use opensource_v1.c, vendor1.c
-cp opensource_v1.c opensource.c  
 
 gcc -fPIC -c -o vendor1.o vendor1.c
-gcc -fPIC -c -o opensource.o opensource.c
-gcc -shared -fPIC -Wl,--default-symver -Wl,-soname,libopensource.so.1 -o libopensource.so.1.0 opensource.o
+gcc -fPIC -c -o opensource_v1.o opensource_v1.c
+gcc -shared -fPIC -Wl,--default-symver -Wl,-soname,libopensource.so.1 -o libopensource.so.1.0 opensource_v1.o
 
 ln -s libopensource.so.1.0 libopensource.so
 ln -s libopensource.so.1.0 libopensource.so.1
@@ -23,10 +22,9 @@ rm -f *.o
 
 #To generate ./opensource_v2/libopensource.so.1.0, libvendor2.so
 #Use opensource_v2.c, vendor2.c
-cp opensource_v2.c opensource.c
 
 gcc -fPIC -c -o vendor2.o vendor2.c
-gcc -fPIC -c -o opensource.o opensource.c
+gcc -fPIC -c -o opensource_v2.o opensource_v2.c
 gcc -shared -fPIC -Wl,--default-symver -Wl,-soname,libopensource.so.1 -o libopensource.so.1.0 opensource.o
 
 ln -s libopensource.so.1.0 libopensource.so
