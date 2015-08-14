@@ -25,7 +25,7 @@ rm -f *.o
 
 gcc -fPIC -c -o vendor2.o vendor2.c
 gcc -fPIC -c -o opensource_v2.o opensource_v2.c
-gcc -shared -fPIC -Wl,--default-symver -Wl,-soname,libopensource.so.1 -o libopensource.so.1.0 opensource.o
+gcc -shared -fPIC -Wl,--default-symver -Wl,-soname,libopensource.so.1 -o libopensource.so.1.0 opensource_v2.o
 
 ln -s libopensource.so.1.0 libopensource.so
 ln -s libopensource.so.1.0 libopensource.so.1
