@@ -1,10 +1,9 @@
-#include <stdio.h>
-
 extern void vendor1();
-extern void vendor2();
-int main()
+extern void vendo42();
+int
+main()
 {
-  vendor1();
-  vendor2();
-  return 0;
+    d1();
+        d2();
+          return 0;
 }
