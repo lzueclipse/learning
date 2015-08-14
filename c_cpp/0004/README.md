@@ -76,7 +76,7 @@ Complile success
 ```
 
 2)编译生成的文件
-![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/2.jpg "图2")
+![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/2.png "图2")
 
 3)
 
