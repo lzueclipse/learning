@@ -65,7 +65,7 @@ opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实
 
 在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.2.0。
 
-libvendor1.so将依赖 
+libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将依赖./opensource_v2/libopensource.so.2.0。
 
 ####3.1 符号表不带版本信息的
 符号表不带版本信息gcc的默认行为。
@@ -75,7 +75,6 @@ libvendor1.so将依赖
 
 ```
 [root@localhost 0004]# sh force_soname_to_different_without_default_symver.sh
-/usr/bin/ld: warning: libopensource.so.2, needed by ./libvendor2.so, may conflict with libopensource.so.1
 Complile success
 ```
 
@@ -85,7 +84,77 @@ Complile success
 
 ![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/2.png "图2")
 
-3)用ldd查看编译生成的所有文件
+3)用readelf查看编译生成的main，libvendor1.so，libvendor2.so
+
+我们仅仅关注"NEEDED"和"RPATH"项。
+
+关于"rpath"和"LD_LIBRARY_PATH"请自行Google。
+
+
+```
+[root@localhost 0004]# readelf -d main
+
+Dynamic section at offset 0xdf8 contains 27 entries:
+ Tag        Type                         Name/Value
+ 0x0000000000000001 (NEEDED)             Shared library: [libvendor1.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libvendor2.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+ 0x000000000000000f (RPATH)              Library rpath: [./:./opensource_v1:./opensource_v2]
+
+```
+
+```
+[root@localhost 0004]# readelf -d libvendor1.so
+
+Dynamic section at offset 0xde8 contains 27 entries:
+  Tag        Type                         Name/Value
+  0x0000000000000001 (NEEDED)             Shared library: [libopensource.so.1]
+  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+  0x000000000000000e (SONAME)             Library soname: [libvendor1.so]
+  0x000000000000000f (RPATH)              Library rpath: [./opensource_v1]
+```
+
+```
+[root@localhost 0004]# readelf -d libvendor2.so
+
+Dynamic section at offset 0xde8 contains 27 entries:
+ Tag        Type                         Name/Value
+ 0x0000000000000001 (NEEDED)             Shared library: [libopensource.so.2]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+ 0x000000000000000e (SONAME)             Library soname: [libvendor2.so]
+ 0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
+```
+
+4)用ldd查看编译生成的main，libvendor1.so，libvendor2.so
+```
+[root@localhost 0004]# ldd main
+        linux-vdso.so.1 =>  (0x00007ffff6ffe000)
+        libvendor1.so => ./libvendor1.so (0x00007fde0ced1000)
+        libvendor2.so => ./libvendor2.so (0x00007fde0ccce000)
+        libc.so.6 => /lib64/libc.so.6 (0x00007fde0c8fb000)
+        libopensource.so.1 => ./opensource_v1/libopensource.so.1 (0x00007fde0c6f9000)
+        libopensource.so.2 => ./opensource_v2/libopensource.so.2 (0x00007fde0c4f6000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007fde0d0d4000)
+```
+
+```
+[root@localhost 0004]# ldd libvendor1.so
+        linux-vdso.so.1 =>  (0x00007fffad3fe000)
+        libopensource.so.1 => ./opensource_v1/libopensource.so.1 (0x00007f69cfd3b000)
+        libc.so.6 => /lib64/libc.so.6 (0x00007f69cf967000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f69d0140000)
+
+```
+
+```
+[root@localhost 0004]# ldd libvendor2.so
+        linux-vdso.so.1 =>  (0x00007fff425fe000)
+        libopensource.so.2 => ./opensource_v2/libopensource.so.2 (0x00007ffc4dbb9000)
+        libc.so.6 => /lib64/libc.so.6 (0x00007ffc4d7e5000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007ffc4dfbe000)
+```
+
+4)用LD_DEBUG 来debug 加载和绑定的过程
 
 
 ####3.2 符号表带版本信息的
