@@ -42,3 +42,5 @@ gcc -Wl,-rpath=./:./opensource_v1:./opensource_v2 -o main  main.c -L. -L./openso
 #gcc -Wl,-rpath=./:./opensource_v2:./opensource_v1 -o main  main.c -L. -L./opensource_v1 -L./opensource_v2 -lvendor1 -lvendor2 -lopensource 
 
 echo "Complile success"
+
+#LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main
