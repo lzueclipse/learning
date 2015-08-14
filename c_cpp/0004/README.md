@@ -154,7 +154,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
         /lib64/ld-linux-x86-64.so.2 (0x00007ffc4dfbe000)
 ```
 
-4)用LD_DEBUG 来debug 加载和绑定的过程
+5)用LD_DEBUG 来debug 加载和绑定的过程
 
 
 ####3.2 符号表带版本信息的
