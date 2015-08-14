@@ -38,7 +38,7 @@ gcc -Wl,-rpath=./opensource_v2 -L ./opensource_v2 -Wl,--default-symver -Wl,-sona
 rm -f *.o
 
 #main.c
-gcc -Wl,-rpath=./:./vendor1:./vendor2 -o main  main.c  -Wl,-rpath=. -L. -L./vendor1 -lvendor1 -lvendor2 -lopensource 
+gcc -Wl,-rpath=./:./opensource_v1:./opensource_v2 -o main  main.c -L. -L./opensource_v1 -lvendor1 -lvendor2 -lopensource 
 #gcc -Wl,-rpath=./:./vendor1:./vendor2 -o main  main.c  -Wl,-rpath=. -L. -L./vendor1 -L./vendor2 -lvendor1 -lvendor2 -lopensource 
 
 echo "Complile success"
