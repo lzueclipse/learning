@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+set -x
 
 rm -f ./lib*
 rm -rf ./vendor1
@@ -8,8 +9,8 @@ rm -rf ./vendor2
 #To generate ./vendor1/libopensource.so.1.0, libvendor1.so
 #Use opensource_v1.c, vendor1.c
 cp opensource_v1.c opensource.c
-gcc -fPIC -o vendor1.o vendor1.c
-gcc -fPIC -o opensource.o opensource.c
+gcc -fPIC -c -o vendor1.o vendor1.c
+gcc -fPIC -c -o opensource.o opensource.c
 gcc -shared -fPIC -Wl,--default-symver -Wl,-soname,libopensource.so.1 -o libopensource.so.1.0 opensource.o
 mkdir ./vendor1
 mv opensource.o ./vendor1
@@ -24,8 +25,8 @@ rm -f ./vendor1/*.o
 #To generate ./vendor2/libopensource.so.1.0, libvendor2.so
 #Use opensource_v2.c, vendor2.c
 cp opensource_v2.c opensource.c
-gcc -fPIC -o vendor2.o vendor2.c
-gcc -fPIC -o opensource.o opensource.c
+gcc -fPIC -c -o vendor2.o vendor2.c
+gcc -fPIC -c -o opensource.o opensource.c
 gcc -shared -fPIC -Wl,--default-symver -Wl,-soname,libopensource.so.1 -o libopensource.so.1.0 opensource.o
 mkdir ./vendor2
 mv opensource.o ./vendor2
