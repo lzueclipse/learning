@@ -2,5 +2,5 @@
 
 void opensource_print(const char* s)
 {
-    printf("opensource 1, called by %s\n", s);
+    printf("opensource v1 print, called by %s\n", s);
 }
