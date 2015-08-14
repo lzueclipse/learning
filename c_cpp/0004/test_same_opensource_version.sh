@@ -18,7 +18,7 @@ mv libopensource.so.1.0 ./vendor1
 cd ./vendor1
 ln -s libopensource.so.1.0 libopensource.so
 cd ..
-gcc -Wl,-rpath=. -L. -L ./vendor1 -Wl,--default-symver -Wl,-soname,libvendor1.so -shared -o libvendor1.so vendor1.o -lopensource
+gcc -Wl,-rpath=./vendor1 -L. -L ./vendor1 -Wl,--default-symver -Wl,-soname,libvendor1.so -shared -o libvendor1.so vendor1.o -lopensource
 rm -f *.o
 rm -f ./vendor1/*.o
 
@@ -34,11 +34,11 @@ mv libopensource.so.1.0 ./vendor2
 cd ./vendor2
 ln -s libopensource.so.1.0 libopensource.so
 cd ..
-gcc -Wl,-rpath=. -L. -L ./vendor2 -Wl,--default-symver -Wl,-soname,libvendor2.so -shared -o libvendor2.so vendor2.o -lopensource
+gcc -Wl,-rpath=./vendor2 -L. -L ./vendor2 -Wl,--default-symver -Wl,-soname,libvendor2.so -shared -o libvendor2.so vendor2.o -lopensource
 rm -f *.o
 rm -f ./vendor2/*.o
 
 #main.c
-gcc -Wl,-rpath=. -o  main.o main.c -L. -L ./vendor1 -L ./vendor2 -Wl,-rpath=. -lvendor1 -lvendor2
+gcc -Wl,-rpath=. -o main.o main.c -L. -Wl,-rpath=. -L. -L./vendor1 -lvendor1 -lvendor2
 
 echo "success"
