@@ -30,7 +30,7 @@ libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.s
 ##2.相关代码
 具体代码在github中。
 
-调用路径： main.c<----vendor[1|2].c<--------opensource_v[1|2].c
+调用依赖： main.c<----vendor[1|2].c<--------opensource_v[1|2].c
 
 C源代码:
 
@@ -63,9 +63,9 @@ opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实
 
 ##3.libopensource.so的版本不相同，如何加载和绑定
 
-在这个实验里我们编译opensource_v1.c生成libopensource.so.1.0；编译opensource_v2.c生成libopensource.so.2.0。
+在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.2.0。
 
-让libvendor1.so 
+libvendor1.so将依赖 
 
 ####3.1 符号表不带版本信息的
 符号表不带版本信息gcc的默认行为。
