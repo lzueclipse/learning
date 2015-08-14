@@ -27,10 +27,80 @@ libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.s
 
 因为我个人没看过连接器和加载器的源码，估计也不好看懂，所以我们的探讨集中在我们看到的证据上，并试图给出一些粗浅的结论。
 
-##2.
+##2.相关代码
+具体代码在github中。
 
+
+伪代码:
+main.c
+```
+int main()
+{
+    vendor1();
+    vendor2();
+}
+```
+
+vendor1.c，将生成libvendor1.so
+```
+void vendor1()
+{
+    opensource_print("vendor 1 ");
+}
+```
+
+vendor2.c，将生成libvendor2.so
+```
+void vendor2()
+{
+    opensource_print("vendor 2 ");
+}
+```
+
+opensource_v1.c，将生成libopensource.so.xxxx，xxxx表示版本号
+```
+void opensource_print(const char* s)
+{
+    printf("opensource v1 print, called by %s\n", s);
+}
+```
+
+opensource_v2.c，将生成libopensource.so.xxxx，xxxx表示版本号
+```
+void opensource_print(const char* s)
+{
+    printf("opensource v2 print, called by %s\n", s);
+}
+```
+
+另外有4个控制编译的Shell脚本。
 
 ##5. 参考文献
 >\[1] 一篇blog，<https://blog.habets.se/2012/05/Shared-libraries-diamond-problem>
 
 >\[2] Google， <www.google.com>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
