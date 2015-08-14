@@ -19,9 +19,9 @@ libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.s
 
 这个问题扩展展开来：
 
-1)如果libopensource.so的版本不相同，是否两个版本的libopensource.so都会被加载？还是只有某一个版本的被加载？符号绑定（binding）绑定的是哪个版本的？
+1)如果libopensource.so的版本不相同，是否两个版本的libopensource.so都会被查找到(lookup)？还是只有某一个版本的被查找到？符号绑定（binding）绑定的是哪个版本的？
 
-2）如果libopensource.so的版本相同，是否两个相同版本的libopensource.so都会被加载？还是只挑选其中一个被加载？符号绑定的是哪个版本的？
+2）如果libopensource.so的版本相同，是否两个相同版本的libopensource.so都会被查找到？还是只挑选其中一个被查找到？符号绑定的是哪个版本的？
 
 如果这几个问题您没有答案，建议您跟随我的实验，我们一起探讨下。
 
@@ -61,7 +61,7 @@ opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实
 
 
 
-##3.libopensource.so的版本不相同，如何加载和绑定
+##3.libopensource.so的版本不相同，如何查找依赖库和绑定符号
 
 在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.2.0。
 
@@ -86,10 +86,13 @@ Complile success
 
 3)用readelf查看编译生成的main，libvendor1.so，libvendor2.so
 
-我们仅仅关注"NEEDED"，"RPATH"，"SONAME"项。
+我们仅仅关注"NEEDED"，"RPATH"项。
 
-关于"rpath"和"LD_LIBRARY_PATH"请自行Google。
+"NEEDED"表示依赖的库。
 
+"rpath"和"LD_LIBRARY_PATH"，表示查找依赖库会从这些列出的路径查找。
+
+更多细节所请自行Google。
 
 ```
 [root@localhost 0004]# readelf -d main
@@ -125,36 +128,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
  0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
 ```
 
-4)用ldd查看编译生成的main，libvendor1.so，libvendor2.so
-```
-[root@localhost 0004]# ldd main
-        linux-vdso.so.1 =>  (0x00007ffff6ffe000)
-        libvendor1.so => ./libvendor1.so (0x00007fde0ced1000)
-        libvendor2.so => ./libvendor2.so (0x00007fde0ccce000)
-        libc.so.6 => /lib64/libc.so.6 (0x00007fde0c8fb000)
-        libopensource.so.1 => ./opensource_v1/libopensource.so.1 (0x00007fde0c6f9000)
-        libopensource.so.2 => ./opensource_v2/libopensource.so.2 (0x00007fde0c4f6000)
-        /lib64/ld-linux-x86-64.so.2 (0x00007fde0d0d4000)
-```
-
-```
-[root@localhost 0004]# ldd libvendor1.so
-        linux-vdso.so.1 =>  (0x00007fffad3fe000)
-        libopensource.so.1 => ./opensource_v1/libopensource.so.1 (0x00007f69cfd3b000)
-        libc.so.6 => /lib64/libc.so.6 (0x00007f69cf967000)
-        /lib64/ld-linux-x86-64.so.2 (0x00007f69d0140000)
-
-```
-
-```
-[root@localhost 0004]# ldd libvendor2.so
-        linux-vdso.so.1 =>  (0x00007fff425fe000)
-        libopensource.so.2 => ./opensource_v2/libopensource.so.2 (0x00007ffc4dbb9000)
-        libc.so.6 => /lib64/libc.so.6 (0x00007ffc4d7e5000)
-        /lib64/ld-linux-x86-64.so.2 (0x00007ffc4dfbe000)
-```
-
-5)用nm|grep opensource_print查看编译生成的libvendor1.so，libvendor2.so
+4)用nm|grep opensource_print查看编译生成的libvendor1.so，libvendor2.so
 ```
 [root@localhost 0004]# nm libvendor1.so |grep opensource_print
                  U opensource_print
@@ -165,7 +139,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
                  U opensource_print
 ```
 
-6)用LD_DEBUG 来debug 加载和绑定的过程
+5)用LD_DEBUG 来debug 依赖库和符号绑定的过程
 ```
 [root@localhost 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main
 opensource v1 print, called by vendor 1
@@ -175,15 +149,33 @@ opensource v1 print, called by vendor 2
 
 完整的LD_DEBUG输出在[robin.1.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.1.txt)
 
+我们来分析这个输出：
+
+51行到61行，./opensource_v1/libopensource.so.1被查找到
+```
+51      22069: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
+52      22069: find library=libopensource.so.1 [0]; searching
+53      22069:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./main)
+54      22069:   trying file=./opensource_v1/tls/x86_64/libopensource.so.1
+55      22069:   trying file=./opensource_v1/tls/libopensource.so.1
+56      22069:   trying file=./opensource_v1/x86_64/libopensource.so.1
+57      22069:   trying file=./opensource_v1/libopensource.so.1
+ 
+59      22069: file=libopensource.so.1 [0];  generating link map
+60      22069:   dynamic: 0x00007f21ce192e08  base: 0x00007f21cdf92000   size: 0x0000000000201038
+61      22069:     entry: 0x00007f21cdf92600  phdr: 0x00007f21cdf92040  phnum:   
+```
+
 
 ####3.2 符号表带版本信息的
 
+####3.3 符号表不带版本信息，但显式调用dlopen等API的
 
 ##4.libopensource.so的版本相同，如何加载和绑定
 
+##5. 根据实验得出的结论 (所以未必100%正确，但一直也没见到权威的资料描述这些情况)
 
-
-##5. 参考文献
+##6. 参考文献
 >\[1] 一篇blog，<https://blog.habets.se/2012/05/Shared-libraries-diamond-problem>
 
 >\[2] Google
