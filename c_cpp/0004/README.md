@@ -30,7 +30,12 @@ libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.s
 ##2.相关代码
 具体代码在github中。
 
-C源代码：
+C源代码:
+
+1)其中vendor1.c会被编译生成libvendor1.so，vendor2.c会被编译生成libvendor2.so，opensource_v1.c会被编译生成libopensource.so.xxx，
+opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实验）
+
+2)main.c链接libvendor1.so，libvendor2.so，libopensource.so.xxx（
 
 "[main.c](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/main.c)"
 
@@ -53,7 +58,8 @@ C源代码：
 "[force_soname_to_same_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_same_with_default_symver.sh)"
 
 
-##3.情形一，生成libopensource.so的版本
+
+##3.情形一，生成libopensource.so的版本不相同
 
 ##4.
 
