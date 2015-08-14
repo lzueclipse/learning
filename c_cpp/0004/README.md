@@ -86,7 +86,7 @@ Complile success
 
 3)用readelf查看编译生成的main，libvendor1.so，libvendor2.so
 
-我们仅仅关注"NEEDED"和"RPATH"项。
+我们仅仅关注"NEEDED"，"RPATH"，"SONAME"项。
 
 关于"rpath"和"LD_LIBRARY_PATH"请自行Google。
 
@@ -154,7 +154,18 @@ Dynamic section at offset 0xde8 contains 27 entries:
         /lib64/ld-linux-x86-64.so.2 (0x00007ffc4dfbe000)
 ```
 
-5)用LD_DEBUG 来debug 加载和绑定的过程
+5)用nm|grep opensource_print查看编译生成的libvendor1.so，libvendor2.so
+```
+[root@localhost 0004]# nm libvendor1.so |grep opensource_print
+                 U opensource_print
+```
+
+```
+[root@localhost 0004]# nm libvendor2.so |grep opensource_print
+                 U opensource_print
+```
+
+6)用LD_DEBUG 来debug 加载和绑定的过程
 
 
 ####3.2 符号表带版本信息的
