@@ -1,9 +1,8 @@
 extern void vendor1();
-extern void vendo42();
-int
-main()
+extern void vendor2();
+int main()
 {
-    d1();
-        d2();
-          return 0;
+    vendor1();
+    vendor2();
+    return 0;
 }
