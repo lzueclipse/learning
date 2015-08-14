@@ -172,7 +172,8 @@ opensource v1 print, called by vendor 1
 opensource v1 print, called by vendor 2
 ```
 首先看输出，从结果看，仅仅调用了libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
-完整的
+
+完整的LD_DEBUG输出在[robin.1.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.1.txt)
 
 
 ####3.2 符号表带版本信息的
