@@ -3,12 +3,12 @@ set -e
 set -x
 
 rm -f ./lib*
-rm -rf ./vendor1
-rm -rf ./vendor2
+rm -rf ./opensource_v1
+rm -rf ./opensource_v2
 
-#To generate ./vendor1/libopensource.so.1.0, libvendor1.so
+#To generate ./opensource_v1/libopensource.so.1.0, libvendor1.so
 #Use opensource_v1.c, vendor1.c
-cp opensource_v1.c opensource.c
+cp opensource_v1.c opensource.c  
 gcc -fPIC -c -o vendor1.o vendor1.c
 gcc -fPIC -c -o opensource.o opensource.c
 gcc -shared -fPIC -Wl,--default-symver -Wl,-soname,libopensource.so.1 -o libopensource.so.1.0 opensource.o
