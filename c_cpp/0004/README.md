@@ -66,12 +66,19 @@ opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实
 ####3.1 符号表不带版本信息的
 符号表不带版本信息gcc的默认行为。
 
-我们用[force_soname_to_different_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_different_without_default_symver.sh) 
+1)我们用[force_soname_to_different_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_different_without_default_symver.sh) 
 来编译。
 
 ```
-sh force_soname_to_different_without_default_symver.sh
+[root@localhost 0004]# sh force_soname_to_different_without_default_symver.sh
+/usr/bin/ld: warning: libopensource.so.2, needed by ./libvendor2.so, may conflict with libopensource.so.1
+Complile success
 ```
+
+2)编译生成的文件
+![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/2.jpg "图2")
+
+3)
 
 ####3.2 符号表带版本信息的
 
