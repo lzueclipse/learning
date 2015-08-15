@@ -217,6 +217,39 @@ opensource v1 print, called by vendor 2
 
 **猜测: 虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到， 但是libopensource.so.1的位置靠前，所以"opensource_print"先在libopensource.so.2中被查找到，并绑定；一旦查找到一个，就不再查找。**
 
+我们是有证据支持这个猜测的，编辑different_soname_without_default_symver.sh，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
+```
+#main.c
+#gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor1 -lvendor2 -ldl
+gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor2 -lvendor1 -ldl
+```
+
+重新编译：
+```
+[root@node1 0004]# sh different_soname_without_default_symver.sh
+Complile success
+
+重新查看"readelf -d main", 和之前的比较，看到"libverndor2.so"位置被提前了：
+```
+[root@node1 0004]# readelf -d main
+
+Dynamic section at offset 0xde8 contains 28 entries:
+  Tag        Type                         Name/Value
+   0x0000000000000001 (NEEDED)             Shared library: [libvendor2.so]
+   0x0000000000000001 (NEEDED)             Shared library: [libvendor1.so]
+   0x0000000000000001 (NEEDED)             Shared library: [libdl.so.2]
+   0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+   0x000000000000000f (RPATH)              Library rpath: [./]
+```
+
+运行程序，发现此时"opensource_print"被绑定成了libopensource.so.2的版本：
+```
+[root@node1 0004]# ./main general
+-----------------------general--------------------
+opensource v2 print, called by vendor 1
+opensource v2 print, called by vendor 2
+```
+
 ####3.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
 
