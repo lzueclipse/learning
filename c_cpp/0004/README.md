@@ -75,8 +75,7 @@ libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将�
 ###3.1 符号表不带版本信息的
 gcc编译的符号，默认是不带版本信息的。
 
-#####3.1.1 我们用[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh) 
-来编译。
+#####3.1.1 我们用[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh) 来编译。
 
 ```
 [root@node1 0004]# sh different_soname_without_default_symver.sh
@@ -253,7 +252,7 @@ opensource v2 print, called by vendor 2
 ####3.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
 
-#####3.2.1 我们用[different_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_with_default_symver.sh) 
+#####3.2.1 我们用[different_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_with_default_symver.sh) 来编译
 
 ```
 [root@node1 0004]# sh different_soname_with_default_symver.sh
@@ -394,9 +393,8 @@ libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将�
 ###4.1 符号表不带版本信息的
 gcc的编译出的符号变默认是不带版本信息的。
 
-#####4.1.1 我们用[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh) 
-来编译。
-略，同3.1.2。
+#####4.1.1 我们用[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh) 来编译。
+略，同3.1.1。
 
 #####4.1.2 列出编译生成的文件
 略，同3.1.2。
