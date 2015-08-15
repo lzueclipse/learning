@@ -227,6 +227,7 @@ gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor2 -lvendor1 -ldl
 ```
 [root@node1 0004]# sh different_soname_without_default_symver.sh
 Complile success
+```
 
 重新查看"readelf -d main", 和之前的比较，看到"libverndor2.so"位置被提前了：
 ```
