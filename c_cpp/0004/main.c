@@ -34,7 +34,7 @@ int main(int argc, char **argv)
             exit(-1);
         }
 
-        viendor1_p = dlsym(handle, "vendor1");
+        vendor1_p = dlsym(handle, "vendor1");
 
         if ((error = dlerror()) != NULL)  
         {
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
             exit(-1);
         }
 
-        viendor2_p = dlsym(handle, "vendor2");
+        vendor2_p = dlsym(handle, "vendor2");
 
         if ((error = dlerror()) != NULL)  
         {
