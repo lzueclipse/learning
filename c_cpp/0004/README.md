@@ -21,7 +21,9 @@ libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.s
 
 1)如果libopensource.so的版本不相同，是否两个版本的libopensource.so都会被查找到(lookup)？还是只有某一个版本libopensource.so的被查找到？符号绑定（binding）绑定的是哪个版本的？
 
-2）如果libopensource.so的版本相同，是否两个相同版本的libopensource.so都会被查找到？还是只挑选其中一个版本的libopensource.so被查找到？符号绑定的是哪个版本的？
+2)如果libopensource.so的版本相同，是否两个相同版本的libopensource.so都会被查找到？还是只挑选其中一个版本的libopensource.so被查找到？符号绑定的是哪个版本的？
+
+3)对于问题1)和2)，采用系统默认加载和使用"dlopen"等API显式加载，又有什么不同？
 
 如果这几个问题您没有答案，建议您跟随我的实验，我们一起探讨下。
 
@@ -280,7 +282,9 @@ Dynamic section at offset 0xdc8 contains 29 entries:
                  U opensource_print@@libopensource.so.2
 ```
 
-####3.3 符号表不带版本信息，但显式调用dlopen等API的
+#####3.1.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
+
+
 
 ##4.libopensource.so的版本相同，如何加载和绑定
 
