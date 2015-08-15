@@ -30,7 +30,7 @@ libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.s
 ##2.相关实验代码
 具体代码在github中。
 
-调用依赖： main.c<----vendor[1|2].c<--------opensource_v[1|2].c
+调用依赖： main.c<----vendor[1|2].c<--------opensource_v[1|2].c(函数opensource_print的不同实现)。
 
 C源代码:
 
@@ -128,7 +128,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
  0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
 ```
 
-4)用nm|grep opensource_print查看编译生成的libvendor1.so，libvendor2.so
+4)用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到符号"opensource_print" 
 ```
 [root@localhost 0004]# nm libvendor1.so |grep opensource_print
                  U opensource_print
@@ -181,7 +181,7 @@ opensource v1 print, called by vendor 2
 74      22069:     entry: 0x00007f21cdd90600  phdr: 0x00007f21cdd90040  phnum:                  7
 ```
 
-752行到772行，然而"opensource_pirnt"这个符号，却被绑定到libopensource.so.1上：
+752行到772行，然而"opensource_pirnt"这个符号，却被绑定到libopensource.so.1上(757行和772行)：
 ```
 752      22069: symbol=opensource_print;  lookup in file=./main [0]
 753      22069: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
@@ -205,6 +205,10 @@ opensource v1 print, called by vendor 2
 771      22069: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
 772      22069: binding file ./libvendor2.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
 ```
+
+猜测:
+虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到，
+但是libopensource.so.1的位置靠前，所以"opensource_print"都被在
 
 ####3.2 符号表带版本信息的
 
