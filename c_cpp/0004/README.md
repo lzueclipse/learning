@@ -208,7 +208,7 @@ opensource v1 print, called by vendor 2
 
 猜测:
 虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到，
-但是libopensource.so.1的位置靠前，所以"opensource_print"都被在
+但是libopensource.so.1的位置靠前，所以"opensource_print"
 
 ####3.2 符号表带版本信息的
 
