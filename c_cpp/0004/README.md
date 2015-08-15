@@ -1,7 +1,7 @@
 #以菱形链接(diamond link)为例，探讨Linux下 连接器和加载器对Shared libarary兼容性的处理
 
 ##1. 什么是菱形链接(diamond link)
-菱形链接(diamond link)未必是一个真正被大家广泛接受的术语，但我觉得它能十分清楚的描述出我们要讨论的问题。
+菱形链接(diamond link)未必是一个广泛使用的术语，但我觉得它能十分清楚的描述出我们要讨论的问题。
 
 该术语，模仿自C++中的菱形集成(diamond inheritance)。
 
@@ -19,15 +19,15 @@ libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.s
 
 这个问题扩展展开来：
 
-1)如果libopensource.so的版本不相同，是否两个版本的libopensource.so都会被查找到(lookup)？还是只有某一个版本的被查找到？符号绑定（binding）绑定的是哪个版本的？
+1)如果libopensource.so的版本不相同，是否两个版本的libopensource.so都会被查找到(lookup)？还是只有某一个版本libopensource.so的被查找到？符号绑定（binding）绑定的是哪个版本的？
 
-2）如果libopensource.so的版本相同，是否两个相同版本的libopensource.so都会被查找到？还是只挑选其中一个被查找到？符号绑定的是哪个版本的？
+2）如果libopensource.so的版本相同，是否两个相同版本的libopensource.so都会被查找到？还是只挑选其中一个版本的libopensource.so被查找到？符号绑定的是哪个版本的？
 
 如果这几个问题您没有答案，建议您跟随我的实验，我们一起探讨下。
 
 因为我个人没看过连接器和加载器的源码，估计也不好看懂，所以我们的探讨集中在我们看到的证据上，并试图给出一些粗浅的结论。
 
-##2.相关代码
+##2.相关实验代码
 具体代码在github中。
 
 调用依赖： main.c<----vendor[1|2].c<--------opensource_v[1|2].c
