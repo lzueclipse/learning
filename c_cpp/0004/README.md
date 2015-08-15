@@ -98,15 +98,15 @@ Complile success
 更多细节所请自行Google。
 
 ```
-[root@localhost 0004]# readelf -d main
+[root@node1 0004]# readelf -d main
 
-Dynamic section at offset 0xdf8 contains 27 entries:
- Tag        Type                         Name/Value
- 0x0000000000000001 (NEEDED)             Shared library: [libvendor1.so]
- 0x0000000000000001 (NEEDED)             Shared library: [libvendor2.so]
- 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
- 0x000000000000000f (RPATH)              Library rpath: [./:./opensource_v1:./opensource_v2]
-
+Dynamic section at offset 0xde8 contains 28 entries:
+  Tag        Type                         Name/Value
+  0x0000000000000001 (NEEDED)             Shared library: [libvendor1.so]
+  0x0000000000000001 (NEEDED)             Shared library: [libvendor2.so]
+  0x0000000000000001 (NEEDED)             Shared library: [libdl.so.2]
+  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+  0x000000000000000f (RPATH)              Library rpath: [./]
 ```
 
 ```
@@ -131,7 +131,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
  0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
 ```
 
-#####3.1.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到符号"opensource_print" 
+#####3.1.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到将使用符号"opensource_print" 
 ```
 [root@localhost 0004]# nm libvendor1.so |grep opensource_print
                  U opensource_print
@@ -144,10 +144,12 @@ Dynamic section at offset 0xde8 contains 27 entries:
 
 #####3.1.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
 ```
-[root@localhost 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main
+[root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
+-----------------------general--------------------
 opensource v1 print, called by vendor 1
 opensource v1 print, called by vendor 2
 ```
+
 首先看输出，从结果看，仅仅调用了libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
 
 完整的LD_DEBUG输出在[robin.1.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.1.txt)
