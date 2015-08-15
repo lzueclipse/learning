@@ -292,7 +292,9 @@ opensource v2 print, called by vendor 2
 
 首先看输出，从结果看，libvendor1.so调用了libopensource.so.1的"opensource_print"；libvendor2.so调用了libopensource.so.2的"opensource_print"。
 
+完整的LD_DEBUG输出在[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)
 
+我们来分析[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)输出：
 
 ##4.libopensource.so的版本相同，如何加载和绑定
 
