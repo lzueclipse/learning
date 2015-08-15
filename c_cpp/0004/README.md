@@ -352,7 +352,6 @@ opensource v2 print, called by vendor 2
 
 **猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。**
 
-
 ##4.libopensource.so的版本不相同，显式使用"dlopen"等API，系统如何查找依赖库和绑定符号
 
 ##5.libopensource.so的版本相同，不使用"dlopen"等API，如何加载和绑定

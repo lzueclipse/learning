@@ -29,7 +29,8 @@ int main(int argc, char **argv)
         printf("----------------------dlopen----------------------\n");
 
         /*call vendor1() */
-        handle = dlopen ("./libvendor1.so", RTLD_LAZY);
+        //handle = dlopen ("./libvendor1.so", RTLD_LAZY);
+        handle = dlopen ("./libvendor1.so", RTLD_NOW);
         if (!handle) 
         {
             printf("%s\n", dlerror());
@@ -48,7 +49,8 @@ int main(int argc, char **argv)
         dlclose(handle);
                             
         /*call vendor2() */
-        handle = dlopen ("./libvendor2.so", RTLD_LAZY);
+        //handle = dlopen ("./libvendor2.so", RTLD_LAZY);
+        handle = dlopen ("./libvendor2.so", RTLD_NOW);
         if (!handle) 
         {
             printf("%s\n", dlerror());
