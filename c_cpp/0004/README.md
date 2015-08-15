@@ -232,7 +232,42 @@ Complile success
 #####3.2.2 列出编译生成的文件
 略，和3.1.2一样.
 
+#####3.2.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
+可以看出和3.1.3是一样的。
 
+```
+[root@node1 0004]# readelf -d main
+
+Dynamic section at offset 0x1de8 contains 28 entries:
+  Tag        Type                         Name/Value
+  0x0000000000000001 (NEEDED)             Shared library: [libvendor1.so]
+  0x0000000000000001 (NEEDED)             Shared library: [libvendor2.so]
+  0x0000000000000001 (NEEDED)             Shared library: [libdl.so.2]
+  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+  0x000000000000000f (RPATH)              Library rpath: [./]
+```
+
+```
+[root@node1 0004]# readelf -d libvendor1.so
+
+Dynamic section at offset 0xdc8 contains 29 entries:
+  Tag        Type                         Name/Value
+   0x0000000000000001 (NEEDED)             Shared library: [libopensource.so.1]
+   0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+   0x000000000000000e (SONAME)             Library soname: [libvendor1.so]
+   0x000000000000000f (RPATH)              Library rpath: [./opensource_v1]
+```
+
+```
+[root@node1 0004]# readelf -d libvendor2.so
+
+Dynamic section at offset 0xdc8 contains 29 entries:
+  Tag        Type                         Name/Value
+   0x0000000000000001 (NEEDED)             Shared library: [libopensource.so.2]
+   0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+   0x000000000000000e (SONAME)             Library soname: [libvendor2.so]
+   0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
+```
 ####3.3 符号表不带版本信息，但显式调用dlopen等API的
 
 ##4.libopensource.so的版本相同，如何加载和绑定
