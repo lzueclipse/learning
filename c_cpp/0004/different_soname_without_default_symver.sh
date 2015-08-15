@@ -36,8 +36,8 @@ gcc -Wl,-rpath=./opensource_v2 -L ./opensource_v2  -Wl,-soname,libvendor2.so -sh
 rm -f *.o
 
 #main.c
-gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor1 -lvendor2
-#gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor1 -lvendor2 
+gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor1 -lvendor2 -ldl
+#gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor1 -lvendor2  -ldl
 
 echo "Complile success"
 

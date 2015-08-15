@@ -15,6 +15,7 @@ int main(int argc, char **argv)
     
     if(strcmp(argv[1], "normal") == 0)
     {
+        printf("-------normal-------\n");
         vendor1();
         vendor2();
     }
@@ -26,6 +27,7 @@ int main(int argc, char **argv)
         void (*vendor1_p) ();
         void (*vendor2_p) ();
 
+        printf("-------dlopen-------\n");
         /*call vendor1() */
         handle = dlopen ("./libvendor1.so", RTLD_LAZY);
         if (!handle) 
