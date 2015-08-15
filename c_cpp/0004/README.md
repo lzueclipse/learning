@@ -181,6 +181,30 @@ opensource v1 print, called by vendor 2
 74      22069:     entry: 0x00007f21cdd90600  phdr: 0x00007f21cdd90040  phnum:                  7
 ```
 
+752行到772行，然而"opensource_pirnt"这个符号，却被绑定到libopensource.so.1上：
+```
+752      22069: symbol=opensource_print;  lookup in file=./main [0]
+753      22069: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
+754      22069: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
+755      22069: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
+756      22069: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
+757      22069: binding file ./libvendor1.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
+758      22069: symbol=printf;  lookup in file=./main [0]
+759      22069: symbol=printf;  lookup in file=./libvendor1.so [0]
+760      22069: symbol=printf;  lookup in file=./libvendor2.so [0]
+761      22069: symbol=printf;  lookup in file=/lib64/libc.so.6 [0]
+762      22069: binding file ./opensource_v1/libopensource.so.1 [0] to /lib64/libc.so.6 [0]: normal symbol `printf' [GLIBC_2.2.5]
+763      22069: symbol=vendor2;  lookup in file=./main [0]
+764      22069: symbol=vendor2;  lookup in file=./libvendor1.so [0]
+765      22069: symbol=vendor2;  lookup in file=./libvendor2.so [0]
+766      22069: binding file ./main [0] to ./libvendor2.so [0]: normal symbol `vendor2'
+767      22069: symbol=opensource_print;  lookup in file=./main [0]
+768      22069: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
+769      22069: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
+770      22069: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
+771      22069: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
+772      22069: binding file ./libvendor2.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
+```
 
 ####3.2 符号表带版本信息的
 
