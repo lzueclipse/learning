@@ -67,10 +67,10 @@ opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实
 
 libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将依赖./opensource_v2/libopensource.so.2.0。
 
-####3.1 符号表不带版本信息的
+###3.1 符号表不带版本信息的
 符号表不带版本信息gcc的默认行为。
 
-1)我们用[force_soname_to_different_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_different_without_default_symver.sh) 
+#####3.1.1 我们用[force_soname_to_different_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_different_without_default_symver.sh) 
 来编译。
 
 ```
@@ -78,13 +78,13 @@ libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将�
 Complile success
 ```
 
-2)列出编译生成的文件
+#####3.1.2 列出编译生成的文件
 
 我们把libopensource.so.1相应3个文件放在"./opensource_v1"目录，把libopensource.so.2相应3个文件放在"./opensource_v2"目录：
 
 ![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/2.png "图2")
 
-3)用readelf查看编译生成的main，libvendor1.so，libvendor2.so
+#####3.1.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
 
 我们仅仅关注"NEEDED"，"RPATH"项。
 
@@ -128,7 +128,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
  0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
 ```
 
-4)用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到符号"opensource_print" 
+#####3.1.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到符号"opensource_print" 
 ```
 [root@localhost 0004]# nm libvendor1.so |grep opensource_print
                  U opensource_print
@@ -139,7 +139,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
                  U opensource_print
 ```
 
-5)用LD_DEBUG 来debug 依赖库和符号绑定的过程
+#####3.1.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
 ```
 [root@localhost 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main
 opensource v1 print, called by vendor 1
@@ -149,7 +149,7 @@ opensource v1 print, called by vendor 2
 
 完整的LD_DEBUG输出在[robin.1.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.1.txt)
 
-我们来分析这个输出：
+我们来分析[robin.1.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.1.txt)输出：
 
 51行到61行，./opensource_v1/libopensource.so.1被查找到
 ```
