@@ -296,6 +296,33 @@ opensource v2 print, called by vendor 2
 
 我们来分析[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)输出：
 
+```
+58        409: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
+59        409: find library=libopensource.so.1 [0]; searching
+60        409:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./lib     vendor1.so)
+61        409:   trying file=./opensource_v1/tls/x86_64/libopensource.so.1
+62        409:   trying file=./opensource_v1/tls/libopensource.so.1
+63        409:   trying file=./opensource_v1/x86_64/libopensource.so.1
+64        409:   trying file=./opensource_v1/libopensource.so.1
+65        409:
+66        409: file=libopensource.so.1 [0];  generating link map
+67        409:   dynamic: 0x00007ffa01a9ade8  base: 0x00007ffa0189a000   size: 0x0000000000201038
+68        409:     entry: 0x00007ffa0189a640  phdr: 0x00007ffa0189a040  phnum:                  7
+69        409:
+70        409:
+71        409: file=libopensource.so.2 [0];  needed by ./libvendor2.so [0]
+72        409: find library=libopensource.so.2 [0]; searching
+73        409:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./lib     vendor2.so)
+74        409:   trying file=./opensource_v2/tls/x86_64/libopensource.so.2
+75        409:   trying file=./opensource_v2/tls/libopensource.so.2
+76        409:   trying file=./opensource_v2/x86_64/libopensource.so.2
+77        409:   trying file=./opensource_v2/libopensource.so.2
+78        409:
+79        409: file=libopensource.so.2 [0];  generating link map
+80        409:   dynamic: 0x00007ffa01898de8  base: 0x00007ffa01698000   size: 0x0000000000201038
+81        409:     entry: 0x00007ffa01698640  phdr: 0x00007ffa01698040  phnum:                  7
+```
+
 ##4.libopensource.so的版本相同，如何加载和绑定
 
 ##5. 根据实验得出的结论 (所以未必100%正确，但一直也没见到权威的资料描述这些情况)
