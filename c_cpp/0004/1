@@ -1,0 +1,2 @@
+ git commit -a -m "Some test about diamond linking -- Shared libarary, load same lib at the same time,  with same version & different version"
+
