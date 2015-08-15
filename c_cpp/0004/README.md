@@ -51,13 +51,13 @@ opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实
 
 用于控制编译的Shell脚本（4个实验，每个使用一个脚本，为了便于说清）:
 
-[build_different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_different_without_default_symver.sh)  
+[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh)  
 
-[build_different_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_different_with_default_symver.sh)
+[different_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_with_default_symver.sh)
 
-[force_soname_to_same_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_same_without_default_symver.sh)
+[same_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/same_soname_without_default_symver.sh)
 
-[force_soname_to_same_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_same_with_default_symver.sh)
+[same_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/same_soname_with_default_symver.sh)
 
 
 
@@ -70,11 +70,11 @@ libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将�
 ###3.1 符号表不带版本信息的
 符号表不带版本信息gcc的默认行为。
 
-#####3.1.1 我们用[force_soname_to_different_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/force_soname_to_different_without_default_symver.sh) 
+#####3.1.1 我们用[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh) 
 来编译。
 
 ```
-[root@localhost 0004]# sh force_soname_to_different_without_default_symver.sh
+[root@localhost 0004]# sh different_soname_without_default_symver.sh
 Complile success
 ```
 
