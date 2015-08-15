@@ -215,10 +215,7 @@ opensource v1 print, called by vendor 2
 1014       3774:
 ```
 
-猜测:
-虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到，
-但是libopensource.so.1的位置靠前，所以"opensource_print"先在libopensource.so.1中被查找到，并绑定；
-一旦查找到一个，就不再查找。
+**猜测: 虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到， 但是libopensource.so.1的位置靠前，所以"opensource_print"先在libopensource.so.2中被查找到，并绑定；一旦查找到一个，就不再查找。**
 
 ####3.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
@@ -353,7 +350,8 @@ opensource v2 print, called by vendor 2
 1018        409: binding file ./libvendor2.so [0] to ./opensource_v2/libopensource.so.2 [0]: normal symbol `opensource_print' [libopensource.so     .2]
 ```
 
-猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。
+**猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。**
+
 
 ##4.libopensource.so的版本不相同，显式使用"dlopen"等API，系统如何查找依赖库和绑定符号
 
