@@ -40,8 +40,8 @@ C源代码:
 1)其中vendor1.c会被编译生成libvendor1.so，vendor2.c会被编译生成libvendor2.so，opensource_v1.c会被编译生成libopensource.so.xxx，
 opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实验）
 
-2)main.c链接libvendor1.so，libvendor2.so，libopensource.so.xxx生成可执行文件；main.c有两种用法，一种"general"使用普通的加载共享库的方法，一种
-"dlopen"使用dlopen显式加载需要的共享库。
+2)main.c链接libvendor1.so，libvendor2.so，libopensource.so.xxx生成可执行文件；main.c有两种用法，一种"general"使用默认的加载共享库的方法，一种
+"dlopen"使用dlopen等API显式加载需要的共享库。
 
 
 [main.c](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/main.c)
@@ -66,7 +66,7 @@ opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实
 
 
 
-##3.libopensource.so的版本不相同，如何查找依赖库和绑定符号
+##3.libopensource.so的版本不相同，不使用"dlopen"等API，系统如何查找依赖库和绑定符号
 
 在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.2.0。
 
@@ -283,6 +283,14 @@ Dynamic section at offset 0xdc8 contains 29 entries:
 ```
 
 #####3.1.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
+```
+[root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
+-----------------------general--------------------
+opensource v1 print, called by vendor 1
+opensource v2 print, called by vendor 2
+```
+
+首先看输出，从结果看，libvendor1.so调用了libopensource.so.1的"opensource_print"；libvendor2.so调用了libopensource.so.2的"opensource_print"。
 
 
 
