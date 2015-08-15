@@ -131,7 +131,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
  0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
 ```
 
-#####3.1.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到将使用符号"opensource_print" 
+#####3.1.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到使用相同符号"opensource_print" 
 ```
 [root@localhost 0004]# nm libvendor1.so |grep opensource_print
                  U opensource_print
@@ -268,6 +268,18 @@ Dynamic section at offset 0xdc8 contains 29 entries:
    0x000000000000000e (SONAME)             Library soname: [libvendor2.so]
    0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
 ```
+
+#####3.2.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到不同的符号"opensource_print@@libopensource.so.1"和opensource_print@@libopensource.so.2
+
+```
+[root@node1 0004]# nm libvendor1.so  |grep opensource_print
+                 U opensource_print@@libopensource.so.1
+```
+```
+[root@node1 0004]# nm libvendor2.so  |grep opensource_print
+                 U opensource_print@@libopensource.so.2
+```
+
 ####3.3 符号表不带版本信息，但显式调用dlopen等API的
 
 ##4.libopensource.so的版本相同，如何加载和绑定
