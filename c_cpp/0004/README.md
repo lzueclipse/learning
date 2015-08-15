@@ -323,7 +323,11 @@ opensource v2 print, called by vendor 2
 81        409:     entry: 0x00007ffa01698640  phdr: 0x00007ffa01698040  phnum:                  7
 ```
 
-##4.libopensource.so的版本相同，如何加载和绑定
+##4.libopensource.so的版本不相同，显式使用"dlopen"等API，系统如何查找依赖库和绑定符号
+
+##5.libopensource.so的版本相同，不使用"dlopen"等API，如何加载和绑定
+
+##6.libopensource.so的版本相同，显式使用"dlopen"等API，如何加载和绑定
 
 ##5. 根据实验得出的结论 (所以未必100%正确，但一直也没见到权威的资料描述这些情况)
 
