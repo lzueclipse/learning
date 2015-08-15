@@ -220,6 +220,15 @@ opensource v1 print, called by vendor 2
 一旦查找到一个，就不再查找。
 
 ####3.2 符号表带版本信息的
+编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
+
+#####3.1.1 我们用[different_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_with_default_symver.sh) 
+
+```
+[root@node1 0004]# sh different_soname_with_default_symver.sh
+Complile success
+```
+
 
 ####3.3 符号表不带版本信息，但显式调用dlopen等API的
 
