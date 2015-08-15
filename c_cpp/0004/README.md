@@ -553,20 +553,19 @@ opensource v2 print, called by vendor 2
 1077       5646: binding file ./libvendor2.so [0] to ./opensource_v2/libopensource.so.2 [0]: normal symbol `opensource_print' [libopensource.so     .2]
 ```
 
-**猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。**
+**结论，同3.2.5**
 
 
-##5.libopensource.so的版本相同，不使用"dlopen"等API，如何加载和绑定
-##3.libopensource.so的版本不相同，不使用"dlopen"等API，系统如何查找依赖库和绑定符号
+##5.libopensource.so的版本相同，不使用"dlopen"等API，系统如何查找依赖库和绑定符号
 
-在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.2.0。
+在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.1.0。
 
-libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将依赖./opensource_v2/libopensource.so.2.0。
+libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将依赖./opensource_v2/libopensource.so.1.0。
 
-###3.1 符号表不带版本信息的
+###5.1 符号表不带版本信息的
 符号表不带版本信息gcc的默认行为。
 
-#####3.1.1 我们用[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh) 
+#####5.1.1 我们用[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh) 
 来编译。
 
 ```
@@ -574,13 +573,13 @@ libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将�
 Complile success
 ```
 
-#####3.1.2 列出编译生成的文件
+#####5.1.2 列出编译生成的文件
 
 我们把libopensource.so.1相应3个文件放在"./opensource_v1"目录，把libopensource.so.2相应3个文件放在"./opensource_v2"目录：
 
 ![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/2.png "图2")
 
-#####3.1.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
+#####5.1.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
 
 我们仅仅关注"NEEDED"，"RPATH"项。
 
@@ -624,7 +623,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
  0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
 ```
 
-#####3.1.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到使用相同符号"opensource_print" 
+#####5.1.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到使用相同符号"opensource_print" 
 ```
 [root@node1 0004]# nm libvendor1.so |grep opensource_print
                  U opensource_print
@@ -635,7 +634,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
                  U opensource_print
 ```
 
-#####3.1.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
+#####5.1.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
 -----------------------general--------------------
@@ -708,20 +707,20 @@ opensource v1 print, called by vendor 2
 
 **猜测: 虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到， 但是libopensource.so.1的位置靠前，所以"opensource_print"先在libopensource.so.2中被查找到，并绑定；一旦查找到一个，就不再查找。**
 
-####3.2 符号表带版本信息的
+####5.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
 
-#####3.2.1 我们用[different_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_with_default_symver.sh) 
+#####5.2.1 我们用[different_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_with_default_symver.sh) 
 
 ```
 [root@node1 0004]# sh different_soname_with_default_symver.sh
 Complile success
 ```
 
-#####3.2.2 列出编译生成的文件
+#####5.2.2 列出编译生成的文件
 略，和3.1.2一样.
 
-#####3.2.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
+#####5.2.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
 可以看出和3.1.3是一样的。
 
 ```
@@ -758,7 +757,7 @@ Dynamic section at offset 0xdc8 contains 29 entries:
    0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
 ```
 
-#####3.2.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到不同的符号"opensource_print@@libopensource.so.1"和opensource_print@@libopensource.so.2
+#####5.2.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到不同的符号"opensource_print@@libopensource.so.1"和opensource_print@@libopensource.so.2
 
 ```
 [root@node1 0004]# nm libvendor1.so  |grep opensource_print
@@ -769,7 +768,7 @@ Dynamic section at offset 0xdc8 contains 29 entries:
                  U opensource_print@@libopensource.so.2
 ```
 
-#####3.2.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
+#####5.2.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
 -----------------------general--------------------
@@ -844,31 +843,29 @@ opensource v2 print, called by vendor 2
 **猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。**
 
 
-##6.libopensource.so的版本相同，显式使用"dlopen"等API，如何加载和绑定
-##3.libopensource.so的版本不相同，不使用"dlopen"等API，系统如何查找依赖库和绑定符号
+##6. libopensource.so的版本相同，显式使用"dlopen"等API，系统如何查找依赖库和绑定符号
 
-在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.2.0。
+在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.1.0。
 
-libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将依赖./opensource_v2/libopensource.so.2.0。
+libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将依赖./opensource_v2/libopensource.so.1.0。
 
-###3.1 符号表不带版本信息的
-符号表不带版本信息gcc的默认行为。
+###6.1 符号表不带版本信息的
+gcc的默认编译的符号，不带版本信息。
 
-#####3.1.1 我们用[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh) 
-来编译。
+#####6.1.1 我们用[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh) 来编译。
 
 ```
 [root@node1 0004]# sh different_soname_without_default_symver.sh
 Complile success
 ```
 
-#####3.1.2 列出编译生成的文件
+#####6.1.2 列出编译生成的文件
 
 我们把libopensource.so.1相应3个文件放在"./opensource_v1"目录，把libopensource.so.2相应3个文件放在"./opensource_v2"目录：
 
 ![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/2.png "图2")
 
-#####3.1.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
+#####6.1.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
 
 我们仅仅关注"NEEDED"，"RPATH"项。
 
@@ -912,7 +909,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
  0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
 ```
 
-#####3.1.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到使用相同符号"opensource_print" 
+#####6.1.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到使用相同符号"opensource_print" 
 ```
 [root@node1 0004]# nm libvendor1.so |grep opensource_print
                  U opensource_print
@@ -923,7 +920,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
                  U opensource_print
 ```
 
-#####3.1.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
+#####6.1.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
 -----------------------general--------------------
@@ -1029,20 +1026,20 @@ opensource v2 print, called by vendor 1
 opensource v2 print, called by vendor 2
 ```
 
-####3.2 符号表带版本信息的
+####6.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
 
-#####3.2.1 我们用[different_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_with_default_symver.sh) 
+#####6.2.1 我们用[different_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_with_default_symver.sh) 
 
 ```
 [root@node1 0004]# sh different_soname_with_default_symver.sh
 Complile success
 ```
 
-#####3.2.2 列出编译生成的文件
+#####6.2.2 列出编译生成的文件
 略，和3.1.2一样.
 
-#####3.2.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
+#####6.2.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
 可以看出和3.1.3是一样的。
 
 ```
@@ -1090,7 +1087,7 @@ Dynamic section at offset 0xdc8 contains 29 entries:
                  U opensource_print@@libopensource.so.2
 ```
 
-#####3.2.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
+#####6.2.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
 -----------------------general--------------------
