@@ -73,7 +73,7 @@ opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实
 libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将依赖./opensource_v2/libopensource.so.2.0。
 
 ###3.1 符号表不带版本信息的
-符号表不带版本信息gcc的默认行为。
+gcc编译的符号，默认是不带版本信息的。
 
 #####3.1.1 我们用[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh) 
 来编译。
@@ -352,97 +352,41 @@ opensource v2 print, called by vendor 2
 
 **猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。**
 
-##4.libopensource.so的版本不相同，不使用"dlopen"等API，系统如何查找依赖库和绑定符号
+##4. libopensource.so的版本不相同，显式使用"dlopen"等API加载共享库，系统如何查找依赖库和绑定符号
 
 在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.2.0。
 
 libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将依赖./opensource_v2/libopensource.so.2.0。
 
 ###4.1 符号表不带版本信息的
-符号表不带版本信息gcc的默认行为。
+gcc的编译出的符号变默认是不带版本信息的。
 
 #####4.1.1 我们用[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh) 
 来编译。
-
-```
-[root@node1 0004]# sh different_soname_without_default_symver.sh
-Complile success
-```
+略，同3.1.2。
 
 #####4.1.2 列出编译生成的文件
-
-我们把libopensource.so.1相应3个文件放在"./opensource_v1"目录，把libopensource.so.2相应3个文件放在"./opensource_v2"目录：
-
-![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/2.png "图2")
+略，同3.1.2。
 
 #####4.1.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
-
-我们仅仅关注"NEEDED"，"RPATH"项。
-
-"NEEDED"表示依赖的库。
-
-"rpath"和"LD_LIBRARY_PATH"，表示查找依赖库会从这些列出的路径查找。
-
-更多细节所请自行Google。
-
-```
-[root@node1 0004]# readelf -d main
-
-Dynamic section at offset 0xde8 contains 28 entries:
-  Tag        Type                         Name/Value
-  0x0000000000000001 (NEEDED)             Shared library: [libvendor1.so]
-  0x0000000000000001 (NEEDED)             Shared library: [libvendor2.so]
-  0x0000000000000001 (NEEDED)             Shared library: [libdl.so.2]
-  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
-  0x000000000000000f (RPATH)              Library rpath: [./]
-```
-
-```
-[root@node1 0004]# readelf -d libvendor1.so
-
-Dynamic section at offset 0xde8 contains 27 entries:
-  Tag        Type                         Name/Value
-  0x0000000000000001 (NEEDED)             Shared library: [libopensource.so.1]
-  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
-  0x000000000000000e (SONAME)             Library soname: [libvendor1.so]
-  0x000000000000000f (RPATH)              Library rpath: [./opensource_v1]
-```
-
-```
-[root@node1 0004]# readelf -d libvendor2.so
-
-Dynamic section at offset 0xde8 contains 27 entries:
- Tag        Type                         Name/Value
- 0x0000000000000001 (NEEDED)             Shared library: [libopensource.so.2]
- 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
- 0x000000000000000e (SONAME)             Library soname: [libvendor2.so]
- 0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
-```
+略，同3.1.3。
 
 #####4.1.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到使用相同符号"opensource_print" 
-```
-[root@node1 0004]# nm libvendor1.so |grep opensource_print
-                 U opensource_print
-```
-
-```
-[root@node1 0004]# nm libvendor2.so |grep opensource_print
-                 U opensource_print
-```
+略，同3.1.4
 
 #####4.1.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
 ```
-[root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
------------------------general--------------------
+[root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main dlopen
+----------------------dlopen----------------------
 opensource v1 print, called by vendor 1
 opensource v1 print, called by vendor 2
 ```
 
 首先看输出，从结果看，仅仅调用了libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
 
-完整的LD_DEBUG输出在[robin.1.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.1.txt)
+完整的LD_DEBUG输出在[robin.3.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)
 
-我们来分析[robin.1.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.1.txt)输出：
+我们来分析[robin.3.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)输出：
 
 58行到69行，./opensource_v1/libopensource.so.1被查找到；71行到81行，./opensource_v2/libopensource.so.2被找到：
 ```
