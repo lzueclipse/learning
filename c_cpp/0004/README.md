@@ -1047,7 +1047,6 @@ opensource v2 print, called by vendor 1
 opensource v2 print, called by vendor 2
 ```
 
-
 ####3.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
 
