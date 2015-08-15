@@ -156,59 +156,62 @@ opensource v1 print, called by vendor 2
 
 我们来分析[robin.1.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.1.txt)输出：
 
-51行到61行，./opensource_v1/libopensource.so.1被查找到
+58行到69行，./opensource_v1/libopensource.so.1被查找到
+71行到81行，./opensource_v2/libopensource.so.2被找到
 ```
-51      22069: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
-52      22069: find library=libopensource.so.1 [0]; searching
-53      22069:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./main)
-54      22069:   trying file=./opensource_v1/tls/x86_64/libopensource.so.1
-55      22069:   trying file=./opensource_v1/tls/libopensource.so.1
-56      22069:   trying file=./opensource_v1/x86_64/libopensource.so.1
-57      22069:   trying file=./opensource_v1/libopensource.so.1
- 
-59      22069: file=libopensource.so.1 [0];  generating link map
-60      22069:   dynamic: 0x00007f21ce192e08  base: 0x00007f21cdf92000   size: 0x0000000000201038
-61      22069:     entry: 0x00007f21cdf92600  phdr: 0x00007f21cdf92040  phnum:   
+58       3774: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
+59       3774: find library=libopensource.so.1 [0]; searching
+60       3774:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./lib     vendor1.so)
+61       3774:   trying file=./opensource_v1/tls/x86_64/libopensource.so.1
+62       3774:   trying file=./opensource_v1/tls/libopensource.so.1
+63       3774:   trying file=./opensource_v1/x86_64/libopensource.so.1
+64       3774:   trying file=./opensource_v1/libopensource.so.1
+65       3774:
+66       3774: file=libopensource.so.1 [0];  generating link map
+67       3774:   dynamic: 0x00007f940ce07e08  base: 0x00007f940cc07000   size: 0x0000000000201038
+68       3774:     entry: 0x00007f940cc07600  phdr: 0x00007f940cc07040  phnum:                  7
+69       3774:
+70       3774:
+71       3774: file=libopensource.so.2 [0];  needed by ./libvendor2.so [0]
+72       3774: find library=libopensource.so.2 [0]; searching
+73       3774:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./lib     vendor2.so)
+74       3774:   trying file=./opensource_v2/tls/x86_64/libopensource.so.2
+75       3774:   trying file=./opensource_v2/tls/libopensource.so.2
+76       3774:   trying file=./opensource_v2/x86_64/libopensource.so.2
+77       3774:   trying file=./opensource_v2/libopensource.so.2
+78       3774:
+79       3774: file=libopensource.so.2 [0];  generating link map
+80       3774:   dynamic: 0x00007f940cc05e08  base: 0x00007f940ca05000   size: 0x0000000000201038
+81       3774:     entry: 0x00007f940ca05600  phdr: 0x00007f940ca05040  phnum:  
 ```
 
-64行到74行，./opensource_v2/libopensource.so.2被找到
+990行到1014行，然而"opensource_pirnt"这个符号，却被绑定到libopensource.so.1上(996行和1013行)：
 ```
-64      22069: file=libopensource.so.2 [0];  needed by ./libvendor2.so [0]
-65      22069: find library=libopensource.so.2 [0]; searching
-66      22069:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./main    )
-67      22069:   trying file=./opensource_v2/tls/x86_64/libopensource.so.2
-68      22069:   trying file=./opensource_v2/tls/libopensource.so.2
-69      22069:   trying file=./opensource_v2/x86_64/libopensource.so.2
-70      22069:   trying file=./opensource_v2/libopensource.so.2
-71      22069:
-72      22069: file=libopensource.so.2 [0];  generating link map
-73      22069:   dynamic: 0x00007f21cdf90e08  base: 0x00007f21cdd90000   size: 0x0000000000201038
-74      22069:     entry: 0x00007f21cdd90600  phdr: 0x00007f21cdd90040  phnum:                  7
-```
-
-752行到772行，然而"opensource_pirnt"这个符号，却被绑定到libopensource.so.1上(757行和772行)：
-```
-752      22069: symbol=opensource_print;  lookup in file=./main [0]
-753      22069: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
-754      22069: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
-755      22069: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
-756      22069: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
-757      22069: binding file ./libvendor1.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
-758      22069: symbol=printf;  lookup in file=./main [0]
-759      22069: symbol=printf;  lookup in file=./libvendor1.so [0]
-760      22069: symbol=printf;  lookup in file=./libvendor2.so [0]
-761      22069: symbol=printf;  lookup in file=/lib64/libc.so.6 [0]
-762      22069: binding file ./opensource_v1/libopensource.so.1 [0] to /lib64/libc.so.6 [0]: normal symbol `printf' [GLIBC_2.2.5]
-763      22069: symbol=vendor2;  lookup in file=./main [0]
-764      22069: symbol=vendor2;  lookup in file=./libvendor1.so [0]
-765      22069: symbol=vendor2;  lookup in file=./libvendor2.so [0]
-766      22069: binding file ./main [0] to ./libvendor2.so [0]: normal symbol `vendor2'
-767      22069: symbol=opensource_print;  lookup in file=./main [0]
-768      22069: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
-769      22069: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
-770      22069: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
-771      22069: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
-772      22069: binding file ./libvendor2.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
+990       3774: symbol=opensource_print;  lookup in file=./main [0]
+991       3774: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
+992       3774: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
+993       3774: symbol=opensource_print;  lookup in file=/lib64/libdl.so.2 [0]
+994       3774: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
+995       3774: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
+996       3774: binding file ./libvendor1.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
+997       3774: symbol=printf;  lookup in file=./main [0]
+998       3774: symbol=printf;  lookup in file=./libvendor1.so [0]
+999       3774: symbol=printf;  lookup in file=./libvendor2.so [0]
+1000       3774: symbol=printf;  lookup in file=/lib64/libdl.so.2 [0]
+1001       3774: symbol=printf;  lookup in file=/lib64/libc.so.6 [0]
+1002       3774: binding file ./opensource_v1/libopensource.so.1 [0] to /lib64/libc.so.6 [0]: normal symbol `printf' [GLIBC_2.2.5]
+1003       3774: symbol=vendor2;  lookup in file=./main [0]
+1004       3774: symbol=vendor2;  lookup in file=./libvendor1.so [0]
+1005       3774: symbol=vendor2;  lookup in file=./libvendor2.so [0]
+1006       3774: binding file ./main [0] to ./libvendor2.so [0]: normal symbol `vendor2'
+1007       3774: symbol=opensource_print;  lookup in file=./main [0]
+1008       3774: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
+1009       3774: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
+1010       3774: symbol=opensource_print;  lookup in file=/lib64/libdl.so.2 [0]
+1011       3774: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
+1012       3774: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
+1013       3774: binding file ./libvendor2.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
+1014       3774:
 ```
 
 猜测:
