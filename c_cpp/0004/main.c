@@ -9,25 +9,25 @@ int main(int argc, char **argv)
     
     if(argc != 2)
     {
-       printf("%s [normal | dlopen]\n", argv[0]);
+       printf("%s [general | dlopen]\n", argv[0]);
        exit(-1);
     }
     
-    if(strcmp(argv[1], "normal") == 0)
+    if(strcmp(argv[1], "general") == 0)
     {
-        printf("-------normal-------\n");
+        printf("-----------------------general--------------------\n");
         vendor1();
         vendor2();
     }
-
-    if(strcmp(argv[1], "dlopen") == 0)
+    else if(strcmp(argv[1], "dlopen") == 0)
     {
         void *handle;
         char *error;
         void (*vendor1_p) ();
         void (*vendor2_p) ();
+        
+        printf("----------------------dlopen----------------------\n");
 
-        printf("-------dlopen-------\n");
         /*call vendor1() */
         handle = dlopen ("./libvendor1.so", RTLD_LAZY);
         if (!handle) 
@@ -66,6 +66,11 @@ int main(int argc, char **argv)
         vendor2_p();
         dlclose(handle);
 
+    }
+    else
+    {
+       printf("%s [general | dlopen]\n", argv[0]);
+       exit(-1);
     }
     return 0;
 }
