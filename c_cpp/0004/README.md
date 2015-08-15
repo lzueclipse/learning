@@ -324,7 +324,7 @@ opensource v2 print, called by vendor 2
 81        409:     entry: 0x00007ffa01698640  phdr: 0x00007ffa01698040  phnum:                  7
 ```
 
-994行到1018行，可以看到libvendor1.so的"opensource_print"
+994行到1018行，可以看到libvendor1.so调用的"opensource_print"被绑定到./opensource_v1/libopensource.so.1上；libvendor2.so调用的"opensource_print"被绑定到./opensource_v2/libopensource.so.2上:
 ```
 994        409: symbol=opensource_print;  lookup in file=./main [0]
 995        409: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
@@ -352,6 +352,8 @@ opensource v2 print, called by vendor 2
 1017        409: symbol=opensource_print;  lookup in file=./opensource_v2/libopensource.so.2 [0]
 1018        409: binding file ./libvendor2.so [0] to ./opensource_v2/libopensource.so.2 [0]: normal symbol `opensource_print' [libopensource.so     .2]
 ```
+
+猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。
 
 ##4.libopensource.so的版本不相同，显式使用"dlopen"等API，系统如何查找依赖库和绑定符号
 
