@@ -158,8 +158,7 @@ opensource v1 print, called by vendor 2
 
 我们来分析[robin.1.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.1.txt)输出：
 
-58行到69行，./opensource_v1/libopensource.so.1被查找到
-71行到81行，./opensource_v2/libopensource.so.2被找到
+58行到69行，./opensource_v1/libopensource.so.1被查找到；71行到81行，./opensource_v2/libopensource.so.2被找到：
 ```
 58       3774: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
 59       3774: find library=libopensource.so.1 [0]; searching
@@ -187,7 +186,7 @@ opensource v1 print, called by vendor 2
 81       3774:     entry: 0x00007f940ca05600  phdr: 0x00007f940ca05040  phnum:  
 ```
 
-990行到1014行，然而"opensource_pirnt"这个符号，却被绑定到libopensource.so.1上(996行和1013行)：
+990行到1014行，libvendor1.so调用的"opensource_print"被绑定到./opensource_v1/libopensource.so.1上(996行)；libvendor2.so调用的"opensource_print"也被绑定到./opensource_v1/libopensource.so.1(1013行)：
 ```
 990       3774: symbol=opensource_print;  lookup in file=./main [0]
 991       3774: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
@@ -296,6 +295,8 @@ opensource v2 print, called by vendor 2
 
 我们来分析[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)输出：
 
+58行到68行，./opensource_v1/libopensource.so.1被查找到
+71行到81行，./opensource_v2/libopensource.so.2被查找到
 ```
 58        409: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
 59        409: find library=libopensource.so.1 [0]; searching
@@ -321,6 +322,35 @@ opensource v2 print, called by vendor 2
 79        409: file=libopensource.so.2 [0];  generating link map
 80        409:   dynamic: 0x00007ffa01898de8  base: 0x00007ffa01698000   size: 0x0000000000201038
 81        409:     entry: 0x00007ffa01698640  phdr: 0x00007ffa01698040  phnum:                  7
+```
+
+994行到1018行，可以看到libvendor1.so的"opensource_print"
+```
+994        409: symbol=opensource_print;  lookup in file=./main [0]
+995        409: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
+996        409: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
+997        409: symbol=opensource_print;  lookup in file=/lib64/libdl.so.2 [0]
+998        409: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
+999        409: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
+1000        409: binding file ./libvendor1.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print' [libopensource.so     .1]
+1001        409: symbol=printf;  lookup in file=./main [0]
+1002        409: symbol=printf;  lookup in file=./libvendor1.so [0]
+1003        409: symbol=printf;  lookup in file=./libvendor2.so [0]
+1004        409: symbol=printf;  lookup in file=/lib64/libdl.so.2 [0]
+1005        409: symbol=printf;  lookup in file=/lib64/libc.so.6 [0]
+1006        409: binding file ./opensource_v1/libopensource.so.1 [0] to /lib64/libc.so.6 [0]: normal symbol `printf' [GLIBC_2.2.5]
+1007        409: symbol=vendor2;  lookup in file=./main [0]
+1008        409: symbol=vendor2;  lookup in file=./libvendor1.so [0]
+1009        409: symbol=vendor2;  lookup in file=./libvendor2.so [0]
+1010        409: binding file ./main [0] to ./libvendor2.so [0]: normal symbol `vendor2' [libvendor2.so]
+1011        409: symbol=opensource_print;  lookup in file=./main [0]
+1012        409: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
+1013        409: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
+1014        409: symbol=opensource_print;  lookup in file=/lib64/libdl.so.2 [0]
+1015        409: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
+1016        409: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
+1017        409: symbol=opensource_print;  lookup in file=./opensource_v2/libopensource.so.2 [0]
+1018        409: binding file ./libvendor2.so [0] to ./opensource_v2/libopensource.so.2 [0]: normal symbol `opensource_print' [libopensource.so     .2]
 ```
 
 ##4.libopensource.so的版本不相同，显式使用"dlopen"等API，系统如何查找依赖库和绑定符号
