@@ -468,7 +468,7 @@ libvendor1.so调用的"opensource_print"被绑定到./opensource_v2/libopensourc
 1072      22438: binding file ./libvendor2.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
 ```
 
-**结论和3.1.5一样 **
+**结论，和3.1.5一样**
 
 ####4.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
@@ -481,69 +481,27 @@ Complile success
 ```
 
 #####4.2.2 列出编译生成的文件
-略，和3.1.2一样.
+略，和4.1.2一样。
 
 #####4.2.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
-可以看出和3.1.3是一样的。
-
-```
-[root@node1 0004]# readelf -d main
-
-Dynamic section at offset 0x1de8 contains 28 entries:
-  Tag        Type                         Name/Value
-  0x0000000000000001 (NEEDED)             Shared library: [libvendor1.so]
-  0x0000000000000001 (NEEDED)             Shared library: [libvendor2.so]
-  0x0000000000000001 (NEEDED)             Shared library: [libdl.so.2]
-  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
-  0x000000000000000f (RPATH)              Library rpath: [./]
-```
-
-```
-[root@node1 0004]# readelf -d libvendor1.so
-
-Dynamic section at offset 0xdc8 contains 29 entries:
-  Tag        Type                         Name/Value
-   0x0000000000000001 (NEEDED)             Shared library: [libopensource.so.1]
-   0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
-   0x000000000000000e (SONAME)             Library soname: [libvendor1.so]
-   0x000000000000000f (RPATH)              Library rpath: [./opensource_v1]
-```
-
-```
-[root@node1 0004]# readelf -d libvendor2.so
-
-Dynamic section at offset 0xdc8 contains 29 entries:
-  Tag        Type                         Name/Value
-   0x0000000000000001 (NEEDED)             Shared library: [libopensource.so.2]
-   0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
-   0x000000000000000e (SONAME)             Library soname: [libvendor2.so]
-   0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
-```
+略，和4.1.3一样。
 
 #####4.2.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到不同的符号"opensource_print@@libopensource.so.1"和opensource_print@@libopensource.so.2
-
-```
-[root@node1 0004]# nm libvendor1.so  |grep opensource_print
-                 U opensource_print@@libopensource.so.1
-```
-```
-[root@node1 0004]# nm libvendor2.so  |grep opensource_print
-                 U opensource_print@@libopensource.so.2
-```
+略，和4.1.4一样。
 
 #####4.2.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
 ```
-[root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
------------------------general--------------------
+[root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main dlopen
+----------------------dlopen----------------------
 opensource v1 print, called by vendor 1
 opensource v2 print, called by vendor 2
 ```
 
 首先看输出，从结果看，libvendor1.so调用了libopensource.so.1的"opensource_print"；libvendor2.so调用了libopensource.so.2的"opensource_print"。
 
-完整的LD_DEBUG输出在[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)
+完整的LD_DEBUG输出在[robin.4.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.4.txt)
 
-我们来分析[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)输出：
+我们来分析[robin.4.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.4.txt)输出：
 
 58行到68行，./opensource_v1/libopensource.so.1被查找到
 71行到81行，./opensource_v2/libopensource.so.2被查找到
