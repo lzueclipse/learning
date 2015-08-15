@@ -166,6 +166,21 @@ opensource v1 print, called by vendor 2
 61      22069:     entry: 0x00007f21cdf92600  phdr: 0x00007f21cdf92040  phnum:   
 ```
 
+64行到74行，./opensource_v2/libopensource.so.2被找到
+```
+64      22069: file=libopensource.so.2 [0];  needed by ./libvendor2.so [0]
+65      22069: find library=libopensource.so.2 [0]; searching
+66      22069:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./main    )
+67      22069:   trying file=./opensource_v2/tls/x86_64/libopensource.so.2
+68      22069:   trying file=./opensource_v2/tls/libopensource.so.2
+69      22069:   trying file=./opensource_v2/x86_64/libopensource.so.2
+70      22069:   trying file=./opensource_v2/libopensource.so.2
+71      22069:
+72      22069: file=libopensource.so.2 [0];  generating link map
+73      22069:   dynamic: 0x00007f21cdf90e08  base: 0x00007f21cdd90000   size: 0x0000000000201038
+74      22069:     entry: 0x00007f21cdd90600  phdr: 0x00007f21cdd90040  phnum:                  7
+```
+
 
 ####3.2 符号表带版本信息的
 
