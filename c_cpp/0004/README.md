@@ -161,7 +161,7 @@ opensource v1 print, called by vendor 2
 ```
 58       3774: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
 59       3774: find library=libopensource.so.1 [0]; searching
-60       3774:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./lib     vendor1.so)
+60       3774:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./libvendor1.so)
 61       3774:   trying file=./opensource_v1/tls/x86_64/libopensource.so.1
 62       3774:   trying file=./opensource_v1/tls/libopensource.so.1
 63       3774:   trying file=./opensource_v1/x86_64/libopensource.so.1
@@ -174,7 +174,7 @@ opensource v1 print, called by vendor 2
 70       3774:
 71       3774: file=libopensource.so.2 [0];  needed by ./libvendor2.so [0]
 72       3774: find library=libopensource.so.2 [0]; searching
-73       3774:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./lib     vendor2.so)
+73       3774:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./libvendor2.so)
 74       3774:   trying file=./opensource_v2/tls/x86_64/libopensource.so.2
 75       3774:   trying file=./opensource_v2/tls/libopensource.so.2
 76       3774:   trying file=./opensource_v2/x86_64/libopensource.so.2
@@ -217,6 +217,7 @@ opensource v1 print, called by vendor 2
 
 #####3.1.6 用LD_DEBUG 来debug 依赖库和符号绑定的过程(针对使用"dlopen"等API，显式加载共享库的情况)
 和3.1.5差不多一样。
+
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main dlopen
 ----------------------dlopen----------------------
@@ -234,7 +235,7 @@ opensource v1 print, called by vendor 2
 ```
 58      22438: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
 59      22438: find library=libopensource.so.1 [0]; searching
-60      22438:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./lib     vendor1.so)
+60      22438:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./libvendor1.so)
 61      22438:   trying file=./opensource_v1/tls/x86_64/libopensource.so.1
 62      22438:   trying file=./opensource_v1/tls/libopensource.so.1
 63      22438:   trying file=./opensource_v1/x86_64/libopensource.so.1
@@ -247,7 +248,7 @@ opensource v1 print, called by vendor 2
 70      22438:
 71      22438: file=libopensource.so.2 [0];  needed by ./libvendor2.so [0]
 72      22438: find library=libopensource.so.2 [0]; searching
-73      22438:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./lib     vendor2.so)
+73      22438:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./libvendor2.so)
 74      22438:   trying file=./opensource_v2/tls/x86_64/libopensource.so.2
 75      22438:   trying file=./opensource_v2/tls/libopensource.so.2
 76      22438:   trying file=./opensource_v2/x86_64/libopensource.so.2
