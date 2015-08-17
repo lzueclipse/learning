@@ -537,7 +537,7 @@ Complile success
 
 我们把libopensource.so.1相应3个文件放在"./opensource_v1"目录，把libopensource.so.2相应3个文件放在"./opensource_v2"目录：
 
-![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/2.png "图2")
+![图3](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/3.png "图3")
 
 #####4.1.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
 
