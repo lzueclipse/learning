@@ -705,11 +705,11 @@ gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor2 -lvendor1 -ldl
 
 重新编译：
 ```
-[root@node1 0004]# sh different_soname_without_default_symver.sh
+[root@node1 0004]# sh same_soname_without_default_symver.sh
 Complile success
 ```
 
-重新查看"readelf -d main", 和之前的3.1.3比较，看到"libverndor2.so"位置被提前了：
+重新查看"readelf -d main", 和之前的4.1.3比较，看到"libverndor2.so"位置被提前了：
 ```
 [root@node1 0004]# readelf -d main
 
