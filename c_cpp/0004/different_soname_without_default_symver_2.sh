@@ -30,9 +30,9 @@ gcc -shared -fPIC -Wl,-soname,librobin.so.2 -o librobin.so.2.0 opensource_v2.o
 ln -s librobin.so.2.0 librobin.so
 ln -s librobin.so.2.0 librobin.so.2
 mkdir opensource_v2
-mv libopensource* ./opensource_v2
+mv librobin* ./opensource_v2
 
-gcc -Wl,-rpath=./opensource_v2 -L ./opensource_v2  -Wl,-soname,libvendor2.so -shared -o libvendor2.so vendor2.o -lopensource
+gcc -Wl,-rpath=./opensource_v2 -L ./opensource_v2  -Wl,-soname,libvendor2.so -shared -o libvendor2.so vendor2.o -lrobin
 rm -f *.o
 
 #main.c
