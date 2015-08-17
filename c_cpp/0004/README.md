@@ -823,7 +823,7 @@ opensource v1 print, called by vendor 2
 对应的完整的LD_DEBUG,[robin.8.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.8.txt)
 
 ##5. 结论
-1)对于不同版本的libopensource.so.xxx共享库，两个版本的共享库库都会被查找到，但有先后顺序；最终绑定的"opensource_print"符号，是先被查找到的共享库里的。
+1)对于不同版本的libopensource.so.xxx共享库，两个版本的共享库都会被查找到，但有先后顺序；最终绑定的"opensource_print"符号，是在先被查找到的共享库里的。
 
 这个情况延伸开来，如果其他完全不相干的共享库里有同名符号"opensource_print"，那么到底绑定哪个"opensource_print"，也是和共享库被查找到顺序有关。
 
