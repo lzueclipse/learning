@@ -55,7 +55,7 @@ libvendor1.so会依赖opensource_v1.c生成的libopensource.so.xxx, libvendor2.s
 
 [opensource_v2.c](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/opensource_v2.c)
 
-用于控制编译的Shell脚本（4个实验，每个使用一个脚本，为了便于说清）:
+用于控制编译的Shell脚本（每个使用一个脚本，为了便于说清）:
 
 [different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh)  
 
@@ -66,7 +66,7 @@ libvendor1.so会依赖opensource_v1.c生成的libopensource.so.xxx, libvendor2.s
 [same_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/same_soname_with_default_symver.sh)
 
 
-##3.libopensource.so的版本不相同，系统如何查找依赖库和绑定符号
+##3.libopensource.so.xxx的版本不相同，系统如何查找依赖库和绑定符号
 
 在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.2.0。
 
@@ -94,7 +94,7 @@ Complile success
 
 "NEEDED"表示依赖的库。
 
-"rpath"和"LD_LIBRARY_PATH"，表示查找依赖库会从这些列出的路径查找。
+"RPATH"表示查找依赖库会从这些列出的路径查找(另外有个环境变量LD_LIBARARY_PATH也是类似的作用)。
 
 更多细节所请自行Google。
 
@@ -151,7 +151,7 @@ opensource v1 print, called by vendor 1
 opensource v1 print, called by vendor 2
 ```
 
-首先看输出，从结果看，仅仅调用了libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
+首先看输出，从结果看，仅仅调用了./opensource_v1/libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
 
 完整的LD_DEBUG输出在[robin.1.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.1.txt)
 
@@ -223,7 +223,7 @@ opensource v1 print, called by vendor 1
 opensource v1 print, called by vendor 2
 ```
 
-首先看输出，从结果看，仅仅调用了libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
+首先看输出，从结果看，仅仅调用了./opensource_v1/libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
 
 完整的LD_DEBUG输出在[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)
 
@@ -279,7 +279,7 @@ opensource v1 print, called by vendor 2
 
 ####3.1.7 推测结论
 
-**猜测: 根据3.1.5和3.1.6，虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到，但是libopensource.so.1的位置靠前，所以符号"opensource_print"先在libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
+**猜测: 根据3.1.5和3.1.6，虽然./opensource_v1/libopensource.so.1和./opensource_v2/libopensource.so.2都被查找到，但是libopensource.so.1的位置靠前，所以符号"opensource_print"先在libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
 
 我们是有证据支持这个猜测的，编辑[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh)，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
 ```
@@ -307,7 +307,7 @@ Dynamic section at offset 0xde8 contains 28 entries:
    0x000000000000000f (RPATH)              Library rpath: [./]
 ```
 
-运行程序，发现此时"opensource_print"被绑定成了libopensource.so.2的版本(此处，略去LD_DEBUG步骤)：
+运行程序，./opensource_v2/libopensource.so.2里的"opensource_print"被绑定了(此处，略去LD_DEBUG步骤，有兴趣可以自己试)：
 ```
 [root@node1 0004]# ./main general
 -----------------------general--------------------
@@ -385,7 +385,7 @@ opensource v1 print, called by vendor 1
 opensource v2 print, called by vendor 2
 ```
 
-首先看输出，从结果看，libvendor1.so调用了libopensource.so.1的"opensource_print"；libvendor2.so调用了libopensource.so.2的"opensource_print"。
+首先看输出，从结果看，libvendor1.so调用了./opensource_v1/libopensource.so.1的"opensource_print"(opensource_v1.c)；libvendor2.so调用了./opensource_v2/libopensource.so.2的"opensource_print"(opensource_v2.c)。
 
 完整的LD_DEBUG输出在[robin.3.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)
 
@@ -395,7 +395,7 @@ opensource v2 print, called by vendor 2
 ```
 58        409: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
 59        409: find library=libopensource.so.1 [0]; searching
-60        409:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./lib     vendor1.so)
+60        409:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./libvendor1.so)
 61        409:   trying file=./opensource_v1/tls/x86_64/libopensource.so.1
 62        409:   trying file=./opensource_v1/tls/libopensource.so.1
 63        409:   trying file=./opensource_v1/x86_64/libopensource.so.1
@@ -408,7 +408,7 @@ opensource v2 print, called by vendor 2
 70        409:
 71        409: file=libopensource.so.2 [0];  needed by ./libvendor2.so [0]
 72        409: find library=libopensource.so.2 [0]; searching
-73        409:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./lib     vendor2.so)
+73        409:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./libvendor2.so)
 74        409:   trying file=./opensource_v2/tls/x86_64/libopensource.so.2
 75        409:   trying file=./opensource_v2/tls/libopensource.so.2
 76        409:   trying file=./opensource_v2/x86_64/libopensource.so.2
@@ -456,7 +456,7 @@ opensource v1 print, called by vendor 1
 opensource v2 print, called by vendor 2
 ```
 
-首先看输出，从结果看，libvendor1.so调用了libopensource.so.1的"opensource_print"；libvendor2.so调用了libopensource.so.2的"opensource_print"。
+首先看输出，从结果看，libvendor1.so调用了./opensource_v1/libopensource.so.1的"opensource_print"(opensource_v1.c)；libvendor2.so调用了./opensource_v2/libopensource.so.2的"opensource_print"(opensource_v2.c)。
 
 完整的LD_DEBUG输出在[robin.4.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.4.txt)
 
@@ -466,7 +466,7 @@ opensource v2 print, called by vendor 2
 ```
 58        409: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
 59        409: find library=libopensource.so.1 [0]; searching
-60        409:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./lib     vendor1.so)
+60        409:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./libvendor1.so)
 61        409:   trying file=./opensource_v1/tls/x86_64/libopensource.so.1
 62        409:   trying file=./opensource_v1/tls/libopensource.so.1
 63        409:   trying file=./opensource_v1/x86_64/libopensource.so.1
@@ -479,7 +479,7 @@ opensource v2 print, called by vendor 2
 70        409:
 71        409: file=libopensource.so.2 [0];  needed by ./libvendor2.so [0]
 72        409: find library=libopensource.so.2 [0]; searching
-73        409:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./lib     vendor2.so)
+73        409:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./libvendor2.so)
 74        409:   trying file=./opensource_v2/tls/x86_64/libopensource.so.2
 75        409:   trying file=./opensource_v2/tls/libopensource.so.2
 76        409:   trying file=./opensource_v2/x86_64/libopensource.so.2
@@ -515,7 +515,7 @@ opensource v2 print, called by vendor 2
 **猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。**
 
 
-##4.libopensource.so的版本相同，系统如何查找依赖库和绑定符号
+##4. libopensource.so的版本相同，系统如何查找依赖库和绑定符号
 
 在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.1.0。
 
@@ -651,7 +651,7 @@ opensource v1 print, called by vendor 1
 opensource v1 print, called by vendor 2
 ```
 
-首先看输出，从结果看，仅仅调用了libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
+首先看输出，从结果看，仅仅调用了./opensoure_v1/libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
 
 完整的LD_DEBUG输出在[robin.6.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.6.txt)
 
@@ -722,7 +722,7 @@ Dynamic section at offset 0xde8 contains 28 entries:
    0x000000000000000f (RPATH)              Library rpath: [./]
 ```
 
-运行程序，发现此时"opensource_print"被绑定成了./opensource_v2/libopensource.so.1的版本(此处，略去LD_DEBUG步骤)：
+运行程序，发现./opensource_v2/libopensource.so.1的"opensource_print"被绑定(此处，略去LD_DEBUG步骤，有兴趣可以自己试)：
 ```
 [root@node1 0004]# ./main general
 -----------------------general--------------------
@@ -792,7 +792,7 @@ Dynamic section at offset 0xdc8 contains 29 entries:
                  U opensource_print@@libopensource.so.1
 ```
 
-**因为libvendor1.so和libvendor2.so使用了相同版本的libopensource.so.1，并且使用了相同的符号opensource_print@@libopensource.so.1，所以实验4.2和4.1是等价的实验，没必要再做下去了。 不过我还是列出了一个LD_DEBUG的输出，供参考。**
+**libvendor1.so和libvendor2.so使用了相同版本的libopensource.so.1，并且使用了相同的符号opensource_print@@libopensource.so.1，所以实验4.2和4.1是等价的实验，没必要再做下去了。 不过我还是列出了LD_DEBUG的输出，供参考。**
 
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
@@ -802,14 +802,22 @@ opensource v1 print, called by vendor 2
 ```
 [robin.7.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.7.txt)
 
+```
+[root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main dlopen
+-----------------------general--------------------
+opensource v1 print, called by vendor 1
+opensource v1 print, called by vendor 2
+```
+[robin.8.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.8.txt)
+
 ##5. 结论
 1)对于不同版本的libopensource.so共享库，两个版本的库都会被查找，最终绑定符号时，绑定的是查找时顺序靠前的共享库的符号。
 
-延伸开来，如果其他完全不相干的共享库里有同名符号"opensource_print"，那么到底绑定哪个"opensource_print"，也是和共享库被查找顺序有关。
+这个情况延伸开来，如果其他完全不相干的共享库里有同名符号"opensource_print"，那么到底绑定哪个"opensource_print"，也是和共享库被查找顺序有关。
 
 这个问题可以通过编译时指定"-Wl,--default-symver"来解决。
 
-2)对于相同版本的lbopensource.so共享库，只有其中的一个会被查找，最终绑定符号是，只有这个被查找的共享库里的符号被绑定。
+2)对于相同版本的lbopensource.so.xxx共享库，只有其中的一个会被查找，只有这个被查找的共享库里的符号被绑定。
 
 遇到这样的问题时，尝试下LD_PRELOAD，但不一定能完全解决问题。
 
