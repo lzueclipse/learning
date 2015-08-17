@@ -215,7 +215,7 @@ opensource v1 print, called by vendor 2
 ```
 
 
-#####3.1.6 用LD_DEBUG 来debug 依赖库和符号绑定的过程(针对使用"dlopen"等API显式加载共享库)
+#####3.1.6 用LD_DEBUG 来debug 依赖库和符号绑定的过程(针对使用"dlopen"等API，显式加载共享库的情况)
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main dlopen
 ----------------------dlopen----------------------
@@ -329,6 +329,7 @@ Complile success
 略，和3.1.2一样.
 
 #####3.2.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
+
 可以看出和3.1.3是一样的。
 
 ```
@@ -376,7 +377,7 @@ Dynamic section at offset 0xdc8 contains 29 entries:
                  U opensource_print@@libopensource.so.2
 ```
 
-#####3.2.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程
+#####3.2.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程(针对默认加载动态库的情况)
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
 -----------------------general--------------------
@@ -386,9 +387,9 @@ opensource v2 print, called by vendor 2
 
 首先看输出，从结果看，libvendor1.so调用了libopensource.so.1的"opensource_print"；libvendor2.so调用了libopensource.so.2的"opensource_print"。
 
-完整的LD_DEBUG输出在[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)
+完整的LD_DEBUG输出在[robin.3.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)
 
-我们来分析[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)输出：
+我们来分析[robin.3.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)输出：
 
 58行到68行，./opensource_v1/libopensource.so.1被查找到
 71行到81行，./opensource_v2/libopensource.so.2被查找到
