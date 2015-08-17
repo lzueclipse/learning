@@ -84,7 +84,7 @@ Complile success
 
 #####3.1.2 列出编译生成的文件
 
-我们把libopensource.so.1相应3个文件放在"./opensource_v1"目录，把libopensource.so.2相应3个文件放在"./opensource_v2"目录：
+我们把libopensource.so.1.0相应3个文件放在"./opensource_v1"目录，把libopensource.so.2.0相应3个文件放在"./opensource_v2"目录：
 
 ![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/2.png "图2")
 
@@ -533,9 +533,9 @@ Complile success
 
 #####4.1.2 列出编译生成的文件
 
-libvendor1.so使用的libopensource.so.1相应3个文件放在"./opensource_v1"目录;
+libvendor1.so使用的libopensource.so.1.0相应3个文件放在"./opensource_v1"目录;
 
-libvendor2.so使用的libopensource.so.1相应3个文件放在"./opensource_v2"目录;
+libvendor2.so使用的libopensource.so.1.0相应3个文件放在"./opensource_v2"目录;
 
 ![图3](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/3.png "图3")
 
