@@ -614,7 +614,7 @@ opensource v1 print, called by vendor 2
 68      24862:     entry: 0x00007fda2f486600  phdr: 0x00007fda2f486040  phnum:                  7
 ```
 
-905行,libvendor1.so调用的"opensource_print"被绑定到./opensource_v1/libopensource.so.1上；1013行，libvendor2.so调用的"opensource_print"也被绑定到./opensource_v1/libopensource.so.1：
+905行,libvendor1.so调用的"opensource_print"被绑定到./opensource_v1/libopensource.so.1上；922行，libvendor2.so调用的"opensource_print"也被绑定到./opensource_v1/libopensource.so.1：
 ```
 899      24862: symbol=opensource_print;  lookup in file=./main [0]
 900      24862: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
@@ -653,63 +653,50 @@ opensource v1 print, called by vendor 2
 
 首先看输出，从结果看，仅仅调用了libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
 
-完整的LD_DEBUG输出在[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)
+完整的LD_DEBUG输出在[robin.6.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.6.txt)
 
-我们来分析[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)输出：
+我们来分析[robin.6.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.6.txt)输出：
 
-58行到68行，./opensource_v1/libopensource.so.1被查找到；71行到81行，./opensource_v2/libopensource.so.2被找到：
+58行到68行，./opensource_v1/libopensource.so.1被查找到；./opensource_v2/libopensource.so.1**没有被查找**：
 ```
-58      22438: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
-59      22438: find library=libopensource.so.1 [0]; searching
-60      22438:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./lib     vendor1.so)
-61      22438:   trying file=./opensource_v1/tls/x86_64/libopensource.so.1
-62      22438:   trying file=./opensource_v1/tls/libopensource.so.1
-63      22438:   trying file=./opensource_v1/x86_64/libopensource.so.1
-64      22438:   trying file=./opensource_v1/libopensource.so.1
-65      22438:
-66      22438: file=libopensource.so.1 [0];  generating link map
-67      22438:   dynamic: 0x00007f41a353de08  base: 0x00007f41a333d000   size: 0x0000000000201038
-68      22438:     entry: 0x00007f41a333d600  phdr: 0x00007f41a333d040  phnum:                  7
-69      22438:
-70      22438:
-71      22438: file=libopensource.so.2 [0];  needed by ./libvendor2.so [0]
-72      22438: find library=libopensource.so.2 [0]; searching
-73      22438:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./lib     vendor2.so)
-74      22438:   trying file=./opensource_v2/tls/x86_64/libopensource.so.2
-75      22438:   trying file=./opensource_v2/tls/libopensource.so.2
-76      22438:   trying file=./opensource_v2/x86_64/libopensource.so.2
-77      22438:   trying file=./opensource_v2/libopensource.so.2
-78      22438:
-79      22438: file=libopensource.so.2 [0];  generating link map
-80      22438:   dynamic: 0x00007f41a333be08  base: 0x00007f41a313b000   size: 0x0000000000201038
-81      22438:     entry: 0x00007f41a313b600  phdr: 0x00007f41a313b040  phnum:                  7
+58      25068: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
+59      25068: find library=libopensource.so.1 [0]; searching
+60      25068:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./libvendor1.so)
+61      25068:   trying file=./opensource_v1/tls/x86_64/libopensource.so.1
+62      25068:   trying file=./opensource_v1/tls/libopensource.so.1
+63      25068:   trying file=./opensource_v1/x86_64/libopensource.so.1
+64      25068:   trying file=./opensource_v1/libopensource.so.1
+65      25068:
+66      25068: file=libopensource.so.1 [0];  generating link map
+67      25068:   dynamic: 0x00007fcc7608ce08  base: 0x00007fcc75e8c000   size: 0x0000000000201038
+68      25068:     entry: 0x00007fcc75e8c600  phdr: 0x00007fcc75e8c040  phnum:                  7
 ```
 
-libvendor1.so调用的"opensource_print"被绑定到./opensource_v1/libopensource.so.1上(1033行)；libvendor2.so调用的"opensource_print"也被绑定到./opensource_v1/libopensource.so.1(1072行)：
+942行，libvendor1.so调用的"opensource_print"被绑定到./opensource_v1/libopensource.so.1上；981行，libvendor2.so调用的"opensource_print"也被绑定到./opensource_v1/libopensource.so.1：
 ```
-1027      22438: symbol=opensource_print;  lookup in file=./main [0]
-1028      22438: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
-1029      22438: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
-1030      22438: symbol=opensource_print;  lookup in file=/lib64/libdl.so.2 [0]
-1031      22438: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
-1032      22438: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
-1033      22438: binding file ./libvendor1.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
+936      25068: symbol=opensource_print;  lookup in file=./main [0]
+937      25068: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
+938      25068: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
+939      25068: symbol=opensource_print;  lookup in file=/lib64/libdl.so.2 [0]
+940      25068: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
+941      25068: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
+942      25068: binding file ./libvendor1.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
 ```
 ```
-1066      22438: symbol=opensource_print;  lookup in file=./main [0]
-1067      22438: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
-1068      22438: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
-1069      22438: symbol=opensource_print;  lookup in file=/lib64/libdl.so.2 [0]
-1070      22438: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
-1071      22438: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
-1072      22438: binding file ./libvendor2.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
+975      25068: symbol=opensource_print;  lookup in file=./main [0]
+976      25068: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
+977      25068: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
+978      25068: symbol=opensource_print;  lookup in file=/lib64/libdl.so.2 [0]
+979      25068: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
+980      25068: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
+981      25068: binding file ./libvendor2.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
 ```
 
 ####4.1.7 推测结论
 
-**猜测: 根据3.1.5和3.1.6，虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到，但是libopensource.so.1的位置靠前，所以符号"opensource_print"先在libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
+**猜测: 根据4.1.5和4.1.6，只有./opensource_v1/libopensource.so.1被查找，所以只有./opensource_v1/libopensource.so.1里的"opensource_print"会被绑定**
 
-我们是有证据支持这个猜测的，编辑different_soname_without_default_symver.sh，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
+我们是有证据支持这个猜测的，编辑[same_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/same_soname_without_default_symver.sh)，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
 ```
 #main.c
 #gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor1 -lvendor2 -ldl
