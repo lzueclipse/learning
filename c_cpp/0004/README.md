@@ -307,7 +307,7 @@ Dynamic section at offset 0xde8 contains 28 entries:
    0x000000000000000f (RPATH)              Library rpath: [./]
 ```
 
-运行程序，发现此时"opensource_print"被绑定成了libopensource.so.2的版本：
+运行程序，发现此时"opensource_print"被绑定成了libopensource.so.2的版本(此处，略去LD_DEBUG步骤)：
 ```
 [root@node1 0004]# ./main general
 -----------------------general--------------------
@@ -568,7 +568,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
 
 Dynamic section at offset 0xde8 contains 27 entries:
  Tag        Type                         Name/Value
- 0x0000000000000001 (NEEDED)             Shared library: [libopensource.so.2]
+ 0x0000000000000001 (NEEDED)             Shared library: [libopensource.so.1]
  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
  0x000000000000000e (SONAME)             Library soname: [libvendor2.so]
  0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
@@ -722,7 +722,7 @@ Dynamic section at offset 0xde8 contains 28 entries:
    0x000000000000000f (RPATH)              Library rpath: [./]
 ```
 
-运行程序，发现此时"opensource_print"被绑定成了libopensource.so.2的版本：
+运行程序，发现此时"opensource_print"被绑定成了./opensource_v2/libopensource.so.1的版本(此处，略去LD_DEBUG步骤)：
 ```
 [root@node1 0004]# ./main general
 -----------------------general--------------------
