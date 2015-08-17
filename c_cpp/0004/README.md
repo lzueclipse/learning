@@ -466,7 +466,7 @@ opensource v1 print, called by vendor 1
 opensource v2 print, called by vendor 2
 ```
 
-首先看输出，从结果看，libvendor1.so调用了./opensource_v1/libopensource.so.1的"opensource_print"(opensource_v1.c)；libvendor2.so调用了./opensource_v2/libopensource.so.2的"opensource_print"(opensource_v2.c)。
+首先看输出，从结果看，libvendor1.so调用了./opensource_v1/libopensource.so.1里的"opensource_print"(opensource_v1.c)；libvendor2.so调用了./opensource_v2/libopensource.so.2里的"opensource_print"(opensource_v2.c)。
 
 完整的LD_DEBUG输出在[robin.4.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.4.txt)
 
