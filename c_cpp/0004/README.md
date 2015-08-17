@@ -38,7 +38,7 @@ libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.s
 C源代码:
 
 1)其中vendor1.c会被编译生成libvendor1.so，vendor2.c会被编译生成libvendor2.so，opensource_v1.c会被编译生成libopensource.so.xxx，
-opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实验）
+opensource_v2.c会被编译成libopensource.so.xxx（xxx值表示版本信息，需详细看后续实验）
 
 2)main.c链接libvendor1.so，libvendor2.so，libopensource.so.xxx生成可执行文件
 
@@ -64,7 +64,6 @@ opensource_v2.c会被编译成libopensource.so.xxx（xxx值需详细看后续实
 [same_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/same_soname_without_default_symver.sh)
 
 [same_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/same_soname_with_default_symver.sh)
-
 
 
 ##3.libopensource.so的版本不相同，系统如何查找依赖库和绑定符号
@@ -144,7 +143,7 @@ Dynamic section at offset 0xde8 contains 27 entries:
                  U opensource_print
 ```
 
-#####3.1.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程， 针对默认
+#####3.1.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程(针对默认加载动态库的情况)
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
 -----------------------general--------------------
