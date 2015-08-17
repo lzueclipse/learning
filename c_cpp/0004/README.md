@@ -736,7 +736,7 @@ Dynamic section at offset 0xde8 contains 28 entries:
    0x000000000000000f (RPATH)              Library rpath: [./]
 ```
 
-运行程序，发现./opensource_v2/libopensource.so.1的"opensource_print"被绑定(此处，略去LD_DEBUG步骤，有兴趣可以自己试)：
+运行程序，发现./opensource_v2/libopensource.so.1里的"opensource_print"被绑定(此处，略去LD_DEBUG步骤，有兴趣可以自己试)：
 ```
 [root@node1 0004]# ./main general
 -----------------------general--------------------
