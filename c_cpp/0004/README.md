@@ -281,9 +281,7 @@ opensource v1 print, called by vendor 2
 
 ####3.1.7 推测结论
 
-**!!!!!!猜测: 根据3.1.5和3.1.6，虽然./opensource_v1/libopensource.so.1和./opensource_v2/libopensource.so.2都被查找到，但是./opensource_v1/libopensource.so.1的位置靠前，
-
-所以符号"opensource_print"先在./opensource_v1/libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
+**!!!!!!猜测: 根据3.1.5和3.1.6，虽然./opensource_v1/libopensource.so.1和./opensource_v2/libopensource.so.2都被查找到，但是./opensource_v1/libopensource.so.1的位置靠前，所以符号"opensource_print"先在./opensource_v1/libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
 
 **!!!!!!我们是有证据支持这个猜测的。**
 
