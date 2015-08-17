@@ -281,7 +281,9 @@ opensource v1 print, called by vendor 2
 
 ####3.1.7 推测结论
 
-**!!!!!!猜测: 根据3.1.5和3.1.6，虽然./opensource_v1/libopensource.so.1和./opensource_v2/libopensource.so.2都被查找到，但是./opensource_v1/libopensource.so.1的位置靠前，所以符号"opensource_print"先在./opensource_v1/libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
+**!!!!!!猜测: 根据3.1.5和3.1.6，虽然./opensource_v1/libopensource.so.1和./opensource_v2/libopensource.so.2都被查找到，但是./opensource_v1/libopensource.so.1的位置靠前，
+
+所以符号"opensource_print"先在./opensource_v1/libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
 
 **!!!!!!我们是有证据支持这个猜测的。**
 
@@ -319,7 +321,11 @@ opensource v2 print, called by vendor 1
 opensource v2 print, called by vendor 2
 ```
 
-**!!!!!!推论的延伸: 如果不使用libopensource.so.2这样和libopensource.so.1混淆的名字，而是使用一个其他的名字，和本次测试是一样的结果(此处不在给出测试结果）。可以用[different_soname_with_default_symver_2.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_with_default_symver_2.sh) 来编译做实验**
+**!!!!!!推论的延伸: 如果不使用libopensource.so.2这样和libopensource.so.1混淆的名字，而是使用一个其他的名字，和本次测试是一样的结果(此处不在给出测试结果）。
+
+可以用[different_soname_without_default_symver_2.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver_2.sh) 来编译做
+
+实验**
 
 ####3.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
