@@ -802,8 +802,14 @@ opensource v1 print, called by vendor 2
 ```
 [robin.7.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.7.txt)
 
+##5. 结论
+1)对于不同版本的libopensource.so共享库，两个版本的库都会被加载，最终绑定符号时，绑定的是加载时顺序靠前的共享库里的符号。这个问题可以通过编译时指定"-Wl,--default-symver"来解决。
 
-##5. 参考文献
+2)对于相同版本的lbopensource.so共享库，只有其中的一个会被加载，最终绑定符号是，只有这个被加载共享库里的符号被绑定。
+
+3)如果其他共享库里有同名符号"opensource_print"，那么到底绑定哪个"opensource_print"，和共享库被加载顺序有关。LD_PRELOAD可以解决这个问题。
+
+##6. 参考文献
 >\[1] 一篇blog，<https://blog.habets.se/2012/05/Shared-libraries-diamond-problem>
 
 >\[2] Google
