@@ -319,7 +319,7 @@ opensource v2 print, called by vendor 1
 opensource v2 print, called by vendor 2
 ```
 
-**!!!!!!推论的延伸: 如果./opensource_v2/libopensource.so.2改名为./opensource_v2/liborobin.so.2.0，和本次测试时一样的结果(此处在列举测试结果）。**
+**!!!!!!推论的延伸: 如果不使用libopensource.so.2这样和libopensource.so.1混淆的名字，而是使用一个其他的名字，和本次测试是一样的结果(此处不在给出测试结果）。**
 
 ####3.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
