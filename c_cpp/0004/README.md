@@ -792,144 +792,16 @@ Dynamic section at offset 0xdc8 contains 29 entries:
                  U opensource_print@@libopensource.so.1
 ```
 
-#####4.2.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程(针对默认加载动态库的情况)
+**因为libvendor1.so和libvendor2.so使用了相同版本的libopensource.so.1，并且使用了相同的符号opensource_print@@libopensource.so.1，所以实验4.2和4.1是等价的实验，没必要再做下去了。 不过我还是列出了一个LD_DEBUG的输出，供参考。**
+
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
 -----------------------general--------------------
 opensource v1 print, called by vendor 1
 opensource v1 print, called by vendor 2
 ```
+[robin.7.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.7.txt)
 
-首先看输出，从结果看，仅仅调用了./opensource_v1/libopensoure.so.1中的"opensource_print"。
-
-完整的LD_DEBUG输出在[robin.3.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)
-
-我们来分析[robin.3.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)输出：
-
-58行到68行，./opensource_v1/libopensource.so.1被查找到
-71行到81行，./opensource_v2/libopensource.so.2被查找到
-```
-58        409: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
-59        409: find library=libopensource.so.1 [0]; searching
-60        409:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./lib     vendor1.so)
-61        409:   trying file=./opensource_v1/tls/x86_64/libopensource.so.1
-62        409:   trying file=./opensource_v1/tls/libopensource.so.1
-63        409:   trying file=./opensource_v1/x86_64/libopensource.so.1
-64        409:   trying file=./opensource_v1/libopensource.so.1
-65        409:
-66        409: file=libopensource.so.1 [0];  generating link map
-67        409:   dynamic: 0x00007ffa01a9ade8  base: 0x00007ffa0189a000   size: 0x0000000000201038
-68        409:     entry: 0x00007ffa0189a640  phdr: 0x00007ffa0189a040  phnum:                  7
-69        409:
-70        409:
-71        409: file=libopensource.so.2 [0];  needed by ./libvendor2.so [0]
-72        409: find library=libopensource.so.2 [0]; searching
-73        409:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./lib     vendor2.so)
-74        409:   trying file=./opensource_v2/tls/x86_64/libopensource.so.2
-75        409:   trying file=./opensource_v2/tls/libopensource.so.2
-76        409:   trying file=./opensource_v2/x86_64/libopensource.so.2
-77        409:   trying file=./opensource_v2/libopensource.so.2
-78        409:
-79        409: file=libopensource.so.2 [0];  generating link map
-80        409:   dynamic: 0x00007ffa01898de8  base: 0x00007ffa01698000   size: 0x0000000000201038
-81        409:     entry: 0x00007ffa01698640  phdr: 0x00007ffa01698040  phnum:                  7
-```
-
-994行到1000行，可以看到libvendor1.so调用的"opensource_print"被绑定到./opensource_v1/libopensource.so.1上；1011行到1018行，libvendor2.so调用的"opensource_print"被绑定到./opensource_v2/libopensource.so.2上:
-```
-994        409: symbol=opensource_print;  lookup in file=./main [0]
-995        409: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
-996        409: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
-997        409: symbol=opensource_print;  lookup in file=/lib64/libdl.so.2 [0]
-998        409: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
-999        409: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
-1000        409: binding file ./libvendor1.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print' [libopensource.so.1]
-1001        409: symbol=printf;  lookup in file=./main [0]
-1002        409: symbol=printf;  lookup in file=./libvendor1.so [0]
-1003        409: symbol=printf;  lookup in file=./libvendor2.so [0]
-1004        409: symbol=printf;  lookup in file=/lib64/libdl.so.2 [0]
-1005        409: symbol=printf;  lookup in file=/lib64/libc.so.6 [0]
-1006        409: binding file ./opensource_v1/libopensource.so.1 [0] to /lib64/libc.so.6 [0]: normal symbol `printf' [GLIBC_2.2.5]
-1007        409: symbol=vendor2;  lookup in file=./main [0]
-1008        409: symbol=vendor2;  lookup in file=./libvendor1.so [0]
-1009        409: symbol=vendor2;  lookup in file=./libvendor2.so [0]
-1010        409: binding file ./main [0] to ./libvendor2.so [0]: normal symbol `vendor2' [libvendor2.so]
-1011        409: symbol=opensource_print;  lookup in file=./main [0]
-1012        409: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
-1013        409: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
-1014        409: symbol=opensource_print;  lookup in file=/lib64/libdl.so.2 [0]
-1015        409: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
-1016        409: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
-1017        409: symbol=opensource_print;  lookup in file=./opensource_v2/libopensource.so.2 [0]
-1018        409: binding file ./libvendor2.so [0] to ./opensource_v2/libopensource.so.2 [0]: normal symbol `opensource_print' [libopensource.so.2]
-```
-
-#####4.2.6 用LD_DEBUG 来debug 依赖库和符号绑定的过程(针对使用"dlopen"等API，显式加载共享库的情况)
-```
-[root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main dlopen
------------------------general--------------------
-opensource v1 print, called by vendor 1
-opensource v2 print, called by vendor 2
-```
-
-首先看输出，从结果看，libvendor1.so调用了libopensource.so.1的"opensource_print"；libvendor2.so调用了libopensource.so.2的"opensource_print"。
-
-完整的LD_DEBUG输出在[robin.4.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.4.txt)
-
-我们来分析[robin.4.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.4.txt)输出：
-
-58行到68行，./opensource_v1/libopensource.so.1被查找到
-71行到81行，./opensource_v2/libopensource.so.2被查找到
-```
-58        409: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
-59        409: find library=libopensource.so.1 [0]; searching
-60        409:  search path=./opensource_v1/tls/x86_64:./opensource_v1/tls:./opensource_v1/x86_64:./opensource_v1      (RPATH from file ./lib     vendor1.so)
-61        409:   trying file=./opensource_v1/tls/x86_64/libopensource.so.1
-62        409:   trying file=./opensource_v1/tls/libopensource.so.1
-63        409:   trying file=./opensource_v1/x86_64/libopensource.so.1
-64        409:   trying file=./opensource_v1/libopensource.so.1
-65        409:
-66        409: file=libopensource.so.1 [0];  generating link map
-67        409:   dynamic: 0x00007ffa01a9ade8  base: 0x00007ffa0189a000   size: 0x0000000000201038
-68        409:     entry: 0x00007ffa0189a640  phdr: 0x00007ffa0189a040  phnum:                  7
-69        409:
-70        409:
-71        409: file=libopensource.so.2 [0];  needed by ./libvendor2.so [0]
-72        409: find library=libopensource.so.2 [0]; searching
-73        409:  search path=./opensource_v2/tls/x86_64:./opensource_v2/tls:./opensource_v2/x86_64:./opensource_v2      (RPATH from file ./lib     vendor2.so)
-74        409:   trying file=./opensource_v2/tls/x86_64/libopensource.so.2
-75        409:   trying file=./opensource_v2/tls/libopensource.so.2
-76        409:   trying file=./opensource_v2/x86_64/libopensource.so.2
-77        409:   trying file=./opensource_v2/libopensource.so.2
-78        409:
-79        409: file=libopensource.so.2 [0];  generating link map
-80        409:   dynamic: 0x00007ffa01898de8  base: 0x00007ffa01698000   size: 0x0000000000201038
-81        409:     entry: 0x00007ffa01698640  phdr: 0x00007ffa01698040  phnum:                  7
-```
-
-1031行到1037行，可以看到libvendor1.so调用的"opensource_print"被绑定到./opensource_v1/libopensource.so.1上；1070行到1077行，libvendor2.so调用的"opensource_print"被绑定到./opensource_v2/libopensource.so.2上:
-```
-1031      24314: symbol=opensource_print;  lookup in file=./main [0]
-1032      24314: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
-1033      24314: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
-1034      24314: symbol=opensource_print;  lookup in file=/lib64/libdl.so.2 [0]
-1035      24314: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
-1036      24314: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
-1037      24314: binding file ./libvendor1.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print' [libopensource.so.1]
-```
-```
-1070      24314: symbol=opensource_print;  lookup in file=./main [0]
-1071      24314: symbol=opensource_print;  lookup in file=./libvendor1.so [0]
-1072      24314: symbol=opensource_print;  lookup in file=./libvendor2.so [0]
-1073      24314: symbol=opensource_print;  lookup in file=/lib64/libdl.so.2 [0]
-1074      24314: symbol=opensource_print;  lookup in file=/lib64/libc.so.6 [0]
-1075      24314: symbol=opensource_print;  lookup in file=./opensource_v1/libopensource.so.1 [0]
-1076      24314: symbol=opensource_print;  lookup in file=./opensource_v2/libopensource.so.2 [0]
-1077      24314: binding file ./libvendor2.so [0] to ./opensource_v2/libopensource.so.2 [0]: normal symbol `opensource_print' [libopensource.so.2]
-```
-
-####4.2.7 推测结论
-**猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。**
 
 ##5. 参考文献
 >\[1] 一篇blog，<https://blog.habets.se/2012/05/Shared-libraries-diamond-problem>
