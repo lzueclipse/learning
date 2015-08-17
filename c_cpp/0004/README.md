@@ -708,7 +708,9 @@ opensource v1 print, called by vendor 2
 
 **猜测: 根据4.1.5和4.1.6，只有./opensource_v1/libopensource.so.1被查找，所以只有./opensource_v1/libopensource.so.1里的"opensource_print"会被绑定**
 
-我们是有证据支持这个猜测的，编辑[same_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/same_soname_without_default_symver.sh)，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
+**我们是有证据支持这个猜测的。**
+
+编辑[same_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/same_soname_without_default_symver.sh)，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
 ```
 #main.c
 #gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor1 -lvendor2 -ldl
