@@ -37,7 +37,7 @@ C源代码:
 
 1)其中vendor1.c会被编译生成libvendor1.so，vendor2.c会被编译生成libvendor2.so；
 
-opensource_v1.c会被编译生成libopensource.so.xxx(xxx值表示版本信息，后续实验会给定真实值)，opensource_v2.c会被编译成libopensource.so.xxx；
+opensource_v1.c会被编译生成./opensource_v1/libopensource.so.xxx(xxx值表示版本信息，后续实验会给定真实值)，opensource_v2.c会被编译成./opensource_v2/libopensource.so.xxx；
 
 libvendor1.so会依赖opensource_v1.c生成的libopensource.so.xxx, libvendor2.so会依赖opensource_v2.c生成的libopensource.so.xxx,
 
