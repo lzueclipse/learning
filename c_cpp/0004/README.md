@@ -281,9 +281,9 @@ opensource v1 print, called by vendor 2
 
 ####3.1.7 推测结论
 
-**猜测: 根据3.1.5和3.1.6，虽然./opensource_v1/libopensource.so.1和./opensource_v2/libopensource.so.2都被查找到，但是./opensource_v1/libopensource.so.1的位置靠前，所以符号"opensource_print"先在./opensource_v1/libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
+**!!!!!!猜测: 根据3.1.5和3.1.6，虽然./opensource_v1/libopensource.so.1和./opensource_v2/libopensource.so.2都被查找到，但是./opensource_v1/libopensource.so.1的位置靠前，所以符号"opensource_print"先在./opensource_v1/libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
 
-**我们是有证据支持这个猜测的。**
+**!!!!!!我们是有证据支持这个猜测的。**
 
 编辑[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh)，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
 ```
@@ -319,7 +319,7 @@ opensource v2 print, called by vendor 1
 opensource v2 print, called by vendor 2
 ```
 
-**推论的延伸: 如果./opensource_v2/libopensource.so.2改名为./opensource_v2/liborobin.so.2.0，和本次测试时一样的结果(此处在列举测试结果）。**
+**!!!!!!推论的延伸: 如果./opensource_v2/libopensource.so.2改名为./opensource_v2/liborobin.so.2.0，和本次测试时一样的结果(此处在列举测试结果）。**
 
 ####3.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
