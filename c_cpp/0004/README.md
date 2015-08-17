@@ -216,6 +216,7 @@ opensource v1 print, called by vendor 2
 
 
 #####3.1.6 用LD_DEBUG 来debug 依赖库和符号绑定的过程(针对使用"dlopen"等API，显式加载共享库的情况)
+和3.1.5差不多一样。
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main dlopen
 ----------------------dlopen----------------------
