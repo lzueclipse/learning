@@ -812,7 +812,7 @@ Dynamic section at offset 0xdc8 contains 29 entries:
 opensource v1 print, called by vendor 1
 opensource v1 print, called by vendor 2
 ```
-[robin.7.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.7.txt)
+对应的完整的LD_DEBUG输出，[robin.7.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.7.txt)
 
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main dlopen
@@ -820,12 +820,12 @@ opensource v1 print, called by vendor 2
 opensource v1 print, called by vendor 1
 opensource v1 print, called by vendor 2
 ```
-[robin.8.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.8.txt)
+对应的完整的LD_DEBUG,[robin.8.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.8.txt)
 
 ##5. 结论
-1)对于不同版本的libopensource.so共享库，两个版本的库都会被查找，最终绑定符号时，绑定的是查找时顺序靠前的共享库的符号。
+1)对于不同版本的libopensource.so.xxx共享库，两个版本的共享库库都会被查找到，但有先后顺序；最终绑定的"opensource_print"符号，是先被查找到的共享库里的。
 
-这个情况延伸开来，如果其他完全不相干的共享库里有同名符号"opensource_print"，那么到底绑定哪个"opensource_print"，也是和共享库被查找顺序有关。
+这个情况延伸开来，如果其他完全不相干的共享库里有同名符号"opensource_print"，那么到底绑定哪个"opensource_print"，也是和共享库被查找到顺序有关。
 
 这个问题可以通过编译时指定"-Wl,--default-symver"来解决。
 
