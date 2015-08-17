@@ -542,15 +542,6 @@ libvendor2.so使用的libopensource.so.1相应3个文件放在"./opensource_v2"�
 ![图3](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/3.png "图3")
 
 #####4.1.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
-
-我们仅仅关注"NEEDED"，"RPATH"项。
-
-"NEEDED"表示依赖的库。
-
-"rpath"和"LD_LIBRARY_PATH"，表示查找依赖库会从这些列出的路径查找。
-
-更多细节所请自行Google。
-
 ```
 [root@node1 0004]# readelf -d main
 

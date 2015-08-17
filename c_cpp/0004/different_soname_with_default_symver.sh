@@ -37,7 +37,7 @@ rm -f *.o
 
 #main.c
 gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor1 -lvendor2 -ldl
-#gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor1 -lvendor2  -ldl
+#gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor2 -lvendor1 -ldl
 
 echo "Complile success"
 
