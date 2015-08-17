@@ -806,7 +806,7 @@ Dynamic section at offset 0xdc8 contains 29 entries:
                  U opensource_print@@libopensource.so.1
 ```
 
-**libvendor1.so和libvendor2.so使用了相同版本的libopensource.so.1，并且使用了相同的符号opensource_print@@libopensource.so.1，所以实验4.2和4.1是等价的实验，没必要再做下去了。 不过我还是列出了LD_DEBUG的输出，供参考。**
+**libvendor1.so和libvendor2.so使用了相同版本的libopensource.so.1，并且使用了相同的符号opensource_print@@libopensource.so.1，所以实验4.2和4.1是等价的实验，没必要再做下去了。 不过我还是列出了后续实验的LD_DEBUG的输出，供参考。**
 
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
@@ -814,7 +814,7 @@ Dynamic section at offset 0xdc8 contains 29 entries:
 opensource v1 print, called by vendor 1
 opensource v1 print, called by vendor 2
 ```
-对应的完整的LD_DEBUG输出，[robin.7.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.7.txt)
+对应的完整的LD_DEBUG输出为[robin.7.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.7.txt)
 
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main dlopen
@@ -822,7 +822,7 @@ opensource v1 print, called by vendor 2
 opensource v1 print, called by vendor 1
 opensource v1 print, called by vendor 2
 ```
-对应的完整的LD_DEBUG,[robin.8.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.8.txt)
+对应的完整的LD_DEBUG输出为[robin.8.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.8.txt)
 
 ##5. 结论
 1)对于不同版本的libopensource.so.xxx共享库，两个版本的共享库都会被查找到，但有先后顺序；最终绑定的"opensource_print"符号，是在先被查找到的共享库里的。
