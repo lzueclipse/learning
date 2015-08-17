@@ -319,7 +319,7 @@ opensource v2 print, called by vendor 1
 opensource v2 print, called by vendor 2
 ```
 
-**!!!!!!推论的延伸: 如果不使用libopensource.so.2这样和libopensource.so.1混淆的名字，而是使用一个其他的名字，和本次测试是一样的结果(此处不在给出测试结果）。**
+**!!!!!!推论的延伸: 如果不使用libopensource.so.2这样和libopensource.so.1混淆的名字，而是使用一个其他的名字，和本次测试是一样的结果(此处不在给出测试结果）。可以用[different_soname_with_default_symver_2.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_with_default_symver_2.sh) 来编译做实验**
 
 ####3.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
