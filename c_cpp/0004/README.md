@@ -319,7 +319,7 @@ opensource v2 print, called by vendor 1
 opensource v2 print, called by vendor 2
 ```
 
-**!!!!!!推论的延伸: 如果不使用libopensource.so.2这样和libopensource.so.1混淆的名字，而是使用一个其他的名字，和本次测试是一样的结果(此处不在给出测试结果）。可以用[different_soname_without_default_symver_2.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver_2.sh) 来编译做实验**
+**!!!!!!推论的延伸: 如果不使用libopensource.so.2这样和libopensource.so.1混淆的名字，而是使用一个其他的名字(例如librobin.so.2)，和本次测试是一样的结果(此处不在给出测试结果）。可以用[different_soname_without_default_symver_2.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver_2.sh) 来编译做实验**
 
 
 
@@ -654,6 +654,8 @@ opensource v1 print, called by vendor 2
 
 
 #####4.1.6 用LD_DEBUG 来debug 依赖库和符号绑定的过程(针对使用"dlopen"等API，显式加载共享库的情况)
+和4.1.5差不多一样。
+
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main dlopen
 ----------------------dlopen----------------------
