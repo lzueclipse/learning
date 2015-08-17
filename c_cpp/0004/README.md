@@ -829,7 +829,7 @@ opensource v1 print, called by vendor 2
 
 这个问题可以通过编译时指定"-Wl,--default-symver"来解决。
 
-2)对于相同版本的lbopensource.so.xxx共享库，只有其中的一个会被查找，只有这个被查找的共享库里的符号被绑定。
+2)对于相同版本的lbopensource.so.xxx共享库，只有其中的一个会被查找，只有这个被查找到的共享库里的符号被绑定。
 
 遇到这样的问题时，尝试下LD_PRELOAD，但不一定能完全解决问题。
 
