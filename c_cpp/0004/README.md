@@ -214,41 +214,6 @@ opensource v1 print, called by vendor 2
 1014       3774:
 ```
 
-**猜测: 虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到， 但是libopensource.so.1的位置靠前，所以符号"opensource_print"先在libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
-
-我们是有证据支持这个猜测的，编辑different_soname_without_default_symver.sh，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
-```
-#main.c
-#gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor1 -lvendor2 -ldl
-gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor2 -lvendor1 -ldl
-```
-
-重新编译：
-```
-[root@node1 0004]# sh different_soname_without_default_symver.sh
-Complile success
-```
-
-重新查看"readelf -d main", 和之前的比较，看到"libverndor2.so"位置被提前了：
-```
-[root@node1 0004]# readelf -d main
-
-Dynamic section at offset 0xde8 contains 28 entries:
-  Tag        Type                         Name/Value
-   0x0000000000000001 (NEEDED)             Shared library: [libvendor2.so]
-   0x0000000000000001 (NEEDED)             Shared library: [libvendor1.so]
-   0x0000000000000001 (NEEDED)             Shared library: [libdl.so.2]
-   0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
-   0x000000000000000f (RPATH)              Library rpath: [./]
-```
-
-运行程序，发现此时"opensource_print"被绑定成了libopensource.so.2的版本：
-```
-[root@node1 0004]# ./main general
------------------------general--------------------
-opensource v2 print, called by vendor 1
-opensource v2 print, called by vendor 2
-```
 
 #####3.1.6 用LD_DEBUG 来debug 依赖库和符号绑定的过程
 ```
@@ -260,9 +225,9 @@ opensource v1 print, called by vendor 2
 
 首先看输出，从结果看，仅仅调用了libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
 
-完整的LD_DEBUG输出在[robin.3.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)
+完整的LD_DEBUG输出在[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)
 
-我们来分析[robin.3.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)输出：
+我们来分析[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)输出：
 
 58行到69行，./opensource_v1/libopensource.so.1被查找到；71行到81行，./opensource_v2/libopensource.so.2被找到：
 ```
@@ -312,7 +277,42 @@ libvendor1.so调用的"opensource_print"被绑定到./opensource_v2/libopensourc
 1072      22438: binding file ./libvendor2.so [0] to ./opensource_v1/libopensource.so.1 [0]: normal symbol `opensource_print'
 ```
 
-**结论，和3.1.5一样**
+####3.1.7 推测结论
+**猜测: 虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到， 但是libopensource.so.1的位置靠前，所以符号"opensource_print"先在libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
+
+我们是有证据支持这个猜测的，编辑different_soname_without_default_symver.sh，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
+```
+#main.c
+#gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor1 -lvendor2 -ldl
+gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor2 -lvendor1 -ldl
+```
+
+重新编译：
+```
+[root@node1 0004]# sh different_soname_without_default_symver.sh
+Complile success
+```
+
+重新查看"readelf -d main", 和之前的比较，看到"libverndor2.so"位置被提前了：
+```
+[root@node1 0004]# readelf -d main
+
+Dynamic section at offset 0xde8 contains 28 entries:
+  Tag        Type                         Name/Value
+   0x0000000000000001 (NEEDED)             Shared library: [libvendor2.so]
+   0x0000000000000001 (NEEDED)             Shared library: [libvendor1.so]
+   0x0000000000000001 (NEEDED)             Shared library: [libdl.so.2]
+   0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+   0x000000000000000f (RPATH)              Library rpath: [./]
+```
+
+运行程序，发现此时"opensource_print"被绑定成了libopensource.so.2的版本：
+```
+[root@node1 0004]# ./main general
+-----------------------general--------------------
+opensource v2 print, called by vendor 1
+opensource v2 print, called by vendor 2
+```
 
 ####3.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
