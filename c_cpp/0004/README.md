@@ -157,7 +157,7 @@ opensource v1 print, called by vendor 2
 
 我们来分析[robin.1.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.1.txt)输出：
 
-58行到69行，./opensource_v1/libopensource.so.1被查找到；71行到81行，./opensource_v2/libopensource.so.2被找到：
+58行到68行，./opensource_v1/libopensource.so.1被查找到；71行到81行，./opensource_v2/libopensource.so.2被找到：
 ```
 58       3774: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
 59       3774: find library=libopensource.so.1 [0]; searching
@@ -214,7 +214,7 @@ opensource v1 print, called by vendor 2
 1014       3774:
 ```
 
-**猜测: 虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到， 但是libopensource.so.1的位置靠前，所以"opensource_print"先在libopensource.so.2中被查找到，并绑定；一旦查找到一个，就不再查找。**
+**猜测: 虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到， 但是libopensource.so.1的位置靠前，所以符号"opensource_print"先在libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
 
 我们是有证据支持这个猜测的，编辑different_soname_without_default_symver.sh，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
 ```
