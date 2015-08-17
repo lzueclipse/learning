@@ -281,7 +281,7 @@ libvendor1.so调用的"opensource_print"被绑定到./opensource_v1/libopensourc
 
 **猜测: 根据3.1.5和3.1.6，虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到，但是libopensource.so.1的位置靠前，所以符号"opensource_print"先在libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
 
-我们是有证据支持这个猜测的，编辑different_soname_without_default_symver.sh，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
+我们是有证据支持这个猜测的，编辑[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh)，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
 ```
 #main.c
 #gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor1 -lvendor2 -ldl
@@ -517,19 +517,19 @@ opensource v2 print, called by vendor 2
 **猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。**
 
 
-##4.libopensource.so的版本不相同，系统如何查找依赖库和绑定符号
+##4.libopensource.so的版本相同，系统如何查找依赖库和绑定符号
 
-在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.2.0。
+在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.1.0。
 
-libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将依赖./opensource_v2/libopensource.so.2.0。
+libvendor1.so将依赖./opensource_v1/libopensource.so.1.0； libvendor2.so将依赖./opensource_v2/libopensource.so.1.0。
 
 ###4.1 符号表不带版本信息的
 gcc编译的符号，默认是不带版本信息的。
 
-#####4.1.1 我们用[different_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver.sh) 来编译。
+#####4.1.1 我们用[same_soname_without_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/same_soname_without_default_symver.sh) 来编译。
 
 ```
-[root@node1 0004]# sh different_soname_without_default_symver.sh
+[root@node1 0004]# sh same_soname_without_default_symver.sh
 Complile success
 ```
 
