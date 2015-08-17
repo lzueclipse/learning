@@ -225,11 +225,11 @@ opensource v1 print, called by vendor 2
 
 首先看输出，从结果看，仅仅调用了libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
 
-完整的LD_DEBUG输出在[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)
+完整的LD_DEBUG输出在[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)
 
-我们来分析[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)输出：
+我们来分析[robin.2.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.2.txt)输出：
 
-58行到69行，./opensource_v1/libopensource.so.1被查找到；71行到81行，./opensource_v2/libopensource.so.2被找到：
+58行到68行，./opensource_v1/libopensource.so.1被查找到；71行到81行，./opensource_v2/libopensource.so.2被找到：
 ```
 58      22438: file=libopensource.so.1 [0];  needed by ./libvendor1.so [0]
 59      22438: find library=libopensource.so.1 [0]; searching
@@ -278,7 +278,8 @@ libvendor1.so调用的"opensource_print"被绑定到./opensource_v2/libopensourc
 ```
 
 ####3.1.7 推测结论
-**猜测: 虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到， 但是libopensource.so.1的位置靠前，所以符号"opensource_print"先在libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
+
+**猜测: 根据3.1.5和3.1.6，虽然两个版本的libopensource.so(libopensource.so.1, libopensource.so.2)都被查找到，但是libopensource.so.1的位置靠前，所以符号"opensource_print"先在libopensource.so.1中被查找到，并绑定；一旦查找到一个，就不再查找。**
 
 我们是有证据支持这个猜测的，编辑different_soname_without_default_symver.sh，仅仅改变"-lvendor2","-lvendor1"的顺序，让"-lvendor2"靠前，如下：
 ```
@@ -293,7 +294,7 @@ gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor2 -lvendor1 -ldl
 Complile success
 ```
 
-重新查看"readelf -d main", 和之前的比较，看到"libverndor2.so"位置被提前了：
+重新查看"readelf -d main", 和之前的"readelf -d main"比较，看到"libverndor2.so"位置被提前了：
 ```
 [root@node1 0004]# readelf -d main
 
@@ -449,9 +450,9 @@ opensource v2 print, called by vendor 2
 
 **猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。**
 
-##7. 根据实验得出的结论 (所以未必100%正确，但一直也没见到权威的资料描述这些情况)
+##5. 根据实验得出的结论 (所以未必100%正确，但一直也没见到权威的资料描述这些情况)
 
-##8. 参考文献
+##6. 参考文献
 >\[1] 一篇blog，<https://blog.habets.se/2012/05/Shared-libraries-diamond-problem>
 
 >\[2] Google
