@@ -25,7 +25,7 @@ libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.s
 
 如果这几个问题您没有答案或者觉得比较含糊，建议您跟随我的实验，我们一起探讨下。
 
-因为我个人没看过连接器和加载器的源码，估计也不好看懂，所以我们的探讨集中在我们看到的证据上，并试图给出一些粗浅的结论。
+因为我个人没看过连接器和加载器的源码，所以我们的探讨集中在我们看到的证据上，并试图给出一些粗浅的结论。
 
 ##2.相关代码
 具体代码在github中。
@@ -515,7 +515,7 @@ opensource v2 print, called by vendor 2
 **猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。**
 
 
-##4. libopensource.so的版本相同，系统如何查找依赖库和绑定符号
+##4. libopensource.so.xxx的版本相同，系统如何查找依赖库和绑定符号
 
 在这个实验里我们编译opensource_v1.c生成./opensource_v1/libopensource.so.1.0；编译opensource_v2.c生成./opensource_v2/libopensource.so.1.0。
 
