@@ -215,7 +215,7 @@ opensource v1 print, called by vendor 2
 ```
 
 
-#####3.1.6 用LD_DEBUG 来debug 依赖库和符号绑定的过程
+#####3.1.6 用LD_DEBUG 来debug 依赖库和符号绑定的过程(针对使用"dlopen"等API显式加载共享库)
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main dlopen
 ----------------------dlopen----------------------
@@ -294,7 +294,7 @@ gcc -Wl,-rpath=./ -o main  main.c -L. -lvendor2 -lvendor1 -ldl
 Complile success
 ```
 
-重新查看"readelf -d main", 和之前的"readelf -d main"比较，看到"libverndor2.so"位置被提前了：
+重新查看"readelf -d main", 和之前的3.1.3比较，看到"libverndor2.so"位置被提前了：
 ```
 [root@node1 0004]# readelf -d main
 
