@@ -5,21 +5,21 @@
 
 ![图1](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0004/diamond_linking.jpg "图1")
 
-如上图所示，我们的程序将要load某厂家的共享库libvendor1.so，同时也要使用另外一个厂家的共享库libvendor2.so。
+如上图所示，我们的程序将要使用某厂家的共享库libvendor1.so，同时也要使用另外一个厂家的共享库libvendor2.so。
 
 libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.so.xxx(xxx表示版本)。
 
 但是这两个厂家提供给我们的都是自己编译维护的libopensource.so.xxx。
 
-我们遇到的问题是，虽然两个厂家提供的libopensource.so.xxx是相同版本，但是互相不兼容，导致我们遇到的现象是：
+我们遇到的问题是：
 
-只有其中一个厂家的库能正常工作，因为只有一个厂家提供的libopensource.so.xxx被加载, 另外一个厂家的共享库使用了不是自己提供的libopensource.so.xxx。
+一个厂家使用了另外一个厂家提供libopensource.so.xxx，而不是自己提供的，出现兼容性问题。
 
 这个问题扩展展开来：
 
-1)如果libopensource.so.xxx的版本不相同，是否两个版本的libopensource.so.xxx都会被查找到(lookup)？还是只有某一个版本libopensource.so.xxx的被查找到？符号绑定（binding）绑定的是哪个版本的？
+1)如果libopensource.so.xxx的版本不相同，加载时，是否两个版本的libopensource.so.xxx都会被查找到(lookup)？还是只有某一个版本libopensource.so.xxx的被查找到？符号绑定（binding）的是哪个版本的？
 
-2)如果libopensource.so.xxx的版本相同，是否两个相同版本的libopensource.so.xxx都会被查找到？还是只挑选其中一个版本的libopensource.so.xxx被查找到？符号绑定的是哪个版本的？
+2)如果libopensource.so.xxx的版本相同，加载时，是否两个相同版本的libopensource.so.xxx都会被查找到？还是只挑选其中一个版本的libopensource.so.xxx被查找到？符号绑定的是哪个版本的？
 
 3)对于问题1)和2)，采用系统默认加载和使用"dlopen"等API显式加载，又有什么不同？
 
