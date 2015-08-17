@@ -17,13 +17,13 @@ libvendor1.so和libvendor2.so都将使用某知名开源共享库libopensource.s
 
 这个问题扩展展开来：
 
-1)如果libopensource.so.xxx的版本不相同，加载时，是否两个版本的libopensource.so.xxx都会被查找到(lookup)？还是只有某一个版本libopensource.so.xxx的被查找到？符号绑定（binding）的是哪个版本的？
+1)如果libopensource.so.xxx的版本不相同，符号绑定（binding）的是哪个版本的？
 
-2)如果libopensource.so.xxx的版本相同，加载时，是否两个相同版本的libopensource.so.xxx都会被查找到？还是只挑选其中一个版本的libopensource.so.xxx被查找到？符号绑定的是哪个版本的？
+2)如果libopensource.so.xxx的版本相同，符号绑定的是哪个版本的？
 
 3)对于问题1)和2)，采用系统默认加载和使用"dlopen"等API显式加载，又有什么不同？
 
-如果这几个问题您没有答案，建议您跟随我的实验，我们一起探讨下。
+如果这几个问题您没有答案或者觉得比较含糊，建议您跟随我的实验，我们一起探讨下。
 
 因为我个人没看过连接器和加载器的源码，估计也不好看懂，所以我们的探讨集中在我们看到的证据上，并试图给出一些粗浅的结论。
 
