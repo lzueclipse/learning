@@ -1,4 +1,4 @@
-#以菱形链接(diamond link)为例，探讨Linux下 连接器和加载器对Shared libarary兼容性的处理
+#以菱形链接(diamond link)为例，探讨Linux下连接器和加载器对Shared libarary兼容性的处理
 
 ##1. 什么是菱形链接(diamond link)
 菱形链接(diamond link)能十分清楚的描述出我们要讨论的问题。
