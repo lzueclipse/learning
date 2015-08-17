@@ -451,7 +451,7 @@ opensource v2 print, called by vendor 2
 
 #####3.2.6 用LD_DEBUG 来debug 依赖库和符号绑定的过程(针对使用"dlopen"等API，显式加载共享库的情况)
 ```
-[root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
+[root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main dlopen
 -----------------------general--------------------
 opensource v1 print, called by vendor 1
 opensource v2 print, called by vendor 2
@@ -459,9 +459,9 @@ opensource v2 print, called by vendor 2
 
 首先看输出，从结果看，libvendor1.so调用了libopensource.so.1的"opensource_print"；libvendor2.so调用了libopensource.so.2的"opensource_print"。
 
-完整的LD_DEBUG输出在[robin.3.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)
+完整的LD_DEBUG输出在[robin.4.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.4.txt)
 
-我们来分析[robin.3.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)输出：
+我们来分析[robin.4.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.4.txt)输出：
 
 58行到68行，./opensource_v1/libopensource.so.1被查找到
 71行到81行，./opensource_v2/libopensource.so.2被查找到
