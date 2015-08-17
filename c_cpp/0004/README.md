@@ -593,7 +593,7 @@ opensource v1 print, called by vendor 1
 opensource v1 print, called by vendor 2
 ```
 
-首先看输出，从结果看，仅仅调用了libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
+首先看输出，从结果看，仅仅调用了./opensource_v1/libopensource.so.1(opensource_v1.c)里的"opensource_print函数"。
 
 完整的LD_DEBUG输出在[robin.5.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.5.txt)
 
@@ -733,19 +733,19 @@ opensource v2 print, called by vendor 2
 ####4.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
 
-#####4.2.1 我们用[different_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_with_default_symver.sh) 来编译
+#####4.2.1 我们用[same_soname_with_default_symver.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/same_soname_with_default_symver.sh) 来编译
 
 ```
-[root@node1 0004]# sh different_soname_with_default_symver.sh
+[root@node1 0004]# sh same_soname_with_default_symver.sh
 Complile success
 ```
 
 #####4.2.2 列出编译生成的文件
-略，和3.1.2一样.
+略，和4.1.2一样.
 
 #####4.2.3 用readelf查看编译生成的main，libvendor1.so，libvendor2.so
 
-可以看出和3.1.3是一样的。
+可以看出和4.1.3是一样的。
 
 ```
 [root@node1 0004]# readelf -d main
@@ -775,13 +775,13 @@ Dynamic section at offset 0xdc8 contains 29 entries:
 
 Dynamic section at offset 0xdc8 contains 29 entries:
   Tag        Type                         Name/Value
-   0x0000000000000001 (NEEDED)             Shared library: [libopensource.so.2]
+   0x0000000000000001 (NEEDED)             Shared library: [libopensource.so.1]
    0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
    0x000000000000000e (SONAME)             Library soname: [libvendor2.so]
    0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
 ```
 
-#####4.2.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到不同的符号"opensource_print@@libopensource.so.1"和opensource_print@@libopensource.so.2
+#####4.2.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到相同的符号"opensource_print@@libopensource.so.1"
 
 ```
 [root@node1 0004]# nm libvendor1.so  |grep opensource_print
@@ -789,7 +789,7 @@ Dynamic section at offset 0xdc8 contains 29 entries:
 ```
 ```
 [root@node1 0004]# nm libvendor2.so  |grep opensource_print
-                 U opensource_print@@libopensource.so.2
+                 U opensource_print@@libopensource.so.1
 ```
 
 #####4.2.5 用LD_DEBUG 来debug 依赖库和符号绑定的过程(针对默认加载动态库的情况)
@@ -797,10 +797,10 @@ Dynamic section at offset 0xdc8 contains 29 entries:
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
 -----------------------general--------------------
 opensource v1 print, called by vendor 1
-opensource v2 print, called by vendor 2
+opensource v1 print, called by vendor 2
 ```
 
-首先看输出，从结果看，libvendor1.so调用了libopensource.so.1的"opensource_print"；libvendor2.so调用了libopensource.so.2的"opensource_print"。
+首先看输出，从结果看，仅仅调用了./opensource_v1/libopensoure.so.1中的"opensource_print"。
 
 完整的LD_DEBUG输出在[robin.3.txt](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/robin.3.txt)
 
