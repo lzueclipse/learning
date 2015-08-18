@@ -68,32 +68,25 @@ void int_to_md5(uint64_t input, md5_digest_t &output )
 
 
 
+/*********************************cache*********************************/
 
-
-
-
-
-#if 0
 cache_t* cache_create(uint32_t area_size, uint32_t root_bits)
 {
     cache_t *cache;
 
-    if((cache = (pd_cache_t*)malloc(sizeof(struct _pd_cache_t))) == NULL)
+    cache = (cache_t*) malloc(sizeof(cache_t));
+    if (cache == NULL)
     {
-        pd_errno = CRMapError(__FILE__, __LINE__);
+        printf("Malloc cache_t fails\n");
         return(NULL);
     }
 
-    memset((void*)cache, 0, sizeof(struct _pd_cache_t));
+    memset(cache, 0, sizeof(cache_t));
 
     cache->area_size = area_size;
     cache->bits      = root_bits;
-    cache->may_lock  = may_lock;
-    cache->dtor      = dtor;
-    cache->user_data = user_data;
 
-    cacheInit(cache);
+    //cache_init(cache);
 
-    return(cache);
+    return cache;
 }
-#endif
