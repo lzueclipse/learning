@@ -132,6 +132,25 @@ Dynamic section at offset 0xde8 contains 27 entries:
  0x000000000000000f (RPATH)              Library rpath: [./opensource_v2]
 ```
 
+```
+
+[root@node1 0004]# readelf -d opensource_v1/libopensource.so.1.0
+
+Dynamic section at offset 0xe08 contains 25 entries:
+  Tag        Type                         Name/Value
+  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+  0x000000000000000e (SONAME)             Library soname: [libopensource.so.1]
+```
+
+```
+[root@node1 0004]# readelf -d opensource_v2/libopensource.so.2.0
+
+Dynamic section at offset 0xe08 contains 25 entries:
+  Tag        Type                         Name/Value
+   0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+   0x000000000000000e (SONAME)             Library soname: [libopensource.so.2]
+```
+
 #####3.1.4 用nm|grep opensource_print查看编译生成的libvendor1.so和libvendor2.so, 可以看到使用相同符号"opensource_print" 
 ```
 [root@node1 0004]# nm libvendor1.so |grep opensource_print
