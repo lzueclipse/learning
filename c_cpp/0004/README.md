@@ -319,7 +319,7 @@ opensource v2 print, called by vendor 1
 opensource v2 print, called by vendor 2
 ```
 
-**!!!!!!推论的延伸: 如果不使用libopensource.so.2这样和libopensource.so.1混淆的名字，而是使用一个其他的名字(例如librobin.so.2)，和本次测试是一样的结果(此处不在给出测试结果）。可以用[different_soname_without_default_symver_2.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver_2.sh) 来编译做实验**
+**!!!!!!推论的延伸: 如果不使用libopensource.so.2这样和libopensource.so.1混淆的名字，而是使用一个其他的名字(例如librobin.so.2)，和本次测试是一样的结果(此处不再给出测试结果）。可以用[different_soname_without_default_symver_2.sh](https://github.com/lzueclipse/learning/blob/master/c_cpp/0004/different_soname_without_default_symver_2.sh) 来编译做实验**
 
 
 
