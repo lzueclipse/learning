@@ -74,19 +74,22 @@ void int_to_md5(uint64_t input, md5_digest_t &output )
 void cache_init(cache_t *cache)
 {
     size_t page_size;
-    uint64_t count;
+    uint32_t count;
 
     if(cache == NULL)
+    {
+        printf("%s:cache is NULL\n", __FUNCTION__);
         return;
+    }
 
     /* Initial page size using provided area size */
-    page_size = cache.area_size * sizeof(cache_node_t);
+    page_size = cache->area_size * sizeof(cache_node_t);
 
     /* now round to nearest page size */
     //ALIGN_TO_PAGE(page_size);
 
     /* this becomes the number of nodes to allocate in one area */
-    page_size /= sizeof(pd_cnode_t);
+    page_size /= sizeof(cache_node_t);
 
     if(page_size < CACHE_AREA_SIZE_MIN)
     {
@@ -101,16 +104,13 @@ void cache_init(cache_t *cache)
         uint32_t size;
         
         count = (1 << cache->bits);
-        size = sizeof(pd_cnodePtr) * count;	/* @64-bit truncation possible */
+        size = sizeof(cache_node_t *) * count;	/* @64-bit truncation possible */
 
-        cache->cache_root = (pd_cnodePtr*)malloc(size);
+        cache->cache_root = (cache_node_t **)malloc(size);
 
         if(cache->cache_root == NULL && cache->bits > 0)
         {
-            WarningA(ENOMEM,
-                "PDCacheInit: Failed to allocate %u bytes for root "
-                "entries. Trying to allocate %u bytes.",
-                size, size >> 1);
+            printf("%s:Malloc fails, cache->bits=%u\n",__FUNCTION__, cache->bits);
             cache->bits -= 1;
         }
         else
@@ -120,18 +120,14 @@ void cache_init(cache_t *cache)
         }
     }
 
-    if(cache->cache_root == NULL)
+    if(cache->cache_root == NULL || cache->bits == 0)
     {
-        /*
-        * Could not allocate the root array. As we may not fail we
-        * use the default root instead (which we may not release)
-        */
-        cache->cache_root = &cache->default_root;
+        printf("%s: cache_root is NULL, or bits is 0, bits=%u\n", cache->bits);
     }
 
     /* clear the root array */
     count = (1 << cache->bits);
-    memset(cache->cache_root, 0, sizeof(pd_cnodePtr) * count);
+    memset(cache->cache_root, 0, sizeof(cache_node *) * count);
     cache->mask = count - 1;
 }
 
@@ -142,7 +138,7 @@ cache_t* cache_create(uint32_t area_size, uint32_t root_bits)
     cache = (cache_t*) malloc(sizeof(cache_t));
     if (cache == NULL)
     {
-        printf("Malloc cache_t fails\n");
+        printf("%s:Malloc cache_t fails\n",__FUNCTION__);
         return(NULL);
     }
 

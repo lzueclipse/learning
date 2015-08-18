@@ -15,7 +15,8 @@
 #define LEN 2048
 #define MAXNUM 20000000
 #define SLEEP 20
-#define CACHE_MAGIC 0x1234567890
+#define CACHE_MAGIC 0x12345678
+#define CACHE_AREA_SIZE_MIN  1024
 
 /*
  * 128 bits md5sum
@@ -97,7 +98,7 @@ typedef struct cache_page
 
 typedef struct cache
 {
-    uint64_t magic;                 
+    uint32_t magic;                 
     uint32_t iter_lock; 
 
     cache_node_t **cache_root; 
