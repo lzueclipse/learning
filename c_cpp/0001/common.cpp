@@ -66,17 +66,17 @@ void int_to_md5(uint64_t input, md5_digest_t &output )
     MD5_Final(output.digest_uchar,&ctx);
 }
 
-/*!
-* \brief    Create a cache instance
-*
-* \param    area_size   area_size to be used (no of nodes to be stored in a single cache page)
-* \param    root_bits   size of the root array, in bits
-* \return   A newly allocated cache instance on success, NULL on failure.
-*/
 
+
+
+
+
+
+
+#if 0
 cache_t* cache_create(uint32_t area_size, uint32_t root_bits)
 {
-    struct __cache_t *cache;
+    cache_t *cache;
 
     if((cache = (pd_cache_t*)malloc(sizeof(struct _pd_cache_t))) == NULL)
     {
@@ -96,4 +96,4 @@ cache_t* cache_create(uint32_t area_size, uint32_t root_bits)
 
     return(cache);
 }
-
+#endif
