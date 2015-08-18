@@ -64,6 +64,9 @@ void int_to_md5(uint64_t input, md5_digest_t &output );
 
 
 
+
+/******************************************cache********************************************/
+
 typedef struct cache_node
 {
     md5_digest_t digest;
@@ -72,3 +75,53 @@ typedef struct cache_node
     uint64_t dcid;
     size_t ref;
 }cache_node_t;
+
+typedef struct cache_page
+{
+    size_t page_size;
+    uint32_t page_locked;
+    uint32_t node_avail;
+    struct cache_page *prev;
+    struct cache_page *next;
+    
+    union
+    {
+        void *tail;                
+        unsigned char pad0[8];
+    }end;
+
+    size_t pad1;
+
+}cache_page_t;
+
+typedef struct cache
+{
+    uint32_t magic;                 
+    uint32_t iter_lock; 
+
+    cache_node_t **cache_root; 
+    cache_node_t  *default_root; 
+    uint32_t mask; 
+
+    cache_node_t *free_list;
+
+    /* cache page memory management */
+    cache_page_t *start_page;
+    cache_page_t *last_page;
+    cache_node_t *area_ptr;
+
+    uint32_t npages; 
+    uint32_t node_avail;
+    uint64_t nfree;
+    
+    /* cache configuration */
+    uint32_t area_size;
+    uint32_t bits; 
+
+    /* stats */
+    uint64_t cache_size;
+    uint64_t cache_items;
+    uint64_t nhits;
+    uint64_t nmiss;
+
+}cache_t;
