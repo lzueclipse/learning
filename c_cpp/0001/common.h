@@ -16,6 +16,9 @@
 #define MAXNUM 20000000
 #define SLEEP 20
 
+/*
+ * 128 bits md5sum
+ */
 typedef struct
 {
     union
@@ -25,6 +28,9 @@ typedef struct
     };
 }md5_digest_t;
 
+/*
+ * md5 compare
+ */
 struct md5_less : public std::less<md5_digest_t>
 {
     bool operator()(const md5_digest_t& a, const md5_digest_t& b) const
@@ -51,10 +57,4 @@ struct md5_less : public std::less<md5_digest_t>
         }
     }
 };
-
-extern void display_mallinfo();
-
-extern void output_top();
-
-extern void int_to_md5(uint64_t input, md5_digest_t &output );
 

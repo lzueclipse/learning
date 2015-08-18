@@ -74,9 +74,9 @@ void int_to_md5(uint64_t input, md5_digest_t &output )
 * \return   A newly allocated cache instance on success, NULL on failure.
 */
 
-cache_t* PDCacheCreate(uint32_t area_size, uint32_t root_bits)
+cache_t* cache_create(uint32_t area_size, uint32_t root_bits)
 {
-    struct _pd_cache_t *cache;
+    struct __cache_t *cache;
 
     if((cache = (pd_cache_t*)malloc(sizeof(struct _pd_cache_t))) == NULL)
     {
