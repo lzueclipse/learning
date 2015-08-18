@@ -70,6 +70,71 @@ void int_to_md5(uint64_t input, md5_digest_t &output )
 
 /*********************************cache*********************************/
 
+
+void cache_init(cache_t *cache)
+{
+    size_t page_size;
+    uint64_t count;
+
+    if(cache == NULL)
+        return;
+
+    /* Initial page size using provided area size */
+    page_size = cache.area_size * sizeof(cache_node_t);
+
+    /* now round to nearest page size */
+    //ALIGN_TO_PAGE(page_size);
+
+    /* this becomes the number of nodes to allocate in one area */
+    page_size /= sizeof(pd_cnode_t);
+
+    if(page_size < CACHE_AREA_SIZE_MIN)
+    {
+        page_size = CACHE_AREA_SIZE_MIN;
+    }
+
+    cache->area_size = (uint32_t) page_size;
+
+    /* Initialize the root array */
+    for(;;)
+    {
+        uint32_t size;
+        
+        count = (1 << cache->bits);
+        size = sizeof(pd_cnodePtr) * count;	/* @64-bit truncation possible */
+
+        cache->cache_root = (pd_cnodePtr*)malloc(size);
+
+        if(cache->cache_root == NULL && cache->bits > 0)
+        {
+            WarningA(ENOMEM,
+                "PDCacheInit: Failed to allocate %u bytes for root "
+                "entries. Trying to allocate %u bytes.",
+                size, size >> 1);
+            cache->bits -= 1;
+        }
+        else
+        {
+            /* malloc succeeded OR can't reduce bits anymore */
+            break;
+        }
+    }
+
+    if(cache->cache_root == NULL)
+    {
+        /*
+        * Could not allocate the root array. As we may not fail we
+        * use the default root instead (which we may not release)
+        */
+        cache->cache_root = &cache->default_root;
+    }
+
+    /* clear the root array */
+    count = (1 << cache->bits);
+    memset(cache->cache_root, 0, sizeof(pd_cnodePtr) * count);
+    cache->mask = count - 1;
+}
+
 cache_t* cache_create(uint32_t area_size, uint32_t root_bits)
 {
     cache_t *cache;
@@ -85,8 +150,9 @@ cache_t* cache_create(uint32_t area_size, uint32_t root_bits)
 
     cache->area_size = area_size;
     cache->bits      = root_bits;
-
-    //cache_init(cache);
+    cache->magic      = CACHE_MAGIC;
+    
+    cache_init(cache);
 
     return cache;
 }
