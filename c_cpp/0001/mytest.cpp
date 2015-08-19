@@ -64,6 +64,23 @@ void test_map()
 
 int main(int argc, char **argv) 
 {
-    test_map();
+    if(argc != 2 )
+    {
+        printf("usage: %s [map|cache] \n", argv[0]);
+        exit(-1);
+    }
+    
+    if(strcmp (argv[1], "map") == 0 )
+    {
+        test_map();
+    }
+    else if(strcmp (argv[1], "cache") == 0 )
+    {
+    }
+    else
+    {
+        printf("usage: %s [map|cache] \n", argv[0]);
+        exit(-1);
+    }
     return 0;
 }
