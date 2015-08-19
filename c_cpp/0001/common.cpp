@@ -51,9 +51,9 @@ void output_top()
 
 
 /*
- * int   --md5-->   128bits md5sum
+ * uint64   --md5-->   128bits md5sum
  */
-void int_to_md5(uint64_t input, md5_digest_t &output )
+void uint64_to_md5(uint64_t input, md5_digest_t &output )
 {
     char data[LEN] = {'\0'};
     snprintf(data, sizeof(data), "%" PRIu64, input);
@@ -67,14 +67,54 @@ void int_to_md5(uint64_t input, md5_digest_t &output )
 }
 
 
+int32_t md5_digest_compare(const md5_digest_t &a, const md5_digest_t &b)
+{
+    int32_t res = 0;
 
-/*********************************cache*********************************/
+    if(a.digest_uint[0] != b.digest_uint[0])
+    {
+        res = (int32_t)a.digest_uint[0] - (int32_t)b.digest_uint[0];
+    }
+    else if(a.digest_uint[1] != b.digest_uint[1])
+    {
+        res = (int32_t)a.digest_uint[1] - (int32_t)b.digest_uint[1];
+    }
+    else if(a.digest_uint[2] != b.digest_uint[2])
+    {
+        res = (int32_t)a.digest_uint[2] - (int32_t)b.digest_uint[2];
+    }
+    else if(a.digest_uint[3] != b.digest_uint[3])
+    {
+        res = (int32_t)a.digest_uint[3] - (int32_t)b.digest_uint[3];
+    }
+    
+    return res;
+}
+
+
+static __inline__ void align_to_pow2(uint64_t *size, uint64_t pow2)
+{
+    pow2--;
+    *size =((*size) + pow2) & (~pow2);
+}
+
+static __inline__ uint32_t get_digest_index(cache_t *cache, const md5_digest_t *digest)
+{
+    return *((uint32_t*)(&(digest->digest_uchar[12]))) & cache->mask;
+}
+
+static __inline__ cache_node_t* get_root_node(cache_t *cache, const md5_digest_t *digest)
+{
+    uint32_t index = get_digest_index(cache, digest);
+    return cache->cache_root[index];
+}
 
 
 void cache_init(cache_t *cache)
 {
-    size_t page_size;
-    uint32_t count;
+    uint64_t page_size;
+    uint64_t area_size;
+    uint64_t count;
 
     if(cache == NULL)
     {
@@ -82,31 +122,26 @@ void cache_init(cache_t *cache)
         return;
     }
 
-    /* Initial page size using provided area size */
     page_size = cache->area_size * sizeof(cache_node_t);
+    printf("%s:Before align, page_size = %u\n",__FUNCTION__, page_size);
+    align_to_pow2(&page_size, PAGE_SIZE);
+    printf("%s:After align, page_size = %u\n",__FUNCTION__, page_size);
 
-    /* now round to nearest page size */
-    //ALIGN_TO_PAGE(page_size);
-
-    /* this becomes the number of nodes to allocate in one area */
-    page_size /= sizeof(cache_node_t);
-
-    if(page_size < CACHE_AREA_SIZE_MIN)
+    area_size = page_size / sizeof(cache_node_t);
+    if(area_size < CACHE_AREA_SIZE_MIN)
     {
-        page_size = CACHE_AREA_SIZE_MIN;
+        area_size = CACHE_AREA_SIZE_MIN;
     }
 
-    cache->area_size = (uint32_t) page_size;
+    printf("%s:cache->area_szie, changes from %u to %u\n",__FUNCTION__, cache->area_size, page_size);
+    cache->area_size = area_size;
 
     /* Initialize the root array */
     for(;;)
     {
-        uint32_t size;
-        
         count = (1 << cache->bits);
-        size = sizeof(cache_node_t *) * count;	/* @64-bit truncation possible */
 
-        cache->cache_root = (cache_node_t **)malloc(size);
+        cache->cache_root = (cache_node_t **)malloc( sizeof(cache_node_t *) * count);
 
         if(cache->cache_root == NULL && cache->bits > 0)
         {
@@ -122,16 +157,18 @@ void cache_init(cache_t *cache)
 
     if(cache->cache_root == NULL || cache->bits == 0)
     {
-        printf("%s: cache_root is NULL, or bits is 0, bits=%u\n", cache->bits);
+        printf("%s: cache_root is NULL, or bits is 0, bits=%u\n", __FUNCTION__, cache->bits);
+        return;
     }
 
     /* clear the root array */
     count = (1 << cache->bits);
     memset(cache->cache_root, 0, sizeof(cache_node *) * count);
     cache->mask = count - 1;
+    printf("%s:cache->bits = %u, cache->mask = %u\n",__FUNCTION__, cache->bits, cache->mask);
 }
 
-cache_t* cache_create(uint32_t area_size, uint32_t root_bits)
+cache_t* cache_create(uint64_t area_size, uint64_t root_bits)
 {
     cache_t *cache;
 
@@ -151,4 +188,20 @@ cache_t* cache_create(uint32_t area_size, uint32_t root_bits)
     cache_init(cache);
 
     return cache;
+}
+
+int32_t cache_add(cache_t *cache, const md5_digest_t *digest, uint32_t dcid)
+{
+    int32_t compare;
+    cache_node_t *node;
+    int32_t status;
+
+    if(cache == NULL || cache->magic != CACHE_MAGIC)
+    {
+        status = -1;
+        return status;
+    }
+
+    node = get_root_node(cache,digest);
+
 }

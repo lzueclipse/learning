@@ -12,11 +12,16 @@
 #include <inttypes.h>
 #include <time.h>
 
+#ifndef __COMMON__
+#define __COMMON__
+
 #define LEN 2048
 #define MAXNUM 30000000
-#define SLEEP 20
+#define SLEEP 10
 #define CACHE_MAGIC 0x12345678
+#define PAGE_SIZE 4096
 #define CACHE_AREA_SIZE_MIN  1024
+
 
 /*
  * 128 bits md5sum
@@ -29,45 +34,6 @@ typedef struct
         uint32_t digest_uint[4];
     };
 }md5_digest_t;
-
-/*
- * md5 compare
- */
-struct md5_less : public std::less<md5_digest_t>
-{
-    bool operator()(const md5_digest_t& a, const md5_digest_t& b) const
-    {
-        if(a.digest_uint[0] < b.digest_uint[0])
-        {
-            return true;
-        }
-        else if(a.digest_uint[1] < b.digest_uint[1])
-        {
-            return true;
-        }
-        else if(a.digest_uint[2] < b.digest_uint[2])
-        {
-            return true;
-        }
-        else if(a.digest_uint[3] < b.digest_uint[3])
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-};
-
-void display_mallinfo();
-void output_top();
-void int_to_md5(uint64_t input, md5_digest_t &output );
-
-
-
-
-/******************************************cache********************************************/
 
 typedef struct cache_node
 {
@@ -103,7 +69,7 @@ typedef struct cache
 
     cache_node_t **cache_root; 
     cache_node_t  *default_root; 
-    uint32_t mask; 
+    uint64_t mask; 
 
     cache_node_t *free_list;
 
@@ -117,8 +83,8 @@ typedef struct cache
     uint64_t nfree;
     
     /* cache configuration */
-    uint32_t area_size;
-    uint32_t bits; 
+    uint64_t area_size;
+    uint64_t bits; 
 
     /* stats */
     uint64_t cache_size;
@@ -127,3 +93,10 @@ typedef struct cache
     uint64_t nmiss;
 
 }cache_t;
+
+extern void display_mallinfo();
+extern void output_top();
+extern void uint64_to_md5(uint64_t input, md5_digest_t &output );
+extern int32_t md5_digest_compare(const md5_digest_t &a, const md5_digest_t &b);
+
+#endif

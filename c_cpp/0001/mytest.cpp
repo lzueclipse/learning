@@ -1,4 +1,17 @@
 #include "common.h"
+
+/*
+ * md5 compare
+ */
+struct md5_less : public std::less<md5_digest_t>
+{
+    bool operator()(const md5_digest_t& a, const md5_digest_t& b) const
+    {
+        return md5_digest_compare(a,b) < 0;
+    }
+
+};
+
 void test_map()
 {
     uint64_t i = 0;
@@ -16,7 +29,7 @@ void test_map()
     
 	time_t my_start = time(NULL);
     for(i = 0; i < MAXNUM; ++i) {
-        int_to_md5(i, my_fp);
+        uint64_to_md5(i, my_fp);
         my_map[my_fp] = i;
     }
 
