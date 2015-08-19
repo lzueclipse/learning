@@ -342,6 +342,7 @@ opensource v2 print, called by vendor 2
 
 
 
+
 ####3.2 符号表带版本信息的
 编译时指定"-Wl,--default-symver"，那么编译出的符号是带版本信息的。
 
@@ -541,7 +542,7 @@ opensource v2 print, called by vendor 2
 ```
 
 ####3.2.7 推测结论
-**猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。**
+**!!!!!!猜测：对比3.2.4和3.1.4 "nm"输出，可以看到当编译时设定""-Wl,--default-symver"，那么编译出的符号是有版本信息的，"opensource_print@@libopensource.so.1" 和 "opensource_print@@libopensource.so.2" 是能找到其对应的正确的共享库的。**
 
 
 ##4. libopensource.so.xxx的版本相同，系统如何查找依赖库和绑定符号
@@ -725,7 +726,7 @@ opensource v1 print, called by vendor 2
 
 ####4.1.7 推测结论
 
-**猜测: 根据4.1.5和4.1.6，只有./opensource_v1/libopensource.so.1被查找，所以只有./opensource_v1/libopensource.so.1里的"opensource_print"会被绑定**
+**!!!!!!猜测: 根据4.1.5和4.1.6，只有./opensource_v1/libopensource.so.1被查找，所以只有./opensource_v1/libopensource.so.1里的"opensource_print"会被绑定**
 
 **我们是有证据支持这个猜测的。**
 
@@ -825,7 +826,7 @@ Dynamic section at offset 0xdc8 contains 29 entries:
                  U opensource_print@@libopensource.so.1
 ```
 
-**libvendor1.so和libvendor2.so使用了相同版本的libopensource.so.1，并且使用了相同的符号opensource_print@@libopensource.so.1，所以实验4.2和4.1是等价的实验，没必要再做下去了。 不过我还是列出了后续实验的LD_DEBUG的输出，供参考。**
+**!!!!!! libvendor1.so和libvendor2.so使用了相同版本的libopensource.so.1，并且使用了相同的符号opensource_print@@libopensource.so.1，所以实验4.2和4.1是等价的实验，没必要再做下去了。 不过我还是列出了后续实验的LD_DEBUG的输出，供参考。**
 
 ```
 [root@node1 0004]# LD_DEBUG_OUTPUT=robin.txt LD_DEBUG=all ./main general
