@@ -66,34 +66,89 @@ void int_to_md5(uint64_t input, md5_digest_t &output )
     MD5_Final(output.digest_uchar,&ctx);
 }
 
-/*!
-* \brief    Create a cache instance
-*
-* \param    area_size   area_size to be used (no of nodes to be stored in a single cache page)
-* \param    root_bits   size of the root array, in bits
-* \return   A newly allocated cache instance on success, NULL on failure.
-*/
+
+
+/*********************************cache*********************************/
+
+
+void cache_init(cache_t *cache)
+{
+    size_t page_size;
+    uint32_t count;
+
+    if(cache == NULL)
+    {
+        printf("%s:cache is NULL\n", __FUNCTION__);
+        return;
+    }
+
+    /* Initial page size using provided area size */
+    page_size = cache->area_size * sizeof(cache_node_t);
+
+    /* now round to nearest page size */
+    //ALIGN_TO_PAGE(page_size);
+
+    /* this becomes the number of nodes to allocate in one area */
+    page_size /= sizeof(cache_node_t);
+
+    if(page_size < CACHE_AREA_SIZE_MIN)
+    {
+        page_size = CACHE_AREA_SIZE_MIN;
+    }
+
+    cache->area_size = (uint32_t) page_size;
+
+    /* Initialize the root array */
+    for(;;)
+    {
+        uint32_t size;
+        
+        count = (1 << cache->bits);
+        size = sizeof(cache_node_t *) * count;	/* @64-bit truncation possible */
+
+        cache->cache_root = (cache_node_t **)malloc(size);
+
+        if(cache->cache_root == NULL && cache->bits > 0)
+        {
+            printf("%s:Malloc fails, cache->bits=%u\n",__FUNCTION__, cache->bits);
+            cache->bits -= 1;
+        }
+        else
+        {
+            /* malloc succeeded OR can't reduce bits anymore */
+            break;
+        }
+    }
+
+    if(cache->cache_root == NULL || cache->bits == 0)
+    {
+        printf("%s: cache_root is NULL, or bits is 0, bits=%u\n", cache->bits);
+    }
+
+    /* clear the root array */
+    count = (1 << cache->bits);
+    memset(cache->cache_root, 0, sizeof(cache_node *) * count);
+    cache->mask = count - 1;
+}
 
 cache_t* cache_create(uint32_t area_size, uint32_t root_bits)
 {
-    struct __cache_t *cache;
+    cache_t *cache;
 
-    if((cache = (pd_cache_t*)malloc(sizeof(struct _pd_cache_t))) == NULL)
+    cache = (cache_t*) malloc(sizeof(cache_t));
+    if (cache == NULL)
     {
-        pd_errno = CRMapError(__FILE__, __LINE__);
+        printf("%s:Malloc cache_t fails\n",__FUNCTION__);
         return(NULL);
     }
 
-    memset((void*)cache, 0, sizeof(struct _pd_cache_t));
+    memset(cache, 0, sizeof(cache_t));
 
     cache->area_size = area_size;
     cache->bits      = root_bits;
-    cache->may_lock  = may_lock;
-    cache->dtor      = dtor;
-    cache->user_data = user_data;
+    cache->magic      = CACHE_MAGIC;
+    
+    cache_init(cache);
 
-    cacheInit(cache);
-
-    return(cache);
+    return cache;
 }
-
