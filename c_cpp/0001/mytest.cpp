@@ -170,7 +170,13 @@ int main(int argc, char **argv)
     }
     else if(strcmp (argv[1], "cache") == 0 )
     {
-        test_cache();
+        uint64_t i;
+        while(i++ < 999999)
+        {
+            printf("i = %" PRIu64 "\n", i);
+            test_cache();
+            printf("\n\n");
+        }
     }
     else
     {
