@@ -36,26 +36,27 @@ After malloc B & memset B:
 
 ##3. 参考文献:
 
->\[1] 频繁分配释放内存导致的性能问题的分析, <http://bbs.csdn.net/topics/330179712>
+>\[1] glibc下的内存管理, <http://www.cnblogs.com/lookof/archive/2013/03/26/2981768.html>
 
->\[2] GLIBC内存分配机制引发的“内存泄露”, <http://www.nosqlnotes.net/archives/105>
+>\[2] ptmalloc, <http://blog.csdn.net/phenics/article/details/777053#node_sec_1>
 
->\[3] glibc下的内存管理, <http://www.cnblogs.com/lookof/archive/2013/03/26/2981768.html>
+>\[3] Linux Allocator Does Not Release Small Chunks of Memory, <http://stackoverflow.com/questions/10943907/linux-allocator-does-not-release-small-chunks-of-memory>
 
->\[4] ptmalloc, <http://blog.csdn.net/phenics/article/details/777053#node_sec_1>
+>\[4] Malloc, brk, mmap and multithreading (draft), <http://stackoverflow.com/questions/10943907/linux-allocator-does-not-release-small-chunks-of-memory>
 
->\[5] Linux Allocator Does Not Release Small Chunks of Memory, <http://stackoverflow.com/questions/10943907/linux-allocator-does-not-release-small-chunks-of-memory>
+>\[5] Malloc parameters, <http://www.gnu.org/software/libc/manual/html_node/Malloc-Tunable-Parameters.html>
 
->\[6] Malloc, brk, mmap and multithreading (draft), <http://stackoverflow.com/questions/10943907/linux-allocator-does-not-release-small-chunks-of-memory>
+>\[6] malloc_text.c <https://github.com/metroxinjing/side_projects/blob/master/memory_management/malloc_test.c>
 
->\[7] Malloc parameters, <http://www.gnu.org/software/libc/manual/html_node/Malloc-Tunable-Parameters.html>
+>\[7] mallinfo, <http://sdutlinux.org/t/1295> 
 
->\[8] malloc_text.c <https://github.com/metroxinjing/side_projects/blob/master/memory_management/malloc_test.c>
+>\[8]man mallinfo
 
->\[9] mallinfo, <http://sdutlinux.org/t/1295> 
+>\[9]malloc.c, <http://osxr.org/glibc/source/malloc/malloc.c?v=glibc-2.17>
 
->\[10]man mallinfo
+>\[10]malloc.c, <http://code.metager.de/source/xref/gnu/glibc/malloc/malloc.c>
 
->\[11]malloc.c, <http://osxr.org/glibc/source/malloc/malloc.c?v=glibc-2.17>
+>\[11] 频繁分配释放内存导致的性能问题的分析, <http://bbs.csdn.net/topics/330179712>
 
->\[12]malloc.c, <http://code.metager.de/source/xref/gnu/glibc/malloc/malloc.c>
+>\[12] GLIBC内存分配机制引发的“内存泄露”, <http://www.nosqlnotes.net/archives/105>
+
