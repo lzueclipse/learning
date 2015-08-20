@@ -1,7 +1,7 @@
 # C/C++ notes
 
 ##1. 分享一个我的案例
-Linux下，STL map存储大量小片(small chunk)数据，map析构后，内存不释放问题；并初步探讨glibc malloc internal。
+Linux下，STL map存储大量小片(small chunk)数据，map析构后，内存不释放问题；并初步探讨glibc malloc(ptmalloc) internal。
 
 具体链接：
 
