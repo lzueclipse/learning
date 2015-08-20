@@ -11,17 +11,23 @@
 #define __STDC_FORMAT_MACROS 
 #include <inttypes.h>
 #include <time.h>
+#include <assert.h>
 
 #ifndef __COMMON__
 #define __COMMON__
 
 #define LEN 2048
-#define MAXNUM 30000000
+#define MAXNUM 35000000 //4TB
 #define SLEEP 10
 #define CACHE_MAGIC 0x12345678
 #define PAGE_SIZE 4096
 #define CACHE_AREA_SIZE_MIN  1024
+#define MEGABYTE (1024 * 1024)
 
+#define CACHE_OK 0
+#define CACHE_NO_MEM -1
+#define CACHE_NULL_POINTER -2
+#define CACHE_FP_NOT_FOUND -3
 
 /*
  * 128 bits md5sum
@@ -41,14 +47,13 @@ typedef struct cache_node
     struct cache_node *left;
     struct cache_node *right;
     uint64_t dcid;
-    size_t ref;
+    uint64_t ref;
 }cache_node_t;
 
 typedef struct cache_page
 {
-    size_t page_size;
-    uint32_t page_locked;
-    uint32_t node_avail;
+    uint64_t page_size;
+    uint64_t node_avail;
     struct cache_page *prev;
     struct cache_page *next;
     
@@ -58,29 +63,24 @@ typedef struct cache_page
         unsigned char pad0[8];
     }end;
 
-    size_t pad1;
+    uint64_t pad1;
 
 }cache_page_t;
 
 typedef struct cache
 {
     uint32_t magic;                 
-    uint32_t iter_lock; 
 
     cache_node_t **cache_root; 
-    cache_node_t  *default_root; 
     uint64_t mask; 
 
-    cache_node_t *free_list;
-
     /* cache page memory management */
-    cache_page_t *start_page;
+    cache_page_t *all_pages;
     cache_page_t *last_page;
     cache_node_t *area_ptr;
 
     uint32_t npages; 
     uint32_t node_avail;
-    uint64_t nfree;
     
     /* cache configuration */
     uint64_t area_size;
@@ -88,15 +88,17 @@ typedef struct cache
 
     /* stats */
     uint64_t cache_size;
-    uint64_t cache_items;
-    uint64_t nhits;
-    uint64_t nmiss;
-
+    uint64_t nitems;
 }cache_t;
 
 extern void display_mallinfo();
 extern void output_top();
 extern void uint64_to_md5(uint64_t input, md5_digest_t &output );
 extern int32_t md5_digest_compare(const md5_digest_t &a, const md5_digest_t &b);
+
+extern cache_t* cache_create(uint64_t area_size, uint64_t root_bits);
+extern void cache_destroy(cache_t *cache);
+extern int32_t cache_add(cache_t *cache, const md5_digest_t& digest, uint64_t dcid);
+extern int32_t cache_exists(cache_t *cache, const md5_digest_t digest, uint64_t &dcid);
 
 #endif
