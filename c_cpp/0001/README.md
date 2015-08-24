@@ -1,48 +1,28 @@
-##1. Linux下，STL map存储大量小片(small chunk)数据，map析构后，内存不释放问题；并初步探讨glibc malloc internal。
+##Linux下，STL map存储大量小片(small chunk)数据，map析构后，内存不返还给操作系统
 
-####1.1. 用代码引出问题
+###1. ptmalloc简要介绍
 
-####1.2. 原因分析
+STL map析构后，内存不返还给操作系统，这个问题与glibc malloc/free实现有关。
 
-####1.3. 用自己实现的内存管理数据结构来解决问题
+STL map不会直接调用malloc/free，但它要调用的new/delete是基于malloc/free实现的。
 
-##2. 某些参考文献是错误的
+我们仅仅讨论glibc默认使用的ptmalloc，不涉及tcmalloc，jemalloc等其它比较流行的malloc实现。
 
-####2.1. 参考文献"[1 频繁分配释放内存导致的性能问题的分析](http://bbs.csdn.net/topics/330179712)"的错误
+###2. 重现STL map不返还内存问题，并根据malloc debug信息分析
 
-文章认为brk是将数据段(.data)的最高地址指针"_edata" 往高地址推。
 
-但是我进行了测试，在glibc里不是这样的(不知该文章针对哪个malloc实现)。
+###3. 自己实现的内存管理来解决问题
 
-编译代码"[edata_test.cpp](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/edata_test.cpp)" 得到输出：
 
-```
------------------------------------------------------
-Before malloc A:
-&_edata=  0x60104c, _edata=0
-After malloc A & memset A:
-&_edata=  0x60104c, _edata=0
------------------------------------------------------
-Before malloc B:
-&_edata=  0x60104c, _edata=0
-After malloc B & memset B:
-&_edata=  0x60104c, _edata=0
------------------------------------------------------
-```
+###4. 参考文献:
 
-可以看到&_edata 没有发生变化。。。
+>\[1] glibc内存管理ptmalloc源代码分析4--淘宝工程师力作, <http://pan.baidu.com/s/1G1pIe>
 
-####2.2. 参考文献"[2 GLIBC内存分配机制引发的'内存泄露'](http://www.nosqlnotes.net/archives/105)"引用了"[1](http://bbs.csdn.net/topics/330179712)"
+>\[2] glibc下的内存管理, <http://www.cnblogs.com/lookof/archive/2013/03/26/2981768.html>
 
-##3. 参考文献:
+>\[3] ptmalloc, <http://blog.csdn.net/phenics/article/details/777053#node_sec_1>
 
->\[1] 频繁分配释放内存导致的性能问题的分析, <http://bbs.csdn.net/topics/330179712>
-
->\[2] GLIBC内存分配机制引发的“内存泄露”, <http://www.nosqlnotes.net/archives/105>
-
->\[3] glibc下的内存管理, <http://www.cnblogs.com/lookof/archive/2013/03/26/2981768.html>
-
->\[4] ptmalloc, <http://blog.csdn.net/phenics/article/details/777053#node_sec_1>
+>\[4] glibc（ptmalloc）内存暴增问题解决 <http://www.blog.chinaunix.net/uid-18770639-id-3385860.html>
 
 >\[5] Linux Allocator Does Not Release Small Chunks of Memory, <http://stackoverflow.com/questions/10943907/linux-allocator-does-not-release-small-chunks-of-memory>
 
@@ -59,3 +39,8 @@ After malloc B & memset B:
 >\[11]malloc.c, <http://osxr.org/glibc/source/malloc/malloc.c?v=glibc-2.17>
 
 >\[12]malloc.c, <http://code.metager.de/source/xref/gnu/glibc/malloc/malloc.c>
+
+>\[13] 频繁分配释放内存导致的性能问题的分析(关于edata的描述，不确切), <http://bbs.csdn.net/topics/330179712>
+
+>\[14] GLIBC内存分配机制引发的“内存泄露”(关于edata的描述，不确切), <http://www.nosqlnotes.net/archives/105>
+
