@@ -19,8 +19,8 @@ void display_mallinfo()
     printf("Number of free fastbin blocks (smblks),     (Number):  %u\n", mi.smblks);
     printf("Free bytes held in fastbins (fsmblks),       (Bytes):  %u\n", mi.fsmblks);
     printf("..............................,................................\n");
-    printf("Number of mapped regions (hblks),           (Number):  %u\n", mi.hblks);
-    printf("Bytes in mapped regions (hblkhd),            (Bytes):  %u\n", mi.hblkhd);
+    printf("Number of mmapped regions (hblks),          (Number):  %u\n", mi.hblks);
+    printf("Bytes in mmapped regions (hblkhd),           (Bytes):  %u\n", mi.hblkhd);
     printf("...............................................................\n");
     printf("Topmost releasable block (keepcost),         (Bytes):  %u\n", mi.keepcost);
     
