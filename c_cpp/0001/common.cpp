@@ -9,7 +9,7 @@ void display_mallinfo()
 
     mi = mallinfo();
 
-    printf("Malloc debug info:\n");
+    printf("\nMalloc debug info:\n");
     printf("................................................................\n");
     printf("Total non-mmapped bytes (arena),             (Bytes):  %u\n", mi.arena);
     printf("    Number of free chunks (ordblks),        (Number):  %u\n", mi.ordblks);
