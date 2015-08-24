@@ -164,33 +164,14 @@ int main(int argc, char **argv)
         exit(-1);
     }
     
+    mallopt(M_TRIM_THRESHOLD, 0);
     if(strcmp (argv[1], "map") == 0 )
     {
-#if 0
-        uint64_t i;
-        while(i++ < 999999)
-        {
-            printf("i = %" PRIu64 "\n", i);
             test_map();
-            printf("\n\n");
-        }
-#else
-            test_map();
-#endif
     }
     else if(strcmp (argv[1], "cache") == 0 )
     {
-#if 0
-        uint64_t i;
-        while(i++ < 999999)
-        {
-            printf("i = %" PRIu64 "\n", i);
             test_cache();
-            printf("\n\n");
-        }
-#else
-            test_cache();
-#endif
     }
     else
     {
