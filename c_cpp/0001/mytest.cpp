@@ -60,7 +60,6 @@ void test_map()
 
 
 	my_start = time(NULL);
-    mallopt(M_TRIM_THRESHOLD, 0);
     my_map.clear();
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
