@@ -12,6 +12,7 @@
 #include <inttypes.h>
 #include <time.h>
 #include <assert.h>
+#include <errno.h>
 
 #ifndef __COMMON__
 #define __COMMON__

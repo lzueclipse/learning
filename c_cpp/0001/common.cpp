@@ -45,7 +45,7 @@ void output_top()
     snprintf(cmd, sizeof(cmd), "top -p %d -n 1  |grep %d", getpid(), getpid());
     if(!(in = popen(cmd, "r")))
     {
-        printf("%s: popen fails\n", __FUNCTION__);
+        printf("%s: popen fails, %s\n", __FUNCTION__, strerror(errno));
         return;
     }
    
