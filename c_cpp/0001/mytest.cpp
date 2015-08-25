@@ -171,6 +171,7 @@ int main(int argc, char **argv)
     }
     else if(strcmp (argv[1], "cache") == 0 )
     {
+        while(1)
             test_cache();
     }
     else
