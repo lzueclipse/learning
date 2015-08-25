@@ -46,7 +46,7 @@ void output_top()
     if(!(in = popen(cmd, "r")))
     {
         printf("%s: popen fails\n", __FUNCTION__);
-        exit(1);
+        return;
     }
    
     while(fgets(buf, sizeof(buf), in)!=NULL)
