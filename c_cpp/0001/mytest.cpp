@@ -164,11 +164,18 @@ int main(int argc, char **argv)
         exit(-1);
     }
     
-    if(strcmp (argv[1], "map-not-tune") == 0 )
+    if(strcmp (argv[1], "map-none-opt") == 0 )
     {
             test_map();
     }
-    else if(strcmp (argv[1], "map-tune") == 0)
+    else if(strcmp (argv[1], "map-opt1") == 0)
+    {
+            mallopt(M_MMAP_THRESHOLD, 24); //md5_digest_t 16 Byte, uint64_t 8 Byte
+            mallopt(M_MMAP_MAX, 256*1024);
+            mallopt(M_TRIM_THRESHOLD, 0);
+            test_map();
+    }
+    else if(strcmp (argv[1], "map-opt2") == 0)
     {
             mallopt(M_MMAP_THRESHOLD, 24); //md5_digest_t 16 Byte, uint64_t 8 Byte
             mallopt(M_MMAP_MAX, 256*1024);
