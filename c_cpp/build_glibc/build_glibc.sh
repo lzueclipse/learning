@@ -12,7 +12,7 @@ rm -rf $BUILDDIR
 
 mkdir -p $SRCDIR
 mkdir -p $DESTDIR
-mkdir -p BUILDDIR
+mkdir -p $BUILDDIR
 
 cd $SRCDIR
 wget http://ftp.gnu.org/gnu/glibc/glibc-2.17.tar.gz
