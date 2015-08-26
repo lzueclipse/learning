@@ -8,7 +8,7 @@ STL map调用的new/delete是基于malloc/free实现的。
 
 我们仅仅讨论glibc默认使用的ptmalloc，不涉及tcmalloc，jemalloc等其它比较流行的malloc实现。
 
-###2. ptmalloc(glibc 默认的内存分配器)基础
+###2. ptmalloc基础
 
 ###2.1 
 
