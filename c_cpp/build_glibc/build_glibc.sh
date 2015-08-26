@@ -8,6 +8,7 @@ BUILDDIR=$HOME/glibc/build
 
 rm -rf $SRCDIR
 rm -rf $DESTDIR
+rm -rf $BUILDDIR
 
 mkdir -p $SRCDIR
 mkdir -p $DESTDIR
@@ -18,5 +19,5 @@ tar -zxvf glibc-2.17.tar.gz
 
 cd $BUILDDIR
 $SRCDIR/glibc-2.17/configure --prefix=/usr
-make malloc
+make -j 4
 make install DESTDIR=${DESTDIR}
