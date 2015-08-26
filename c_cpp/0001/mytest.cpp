@@ -78,9 +78,6 @@ void test_map()
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
 	printf("Malloc_trim(0), ret=%d, cost time = %.f seconds\n", ret, seconds);
-    /* sleep and monitor */
-    printf("Sleep %u seconds\n", SLEEP); 
-    sleep(SLEEP);
     printf("Output of 'top':\n");
     output_top();
     display_mallinfo();
@@ -146,9 +143,6 @@ void test_cache()
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
     printf("Delete all FPs from cache, cost time = %.f seconds\n", seconds);
-    /* sleep and monitor */
-    printf("Sleep %u seconds\n", SLEEP); 
-    sleep(SLEEP);
     printf("Output of 'top':\n");
     output_top();
     display_mallinfo();

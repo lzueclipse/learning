@@ -1,10 +1,10 @@
 ##Linux下，STL map存储大量小块(small chunk)数据，map析构后，内存不返还给操作系统
 
-###1. 我们遇到的问题
+###1. 问题
 
-STL map析构后，内存不返还给操作系统，这个问题与glibc malloc/free实现有关。
+STL map析构后，内存不返还给操作系统，这个问题和glibc malloc/free的实现有关。
 
-STL map不会直接调用malloc/free，但它要调用的new/delete是基于malloc/free实现的。
+STL map调用的new/delete是基于malloc/free实现的。
 
 我们仅仅讨论glibc默认使用的ptmalloc，不涉及tcmalloc，jemalloc等其它比较流行的malloc实现。
 
