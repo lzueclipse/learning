@@ -160,11 +160,15 @@ int main(int argc, char **argv)
 {
     if(argc != 2 )
     {
-        printf("usage: %s [map|cache] \n", argv[0]);
+        printf("usage: %s [map-not-tune|map-tune|cache] \n", argv[0]);
         exit(-1);
     }
     
-    if(strcmp (argv[1], "map") == 0 )
+    if(strcmp (argv[1], "map-not-tune") == 0 )
+    {
+            test_map();
+    }
+    else if(strcmp (argv[1], "map-tune") == 0)
     {
             mallopt(M_MMAP_THRESHOLD, 24); //md5_digest_t 16 Byte, uint64_t 8 Byte
             mallopt(M_MMAP_MAX, 256*1024);
@@ -177,7 +181,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        printf("usage: %s [map|cache] \n", argv[0]);
+        printf("usage: %s [map-not-tune|map-tune|cache] \n", argv[0]);
         exit(-1);
     }
     return 0;
