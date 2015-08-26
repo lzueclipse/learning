@@ -26,5 +26,5 @@ sed "798 itouch -d '0.5 seconds ago' \$\@" -i Makerules
 
 cd $BUILDDIR
 $SRCDIR/glibc-2.17/configure --prefix=/usr
-make 
+make -j 4
 make install DESTDIR=${DESTDIR}
