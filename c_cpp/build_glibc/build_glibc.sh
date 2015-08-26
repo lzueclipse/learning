@@ -4,7 +4,7 @@ set -e
 
 SRCDIR=$HOME/glibc/src
 DESTDIR=$HOME/glibc/build
-CURDIR=`PWD`
+CURDIR=`pwd`
 
 rm -rf $SRCDIR
 rm -rf $DESTDIR
