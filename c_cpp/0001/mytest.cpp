@@ -166,7 +166,8 @@ int main(int argc, char **argv)
     
     if(strcmp (argv[1], "map") == 0 )
     {
-            mallopt(M_MMAP_THRESHOLD, 8);
+            mallopt(M_MMAP_THRESHOLD, 1);
+            mallopt(M_MMAP_MAX, 1024*1024);
             mallopt(M_TRIM_THRESHOLD, 0);
             test_map();
     }
