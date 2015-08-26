@@ -19,6 +19,6 @@ tar -zxvf glibc-2.17.tar.gz
 cd $CURDIR
 $SRCDIR/glibc-2.17/configure --prefix=/usr
 
-make
+make malloc
 
 #make install DESTDIR=${DESTDIR}
