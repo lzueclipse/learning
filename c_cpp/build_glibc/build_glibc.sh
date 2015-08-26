@@ -26,6 +26,6 @@ sed "798 itouch -d '0.5 seconds ago' \$\@" -i Makerules
 
 cd $BUILDDIR
 $SRCDIR/glibc-2.17/configure --prefix=/usr
-export PARALLELMFLAGS=4
+sed "5 iPARALLELMFLAGS = -j 4" -i Makefile
 make 
 make install DESTDIR=${DESTDIR}
