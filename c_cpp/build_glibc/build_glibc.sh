@@ -20,5 +20,5 @@ tar -zxvf glibc-2.17.tar.gz
 
 cd $BUILDDIR
 $SRCDIR/glibc-2.17/configure --prefix=/usr
-make -j 4
+make 
 make install DESTDIR=${DESTDIR}
