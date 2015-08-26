@@ -1,6 +1,6 @@
-##Linux下，STL map存储大量小片(small chunk)数据，map析构后，内存不返还给操作系统
+##Linux下，STL map存储大量小块(small chunk)数据，map析构后，内存不返还给操作系统
 
-###1. ptmalloc简要介绍
+###1. 我们遇到的问题
 
 STL map析构后，内存不返还给操作系统，这个问题与glibc malloc/free实现有关。
 
@@ -8,13 +8,27 @@ STL map不会直接调用malloc/free，但它要调用的new/delete是基于mall
 
 我们仅仅讨论glibc默认使用的ptmalloc，不涉及tcmalloc，jemalloc等其它比较流行的malloc实现。
 
-###2. 重现STL map不返还内存问题，并根据malloc debug信息分析
+###2. ptmalloc(glibc 默认的内存分配器)基础
+
+###2.1 
+
+###2.2
+
+###2.3
+
+###2.4
+
+###2.5
+
+###2.6
+
+###3. 重现STL map不返还内存问题，并根据malloc debug信息分析
 
 
-###3. 自己实现的内存管理来解决问题
+###4. 自己实现的内存管理来解决问题
 
 
-###4. 参考文献:
+###5. 参考文献:
 
 >\[1] glibc内存管理ptmalloc源代码分析4--淘宝工程师力作, <http://pan.baidu.com/s/1G1pIe>
 
