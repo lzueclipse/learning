@@ -19,7 +19,7 @@
 
 #define LEN 2048
 //#define MAXNUM 50000000 //6.4TB
-#define MAXNUM 50000000 //6.4TB
+#define MAXNUM 30000000 //6.4TB
 #define SLEEP 20
 #define CACHE_MAGIC 0x12345678
 #define PAGE_SIZE 4096

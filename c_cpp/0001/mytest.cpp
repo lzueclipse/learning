@@ -166,11 +166,12 @@ int main(int argc, char **argv)
     
     if(strcmp (argv[1], "map") == 0 )
     {
+            mallopt(M_MMAP_THRESHOLD, 8);
+            mallopt(M_TRIM_THRESHOLD, 0);
             test_map();
     }
     else if(strcmp (argv[1], "cache") == 0 )
     {
-        while(1)
             test_cache();
     }
     else
