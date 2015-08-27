@@ -63,7 +63,7 @@ void test_map()
     seconds = difftime(my_end, my_start);
     printf("Delete all FPs from std::map, map.size=%" PRIu64 ", cost time = %.f seconds\n", my_map.size(), seconds);
     /* sleep and monitor */
-    printf("Sleep %u seconds\n", SLEEP); 
+    printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);
     printf("Output of 'top':\n");
     output_top();
