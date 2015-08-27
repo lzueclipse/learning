@@ -62,3 +62,4 @@ STL map调用的new/delete是基于malloc/free实现的。
 
 >\[16] Inside ptmalloc2 <http://files.cnblogs.com/files/hseagle/demo.pdf>
 
+>\[17] ptmalloc2 source code <http://www.malloc.de/en/>
