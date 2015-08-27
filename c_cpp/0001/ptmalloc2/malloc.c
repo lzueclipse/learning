@@ -236,6 +236,7 @@
 #endif
 #endif /*__STD_C*/
 
+#define _GNU_SOURCE 1 
 
 /*
   Void_t* is the pointer type that malloc should say it returns
