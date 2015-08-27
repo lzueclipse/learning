@@ -58,3 +58,4 @@ STL map调用的new/delete是基于malloc/free实现的。
 
 >\[14] GLIBC内存分配机制引发的“内存泄露”(关于edata的描述，不确切), <http://www.nosqlnotes.net/archives/105>
 
+>\[15] Understanding glibc malloc (自备梯子） <https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/>
