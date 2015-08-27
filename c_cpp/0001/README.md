@@ -2,11 +2,6 @@
 
 ###1. 问题
 
-STL map析构后，内存不返还给操作系统，这个问题和glibc malloc/free的实现有关。
-
-STL map调用的new/delete是基于malloc/free实现的。
-
-我们仅仅讨论glibc默认使用的ptmalloc，不涉及tcmalloc，jemalloc等其它比较流行的malloc实现。
 
 ###2. ptmalloc基础
 

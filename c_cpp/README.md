@@ -1,10 +1,15 @@
 # C/C++ notes
 
-##1. 分享一个我的案例
-Linux下，STL map存储大量小块(small chunk)数据，map析构后，内存不返还给操作系统，导致内存暴增。
-该问题的本质是glibc malloc分配大量小块数据，free后，内存不返还给操作系统。
+##1. 由一个STL map引起的内存暴增问题，逐渐深入到ptmalloc2
 
 具体链接：
 
-[Linux下，STL map析构后，内存不返还给给操作系统](./0001/)
+[由一个STL map引起的内存暴增问题，逐渐深入到ptmalloc2](./0001/)
 
+
+
+##4. 以菱形链接(diamond link)为例，探讨Linux下连接器和加载器对Shared libarary兼容性的处理
+
+具体链接：
+
+[Linux下连接器和加载器对Shared libarary兼容性的处理](./0004/)
