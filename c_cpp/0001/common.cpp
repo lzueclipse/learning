@@ -16,17 +16,16 @@ void display_mallinfo()
     mi = mallinfo();
 
     printf("\nMalloc debug info:\n");
-    printf("................................................................\n");
     printf("None-mmap:\n");
-    printf("Total non-mmapped bytes (arena),                   (Bytes):  %u\n", mi.arena);
-    printf("....Total allocated space (uordblks),              (Bytes):  %u\n", mi.uordblks);
-    printf("....Total free space (fordblks),                   (Bytes):  %u\n", mi.fordblks);
-    printf("........Free bytes held in fastbins (fsmblks),     (Bytes):  %u\n", mi.fsmblks);
-    printf("........Free bytes held in top chunk (keepcost),   (Bytes):  %u\n", mi.keepcost);
+    printf("Total non-mmapped bytes (arena),                              (Bytes):  %u\n", mi.arena);
+    printf("....Total none-free space (uordblks),                         (Bytes):  %u\n", mi.uordblks);
+    printf("....Total free space (fordblks),                              (Bytes):  %u\n", mi.fordblks);
+    printf("........Free bytes held in fast bins (fsmblks),               (Bytes):  %u\n", mi.fsmblks);
+    printf("........Free bytes held in reguar bins (Caculated by robin)   (Bytes):  %u\n", (mi.fordblks - mi.fsmblks - mi.keepcost) );
+    printf("........Free bytes held in top chunk (keepcost),              (Bytes):  %u\n", mi.keepcost);
     printf("Mmap:\n");
-    printf("Number of mmapped regions (hblks),          (Number):  %u\n", mi.hblks);
-    printf("Bytes in mmapped regions (hblkhd),           (Bytes):  %u\n", mi.hblkhd);
-    printf("...............................................................\n");
+    printf("Number of mmapped regions (hblks),                           (Number):  %u\n", mi.hblks);
+    printf("Bytes in mmapped regions (hblkhd),                            (Bytes):  %u\n", mi.hblkhd);
     
     //usmblks is always 0
     //printf("Max. total allocated space (usmblks),    (Bytes):  %u\n", mi.usmblks);
@@ -36,6 +35,7 @@ void display_mallinfo()
 
     //printf("\nmalloc_stats: \n");
     //malloc_stats(); 
+    ///printf("...............................................................\n");
 }
 
 /*
