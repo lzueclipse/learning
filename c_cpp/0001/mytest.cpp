@@ -81,7 +81,7 @@ void test_map_phase2()
 
 
     printf("-----------------------------------------------------------------------------------------------\n");
-    printf("After std::map is desctucted:\n");
+    printf("After std::map is destructed:\n");
     printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);
     printf("Output of 'top':\n");
