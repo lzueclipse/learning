@@ -12,7 +12,7 @@ struct md5_less : public std::less<md5_digest_t>
 
 };
 
-void test_map()
+void test_map_phase1()
 {
     uint64_t i = 0;
     std::map< md5_digest_t, uint64_t, md5_less> my_map;
@@ -70,10 +70,25 @@ void test_map()
     printf("Output of 'top':\n");
     output_top();
     display_mallinfo();
-    printf("-----------------------------------------------------------------------------------------------\n");
-    
 
-	my_start = time(NULL);
+}
+
+void test_map_phase2()
+{
+    time_t my_start, my_end;
+    double seconds;
+	int ret;
+
+
+    printf("-----------------------------------------------------------------------------------------------\n");
+    printf("After std::map is desctucted:\n");
+    printf("Sleep %u seconds, ", SLEEP); 
+    sleep(SLEEP);
+    printf("Output of 'top':\n");
+    output_top();
+    display_mallinfo();
+    printf("-----------------------------------------------------------------------------------------------\n");
+    my_start = time(NULL);
     ret = malloc_trim(0);
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
