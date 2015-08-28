@@ -11,27 +11,27 @@ void display_mallinfo()
      * After I read the code of "mallinfo", I decide to add this line...
      * This will let us have a good "mallinfo" output after "free", for demo...
      */
-    mallopt(-44332211, 0);
+    mallopt(-123321, 0);
 
     mi = mallinfo();
 
     printf("\nMalloc debug info:\n");
     printf("................................................................\n");
-    printf("Total non-mmapped bytes (arena),             (Bytes):  %u\n", mi.arena);
-    printf("    Number of free chunks (ordblks),        (Number):  %u\n", mi.ordblks);
-    printf("    Total allocated space (uordblks),        (Bytes):  %u\n", mi.uordblks);
-    printf("    Total free space (fordblks),             (Bytes):  %u\n", mi.fordblks);
-    printf("...............................................................\n");
-    printf("Number of free fastbin blocks (smblks),     (Number):  %u\n", mi.smblks);
-    printf("Free bytes held in fastbins (fsmblks),       (Bytes):  %u\n", mi.fsmblks);
-    printf("..............................,................................\n");
+    printf("None-mmap:\n");
+    printf("Total non-mmapped bytes (arena),                   (Bytes):  %u\n", mi.arena);
+    printf("....Total allocated space (uordblks),              (Bytes):  %u\n", mi.uordblks);
+    printf("....Total free space (fordblks),                   (Bytes):  %u\n", mi.fordblks);
+    printf("........Free bytes held in fastbins (fsmblks),     (Bytes):  %u\n", mi.fsmblks);
+    printf("........Free bytes held in top chunk (keepcost),   (Bytes):  %u\n", mi.keepcost);
+    printf("Mmap:\n");
     printf("Number of mmapped regions (hblks),          (Number):  %u\n", mi.hblks);
     printf("Bytes in mmapped regions (hblkhd),           (Bytes):  %u\n", mi.hblkhd);
     printf("...............................................................\n");
-    printf("Topmost releasable block (keepcost),         (Bytes):  %u\n", mi.keepcost);
     
     //usmblks is always 0
     //printf("Max. total allocated space (usmblks),    (Bytes):  %u\n", mi.usmblks);
+    //printf("    Number of free chunks (ordblks),        (Number):  %u\n", mi.ordblks);
+    //printf("Number of free fastbin blocks (smblks),     (Number):  %u\n", mi.smblks);
     
 
     //printf("\nmalloc_stats: \n");
