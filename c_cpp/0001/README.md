@@ -1,4 +1,4 @@
-##Linux下，STL map存储大量小块(small chunk)数据，map析构后，内存不返还给操作系统
+##由一个STL map析构后，内存不返还给操作系统的问题出发，探讨ptmalloc2(glibc malloc) malloc/free行为
 
 ###1. 问题
 
