@@ -10,5 +10,7 @@ g++ -shared -fPIC -o libcommon.so common.o
 g++ -Wl,-rpath=./ -o mytest mytest.cpp -L.  -lcommon -lcrypto
 
 
+cd ptmalloc2
+make shared
 
 echo "Complile mytest success"
