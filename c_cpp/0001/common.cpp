@@ -57,6 +57,17 @@ void output_top()
     pclose(in);
 }
 
+void abortfn(enum mcheck_status status) 
+{                                  
+    switch(status) 
+    {                                                        
+         case MCHECK_DISABLED:                                           
+              printf("MEMCHECK DISABLED\n");                 
+              break;                               
+         default:                             
+              printf("MEMCHECK ENABLED\n");                    
+    } 
+}  
 
 /*
  * uint64   --md5-->   128bits md5sum
