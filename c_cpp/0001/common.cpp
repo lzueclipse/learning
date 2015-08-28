@@ -6,6 +6,12 @@
 void display_mallinfo()
 {
     struct mallinfo mi;
+    
+    /*
+     * After I read the code of "mallinfo", I decide to add this line...
+     * This will let us have a good "mallinfo" output after "free", for demo...
+     */
+    mallopt(-44332211, 0);
 
     mi = mallinfo();
 
@@ -57,17 +63,6 @@ void output_top()
     pclose(in);
 }
 
-void abortfn(enum mcheck_status status) 
-{                                  
-    switch(status) 
-    {                                                        
-         case MCHECK_DISABLED:                                           
-              printf("MEMCHECK DISABLED\n");                 
-              break;                               
-         default:                             
-              printf("MEMCHECK ENABLED\n");                    
-    } 
-}  
 
 /*
  * uint64   --md5-->   128bits md5sum
