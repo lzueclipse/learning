@@ -26,6 +26,7 @@ void test_map()
     printf("At the beginning, map.size=%" PRIu64 "\n", my_map.size());
     printf("Output of 'top':\n");
     output_top();
+    display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
     
 
@@ -39,6 +40,7 @@ void test_map()
     printf("Insert all FPs into std::map, map.size=%" PRIu64 ", cost time = %.f seconds\n", my_map.size(), seconds);
     printf("Output of 'top':\n");
     output_top();
+    display_mallinfo();
     printf("-------------------------------------------------------------------------------------------------\n");
   
 
@@ -67,6 +69,7 @@ void test_map()
     sleep(SLEEP);
     printf("Output of 'top':\n");
     output_top();
+    display_mallinfo();
     printf("-----------------------------------------------------------------------------------------------\n");
     
 
@@ -77,6 +80,7 @@ void test_map()
 	printf("Malloc_trim(0), ret=%d, cost time = %.f seconds\n", ret, seconds);
     printf("Output of 'top':\n");
     output_top();
+    display_mallinfo();
 	printf("-----------------------------------------------------------------------------------------------\n");
 }
 
@@ -102,6 +106,7 @@ void test_cache()
     printf("At the beginning, cache.size=%" PRIu64 "\n", cache->nitems);
     printf("Output of 'top':\n");
     output_top();
+    display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
 	
 
@@ -115,6 +120,7 @@ void test_cache()
     printf("Insert all FPs into cache, cache.size=%" PRIu64 ", cost time = %.f seconds\n", cache->nitems, seconds);
     printf("Output of 'top':\n");
     output_top();
+    display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
   
 
@@ -139,6 +145,7 @@ void test_cache()
     printf("Delete all FPs from cache, cost time = %.f seconds\n", seconds);
     printf("Output of 'top':\n");
     output_top();
+    display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
 
 }
