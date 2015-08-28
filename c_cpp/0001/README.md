@@ -1,4 +1,4 @@
-##由一个STL map析构后，内存不返还给操作系统的问题出发，探讨ptmalloc2(glibc malloc) malloc/free行为
+##由STL map析构后，内存不返还给操作系统的问题出发，探讨ptmalloc2(glibc malloc) malloc/free行为
 
 ###1. 问题
 

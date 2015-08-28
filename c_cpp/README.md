@@ -1,6 +1,6 @@
 # C/C++ notes
 
-###1. 由一个STL map析构后，内存不返还给操作系统的问题出发，探讨ptmalloc2(glibc malloc) malloc/free行为
+###1. 由STL map析构后，内存不返还给操作系统的问题出发，探讨ptmalloc2(glibc malloc) malloc/free行为
 
 具体链接：
 
