@@ -1,6 +1,37 @@
 #include "common.h"
 
 bool should_debug = false;
+
+void after_map_destructed()
+{
+    time_t my_start, my_end;
+    double seconds;
+    int ret;
+    
+    printf("After std::map is destructed:\n");
+    printf("Sleep %u seconds, ", SLEEP); 
+    sleep(SLEEP);
+    printf("Output of 'top':\n");
+    output_top();
+    if(should_debug)
+        display_mallinfo();
+    printf("-----------------------------------------------------------------------------------------------\n");
+    
+    
+    if(should_debug)
+    {
+        my_start = time(NULL);
+        ret = malloc_trim(0);
+        my_end = time(NULL);
+        seconds = difftime(my_end, my_start);
+        printf("Malloc_trim(0), ret=%d, cost time = %.f seconds\n", ret, seconds);
+        printf("Output of 'top':\n");
+        output_top();
+        display_mallinfo();
+	    printf("-----------------------------------------------------------------------------------------------\n");
+    }
+}
+
 /*
  * md5 compare
  */
@@ -78,36 +109,6 @@ void test_map()
     
     
     after_map_destructed();
-}
-
-void after_map_destructed()
-{
-    time_t my_start, my_end;
-    double seconds;
-    int ret;
-    
-    printf("After std::map is destructed:\n");
-    printf("Sleep %u seconds, ", SLEEP); 
-    sleep(SLEEP);
-    printf("Output of 'top':\n");
-    output_top();
-    if(should_debug)
-        display_mallinfo();
-    printf("-----------------------------------------------------------------------------------------------\n");
-    
-    
-    if(should_debug)
-    {
-        my_start = time(NULL);
-        ret = malloc_trim(0);
-        my_end = time(NULL);
-        seconds = difftime(my_end, my_start);
-        printf("Malloc_trim(0), ret=%d, cost time = %.f seconds\n", ret, seconds);
-        printf("Output of 'top':\n");
-        output_top();
-        display_mallinfo();
-	    printf("-----------------------------------------------------------------------------------------------\n");
-    }
 }
 
 
