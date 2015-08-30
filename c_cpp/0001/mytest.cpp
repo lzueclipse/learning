@@ -6,6 +6,8 @@ void test_malloc_free()
 {
     int i;
     
+    printf("At the beginning:\n");
+    printf("Output of 'top':\n");
     output_top();
     
     char ** ptrs = (char **) malloc( sizeof(char *) * MAXNUM );
@@ -14,14 +16,20 @@ void test_malloc_free()
         ptrs[i] = (char *) malloc( sizeof(cache_node_t) );
         memset( ptrs[i], 0, sizeof(cache_node_t) );
     }
+    printf("Add some data:\n");
+    printf("Output of 'top':\n");
     output_top();
+
 
     for(i = 0; i < MAXNUM; ++i) {
         delete[] ptrs[i];
     }
-
     delete[] ptrs;
-
+    printf("Delete all the data:\n");
+    /* sleep and monitor */
+    printf("Sleep %u seconds, ", SLEEP); 
+    sleep(SLEEP);
+    printf("Output of 'top':\n");
     output_top();
 }
 
