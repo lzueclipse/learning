@@ -70,7 +70,9 @@ Sleep 15 seconds, Output of 'top':
 
 我们仅仅针对ptmalloc2展开讨论，不涉及业界流行的jemalloc，tcmalloc等其他内存分配器。
 
-###2.1 
+###2.1 x86_64位下内存布局
+
+![图1](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/1.jpg "图1")
 
 ###2.2
 
