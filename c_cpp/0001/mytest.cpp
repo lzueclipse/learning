@@ -2,17 +2,17 @@
 
 bool should_debug = false;
 
-void test_new_delete()
+void test_malloc_free()
 {
     int i;
     
     output_top();
     
-    char ** ptrs = new char*[MAXNUM];
+    char ** ptrs = (char **) malloc( sizeof(char *) * MAXNUM );
     memset(ptrs, 0, sizeof(char *) * MAXNUM);
     for(i = 0; i < MAXNUM; ++i) {
-        ptrs[i] = new char[sizeof(cache_node_t)];
-        memset(ptrs[i], 0, sizeof(cache_node_t));
+        ptrs[i] = (char *) malloc( sizeof(cache_node_t) );
+        memset( ptrs[i], 0, sizeof(cache_node_t) );
     }
     output_top();
 
@@ -226,9 +226,9 @@ int main(int argc, char **argv)
             should_debug = false;
             test_cache();
     }
-    else if(strcmp (argv[1], "new-delete") == 0 )
+    else if(strcmp (argv[1], "malloc-free") == 0 )
     {
-            test_new_delete();
+            test_malloc_free();
     }
     else
     {
