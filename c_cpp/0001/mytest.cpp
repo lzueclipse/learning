@@ -34,7 +34,7 @@ void test_map()
     printf("----------------------------------------------------------------------------------------------\n");
     
 
-	my_start = time(NULL);
+    my_start = time(NULL);
     for(i = 0; i < MAXNUM; ++i) {
         uint64_to_md5(i, my_fp);
         (*my_map)[my_fp] = i;
@@ -49,7 +49,7 @@ void test_map()
     printf("-------------------------------------------------------------------------------------------------\n");
   
 
-	my_start = time(NULL);
+    my_start = time(NULL);
     for(i = 0; i < MAXNUM; ++i) {
         uint64_to_md5(i, my_fp);
         iter = my_map->find(my_fp);
@@ -63,8 +63,8 @@ void test_map()
     printf("Lookup all FPs from std::map, map.size=%" PRIu64 ", cost time = %.f seconds\n", my_map->size(), seconds);
     printf("-----------------------------------------------------------------------------------------------\n");
 
-
-	my_start = time(NULL);
+    
+    my_start = time(NULL);
     my_map->clear();
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
@@ -78,6 +78,7 @@ void test_map()
         display_mallinfo();
     printf("-----------------------------------------------------------------------------------------------\n");
     
+    
     delete my_map;
     printf("After std::map is destructed:\n");
     printf("Sleep %u seconds, ", SLEEP); 
@@ -87,6 +88,7 @@ void test_map()
     if(should_debug)
         display_mallinfo();
     printf("-----------------------------------------------------------------------------------------------\n");
+    
     
     my_start = time(NULL);
     ret = malloc_trim(0);
@@ -142,8 +144,8 @@ void test_cache()
         display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
   
-
-	my_start = time(NULL);
+    
+    my_start = time(NULL);
     for(i = 0; i < MAXNUM; ++i) {
         uint64_to_md5(i, my_fp);
         if (cache_exists(cache, my_fp, dcid) != CACHE_OK)
@@ -157,7 +159,7 @@ void test_cache()
     printf("---------------------------------------------------------------------------------------------\n");
 
 
-	my_start = time(NULL);
+    my_start = time(NULL);
     cache_destroy(cache);
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
