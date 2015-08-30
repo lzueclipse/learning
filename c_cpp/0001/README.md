@@ -9,7 +9,7 @@
 [(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L102)。
 
 
-**实验：**
+**实验 1：**
 
 编译:
 ```
@@ -19,14 +19,31 @@ Complile mytest success
 
 运行:
 ```
+[root@node1 0001]# ./mytest map-none-opt
+----------------------------------------------------------------------------------------------
+At the beginning, map.size=0
+Output of 'top':
+19742 root      20   0   22908   1532   1176 S   0.0  0.1   0:00.00 mytest
+----------------------------------------------------------------------------------------------
+Insert all FPs into std::map, map.size=5000000, cost time = 11 seconds
+Output of 'top':
+19742 root      20   0  335352 314148   1288 S   0.0 10.8   0:11.20 mytest
+-------------------------------------------------------------------------------------------------
+Lookup all FPs from std::map, map.size=5000000, cost time = 12 seconds
+-----------------------------------------------------------------------------------------------
+Delete all FPs from std::map, map.size=0, cost time = 1 seconds
+Sleep 15 seconds, Output of 'top':
+19742 root      20   0  335352 314176   1316 S   0.0 10.8   0:23.41 mytest
+-----------------------------------------------------------------------------------------------
 ```
 
-查阅STL源码，向std::map插入数据，会调用new来分配内存；map.clear会调用delete来释放内存。
+'top'输出的第6列表示使用的物理内存大小，可以发现map.clear()后**没有返还物理内存给操作系统。**
 
-那么为什么内存没有返还给操作系统？
+那么为什么内存没有返还给操作系统？经过google搜索，发现这是glibc malloc/free的behavior。
 
-因为new/delete是基于malloc/free实现的，
-这个归根结底还是和底层的malloc/free实现有关，
+**实验 2 **
+
+
 
 ###2. ptmalloc基础
 
