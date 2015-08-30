@@ -1,15 +1,9 @@
 ##由STL map调用clear()后，内存不返还给操作系统的问题出发，探讨ptmalloc2(glibc malloc) malloc/free行为
 
 ###1. 问题
-我们的程序要向std::map中插入大量的数据，但每个数据只有几十字节
-[(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L74)。
+我们的程序要向std::map中插入大量的数据，但每个数据只有几十字节；当使用完该std::map，调用map.clear()，删除map里的所有元素，sleep 15秒后，发现std::map所占内存没有返还给操作系统
 
-
-当使用完该std::map，调用map.clear()，删除map里的所有元素，sleep 15秒后，发现std::map所占内存没有返还给操作系统
-[(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L102)。
-
-
-**实验 1：**
+####1.1 实验 1
 
 编译:
 ```
@@ -39,12 +33,16 @@ Sleep 15 seconds, Output of 'top':
 
 小提示：'top'输出的**第6列表示某程序使用的物理内存大小。**
 
-在实验 1里，我们向std::map插入5,000,000个数据来模拟我们的业务场景(一个md5值作为key，对应一个uint64_t值作为value)。
-可以发现map.clear()后**没有返还物理内存给操作系统(仍然占用314176 KB)。**
+在实验 1里，我们向std::map插入5,000,000个数据来
+[(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L74)
+模拟我们的业务场景(一个md5值作为key，对应一个uint64_t值作为value)。
+可以发现map.clear()删除数据后
+[(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L102)。
+**没有返还物理内存给操作系统(仍然占用314176 KB)。**
 
 是std::map的实现造成的？还是new/delete造成的？或者是malloc/free造成的？实验 2将为我们揭晓答案。
 
-**实验 2**
+####1.2 实验 2
 
 运行：
 ```
