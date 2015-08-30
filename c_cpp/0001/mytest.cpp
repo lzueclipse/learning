@@ -88,18 +88,16 @@ void test_map()
         display_mallinfo();
     printf("-----------------------------------------------------------------------------------------------\n");
     
+    my_start = time(NULL);
+    ret = malloc_trim(0);
+    my_end = time(NULL);
+    seconds = difftime(my_end, my_start);
+    printf("Malloc_trim(0), ret=%d, cost time = %.f seconds\n", ret, seconds);
+    printf("Output of 'top':\n");
+    output_top();
     if(should_debug)
-    {
-        my_start = time(NULL);
-        ret = malloc_trim(0);
-        my_end = time(NULL);
-        seconds = difftime(my_end, my_start);
-	    printf("Malloc_trim(0), ret=%d, cost time = %.f seconds\n", ret, seconds);
-        printf("Output of 'top':\n");
-        output_top();
         display_mallinfo();
-	    printf("-----------------------------------------------------------------------------------------------\n");
-    }
+	printf("-----------------------------------------------------------------------------------------------\n");
 }
 
 
