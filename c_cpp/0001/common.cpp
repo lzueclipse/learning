@@ -24,8 +24,8 @@ void display_mallinfo()
     printf("........Free bytes held in reguar bins (Caculated by robin)   (Bytes):  %u\n", (mi.fordblks - mi.fsmblks - mi.keepcost) );
     printf("........Free bytes held in top chunk (keepcost),              (Bytes):  %u\n", mi.keepcost);
     printf("Mmap:\n");
-    printf("Number of mmapped regions (hblks),                           (Number):  %u\n", mi.hblks);
-    printf("Bytes in mmapped regions (hblkhd),                            (Bytes):  %u\n", mi.hblkhd);
+    printf("....Number of mmapped regions (hblks),                       (Number):  %u\n", mi.hblks);
+    printf("....Bytes in mmapped regions (hblkhd),                        (Bytes):  %u\n", mi.hblkhd);
     
     //usmblks is always 0
     //printf("Max. total allocated space (usmblks),    (Bytes):  %u\n", mi.usmblks);
