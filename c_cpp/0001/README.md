@@ -1,7 +1,8 @@
 ##由STL map析构后，内存不返还给操作系统的问题出发，探讨ptmalloc2(glibc malloc) malloc/free行为
 
 ###1. 问题
-我们的程序要构建一个
+我们的程序要向std::map中插入大量的数据，但每个数据只有几十字节。
+[插入数据](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L40)
 
 ###2. ptmalloc基础
 
