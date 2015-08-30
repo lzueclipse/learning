@@ -81,6 +81,10 @@ void test_map()
 
 void after_map_destructed()
 {
+    time_t my_start, my_end;
+    double seconds;
+    int ret;
+    
     printf("After std::map is destructed:\n");
     printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);
