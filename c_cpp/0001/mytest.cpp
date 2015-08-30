@@ -2,34 +2,27 @@
 
 bool should_debug = false;
 
-void after_map_destructed()
+void test_new_delete()
 {
-    time_t my_start, my_end;
-    double seconds;
-    int ret;
+    int i;
     
-    printf("After std::map is destructed:\n");
-    printf("Sleep %u seconds, ", SLEEP); 
-    sleep(SLEEP);
-    printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
-    printf("-----------------------------------------------------------------------------------------------\n");
     
-    
-    if(should_debug)
-    {
-        my_start = time(NULL);
-        ret = malloc_trim(0);
-        my_end = time(NULL);
-        seconds = difftime(my_end, my_start);
-        printf("Malloc_trim(0), ret=%d, cost time = %.f seconds\n", ret, seconds);
-        printf("Output of 'top':\n");
-        output_top();
-        display_mallinfo();
-	    printf("-----------------------------------------------------------------------------------------------\n");
+    char ** ptrs = new char*[MAXNUM];
+    memset(ptrs, 0, sizeof(char *) * MAXNUM);
+    for(i = 0; i < MAXNUM; ++i) {
+        ptrs[i] = new char[sizeof(cache_node_t)];
+        memset(ptrs[i], 0, sizeof(cache_node_t));
     }
+    output_top();
+
+    for(i = 0; i < MAXNUM; ++i) {
+        delete[] ptrs[i];
+    }
+
+    delete[] ptrs;
+
+    output_top();
 }
 
 /*
@@ -232,6 +225,10 @@ int main(int argc, char **argv)
     {
             should_debug = false;
             test_cache();
+    }
+    else if(strcmp (argv[1], "new-delete") == 0 )
+    {
+            test_new_delete();
     }
     else
     {

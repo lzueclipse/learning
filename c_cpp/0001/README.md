@@ -1,14 +1,13 @@
-##由STL map析构后，内存不返还给操作系统的问题出发，探讨ptmalloc2(glibc malloc) malloc/free行为
+##由STL map调用clear()后，内存不返还给操作系统的问题出发，探讨ptmalloc2(glibc malloc) malloc/free行为
 
 ###1. 问题
 我们的程序要向std::map中插入大量的数据，但每个数据只有几十字节
-[(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L40)。
+[(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L84)。
+
 
 当使用完该std::map，调用map.clear()，删除map里的所有元素，sleep 15秒后，发现std::map所占内存没有返还给操作系统
-[(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L68)。
+[(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L94)。
 
-当std::map被析构，sleep 15秒后，发现内存仍然没有返还给操作系统
-[(std::map析构代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L82)。
 
 **实验：**
 
@@ -21,6 +20,13 @@ Complile mytest success
 运行:
 ```
 ```
+
+查阅STL源码，向std::map插入数据，会调用new来分配内存；map.clear会调用delete来释放内存。
+
+那么为什么内存没有返还给操作系统？
+
+因为new/delete是基于malloc/free实现的，
+这个归根结底还是和底层的malloc/free实现有关，
 
 ###2. ptmalloc基础
 
