@@ -55,6 +55,4 @@
 
 >\[15] Understanding glibc malloc (自备梯子） <https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/>
 
->\[16] Inside ptmalloc2 <http://files.cnblogs.com/files/hseagle/demo.pdf>
-
->\[17] ptmalloc2 source code <http://www.malloc.de/en/>
+>\[16] ptmalloc2 source code <http://www.malloc.de/en/>
