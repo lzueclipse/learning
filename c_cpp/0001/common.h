@@ -31,6 +31,8 @@
 #define CACHE_NULL_POINTER -2
 #define CACHE_FP_NOT_FOUND -3
 
+extern bool should_mallinfo;
+
 /*
  * 128 bits md5sum
  */

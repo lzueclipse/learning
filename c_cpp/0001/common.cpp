@@ -7,6 +7,9 @@ void display_mallinfo()
 {
     struct mallinfo mi;
     
+    if(should_mallinfo == false)
+        return;
+
     /*
      * After I read the code of "mallinfo", I decide to add this line...
      * This will let us have a good "mallinfo" output after "free", for demo...
@@ -17,15 +20,15 @@ void display_mallinfo()
 
     printf("\nMalloc debug info:\n");
     printf("None-mmap:\n");
-    printf("Total non-mmapped bytes (arena),                              (Bytes):  %u\n", mi.arena);
-    printf("....Total none-free space (uordblks),                         (Bytes):  %u\n", mi.uordblks);
-    printf("....Total free space (fordblks),                              (Bytes):  %u\n", mi.fordblks);
-    printf("........Free bytes held in fast bins (fsmblks),               (Bytes):  %u\n", mi.fsmblks);
-    printf("........Free bytes held in reguar bins (Caculated by robin)   (Bytes):  %u\n", (mi.fordblks - mi.fsmblks - mi.keepcost) );
-    printf("........Free bytes held in top chunk (keepcost),              (Bytes):  %u\n", mi.keepcost);
+    printf("....Total non-mmapped bytes (arena),                              (Bytes):  %u\n", mi.arena);
+    printf("........Total none-free space (uordblks),                         (Bytes):  %u\n", mi.uordblks);
+    printf("........Total free space (fordblks),                              (Bytes):  %u\n", mi.fordblks);
+    printf("............Free bytes held in fast bins (fsmblks),               (Bytes):  %u\n", mi.fsmblks);
+    printf("............Free bytes held in reguar bins (Caculated by robin)   (Bytes):  %u\n", (mi.fordblks - mi.fsmblks - mi.keepcost) );
+    printf("............Free bytes held in top chunk (keepcost),              (Bytes):  %u\n", mi.keepcost);
     printf("Mmap:\n");
-    printf("Number of mmapped regions (hblks),                           (Number):  %u\n", mi.hblks);
-    printf("Bytes in mmapped regions (hblkhd),                            (Bytes):  %u\n", mi.hblkhd);
+    printf("....Number of mmapped regions (hblks),                           (Number):  %u\n", mi.hblks);
+    printf("....Bytes in mmapped regions (hblkhd),                            (Bytes):  %u\n", mi.hblkhd);
     
     //usmblks is always 0
     //printf("Max. total allocated space (usmblks),    (Bytes):  %u\n", mi.usmblks);
