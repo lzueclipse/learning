@@ -67,7 +67,10 @@ Sleep 15 seconds, Output of 'top':
 可以发现free后，**没有返还物理内存给操作系统。看来一切的根源在glibc malloc/free上。**
 
 
-###2. ptmalloc基础
+###2. ptmalloc2基础
+目前glibc中使用的是ptmalloc version 2，简称ptmalloc2。
+
+我们仅仅针对ptmalloc2展开讨论，不涉及业界流行的jemalloc，tcmalloc等其他内存分配器。
 
 ###2.1 
 
