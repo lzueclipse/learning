@@ -2,7 +2,17 @@
 
 ###1. 问题
 我们的程序要向std::map中插入大量的数据，但每个数据只有几十字节。
-[插入数据](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L40)
+
+[插入数据代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L40)
+
+当使用完该std::map，调用map.clear()，删除map里的所有元素，sleep一段时间后，发现std::map所占内存没有返还给操作系统。
+
+[删除数据代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L68)
+
+当std::map被析构，sleep一段时间后，发现内存仍然没有返还给操作系统。
+
+[std::map析构](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L82)
+
 
 ###2. ptmalloc基础
 
