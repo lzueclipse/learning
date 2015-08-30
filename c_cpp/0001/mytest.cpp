@@ -77,6 +77,7 @@ void test_map()
     printf("-----------------------------------------------------------------------------------------------\n");
     
     
+    after_map_destructed();
 }
 
 void after_map_destructed()
@@ -195,14 +196,12 @@ int main(int argc, char **argv)
     if(strcmp (argv[1], "map-none-opt") == 0 )
     {
             test_map();
-            after_map_destructed();
     }
     else if(strcmp (argv[1], "map-opt1") == 0)
     {
             mallopt(M_MMAP_THRESHOLD, 24); //md5_digest_t 16 Byte, uint64_t 8 Byte
             mallopt(M_TRIM_THRESHOLD, 0);
             test_map();
-            after_map_destructed();
     }
     else if(strcmp (argv[1], "map-opt2") == 0)
     {
@@ -210,7 +209,6 @@ int main(int argc, char **argv)
             mallopt(M_MMAP_MAX, 256*1024);
             mallopt(M_TRIM_THRESHOLD, 0);
             test_map();
-            after_map_destructed();
     }
     else if(strcmp (argv[1], "cache") == 0 )
     {
