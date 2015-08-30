@@ -8,8 +8,14 @@
 [(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L68)
 
 当std::map被析构，sleep一段时间后，发现内存仍然没有返还给操作系统。
-[std::map析构代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L82)
+[(std::map析构代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L82)
 
+***实验：***
+
+编译:
+```
+sh build.sh
+```
 
 ###2. ptmalloc基础
 
