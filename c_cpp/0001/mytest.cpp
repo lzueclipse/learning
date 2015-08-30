@@ -211,6 +211,7 @@ int main(int argc, char **argv)
     }
     else if(strcmp (argv[1], "cache") == 0 )
     {
+            should_debug = false;
             test_cache();
     }
     else
