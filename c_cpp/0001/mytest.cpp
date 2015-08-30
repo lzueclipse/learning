@@ -123,8 +123,8 @@ void test_cache()
     printf("At the beginning, cache.size=%" PRIu64 "\n", cache->nitems);
     printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
+    //if(should_debug)
+    //    display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
 	
 
@@ -138,8 +138,8 @@ void test_cache()
     printf("Insert all FPs into cache, cache.size=%" PRIu64 ", cost time = %.f seconds\n", cache->nitems, seconds);
     printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
+    //if(should_debug)
+    //    display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
   
 
@@ -164,8 +164,8 @@ void test_cache()
     printf("Delete all FPs from cache, cost time = %.f seconds\n", seconds);
     printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
+    //if(should_debug)
+    //    display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
 
 }
