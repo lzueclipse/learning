@@ -123,8 +123,8 @@ void test_cache()
     printf("At the beginning, cache.size=%" PRIu64 "\n", cache->nitems);
     printf("Output of 'top':\n");
     output_top();
-    //if(should_debug)
-    //    display_mallinfo();
+    if(should_debug)
+        display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
 	
 
@@ -138,8 +138,8 @@ void test_cache()
     printf("Insert all FPs into cache, cache.size=%" PRIu64 ", cost time = %.f seconds\n", cache->nitems, seconds);
     printf("Output of 'top':\n");
     output_top();
-    //if(should_debug)
-    //    display_mallinfo();
+    if(should_debug)
+        display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
   
 
@@ -164,32 +164,23 @@ void test_cache()
     printf("Delete all FPs from cache, cost time = %.f seconds\n", seconds);
     printf("Output of 'top':\n");
     output_top();
-    //if(should_debug)
-    //    display_mallinfo();
+    if(should_debug)
+        display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
 
 }
 
 int main(int argc, char **argv) 
 {
-    if(argc != 3 )
+    if(argc < 2 )
     {
-        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache] [none-debug|debug] \n", argv[0]);
+        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache] [debug] \n", argv[0]);
         exit(-1);
     }
     
-    if(strcmp (argv[2], "none-debug") == 0 )
-    {
-        should_debug = false;
-    }
-    else if(strcmp (argv[2], "debug") == 0)
+    if(argc >=3 && strcmp (argv[2], "debug") == 0)
     {
         should_debug = true;
-    }
-    else
-    {
-        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache] [none-debug|debug] \n", argv[0]);
-        exit(-1);
     }
 
     if(strcmp (argv[1], "map-none-opt") == 0 )
