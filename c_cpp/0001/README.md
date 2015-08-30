@@ -1,20 +1,25 @@
 ##由STL map析构后，内存不返还给操作系统的问题出发，探讨ptmalloc2(glibc malloc) malloc/free行为
 
 ###1. 问题
-我们的程序要向std::map中插入大量的数据，但每个数据只有几十字节。
-[(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L40)
+我们的程序要向std::map中插入大量的数据，但每个数据只有几十字节
+[(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L40)。
 
-当使用完该std::map，调用map.clear()，删除map里的所有元素，sleep一段时间后，发现std::map所占内存没有返还给操作系统。
-[(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L68)
+当使用完该std::map，调用map.clear()，删除map里的所有元素，sleep 15秒后，发现std::map所占内存没有返还给操作系统
+[(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L68)。
 
-当std::map被析构，sleep一段时间后，发现内存仍然没有返还给操作系统。
-[(std::map析构代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L82)
+当std::map被析构，sleep 15秒后，发现内存仍然没有返还给操作系统
+[(std::map析构代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L82)。
 
 **实验：**
 
 编译:
 ```
-sh build.sh
+[root@node1 0001]# sh build.sh
+Complile mytest success
+```
+
+运行:
+```
 ```
 
 ###2. ptmalloc基础
