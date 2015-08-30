@@ -1,6 +1,6 @@
 #include "common.h"
 
-bool should_mallinfo = false;
+bool should_debug = false;
 /*
  * md5 compare
  */
@@ -29,7 +29,8 @@ void test_map()
     printf("At the beginning, map.size=%" PRIu64 "\n", my_map->size());
     printf("Output of 'top':\n");
     output_top();
-    display_mallinfo();
+    if(should_debug)
+        display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
     
 
@@ -43,7 +44,8 @@ void test_map()
     printf("Insert all FPs into std::map, map.size=%" PRIu64 ", cost time = %.f seconds\n", my_map->size(), seconds);
     printf("Output of 'top':\n");
     output_top();
-    display_mallinfo();
+    if(should_debug)
+        display_mallinfo();
     printf("-------------------------------------------------------------------------------------------------\n");
   
 
@@ -72,7 +74,8 @@ void test_map()
     sleep(SLEEP);
     printf("Output of 'top':\n");
     output_top();
-    display_mallinfo();
+    if(should_debug)
+        display_mallinfo();
     printf("-----------------------------------------------------------------------------------------------\n");
     
     delete my_map;
@@ -81,18 +84,22 @@ void test_map()
     sleep(SLEEP);
     printf("Output of 'top':\n");
     output_top();
-    display_mallinfo();
+    if(should_debug)
+        display_mallinfo();
     printf("-----------------------------------------------------------------------------------------------\n");
     
-    my_start = time(NULL);
-    ret = malloc_trim(0);
-    my_end = time(NULL);
-    seconds = difftime(my_end, my_start);
-	printf("Malloc_trim(0), ret=%d, cost time = %.f seconds\n", ret, seconds);
-    printf("Output of 'top':\n");
-    output_top();
-    display_mallinfo();
-	printf("-----------------------------------------------------------------------------------------------\n");
+    if(should_debug)
+    {
+        my_start = time(NULL);
+        ret = malloc_trim(0);
+        my_end = time(NULL);
+        seconds = difftime(my_end, my_start);
+	    printf("Malloc_trim(0), ret=%d, cost time = %.f seconds\n", ret, seconds);
+        printf("Output of 'top':\n");
+        output_top();
+        display_mallinfo();
+	    printf("-----------------------------------------------------------------------------------------------\n");
+    }
 }
 
 
@@ -118,7 +125,8 @@ void test_cache()
     printf("At the beginning, cache.size=%" PRIu64 "\n", cache->nitems);
     printf("Output of 'top':\n");
     output_top();
-    display_mallinfo();
+    if(should_debug)
+        display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
 	
 
@@ -132,7 +140,8 @@ void test_cache()
     printf("Insert all FPs into cache, cache.size=%" PRIu64 ", cost time = %.f seconds\n", cache->nitems, seconds);
     printf("Output of 'top':\n");
     output_top();
-    display_mallinfo();
+    if(should_debug)
+        display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
   
 
@@ -157,7 +166,8 @@ void test_cache()
     printf("Delete all FPs from cache, cost time = %.f seconds\n", seconds);
     printf("Output of 'top':\n");
     output_top();
-    display_mallinfo();
+    if(should_debug)
+        display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
 
 }
@@ -166,21 +176,21 @@ int main(int argc, char **argv)
 {
     if(argc != 3 )
     {
-        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache] [none-mallinfo|mallinfo] \n", argv[0]);
+        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache] [none-debug|debug] \n", argv[0]);
         exit(-1);
     }
     
-    if(strcmp (argv[2], "none-mallinfo") == 0 )
+    if(strcmp (argv[2], "none-debug") == 0 )
     {
-        should_mallinfo = false;
+        should_debug = false;
     }
-    else if(strcmp (argv[2], "mallinfo") == 0)
+    else if(strcmp (argv[2], "debug") == 0)
     {
-        should_mallinfo = true;
+        should_debug = true;
     }
     else
     {
-        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache] [none-mallinfo|mallinfo] \n", argv[0]);
+        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache] [none-debug|debug] \n", argv[0]);
         exit(-1);
     }
 
@@ -207,7 +217,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache] \n", argv[0]);
+        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache] [none-debug|debug] \n", argv[0]);
         exit(-1);
     }
     return 0;

@@ -7,9 +7,6 @@ void display_mallinfo()
 {
     struct mallinfo mi;
     
-    if(should_mallinfo == false)
-        return;
-
     /*
      * After I read the code of "mallinfo", I decide to add this line...
      * This will let us have a good "mallinfo" output after "free", for demo...
