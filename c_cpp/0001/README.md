@@ -128,7 +128,11 @@ Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支�
 
 我们仅仅针对ptmalloc2展开讨论，不涉及业界流行的**jemalloc，tcmalloc**等其他内存分配器。
 
-####3.1 ptmalloc2 关
+本章节大部分节选自[参考文献 1，淘宝工程师力作](http://pan.baidu.com/s/1G1pIe)
+
+我仅仅列出我所关注的部分，详细请阅读参考文献 1。
+
+####3.1 Main_arena 与 non_main_arena
 
 
 
