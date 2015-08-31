@@ -86,9 +86,8 @@ Sleep 15 seconds, Output of 'top':
 ###2.1 x86_64位下内存布局
 
 ![图1](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/1.png "图1")
-上图是 X86_64 下 Linux 进程的默认内存布局形式，这只是一个示意图， 当前内核默认 配置下，进程的stack和 mmap映射区域并不是从一个固定地址开始，并且每次启动时的值都
-
-不一样，这是程序在启动时随机改变这些值的设置，使得使用缓冲区溢出进行攻击更加困难。可以用如下命令禁止该特性：sudo sysctl -w kernel.randomize_va_space=0
+上图是 X86_64 下 Linux 进程的默认内存布局形式，这只是一个示意图， 当前内核默认 配置下，进程的stack和 mmap映射区域并不是从一个固定地址开始，并且每次启动时的值都 不一样，
+这是程序在启动时随机改变这些值的设置，使得使用缓冲区溢出进行攻击更加困难。可以用如下命令禁止该特性：sudo sysctl -w kernel.randomize_va_space=0
 
 ###2.2
 
