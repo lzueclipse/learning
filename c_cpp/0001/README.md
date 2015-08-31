@@ -184,7 +184,7 @@ struct malloc_chunk {
 
 chunk的第一个域表示相邻的前一个chunk的size(prev_size)；第二个域表示本chunk的"size"，其最低3位被借用来表示特殊含义。
 
-"P"--P为0，表示相邻前一个chunk是free的，此时prev_size才有效；P为1，表示相邻前一个chunk正被使用
+"P"--P为0，表示相邻前一个chunk是free的，**此时prev_size才有效**；P为1，表示相邻前一个chunk正被使用，此时**prev_size无效**
 
 "M"--M为0，表示该chunk从heap(brk/sbrk)分配；M为1，表示该chunk从mmap映射区分配
 
