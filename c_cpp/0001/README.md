@@ -76,13 +76,7 @@ Sleep 15 seconds, Output of 'top':
 
 
 
-###2. ptmalloc2基础
-Linux 中 malloc 的早期版本是由 Doug Lea 实现的，它有一个重要问题就是在并行处理时 多个线程共享进程的内存空间，各线程可能并发请求内存，
-在这种情况下应该如何保证分配和回收的正确和高效。
-
-Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支持多线程——ptmalloc，在glibc-2.3.x.中已经集成了 ptmalloc2，这就是我们平时使用的 malloc，
-
-我们仅仅针对ptmalloc2展开讨论，不涉及业界流行的jemalloc，tcmalloc等其他内存分配器。
+###2. 内存分配基础知识
 
 本章节大部分节选自[参考文献 1，淘宝工程师力作](http://pan.baidu.com/s/1G1pIe)
 
@@ -128,7 +122,13 @@ Free:
 ```
 在实验--3里，我们仅仅malloc()一块内存，却没有想这块内存区间写入任何数据，观察'top'输出的第5列和第6列，能发现仅仅分配了**虚拟内存(285048 KB)**，没有分配物理内存(**1580 KB**)。
 
-###2.4
+###2.4 ptmalloc2
+Linux 中 malloc 的早期版本是由 Doug Lea 实现的，它有一个重要问题就是在并行处理时 多个线程共享进程的内存空间，各线程可能并发请求内存，
+在这种情况下应该如何保证分配和回收的正确和高效。
+
+Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支持多线程——ptmalloc，在glibc-2.3.x.中已经集成了 ptmalloc2，这就是我们平时使用的 malloc，
+
+我们仅仅针对ptmalloc2展开讨论，不涉及业界流行的jemalloc，tcmalloc等其他内存分配器。
 
 ###2.5
 
