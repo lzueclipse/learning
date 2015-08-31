@@ -5,6 +5,8 @@
 
 ####1.1 实验 1
 
+本文所有实验基于**Red Hat Enterprise 7.0，glibc版本2.17**
+
 编译:
 ```
 [root@node1 0001]# sh build.sh
