@@ -88,7 +88,7 @@ Sleep 15 seconds, Output of 'top':
 
 ###2.2 内存分配/释放的相关系统调用和函数
 
-从2.1中我们知道，heap和mmap region都是提供给用户程序的虚拟内存空间，那么如何获得该区域的内存呢？
+从2.1中我们知道，heap和mmap region都是提供给用户程序的虚拟内存空间(malloc/free所管理的虚拟内存空间)，那么如何获得该区域的内存呢？
 
 对heap的操作，Linux提供了brk()系统调用，另外glibc对brk()进行了封装，提供了sbrk()函数； 对mmap region，Linux提供了mmap()和munmap()系统调用。
 
