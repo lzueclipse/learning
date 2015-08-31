@@ -213,9 +213,9 @@ Ptmalloc 一共维护了 128 个 bin，并使用一个数组来存储这些 bin�
 
 ![图4](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/4.png "图4")
 
-数组中的第1个为unsorted bin。
+1) 数组中的第1个为unsorted bin。
 
-数组中的第2--第63为small bin，同一个small bin中的chunk大小相同，两个相邻的small bin中的chunk大小相差16 Byte。
+2) 数组中的第2--第63为small bin，同一个small bin中的chunk大小相同，两个相邻的small bin中的chunk大小相差16 Byte。
 
 Small bin chunk_size= 16 * index， [(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1490)
 
