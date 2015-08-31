@@ -148,14 +148,14 @@ Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支�
 然后使用该分配区进行分配内存操作。在释放操作中，线程同样试图获得待释放内存块所在分配区的锁，如果该分配区正在被别的线程使用，则需要等待直到其他线程释放该分配区的
 互斥锁之后才可以进行释放操作。
 
-** Max Number of arena = 8 * number of cores ** [(相关代码)](http://osxr.org/glibc/source/malloc/arena.c?v=glibc-2.17#0848)
+** Max Number of arena = 8 * number of cores ** [(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/arena.c#L848)
 
 ####3.2 chunk 的组织
 用户请求分配的空间在 ptmalloc2 中都使用一个 chunk 来表示。
 
 用户调用 free()函数释放掉的内存也并不是立即就归还给操作系统，ptmalloc2 使用特定的数据结构来管理这些空闲的 chunk。
 
-chunk的定义如下[(相关代码)](http://osxr.org/glibc/source/malloc/malloc.c?v=glibc-2.17#1125)：
+chunk的定义如下[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1125)：
 
 ```
 struct malloc_chunk {
