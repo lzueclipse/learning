@@ -177,6 +177,8 @@ struct malloc_chunk {
 };
 ```
 
+在x86_64位机器上，**chunk是16B对齐**。
+
 一个使用中（没有被free）的chunk，在内存中是这个样子：
 
 ![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/2.png "图2")
@@ -223,7 +225,7 @@ Small bin chunk_size= 16 * index， [(相关代码)] (https://github.com/lzuecli
 [(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1513)
 ：
 
-第64--第96，公差为64B；chunk_size = 1024 + 64 * (index -64)
+第64--第96，公差为64B；1024 + 64 * (index -64) 
 
 第97--第111，公差为512B；chunk_size = 1024 + 64 * 33 + 512 * (index - 97) = 3136 + 512 * (index -97)
 
