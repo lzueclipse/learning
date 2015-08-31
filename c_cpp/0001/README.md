@@ -130,7 +130,7 @@ Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支�
 
 本章节大部分节选自[参考文献 1，淘宝工程师力作](http://pan.baidu.com/s/1G1pIe)
 
-我**仅仅列出我所关注的部分**，详细请阅读参考文献 1。
+我**仅仅列出我所关注的部分，比较粗浅**，详细请阅读参考文献 1。
 
 ####3.1 main_arena 与 non_main_arena
 在 Doug Lea 实现的内存分配器中只有一个主分配区（ main arena），每次分配内存都必 须对主分配区加锁，分配完成后释放锁，在 SMP 多线程环境下，对主分配区的锁的争用很激烈，
