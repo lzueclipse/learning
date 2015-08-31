@@ -71,7 +71,7 @@ Sleep 15 seconds, Output of 'top':
 。
 可以发现free后，**没有返还内存给操作系统(仍然占用314084 KB)。看来一切的根源在glibc malloc/free上。**
 
-**在第2节，我们将讲述glibc malloc/free(ptmalloc2)原理。**
+**在第2节，我们将讲述glibc malloc/free(ptmalloc2)基础。**
 
 
 
