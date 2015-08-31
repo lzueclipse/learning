@@ -86,8 +86,6 @@ Sleep 15 seconds, Output of 'top':
 上图是 X86_64 下 Linux 进程的默认内存布局形式，这只是一个示意图， 当前内核默认 配置下，进程的stack和 mmap映射区域并不是从一个固定地址开始，并且每次启动时的值都 不一样，
 这是程序在启动时随机改变这些值的设置，使得使用缓冲区溢出进行攻击更加困难。可以用如下命令禁止该特性：sudo sysctl -w kernel.randomize_va_space=0
 
-其中heap和memory mapping region都是提供给用户程序的虚拟内存空间。
-
 ###2.2 内存分配/释放的相关系统调用和函数
 
 从2.1中我们知道，heap和mmap region都是提供给用户程序的虚拟内存空间，那么如何获得该区域的内存呢？
@@ -128,7 +126,7 @@ Linux 中 malloc 的早期版本是由 Doug Lea 实现的，它有一个重要�
 
 Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支持多线程——ptmalloc，在glibc-2.3.x.中已经集成了 ptmalloc2，这就是我们平时使用的 malloc，
 
-我们仅仅针对ptmalloc2展开讨论，不涉及业界流行的jemalloc，tcmalloc等其他内存分配器。
+我们仅仅针对ptmalloc2展开讨论，不涉及业界流行的**jemalloc，tcmalloc**等其他内存分配器。
 
 ###2.5
 
