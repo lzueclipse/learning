@@ -178,6 +178,7 @@ struct malloc_chunk {
 ```
 
 一个使用中（没有被free）的chunk，在内存中是这个样子：
+
 ![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/2.png "图2")
 
 图中"chunk"指针指向一个chunk的开始，"mem"指针是真正返回给用户的内存指针，这两个指针在64位机器上相差16 Bytes。
@@ -192,6 +193,7 @@ chunk的第一个域表示相邻的前一个chunk的size(prev_size)；第二个�
 
 
 一个被free后的chunk，在内存中是这个样子:
+
 ![图3](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/3.png "图3")
 
 当chunk空闲时, M状态不存在，只有A和P(P为1)状态。
