@@ -176,6 +176,8 @@ struct malloc_chunk {
 
 };
 ```
+![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/2.png "图2")
+![图3](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/3.png "图3")
 
 
 ####3.3
