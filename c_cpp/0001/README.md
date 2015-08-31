@@ -157,6 +157,7 @@ Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支�
 
 chunk的定义如下[(相关代码)](http://osxr.org/glibc/source/malloc/malloc.c?v=glibc-2.17#1125)：
 
+```
 struct malloc_chunk {
 
   INTERNAL_SIZE_T      prev_size;  /* Size of previous chunk (if free).  */
@@ -172,8 +173,9 @@ struct malloc_chunk {
   struct malloc_chunk* fd_nextsize; /* double links -- used only if free. */
   
   struct malloc_chunk* bk_nextsize;
-};
 
+};
+```
 
 
 ####3.3
