@@ -176,7 +176,18 @@ struct malloc_chunk {
 
 };
 ```
+
+一个使用中（没有被free）的chunk，在内存中是这个样子：
 ![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/2.png "图2")
+
+图中"chunk"指针指向一个chunk的开始，"mem"指针是真正返回给用户的内存指针，这两个指针在64位机器上相差16 Bytes。
+
+chunk的第一个域表示相邻的前一个chunk的size(prev_size)；第二个域表示本chunk的"size"，其最低3位被借用来表示特殊含义。
+"P"--P为0，表示相邻前一个chunk是free的，此时prev_size才有效；P为1，表示相邻前一个chunk正被使用
+"M"--M为0，表示该chunk从heap(brk/sbrk)分配；M为1，表示该chunk从mmap映射区分配
+"A"--A为0，表示该chunk属于none main arena；A为1，表示该chunk属于main arena
+
+
 ![图3](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/3.png "图3")
 
 
