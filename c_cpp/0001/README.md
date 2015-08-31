@@ -217,25 +217,20 @@ Ptmalloc 一共维护了 128 个 bin，并使用一个数组来存储这些 bin�
 
 1) 数组中的第1个为unsorted bin。
 
-2) 数组中的第2--第63为small bin，同一个small bin中的chunk大小相同，两个相邻的small bin中的chunk大小相差16 Byte。
-
-Small bin chunk_size= 16 * index， [(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1490)
+2) 数组中的第2--第63为small bin，同一个small bin中的chunk大小相同，两个相邻的small bin中的chunk大小相差16 Byte [(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1490)。
 
 3)数组中第64--第126个为large bin， large bin 一共包括 63 个 bin，每个 bin 中的 chunk 大小不是一个固定公差的等差数列， 而是分成 6 组 bin，每组 bin 是一个固定公差的等差数列
-[(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1513)
-：
+[(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1513)。
 
-第64--第96，公差为64B；1024 + 64 * (index -64) 
+第64--第96，公差为64B:
 
-第97--第111，公差为512B；chunk_size = 1024 + 64 * 33 + 512 * (index - 97) = 3136 + 512 * (index -97)
+第97--第111，公差为512B；
 
-第112--第120，公差为4096B；chunk_size = 3136 + 512 * 15 + 4096 * (index - 112 ) =  10816 + 4096 * (index - 112)
+第112--第120，公差为4096B；
 
-第121--第123，公差为32768B；chunk_size = 10816 + 4096 * 9 + 32768 * (index - 121) = 47680 + 32768 * (index -121)
+第121--第123，公差为32768B；
 
-第124--第126，公差为262144B；chunk_size = 47680 + 32768 * 3 + 262144 * (index - 124) = 145984 + 262144 * (index - 124)
-
-
+第124--第126，公差为262144B；
 
 
 ####3.4
