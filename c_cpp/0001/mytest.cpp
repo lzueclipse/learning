@@ -10,6 +10,8 @@ void test_malloc_free()
     printf("At the beginning:\n");
     printf("Output of 'top':\n");
     output_top();
+    if(should_debug)
+        display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
     
     char ** ptrs = (char **) malloc( sizeof(char *) * MAXNUM );
@@ -21,6 +23,8 @@ void test_malloc_free()
     printf("Malloc:\n");
     printf("Output of 'top':\n");
     output_top();
+    if(should_debug)
+        display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
 
 
@@ -34,6 +38,8 @@ void test_malloc_free()
     sleep(SLEEP);
     printf("Output of 'top':\n");
     output_top();
+    if(should_debug)
+        display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
 }
 
