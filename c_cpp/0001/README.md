@@ -234,7 +234,7 @@ Ptmalloc 一共维护了 128 个 bin，并使用一个数组来存储这些 bin�
 
 第126(1个)， 其他
 
-根据这些公式，可以用Excel计算出，每一个bin包含的字节范围, 请查看 [malloc_bins.xlsx]()
+根据这些公式，可以用Excel计算出，每一个bin包含的字节范围, 请查看 [malloc_bins.xlsx](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/malloc_bins.xlsx?raw=true)
 
 
 ####3.4
