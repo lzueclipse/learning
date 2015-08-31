@@ -89,7 +89,7 @@ Sleep 15 seconds, Output of 'top':
 上图是 X86_64 下 Linux 进程的默认内存布局形式，这只是一个示意图， 当前内核默认 配置下，进程的stack和 mmap映射区域并不是从一个固定地址开始，并且每次启动时的值都 不一样，
 这是程序在启动时随机改变这些值的设置，使得使用缓冲区溢出进行攻击更加困难。可以用如下命令禁止该特性：sudo sysctl -w kernel.randomize_va_space=0
 
-其中heap和memory mapping region都是提供给用户程序的虚拟地址空间(Virtual Address)。
+其中heap和memory mapping region都是提供给用户程序的虚拟内存空间。
 
 ###2.2 内存分配/释放的相关系统调用和函数
 
