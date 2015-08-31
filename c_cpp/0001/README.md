@@ -71,7 +71,7 @@ Sleep 15 seconds, Output of 'top':
 。
 可以发现free后，**没有返还内存给操作系统(仍然占用314084 KB)。看来一切的根源在glibc malloc/free上。**
 
-**在第2节，我们将讲述glibc malloc/free原理。**
+**在第2节，我们将讲述glibc malloc/free(ptmalloc2)原理。**
 
 
 ###2. ptmalloc2基础
@@ -79,9 +79,13 @@ Sleep 15 seconds, Output of 'top':
 
 我们仅仅针对ptmalloc2展开讨论，不涉及业界流行的jemalloc，tcmalloc等其他内存分配器。
 
+本章节大部分节选自[参考文献 1，淘宝工程师力作](http://pan.baidu.com/s/1G1pIe)
+
 ###2.1 x86_64位下内存布局
 
 ![图1](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/1.png "图1")
+
+
 
 ###2.2
 
