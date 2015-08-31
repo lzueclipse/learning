@@ -66,7 +66,9 @@ Sleep 15 seconds, Output of 'top':
 ----------------------------------------------------------------------------------------------
 
 ```
-在实验--2里，我们用malloc分配一些内存空间，存入数据后(全0)，用free释放空间。
+在实验--2里，我们用malloc分配一些内存空间，存入数据后(全0)，用free释放空间
+[(对应的代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L5)
+。
 可以发现free后，**没有返还物理内存给操作系统(仍然占用314084 KB)。看来一切的根源在glibc malloc/free上。**
 
 
@@ -77,7 +79,7 @@ Sleep 15 seconds, Output of 'top':
 
 ###2.1 x86_64位下内存布局
 
-![图1](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/1.jpg "图1")
+![图1](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/1.png"图1")
 
 ###2.2
 
