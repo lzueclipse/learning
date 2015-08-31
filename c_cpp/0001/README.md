@@ -193,9 +193,11 @@ chunk的第一个域表示相邻的前一个chunk的size(prev_size)；第二个�
 
 一个被free后的chunk，在内存中是这个样子
 ![图3](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/3.png "图3")
-当chunk空闲时, M状态不存在，只有A和P状态。
+当chunk空闲时, M状态不存在，只有A和P(P为1)状态。
 
-原本是用户数据的地方存储了4个指针（后面会介绍4个指针的用途）。
+原本是用户数据的地方存储了4个指针，指针 fd 指向后一个空闲的 chunk，而 bk 指向前一个空闲的 chunk， ptmalloc2通过这两个指针将大小相近的 chunk 连成一个双向链表。
+
+对于 large bin 中的空闲 chunk，还有两个指针，fd_nextsize 和 bk_nextsize，这两个指针用于加快在large bin 中查找最匹配的空闲chunk（smallest first, best fit)。 
 
 
 ####3.3
