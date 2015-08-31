@@ -222,10 +222,15 @@ Small bin chunk_size= 16 * index， [(相关代码)] (https://github.com/lzuecli
 3)数组中第64--第126为large bin， large bin 一共包括 63 个 bin，每个 bin 中的 chunk 大小不是一个固定公差的等差数列， 而是分成 6 组 bin，每组 bin 是一个固定公差的等差数列：
 
 第64--第96， 公差为64B；
+
 第97--第111，公差为512B；
+
 第112--第120，公差为4096B；
+
 第121--第123，公差为32768B；
+
 第124--第126，公差为262144B 
+
 [(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1513)
 
 
