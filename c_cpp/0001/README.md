@@ -219,7 +219,9 @@ Ptmalloc 一共维护了 128 个 bin，并使用一个数组来存储这些 bin�
 
 Small bin chunk_size= 16 * index， [(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1490)
 
-3)数组中第64--第126为large bin， large bin 一共包括 63 个 bin，每个 bin 中的 chunk 大小不是一个固定公差的等差数列， 而是分成 6 组 bin，每组 bin 是一个固定公差的等差数列：
+3)数组中第64--第126为large bin， large bin 一共包括 63 个 bin，每个 bin 中的 chunk 大小不是一个固定公差的等差数列， 而是分成 6 组 bin，每组 bin 是一个固定公差的等差数列
+[(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1513)
+：
 
 第64--第96， 公差为64B；
 
@@ -231,7 +233,6 @@ Small bin chunk_size= 16 * index， [(相关代码)] (https://github.com/lzuecli
 
 第124--第126，公差为262144B 
 
-[(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1513)
 
 
 
