@@ -79,7 +79,7 @@ Sleep 15 seconds, Output of 'top':
 
 ###2.1 x86_64位下内存布局
 
-![图1](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/1.png"图1")
+![图1](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/1.png "图1")
 
 ###2.2
 
