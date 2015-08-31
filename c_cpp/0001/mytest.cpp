@@ -43,6 +43,25 @@ void test_malloc_free()
     printf("----------------------------------------------------------------------------------------------\n");
 }
 
+void test_lazy_allocation()
+{
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("At the beginning:\n");
+    printf("Output of 'top':\n");
+    output_top();
+    printf("----------------------------------------------------------------------------------------------\n");
+ 
+    printf("Malloc:\n");
+    char *ptr = (char *) malloc(1024 * 1024 * 256);
+    output_top();
+    printf("----------------------------------------------------------------------------------------------\n");
+
+    printf("Free:\n");
+    free(ptr);
+    output_top();
+    printf("----------------------------------------------------------------------------------------------\n");
+}
+
 /*
  * md5 compare
  */
@@ -207,7 +226,7 @@ int main(int argc, char **argv)
 {
     if(argc < 2 )
     {
-        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache] [debug] \n", argv[0]);
+        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache|malloc-free|lazy-allocation] [debug] \n", argv[0]);
         exit(-1);
     }
     
@@ -242,9 +261,13 @@ int main(int argc, char **argv)
     {
             test_malloc_free();
     }
+    else if(strcmp (argv[1], "lazy-allocation") == 0 )
+    {
+            test_lazy_allocation();
+    }
     else
     {
-        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache] [none-debug|debug] \n", argv[0]);
+        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache|malloc-free|lazy-allocation] [debug] \n", argv[0]);
         exit(-1);
     }
     return 0;
