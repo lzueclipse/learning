@@ -150,6 +150,33 @@ Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支�
 
 ** Max Number of arena = 8 * number of cores ** [(相关代码)](http://osxr.org/glibc/source/malloc/arena.c?v=glibc-2.17#0848)
 
+####3.2 chunk 的组织
+用户请求分配的空间在 ptmalloc2 中都使用一个 chunk 来表示。
+
+用户调用 free()函数释放掉的内存也并不是立即就归还给操作系统，ptmalloc2 使用特定的数据结构来管理这些空闲的 chunk。
+
+chunk的定义如下[(相关代码)](http://osxr.org/glibc/source/malloc/malloc.c?v=glibc-2.17#1125)：
+
+struct malloc_chunk {
+
+  INTERNAL_SIZE_T      prev_size;  /* Size of previous chunk (if free).  */
+  INTERNAL_SIZE_T      size;       /* Size in bytes, including overhead. */
+
+  struct malloc_chunk* fd;         /* double links -- used only if free. */
+  struct malloc_chunk* bk;
+
+  /* Only used for large blocks: pointer to next larger size.  */
+  struct malloc_chunk* fd_nextsize; /* double links -- used only if free. */
+  struct malloc_chunk* bk_nextsize;
+};
+
+
+
+####3.3
+####3.4
+####3.5
+
+
 ###4. 重现STL map不返还内存问题，并根据malloc debug信息分析
 
 
