@@ -69,7 +69,9 @@ Sleep 15 seconds, Output of 'top':
 在实验--2里，我们用malloc分配一些内存空间，存入数据后(全0)，用free释放空间
 [(对应的代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L5)
 。
-可以发现free后，**没有返还内存给操作系统(仍然占用314084 KB)。看来一切的根源在glibc malloc/free上。在第2节，我们将讲述glibc malloc/free原理。**
+可以发现free后，**没有返还内存给操作系统(仍然占用314084 KB)。看来一切的根源在glibc malloc/free上。**
+
+**在第2节，我们将讲述glibc malloc/free原理。**
 
 
 ###2. ptmalloc2基础
