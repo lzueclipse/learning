@@ -209,9 +209,9 @@ chunk的第一个域表示相邻的前一个chunk的size(prev_size)；第二个�
 ####3.3 空闲chunk容器
 
 #####3.3.1 bins
-用户 free 掉的内存并不是都会马上归还给系统， ptmalloc 会统一管理 heap 和 mmap 映 射区域中的空闲的 chunk，当用户进行下一次分配请求时， ptmalloc 会首先试图在空闲的
+用户 free 掉的内存并不是都会马上归还给系统， ptmalloc 会统一管理 heap 和 mmap 映 射区域中的空闲的 chunk，当用户进行下一次分配请求时， ptmalloc 会首先试图在空闲的chunk 中挑选一块给用户，这样就避免了频繁的系统调用，降低了内存分配的开销。 
 
-chunk 中挑选一块给用户，这样就避免了频繁的系统调用，降低了内存分配的开销。 ptmalloc将相似大小的 chunk 用双向链表链接起来，这样的一个链表被称为一个 bin。 
+ptmalloc将相似大小的 chunk 用双向链表链接起来，这样的一个链表被称为一个 bin。 
 
 Ptmalloc 一共维护了 128 个 bin，并使用一个数组来存储这些 bin。
 
@@ -239,7 +239,7 @@ Ptmalloc 一共维护了 128 个 bin，并使用一个数组来存储这些 bin�
 
 **根据small bin和large bin的公式，可以用Excel计算出，每一个bin包含的字节范围, 请查看 [malloc_bins.xlsx](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/malloc_bins.xlsx?raw=true)**
 
-**注意：此处给出的数据没有考虑16字节对齐，进攻参考**
+**注意：此Excel给出的数据中，"结束(字节)没有考虑16字节对齐，仅供参考**
 
 ####3.4
 ####3.5
