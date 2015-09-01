@@ -273,15 +273,354 @@ unsorted bin 的队列使用 bins 数组的第一个， 如果被用户释放的
 
 从这个过程可以看出来， unsorted bin 可以看做是 bins 的一个缓冲区， 增加它只是为了加快分配的速度。
 
-#####3.3.4 
+#####3.3.4  Top chunk
+并不是所有的 chunk 都按照上面的方式来组织，实际上，有三种例外情况。 Top chunk，
+mmaped chunk 和 last remainder，下面会分别介绍这三类特殊的 chunk。 top chunk 对于主分
+配区和非主分配区是不一样的。
+对于非主分配区会预先从 mmap 区域分配一块较大的空闲内存模拟 sub-heap， 通过管
+理 sub-heap 来响应用户的需求， 因为内存是按地址从低向高进行分配的， 在空闲内存的最
+高处， 必然存在着一块空闲 chunk， 叫做 top chunk。 当 bins 和 fast bins 都不能满足分配需
+要的时候，ptmalloc 会设法在 top chunk 中分出一块内存给用户，如果 top chunk 本身不够大，
+分配程序会重新分配一个 sub-heap，并将 top chunk 迁移到新的 sub-heap 上，新的 sub-heap
+与已有的 sub-heap 用单向链表连接起来，然后在新的 top chunk 上分配所需的内存以满足分
+配的需要， 实际上， top chunk 在分配时总是在 fast bins 和 bins 之后被考虑， 所以， 不论 top
+chunk 有多大， 它都不会被放到 fast bins 或者是 bins 中。 Top chunk 的大小是随着分配和回
+收不停变换的，如果从 top chunk 分配内存会导致 top chunk 减小，如果回收的 chunk 恰好
+与 top chunk 相邻，那么这两个 chunk 就会合并成新的 top chunk，从而使 top chunk 变大。
+如果在 free 时回收的内存大于某个阈值， 并且 top chunk 的大小也超过了收缩阈值， ptmalloc
+会收缩 sub-heap，如果 top-chunk 包含了整个 sub-heap， ptmalloc 会调用 munmap 把整个
+sub-heap 的内存返回给操作系统。
+由于主分配区是唯一能够映射进程 heap 区域的分配区，它可以通过 sbrk()来增大或是
+收缩进程 heap 的大小， ptmalloc 在开始时会预先分配一块较大的空闲内存（ 也就是所谓
+的 heap）， 主分配区的 top chunk 在第一次调用 malloc 时会分配一块(chunk_size + 128KB)
+align 4KB 大小的空间作为初始的 heap， 用户从 top chunk 分配内存时，可以直接取出一块内
+存给用户。在回收内存时， 回收的内存恰好与 top chunk 相邻则合并成新的 top chunk，当该
+次回收的空闲内存大小达到某个阈值， 并且 top chunk 的大小也超过了收缩阈值， 会执行内
+存收缩，减小 top chunk 的大小， 但至少要保留一个页大小的空闲内存， 从而把内存归还给
+操作系统。 如果向主分配区的 top chunk 申请内存， 而 top chunk 中没有空闲内存， ptmalloc
+会调用 sbrk()将的进程 heap 的边界 brk 上移，然后修改 top chunk 的大小。
 
-#####3.3.5 
+#####3.3.5 mmaped chunk
+当需要分配的 chunk 足够大， 而且 fast bins 和 bins 都不能满足要求， 甚至 top chunk 本
+身也不能满足分配需求时， ptmalloc 会使用 mmap 来直接使用内存映射来将页映射到进程空
+间。 这样分配的 chunk 在被 free 时将直接解除映射， 于是就将内存归还给了操作系统， 再
+次对这样的内存区的引用将导致 segmentation fault 错误。 这样的 chunk 也不会包含在任何
+bin 中。
 
-#####3.3.6 
+#####3.3.6 Last remainder
+Last remainder 是另外一种特殊的 chunk，就像 top chunk 和 mmaped chunk 一样，不会
+在任何 bins 中找到这种 chunk。当需要分配一个 small chunk，但在 small bins 中找不到合适
+的 chunk，如果 last remainder chunk 的大小大于所需的 small chunk 大小，last remainder chunk
+被分裂成两个 chunk，其中一个 chunk 返回给用户，另一个 chunk 变成新的 last remainder chuk。
 
-####3.4
+####3.4 sbrk 与 mmap
+从进程的内存布局可知， .bss 段之上的这块分配给用户程序的空间被称为 heap（ 堆）。
+start_brk 指向 heap 的开始，而 brk 指向 heap 的顶部。可以使用系统调用 brk()和 sbrk()来增
+加标识 heap 顶部的 brk 值，从而线性的增加分配给用户的 heap 空间。在使 malloc 之前，
+brk的值等于 start_brk，也就是说 heap大小为 0。ptmalloc在开始时，若请求的空间小于 mmap
+分配阈值（ mmap threshold，默认值为 128KB）时，主分配区会调用 sbrk()增加一块大小为 (128
+KB + chunk_size) align 4KB 的空间作为 heap。 非主分配区会调用 mmap 映射一块大小为
+HEAP_MAX_SIZE （ 32 位系统上默认为 1MB，64 位系统上默认为 64MB）的空间作为 sub-heap。
+这就是前面所说的 ptmalloc 所维护的分配空间，当用户请求内存分配时，首先会在这个区
+域内找一块合适的 chunk 给用户。当用户释放了 heap 中的 chunk 时， ptmalloc 又会使用 fast
+bins 和 bins 来组织空闲 chunk。以备用户的下一次分配。若需要分配的 chunk 大小小于 mmap
+分配阈值，而 heap 空间又不够，则此时主分配区会通过 sbrk()调用来增加 heap 大小， 非主
+分配区会调用 mmap 映射一块新的 sub-heap， 也就是增加 top chunk 的大小，每次 heap 增
+加的值都会对齐到 4KB。
+当用户的请求超过 mmap 分配阈值， 并且主分配区使用 sbrk()分配失败的时候， 或是非
+主分配区在 top chunk 中不能分配到需要的内存时， ptmalloc 会尝试使用 mmap()直接映射一
+块内存到进程内存空间。 使用 mmap()直接映射的 chunk 在释放时直接解除映射， 而不再属
+于进程的内存空间。 任何对该内存的访问都会产生段错误。 而在 heap 中或是 sub-heap 中分
+配的空间则可能会留在进程内存空间内， 还可以再次引用（ 当然是很危险的）。
+当 ptmalloc munmap chunk 时，如果回收的 chunk 空间大小大于 mmap 分配阈值的当前
+值，并且小于 DEFAULT_MMAP_THRESHOLD_MAX（ 32 位系统默认为 512KB， 64 位系统默认
+为 32MB）， ptmalloc 会把 mmap 分配阈值调整为当前回收的 chunk 的大小，并将 mmap 收
+缩阈值（ mmap trim threshold）设置为 mmap 分配阈值的 2 倍。这就是 ptmalloc 的对 mmap
+分配阈值的动态调整机制，该机制是默认开启的，当然也可以用 mallopt()关闭该机制（将在
+3.2.6 节介绍如何关闭该机制）。
 
-####3.5
+####3.5 malloc
+ptmalloc 的响应用户内存分配要求的具体步骤为:
+1) 获取分配区的锁， 为了防止多个线程同时访问同一个分配区， 在进行分配之前需要
+取得分配区域的锁。线程先查看线程私有实例中是否已经存在一个分配区，如果存
+在尝试对该分配区加锁，如果加锁成功，使用该分配区分配内存，否则，该线程搜
+索分配区循环链表试图获得一个空闲（ 没有加锁） 的分配区。如果所有的分配区都
+已经加锁，那么 ptmalloc 会开辟一个新的分配区，把该分配区加入到全局分配区循
+环链表和线程的私有实例中并加锁，然后使用该分配区进行分配操作。 开辟出来的
+新分配区一定为非主分配区，因为主分配区是从父进程那里继承来的。开辟非主分
+配区时会调用 mmap()创建一个 sub-heap，并设置好 top chunk。
+2) 将用户的请求大小转换为实际需要分配的 chunk 空间大小。
+3) 判断所需分配 chunk的大小是否满足 chunk_size <= max_fast (max_fast 默认为 64B)，
+如果是的话， 则转下一步， 否则跳到第 5 步。
+4) 首先尝试在 fast bins 中取一个所需大小的 chunk 分配给用户。 如果可以找到， 则分
+配结束。 否则转到下一步。
+5) 判断所需大小是否处在 small bins 中， 即判断 chunk_size < 512B 是否成立。 如果
+chunk 大小处在 small bins 中， 则转下一步， 否则转到第 6 步。
+6) 根据所需分配的 chunk 的大小， 找到具体所在的某个 small bin， 从该 bin 的尾部摘
+取一个恰好满足大小的 chunk。 若成功， 则分配结束， 否则， 转到下一步。
+7) 到了这一步， 说明需要分配的是一块大的内存， 或者 small bins 中找不到合适的
+chunk。于是， ptmalloc 首先会遍历 fast bins 中的 chunk， 将相邻的 chunk 进行合并，
+并链接到 unsorted bin 中， 然后遍历 unsorted bin 中的 chunk，如果 unsorted bin 只
+有一个 chunk，并且这个 chunk 在上次分配时被使用过，并且所需分配的 chunk 大
+小属于 small bins，并且 chunk 的大小大于等于需要分配的大小，这种情况下就直
+接将该 chunk 进行切割，分配结束，否则将根据 chunk 的空间大小将其放入 small
+bins 或是 large bins 中，遍历完成后，转入下一步。
+8) 到了这一步，说明需要分配的是一块大的内存，或者 small bins 和 unsorted bin 中
+都找不到合适的 chunk，并且 fast bins 和 unsorted bin 中所有的 chunk 都清除干净
+了。 从 large bins 中按照“ smallest-first， best-fit”原则， 找一个合适的 chunk， 从
+中划分一块所需大小的 chunk， 并将剩下的部分链接回到 bins 中。 若操作成功， 则
+分配结束， 否则转到下一步。
+9) 如果搜索 fast bins 和 bins 都没有找到合适的 chunk， 那么就需要操作 top chunk 来
+进行分配了。 判断 top chunk 大小是否满足所需 chunk 的大小， 如果是， 则从 top
+chunk 中分出一块来。 否则转到下一步。
+10) 到了这一步， 说明 top chunk 也不能满足分配要求， 所以， 于是就有了两个选择: 如
+果是主分配区， 调用 sbrk()， 增加 top chunk 大小； 如果是非主分配区，调用 mmap
+来分配一个新的 sub-heap，增加 top chunk 大小； 或者使用 mmap()来直接分配。 在
+这里， 需要依靠 chunk 的大小来决定到底使用哪种方法。 判断所需分配的 chunk
+大小是否大于等于 mmap 分配阈值， 如果是的话， 则转下一步， 调用 mmap 分配，
+否则跳到第 12 步， 增加 top chunk 的大小。
+11) 使用 mmap 系统调用为程序的内存空间映射一块 chunk_size align 4kB 大小的空间。
+然后将内存指针返回给用户。
+12) 判断是否为第一次调用 malloc， 若是主分配区， 则需要进行一次初始化工作， 分配
+21
+一块大小为(chunk_size + 128KB) align 4KB 大小的空间作为初始的 heap。 若已经初
+始化过了， 主分配区则调用 sbrk()增加 heap 空间， 分主分配区则在 top chunk 中切
+割出一个 chunk， 使之满足分配需求， 并将内存指针返回给用户。
+总结一下： 根据用户请求分配的内存的大小， ptmalloc 有可能会在两个地方为用户
+分配内存空间。 在第一次分配内存时，一般情况下只存在一个主分配区，但也有可能从
+父进程那里继承来了多个非主分配区，在这里主要讨论主分配区的情况， brk 值等于
+start_brk， 所以实际上 heap 大小为 0， top chunk 大小也是 0。 这时， 如果不增加 heap
+大小， 就不能满足任何分配要求。所以， 若用户的请求的内存大小小于 mmap 分配阈值，
+则 ptmalloc 会初始 heap。 然后在 heap 中分配空间给用户， 以后的分配就基于这个 heap
+进行。若第一次用户的请求就大于 mmap 分配阈值， 则 ptmalloc 直接使用 mmap()分配
+一块内存给用户， 而 heap 也就没有被初始化， 直到用户第一次请求小于 mmap 分配阈
+值的内存分配。第一次以后的分配就比较复杂了，简单说来，ptmalloc 首先会查找 fast bins，
+如果不能找到匹配的 chunk， 则查找 small bins。 若还是不行，合并 fast bins，把 chunk
+加入 unsorted bin，在 unsorted bin 中查找， 若还是不行， 把 unsorted bin 中的 chunk 全
+加入 large bins 中，并查找 large bins。在 fast bins 和 small bins 中的查找都需要精确匹配，
+而在 large bins 中查找时， 则遵循“ smallest-first， best-fit”的原则， 不需要精确匹配。
+若以上方法都失败了， 则 ptmalloc 会考虑使用 top chunk。 若 top chunk 也不能满足分配
+要求。 而且所需 chunk 大小大于 mmap 分配阈值， 则使用 mmap 进行分配。 否则增加
+heap， 增大 top chunk。 以满足分配要求。
+
+####3.6 free
+free() 函数接受一个指向分配区域的指针作为参数，释放该指针所指向的 chunk。而具
+体的释放方法则看该 chunk 所处的位置和该 chunk 的大小。 free()函数的工作步骤如下：
+1) free()函数同样首先需要获取分配区的锁，来保证线程安全。
+2) 判断传入的指针是否为 0，如果为 0，则什么都不做，直接 return。否则转下一步。
+3) 判断所需释放的 chunk 是否为 mmaped chunk，如果是，则调用 munmap()释放
+mmaped chunk，解除内存空间映射，该该空间不再有效。如果开启了 mmap 分配
+阈值的动态调整机制，并且当前回收的 chunk 大小大于 mmap 分配阈值，将 mmap
+分配阈值设置为该 chunk 的大小，将 mmap 收缩阈值设定为 mmap 分配阈值的 2
+倍，释放完成，否则跳到下一步。
+4) 判断 chunk 的大小和所处的位置，若 chunk_size <= max_fast， 并且 chunk 并不位于
+heap 的顶部，也就是说并不与 top chunk 相邻，则转到下一步，否则跳到第 6 步。
+（ 因为与 top chunk 相邻的小 chunk 也和 top chunk 进行合并，所以这里不仅需要
+判断大小，还需要判断相邻情况）
+5) 将 chunk 放到 fast bins 中， chunk 放入到 fast bins 中时， 并不修改该 chunk 使用状
+态位 P。也不与相邻的 chunk 进行合并。只是放进去， 如此而已。 这一步做完之后
+释放便结束了， 程序从 free()函数中返回。
+6) 判断前一个 chunk 是否处在使用中， 如果前一个块也是空闲块， 则合并。 并转下一
+步。
+7) 判断当前释放 chunk 的下一个块是否为 top chunk， 如果是， 则转第 9 步， 否则转
+下一步。
+8) 判断下一个 chunk 是否处在使用中， 如果下一个 chunk 也是空闲的， 则合并， 并将
+22
+合并后的 chunk 放到 unsorted bin 中。 注意， 这里在合并的过程中， 要更新 chunk
+的大小， 以反映合并后的 chunk 的大小。 并转到第 10 步。
+9) 如果执行到这一步， 说明释放了一个与 top chunk 相邻的 chunk。则无论它有多大，
+都将它与 top chunk 合并， 并更新 top chunk 的大小等信息。 转下一步。
+10) 判断合并后的 chunk 的大小是否大于 FASTBIN_CONSOLIDATION_THRESHOLD（默认
+64KB）， 如果是的话， 则会触发进行 fast bins 的合并操作， fast bins 中的 chunk 将被
+遍历，并与相邻的空闲 chunk 进行合并，合并后的 chunk 会被放到 unsorted bin 中。
+fast bins 将变为空， 操作完成之后转下一步。
+11) 判断 top chunk 的大小是否大于 mmap 收缩阈值（默认为 128KB）， 如果是的话， 对
+于主分配区， 则会试图归还 top chunk 中的一部分给操作系统。 但是最先分配的
+128KB 空间是不会归还的， ptmalloc 会一直管理这部分内存， 用于响应用户的分配
+请求；如果为非主分配区，会进行 sub-heap 收缩，将 top chunk 的一部分返回给操
+作系统，如果 top chunk 为整个 sub-heap，会把整个 sub-heap 还回给操作系统。 做
+完这一步之后， 释放结束， 从 free() 函数退出。 可以看出， 收缩堆的条件是当前
+free 的 chunk 大小加上前后能合并 chunk 的大小大于 64k，并且要 top chunk 的大
+小要达到 mmap 收缩阈值，才有可能收缩堆。
+
+####3.7 配置选项
+Ptmalloc 主要提供以下几个配置选项用于调优，这些选项可以通过 mallopt()进行设置：
+1． M_MXFAST
+M_MXFAST 用于设置 fast bins 中保存的 chunk 的最大大小，默认值为 64B， fast bins 中
+保存的 chunk 在一段时间内不会被合并， 分配小对象时可以首先查找 fast bins，如果 fast bins
+找到了所需大小的 chunk，就直接返回该 chunk，大大提高小对象的分配速度，但这个值设
+置得过大，会导致大量内存碎片，并且会导致 ptmalloc 缓存了大量空闲内存，去不能归还给
+操作系统，导致内存暴增。
+M_MXFAST 的最大值为 80B，不能设置比 80B 更大的值，因为设置为更大的值并不能提
+高分配的速度。Fast bins 是为需要分配许多小对象的程序设计的，比如需要分配许多小 struct，
+小对象，小的 string 等等。
+如果设置该选项为 0，就会不使用 fast bins。
+2． M_TRIM_THRESHOLD
+M_TRIM_THRESHOLD 用于设置 mmap 收缩阈值，默认值为 128KB。自动收缩只会在 free
+时才发生，如果当前 free 的 chunk 大小加上前后能合并 chunk 的大小大于 64KB，并且 top
+chunk 的大小达到 mmap 收缩阈值， 对于主分配区，调用 malloc_trim()返回一部分内存给操
+作系统，对于非主分配区，调用 heap_trim()返回一部分内存给操作系统，在发生内存收缩
+时，还是从新设置 mmap 分配阈值和 mmap 收缩阈值。
+这个选项一般与 M_MMAP_THRESHOLD 选项一起使用， M_MMAP_THRESHOLD 用于设置
+mmap 分配阈值，对于长时间运行的程序，需要对这两个选项进行调优， 尽量保证在 ptmalloc
+中缓存的空闲 chunk 能够得到重用，尽量少用 mmap 分配临时用的内存。 不停地使用系统
+调用 mmap 分配内存，然后很快又 free 掉该内存，这样是很浪费系统资源的，并且这样分
+配的内存的速度比从 ptmalloc 的空闲 chunk 中分配内存慢得多，由于需要页对齐导致空间利
+用率降低， 并且操作系统调用 mmap()分配内存是串行的， 在发生缺页异常时加载新的物理
+页，需要对新的物理页做清 0 操作，大大影响效率。
+23
+M_TRIM_THRESHOLD 的值必须设置为页大小对齐，设置为-1 会关闭内存收缩设置。
+注意：试图在程序开始运行时分配一块大内存，并马上释放掉，以期望来触发内存收缩，
+这是不可能的，因为该内存马上就返回给操作系统了。
+3． M_MMAP_THRESHOLD
+M_MMAP_THRESHOLD 用于设置 mmap 分配阈值，默认值为 128KB， ptmalloc 默认开启
+动态调整 mmap 分配阈值和 mmap 收缩阈值。
+当用户需要分配的内存大于 mmap分配阈值，ptmalloc的 malloc()函数其实相当于 mmap()
+的简单封装， free 函数相当于 munmap()的简单封装。相当于直接通过系统调用分配内存，
+回收的内存就直接返回给操作系统了。因为这些大块内存不能被 ptmalloc 缓存管理，不能重
+用，所以 ptmalloc 也只有在万不得已的情况下才使用该方式分配内存。
+但使用 mmap 分配有如下的好处：
+ Mmap 的空间可以独立从系统中分配和释放的系统，对于长时间运行的程序，申请
+长生命周期的大内存块就很适合有这种方式。
+ Mmap 的空间不会被 ptmalloc 锁在缓存的 chunk 中，不会导致 ptmalloc 内存暴增的
+问题。
+ 对有些系统的虚拟地址空间存在洞，只能用 mmap()进行分配内存， sbrk()不能运行。
+使用 mmap 分配内存的缺点：
+ 该内存不能被 ptmalloc 回收再利用。
+ 会导致更多的内存浪费，因为 mmap 需要按页对齐。
+ 它的分配效率跟操作系统提供的 mmap()函数的效率密切相关， Linux 系统强制把匿
+名 mmap 的内存物理页清 0 是很低效的。
+所以用 mmap 来分配长生命周期的大内存块就是最好的选择，其他情况下都不太高效。
+4． M_MMAP_MAX
+M_MMAP_MAX 用于设置进程中用 mmap 分配的内存块的最大限制，默认值为 64K，因
+为有些系统用 mmap 分配的内存块太多会导致系统的性能下降。
+如果将 M_MMAP_MAX 设置为 0， ptmalloc 将不会使用 mmap 分配大块内存。
+Ptmalloc 为优化锁的竞争开销，做了 PER_THREAD 的优化，也提供了两个选项，
+M_ARENA_TEST 和 M_ARENA_MAX，由于 PER_THREAD 的优化默认没有开启，这里暂不对这
+两个选项做介绍。
+另外， ptmalloc 没有提供关闭 mmap 分配阈值动态调整机制的选项， mmap 分配阈值动
+态 调 整 时 默 认 开 启 的 ， 如 果 要 关 闭 mmap 分 配 阈 值 动 态 调 整 机 制 ， 可 以 设 置
+M_TRIM_THRESHOLD， M_MMAP_THRESHOLD， M_TOP_PAD 和 M_MMAP_MAX 中的任意一个。
+但是强烈建议不要关闭该机制，该机制保证了 ptmalloc 尽量重用缓存中的空闲内存，不用每
+次对相对大一些的内存使用系统调用 mmap 去分配内存
+
+####3.8 使用注意事项
+为了避免 Glibc 内存暴增，使用时需要注意以下几点：
+1． 后分配的内存先释放，因为 ptmalloc 收缩内存是从 top chunk 开始，如果与 top chunk 相
+邻的 chunk 不能释放， top chunk 以下的 chunk 都无法释放。
+2． Ptmalloc 不适合用于管理长生命周期的内存，特别是持续不定期分配和释放长生命周期
+的内存，这将导致 ptmalloc 内存暴增。如果要用 ptmalloc 分配长周期内存，在 32 位系
+24
+统上，分配的内存块最好大于 1MB， 64 位系统上，分配的内存块大小大于 32MB。这是
+由于 ptmalloc 默认开启 mmap 分配阈值动态调整功能， 1MB 是 32 位系统 mmap 分配阈
+值的最大值， 32MB 是 64 位系统 mmap 分配阈值的最大值，这样可以保证 ptmalloc 分配
+的内存一定是从 mmap 映射区域分配的，当 free 时， ptmalloc 会直接把该内存返回给操
+作系统，避免了被 ptmalloc 缓存。
+3． 不要关闭 ptmalloc 的 mmap 分配阈值动态调整机制，因为这种机制保证了短生命周期的
+内存分配尽量从 ptmalloc 缓存的内存 chunk 中分配，更高效，浪费更少的内存。如果关
+闭了该机制，对大于 128KB 的内存分配就会使用系统调用 mmap 向操作系统分配内存，
+使用系统调用分配内存一般会比从 ptmalloc 缓存的 chunk 中分配内存慢，特别是在多线
+程同时分配大内存块时， 操作系统会串行调用 mmap()，并为发生缺页异常的页加载新
+物理页时，默认强制清 0。频繁使用 mmap 向操作系统分配内存是相当低效的。使用
+mmap 分配的内存只适合长生命周期的大内存块。
+4． 多线程分阶段执行的程序不适合用 ptmalloc，这种程序的内存更适合用内存池管理，就
+像 Appach 那样，每个连接请求处理分为多个阶段，每个阶段都有自己的内存池， 每个
+阶段完成后，将相关的内存就返回给相关的内存池。 Google 的许多应用也是分阶段执行
+的，他们在使用 ptmalloc 也遇到了内存暴增的相关问题，于是他们实现了 TCMalloc 来代
+替 ptmalloc， TCMalloc 具有内存池的优点，又有垃圾回收的机制，并最大限度优化了锁
+的争用，并且空间利用率也高于 ptmalloc。 Ptmalloc 假设了线程 A 释放的内存块能在线
+程 B 中得到重用，但 B 不一定会分配和 A 线程同样大小的内存块，于是就需要不断地做
+切割和合并，可能导致内存碎片。
+5． 尽量减少程序的线程数量和避免频繁分配/释放内存， Ptmalloc 在多线程竞争激烈的情况
+下，首先查看线程私有变量是否存在分配区，如果存在则尝试加锁，如果加锁不成功会
+尝试其它分配区，如果所有的分配区的锁都被占用着，就会增加一个非主分配区供当前
+线程使用。由于在多个线程的私有变量中可能会保存同一个分配区，所以当线程较多时，
+加锁的代价就会上升， ptmalloc 分配和回收内存都要对分配区加锁，从而导致了多线程
+竞争环境下 ptmalloc 的效率降低。
+6． 防止内存泄露， ptmalloc 对内存泄露是相当敏感的，根据它的内存收缩机制，如果与 top
+chunk 相邻的那个 chunk 没有回收，将导致 top chunk 一下很多的空闲内存都无法返回给
+操作系统。
+7． 防止程序分配过多内存，或是由于 Glibc 内存暴增，导致系统内存耗尽，程序因 OOM 被
+系 统 杀 掉 。 预 估 程 序 可 以 使 用 的 最 大 物 理 内 存 大 小 ， 配 置 系 统 的
+/proc/sys/vm/overcommit_memory， /proc/sys/vm/overcommit_ratio，以及使用 ulimt –v
+限制程序能使用虚拟内存空间大小，防止程序因 OOM 被杀掉。
+
+####3.9 问题分析与解决
+通过前面几节对 ptmalloc 实现的粗略分析，尝试去分析和解决我们遇到的问题，我们系
+统遇到的问题是 glibc 内存暴增，现象是程序已经把内存返回给了 Glibc 库，但 Glibc 库却没
+有把内存归还给操作系统，最终导致系统内存耗尽，程序因为 OOM 被系统杀掉。
+请参考 3.2.2 节对 ptmalloc 的设计假设与 3.2.7 节对 ptmalloc 的使用注意事项，原因有如
+下几点：
+1. 在 64 位系统上使用默认的系统配置，也就是说 ptmalloc 的 mmap 分配阈值动态调整机
+制是开启的。我们的 NoSql 系统经常分配内存为 2MB，并且这 2MB 的内存很快会被释
+25
+放， 在 ptmalloc 回收 2MB 内存时， ptmalloc 的动态调整机制会认为 2MB 对我们的系统
+来说是一个临时的内存分配，每次都用系统调用 mmap()向操作系统分配内存， ptmalloc
+认为这太低效了，于是把 mmap 的阈值设置成了 2MB+4K，当下次再分配 2MB 的内存时，
+尽量从 ptmalloc 缓存的 chunk 中分配，缓存的 chunk 不能满足要求，才考虑调用 mmap()
+进行分配，提高分配的效率。
+2. 系统中分配 2M 内存的地方主要有两处，一处是全局的内存 cache，另一处是网络模块，
+网络模块每次分配 2MB 内存用于处理网络的请求，处理完成后就释放该内存。这可以
+看成是一个短生命周期的内存。内存 cache 每次分配 2MB，但不确定什么时候释放，也
+不确定下次会什么时候会再分配 2MB 内存，但有一点可以确定，每次分配的 2MB 内存，
+要经过比较长的一段时间才会释放，所以可以看成是长生命周期的内存块，对于这些
+cache 中的多个 2M 内存块没有使用 free list 管理，每次都是先从 cache 中 free 调用一个
+2M 内存块，再从 Glibc 中分配一块新的 2M 内存块。 Ptmalloc 不擅长管理长生命周期的
+内存块， ptmalloc 设计的假设中就明确假设缓存的内存块都用于短生命周期的内存分配，
+因为 ptmalloc 的内存收缩是从 top chunk 开始，如果与 top chunk 相邻的那个 chunk 在我
+们 NoSql 的内存池中没有释放， top chunk 以下的空闲内存都无法返回给系统，即使这些
+空闲内存有几十个 G 也不行。
+3. Glibc 内存暴增的问题我们定位为全局内存池中的内存块长时间没有释放，其中还有一个
+原因就是全局内存池会不定期的分配内存，可能下次分配的内存是在 top chunk分配的，
+分配以后又短时间不释放， 导致 top chunk 升到了一个更高的虚拟地址空间，从而使
+ptmalloc 中缓存的内存块更多，但无法返回给操作系统。
+4. 另一个原因就是进程的线程数越多，在高压力高并发环境下， 频繁分配和释放内存，由
+于分配内存时锁争用更激烈， ptmalloc 会为进程创建更多的分配区，由于我们的全局内
+存池的长时间不释放内存的缘故，会导致 ptmalloc 缓存的 chunk 数量增长得更快，从而
+更容易重现 Glibc 内存暴增的问题。在我们的 ms 上这个问题最为突出，就是这个原因。
+5. 内存池管理内存的方式导致 Glibc 大量的内存碎片。 我们的内存池对于小于等于 64K 的
+内存分配，则从内存池中分配 64K 的内存块，如果内存池中没有，则调用 malloc()分配
+64K 的内存块，释放时，该 64K 的内存块加入内存中，永不还回给操作系统，对于大于
+64K 的内存分配，调用 malloc()分配，释放时调用 free()函数换回给 Glibc。这些大量的
+64K 的内存块长时间存在于内存池中，导致了 Glibc 中缓存了大量的内存碎片不能释放回
+操作系统。 比如:
+64K 100K 64K
+假如应用层分配内存的顺序是 64K， 100K， 64K，然后释放 100K 的内存块， Glibc 会缓
+存这个 100K 的内存块，其中的两个 64K 内存块都在 mempool 中，一直不释放，如果下次再
+分配 64K 的内存，就会将 100K 的内存块拆分成 64K 和 36K 的两个内存块， 64K 的内存块返
+回给应用层，并被 mempool 缓存，但剩下的 36K 被 Glibc 缓存，再也不能被应用层分配了，
+因为应用层分配的最小内存为 64K，这个 36K 的内存块就是内存碎片， 这也是内存暴增的原
+因之一。
+问题找到了，解决的办法可以参考如下几种:
+1. 禁 用 ptmalloc 的 mmap 分 配 阈 值 动 态 调 整 机 制 。 通 过 mallopt() 设 置
+M_TRIM_THRESHOLD， M_MMAP_THRESHOLD， M_TOP_PAD 和 M_MMAP_MAX 中的
+任意一个，关闭 mmap 分配阈值动态调整机制，同时需要将 mmap 分配阈值设置
+为 64K，大于 64K 的内存分配都使用 mmap 向系统分配，释放大于 64K 的内存将调
+用 munmap 释放回系统。但强烈建议不要这么做，这会大大降低 ptmalloc 的分配
+26
+释放效率。因为系统调用 mmap 是串行的，操作系统需要对 mmap 分配内存加锁，
+而且操作系统对 mmap 的物理页强制清 0 很慢，请参看 3.2.6 选项配置相关描述。
+由于最初我们的系统的预分配优化做得不够好，关闭 mmap 的动态阈值调整机制
+后， chunkserver 在 ssd 上的性能减少到原来的 1/3，这种性能结果是无法让人接受
+的。
+2. 我们系统的关键问题出在全局内存池，它分配的内存是长生命周期的大内存块，通
+过前面的分析可知，对长生命周期的大内存块分配最好用 mmap 系统调用直接向
+操作系统分配，回收时用 munmap 返回给操作系统。比如内存池每次用 mmap 向
+操作系统分配 8M 或是更多的虚拟内存。如果非要用 ptmalloc 的 malloc 函数分配
+内存，就得绕过 ptmalloc 的 mmap 分配阈值动态调整机制， mmap 分配阈值在 64
+位系统上的最大值为 32M，如果分配的内存大于 32M，可以保证 malloc 分配的内
+存肯定是用 mmap 向操作系统分配的，回收时 free 一定会返回给操作系统，而不
+会被 ptmalloc缓存用于下一次分配。但是如果这样使用 malloc分配的话，其实 malloc
+就是 mmap 的简单封装，还不如直接使用 mmap 系统调用想操作系统分配内存来
+得简单，并且显式调用 munmap 回收分配的内存，根本不依赖 ptmalloc 的实现。
+3. 改写内存 cache，使用 free list 管理所分配的内存块。 使用预分配优化已有的代码，
+尽量在每个请求过程中少分配内存。并使用线程私有内存块来存放线程所使用的私
+有实例。这种解决办法也是暂时的。
+4. 从长远的设计来看，我们的系统也是分阶段执行的，每次网络请求都会分配 2MB
+为单位内存， 请求完成后释放请求锁分配的内存，内存池最适合这种情景的操作。
+我们的线程池至少需要包含对 2MB 和几种系统中常用分配大小的支持，采用与
+TCMalloc 类似的无锁设计，使用线程私用变量的形式尽量减少分配时线程对锁的争
+用。或者直接使用 TCMalloc，免去了很多的线程池设计考虑。
 
 
 ###4. 重现STL map不返还内存问题，并根据malloc debug信息分析
