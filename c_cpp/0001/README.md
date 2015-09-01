@@ -177,7 +177,7 @@ struct malloc_chunk {
 };
 ```
 
-在x86_64位机器上，**chunk是16B对齐**。
+在x86_64位机器上，**chunk是16B对齐**。[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L354)
 
 一个使用中（没有被free）的chunk，在内存中是这个样子：
 
@@ -239,7 +239,7 @@ Ptmalloc 一共维护了 128 个 bin，并使用一个数组来存储这些 bin�
 
 **根据small bin和large bin的公式，可以用Excel计算出，每一个bin包含的字节范围, 请查看 [malloc_bins.xlsx](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/malloc_bins.xlsx?raw=true)**
 
-**注意：此Excel给出的数据中，"结束(字节)没有考虑16字节对齐，仅供参考**
+**注意：此Excel给出的数据中，"结束(字节)没有考虑16字节对齐，仅供理解原理用**
 
 ####3.4
 ####3.5
