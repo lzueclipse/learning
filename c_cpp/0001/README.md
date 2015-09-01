@@ -266,10 +266,8 @@ ptmalloc2 使用**"smallest-first， best-fit"原则**在空闲 large bin 中查
 在某个特定的时候，ptmalloc2会遍历 fast bins中的 chunk，将相邻的空闲 chunk 进行合并，并将合并后的 chunk 加入 unsorted bin 中，然后再将 usorted bin 里的 chunk 加入 bins 中。
 
 #####3.3.3 Unsorted Bin
-unsorted bin 的队列使用 bins 数组的第一个， 如果被用户释放的 chunk 大于 max_fast(默认128B)，或者 fast bins 中的空闲 chunk 合并后，
-
-这些 chunk 首先会被放到 unsorted bin 队列中， 在进行 malloc 操作的时候，如果在 fast bins 中没有找到合适的 chunk，则 ptmalloc2 会先在 unsorted bin 中查找合适的空闲 chunk， 
-然后才查找 bins。
+unsorted bin 的队列使用 bins 数组的第一个， 如果被用户释放的 chunk 大于 max_fast(默认128B)，或者 fast bins 中的空闲 chunk 合并后，这些 chunk 首先会被放到 unsorted bin 队列中，
+在进行 malloc 操作的时候，如果在 fast bins 中没有找到合适的 chunk，则 ptmalloc2 会先在 unsorted bin 中查找合适的空闲 chunk， 然后才查找 bins。
 
 如果 unsorted bin 不能满足分配要求。 malloc便会将 unsorted bin 中的 chunk 加入 bins 中。 然后再从 bins 中继续进行查找和分配过程。
 
