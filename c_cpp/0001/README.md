@@ -273,32 +273,35 @@ unsorted bin 的队列使用 bins 数组的第一个， 如果被用户释放的
 
 从这个过程可以看出来， unsorted bin 可以看做是 bins 的一个缓冲区， 增加它只是为了加快分配的速度。
 
-#####3.3.4  Top chunk
-并不是所有的 chunk 都按照上面的方式来组织，实际上，有三种例外情况。 Top chunk，
-mmaped chunk 和 last remainder，下面会分别介绍这三类特殊的 chunk。 top chunk 对于主分
-配区和非主分配区是不一样的。
-对于非主分配区会预先从 mmap 区域分配一块较大的空闲内存模拟 sub-heap， 通过管
-理 sub-heap 来响应用户的需求， 因为内存是按地址从低向高进行分配的， 在空闲内存的最
-高处， 必然存在着一块空闲 chunk， 叫做 top chunk。 当 bins 和 fast bins 都不能满足分配需
-要的时候，ptmalloc 会设法在 top chunk 中分出一块内存给用户，如果 top chunk 本身不够大，
+#####3.3.4 Top chunk
+Top chunk 对于主分配区和非主分配区是不一样的。
+
+1)对于非主分配区:
+
+会预先从 mmap 区域分配一块较大的空闲内存模拟 sub-heap， 通过管理sub-heap 来响应用户的需求，
+因为内存是按地址从低向高进行分配的， 在空闲内存的最高处， 必然存在着一块空闲 chunk， 叫做 top chunk。 
+
+当 bins 和 fast bins 都不能满足分配需要的时候，ptmalloc2 会设法在 top chunk 中分出一块内存给用户，如果 top chunk 本身不够大，
 分配程序会重新分配一个 sub-heap，并将 top chunk 迁移到新的 sub-heap 上，新的 sub-heap
 与已有的 sub-heap 用单向链表连接起来，然后在新的 top chunk 上分配所需的内存以满足分
 配的需要， 实际上， top chunk 在分配时总是在 fast bins 和 bins 之后被考虑， 所以， 不论 top
-chunk 有多大， 它都不会被放到 fast bins 或者是 bins 中。 Top chunk 的大小是随着分配和回
-收不停变换的，如果从 top chunk 分配内存会导致 top chunk 减小，如果回收的 chunk 恰好
+chunk 有多大， 它都不会被放到 fast bins 或者是 bins 中。 
+
+Top chunk 的大小是随着分配和回收不停变换的，如果从 top chunk 分配内存会导致 top chunk 减小，如果回收的 chunk 恰好
 与 top chunk 相邻，那么这两个 chunk 就会合并成新的 top chunk，从而使 top chunk 变大。
-如果在 free 时回收的内存大于某个阈值， 并且 top chunk 的大小也超过了收缩阈值， ptmalloc
-会收缩 sub-heap，如果 top-chunk 包含了整个 sub-heap， ptmalloc 会调用 munmap 把整个
-sub-heap 的内存返回给操作系统。
-由于主分配区是唯一能够映射进程 heap 区域的分配区，它可以通过 sbrk()来增大或是
-收缩进程 heap 的大小， ptmalloc 在开始时会预先分配一块较大的空闲内存（ 也就是所谓
-的 heap）， 主分配区的 top chunk 在第一次调用 malloc 时会分配一块(chunk_size + 128KB)
-align 4KB 大小的空间作为初始的 heap， 用户从 top chunk 分配内存时，可以直接取出一块内
-存给用户。在回收内存时， 回收的内存恰好与 top chunk 相邻则合并成新的 top chunk，当该
-次回收的空闲内存大小达到某个阈值， 并且 top chunk 的大小也超过了收缩阈值， 会执行内
-存收缩，减小 top chunk 的大小， 但至少要保留一个页大小的空闲内存， 从而把内存归还给
-操作系统。 如果向主分配区的 top chunk 申请内存， 而 top chunk 中没有空闲内存， ptmalloc
-会调用 sbrk()将的进程 heap 的边界 brk 上移，然后修改 top chunk 的大小。
+
+如果在 free 时回收的内存大于某个阈值， 并且 top chunk 的大小也超过了收缩阈值， ptmalloc2
+会收缩 sub-heap，如果 top-chunk 包含了整个 sub-heap， ptmalloc2会调用 munmap 把整个sub-heap 的内存返回给操作系统。
+
+2)主分配区:
+
+它可以通过 sbrk()来增大或是收缩进程 heap 的大小， 主分配区的 top chunk 在第一次调用 malloc 时会分配一块空间作为初始的 heap，
+用户从 top chunk 分配内存时，可以直接取出一块内存给用户。
+
+在回收内存时， 回收的内存恰好与 top chunk 相邻则合并成新的 top chunk，当该次回收的空闲内存大小达到某个阈值， 并且 top chunk 的大小也超过了收缩阈值， 
+会执行内存收缩，减小 top chunk 的大小， 但至少要保留一个页大小的空闲内存， 从而把内存归还给操作系统。 
+
+如果向主分配区的 top chunk 申请内存， 而 top chunk 中没有空闲内存， ptmalloc2会调用 sbrk()将的进程 heap 的边界 brk 上移，然后修改 top chunk 的大小。
 
 #####3.3.5 mmaped chunk
 当需要分配的 chunk 足够大， 而且 fast bins 和 bins 都不能满足要求， 甚至 top chunk 本
