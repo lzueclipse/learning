@@ -223,12 +223,15 @@ int main(int argc, char **argv)
 
     if(strcmp (argv[1], "map") == 0 )
     {
+            should_debug = false;
             test_map();
+            output_top();
     }
     else if(strcmp (argv[1], "cache") == 0 )
     {
             should_debug = false;
             test_cache();
+            output_top();
     }
     else if(strcmp (argv[1], "malloc-free") == 0 )
     {
@@ -253,6 +256,7 @@ int main(int argc, char **argv)
     else if(strcmp (argv[1], "lazy-allocation") == 0 )
     {
             test_lazy_allocation();
+            output_top();
     }
     else
     {
