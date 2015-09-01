@@ -259,13 +259,21 @@ ptmalloc2 使用**"smallest-first， best-fit"原则**在空闲 large bin 中查
 
 当合并了相邻的几个小的 chunk 之后， 也许马上就会有另一个小块内存的请求， 这样分配器又需要从大的空闲内存中切分出一块，这样无疑是比较低效的。
 
-故而，ptmalloc2 中在分配过程中引入了 fast bins，不大于128B[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L798)）的 chunk 被释放后，首先会被放到 fast bins中， fast bins 中的 chunk 并不改变它的使用标志 P。 这样也就无法将它们合并。
+故而，ptmalloc2 中在分配过程中引入了 fast bins，不大于max_fast(默认128B)[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L798)）的 chunk 被释放后，首先会被放到 fast bins中， fast bins 中的 chunk 并不改变它的使用标志 P。 这样也就无法将它们合并。
 
-当需要给用户分配的 chunk 小于或等于 128B 时， ptmalloc 首先会在 fast bins 中查找相应的空闲块，然后才会去查找 bins中的空闲 chunk。
+当需要给用户分配的 chunk 小于或等于max_fast(默认128B) 时， ptmalloc2 首先会在 fast bins 中查找相应的空闲块，然后才会去查找 bins中的空闲 chunk。
 
 在某个特定的时候，ptmalloc2会遍历 fast bins中的 chunk，将相邻的空闲 chunk 进行合并，并将合并后的 chunk 加入 unsorted bin 中，然后再将 usorted bin 里的 chunk 加入 bins 中。
 
-#####3.3.3
+#####3.3.3 Unsorted Bin
+unsorted bin 的队列使用 bins 数组的第一个， 如果被用户释放的 chunk 大于 max_fast(默认128B)，或者 fast bins 中的空闲 chunk 合并后，
+
+这些 chunk 首先会被放到 unsorted bin 队列中， 在进行 malloc 操作的时候，如果在 fast bins 中没有找到合适的 chunk，则 ptmalloc2 会先在 unsorted bin 中查找合适的空闲 chunk， 
+然后才查找 bins。
+
+如果 unsorted bin 不能满足分配要求。 malloc便会将 unsorted bin 中的 chunk 加入 bins 中。 然后再从 bins 中继续进行查找和分配过程。
+
+从这个过程可以看出来， unsorted bin 可以看做是 bins 的一个缓冲区， 增加它只是为了加快分配的速度。
 
 #####3.3.4 
 
