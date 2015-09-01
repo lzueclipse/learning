@@ -219,7 +219,13 @@ Ptmalloc 一共维护了 128 个 bin，并使用一个数组来存储这些 bin�
 
 1) 数组中的第1个为unsorted bin。
 
-2) 数组中的第2--第63为small bin，两个相邻的small bin中的chunk大小相差16 Byte [(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1490)。
+2) 数组中的第2--第63为small bin，同一个 small bin中的 chunk具有相同的大小。
+
+两个相邻的small bin中的chunk大小相差16 Byte [(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1490)。
+
+**可以用Excel计算出，每一个small bin的大小, 请查看 [malloc_bins.xlsx](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/malloc_bins.xlsx?raw=true)**
+
+**每一个small bin是一个FIFO队列。**
 
 3)数组中第64--第126个为large bin， large bin 一共包括 63 个 bin，每个 bin 中的 chunk 大小不是一个固定公差的等差数列， 而是分成 6 组 bin，每组 bin 是一个固定公差的等差数列
 [(相关代码)] (https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1513)。
@@ -236,10 +242,21 @@ Ptmalloc 一共维护了 128 个 bin，并使用一个数组来存储这些 bin�
 
 第126(1个)， 其他
 
+**根据large bin的公式，可以用Excel计算出，每一个large bin包含的字节范围, 请查看 [malloc_bins.xlsx](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/malloc_bins.xlsx?raw=true)**
 
-**根据small bin和large bin的公式，可以用Excel计算出，每一个bin包含的字节范围, 请查看 [malloc_bins.xlsx](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/malloc_bins.xlsx?raw=true)**
+**注意：此Excel给出的large bin数据中，"结束(字节)没有考虑16字节对齐，仅供理解原理用**
 
-**注意：此Excel给出的数据中，"结束(字节)没有考虑16字节对齐，仅供理解原理用**
+large bin 中的每一个 bin 分别包含了一个给定范围内的 chunk，其中的 chunk 按大小序排列。相同大小的 chunk 同样按照最近使用顺序排列。
+
+ptmalloc2 使用**"smallest-first， best-fit"原则**在空闲 large bin 中查找合适的 chunk。
+
+4)当空闲的 chunk 被链接到 bin 中的时候， ptmalloc2 会把表示该 chunk 是否处于使用中的标志 P 设为 0（注意，这个标志实际上处在下一个chunk中）， 
+
+同时 ptmalloc 还会检查它前后的 chunk 是否也是空闲的，如果是的话，ptmalloc2 会首先把它们合并为一个大的 chunk，然后将合并后的 chunk 放到 unstored bin 中。 
+
+要注意的是， 并不是所有的 chunk 被释放后就立即被放到 bin 中。 ptmalloc 为了提高分配的速度， 会把一些小的的 chunk 先放到一个叫做fast bin 的容器内。
+
+#####3.3.2 
 
 ####3.4
 ####3.5
