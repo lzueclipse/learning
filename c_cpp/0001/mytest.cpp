@@ -41,6 +41,16 @@ void test_malloc_free()
     if(should_debug)
         display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
+    
+    if(should_debug)
+    {
+        int ret = malloc_trim(0);
+        printf("Malloc_trim(0), ret=%d\n", ret);
+        printf("Output of 'top':\n");
+        output_top();
+        display_mallinfo();
+	    printf("-----------------------------------------------------------------------------------------------\n");
+    }
 }
 
 void test_lazy_allocation()
@@ -88,8 +98,6 @@ void test_map()
     printf("At the beginning, map.size=%" PRIu64 "\n", my_map.size());
     printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
     
 
@@ -103,8 +111,6 @@ void test_map()
     printf("Insert all FPs into std::map, map.size=%" PRIu64 ", cost time = %.f seconds\n", my_map.size(), seconds);
     printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
     printf("-------------------------------------------------------------------------------------------------\n");
   
 
@@ -133,23 +139,9 @@ void test_map()
     sleep(SLEEP);
     printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
     printf("-----------------------------------------------------------------------------------------------\n");
     
     
-    if(should_debug)
-    {
-        my_start = time(NULL);
-        ret = malloc_trim(0);
-        my_end = time(NULL);
-        seconds = difftime(my_end, my_start);
-        printf("Malloc_trim(0), ret=%d, cost time = %.f seconds\n", ret, seconds);
-        printf("Output of 'top':\n");
-        output_top();
-        display_mallinfo();
-	    printf("-----------------------------------------------------------------------------------------------\n");
-    }
 }
 
 
@@ -175,8 +167,6 @@ void test_cache()
     printf("At the beginning, cache.size=%" PRIu64 "\n", cache->nitems);
     printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
 	
 
@@ -190,8 +180,6 @@ void test_cache()
     printf("Insert all FPs into cache, cache.size=%" PRIu64 ", cost time = %.f seconds\n", cache->nitems, seconds);
     printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
   
     
@@ -216,8 +204,6 @@ void test_cache()
     printf("Delete all FPs from cache, cost time = %.f seconds\n", seconds);
     printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
     printf("---------------------------------------------------------------------------------------------\n");
 
 }
@@ -235,21 +221,8 @@ int main(int argc, char **argv)
         should_debug = true;
     }
 
-    if(strcmp (argv[1], "map-none-opt") == 0 )
+    if(strcmp (argv[1], "map") == 0 )
     {
-            test_map();
-    }
-    else if(strcmp (argv[1], "map-opt1") == 0)
-    {
-            mallopt(M_MMAP_THRESHOLD, 24); //md5_digest_t 16 Byte, uint64_t 8 Byte
-            mallopt(M_TRIM_THRESHOLD, 0);
-            test_map();
-    }
-    else if(strcmp (argv[1], "map-opt2") == 0)
-    {
-            mallopt(M_MMAP_THRESHOLD, 24); //md5_digest_t 16 Byte, uint64_t 8 Byte
-            mallopt(M_MMAP_MAX, 256*1024);
-            mallopt(M_TRIM_THRESHOLD, 0);
             test_map();
     }
     else if(strcmp (argv[1], "cache") == 0 )
@@ -260,6 +233,19 @@ int main(int argc, char **argv)
     else if(strcmp (argv[1], "malloc-free") == 0 )
     {
             test_malloc_free();
+    }
+    else if(strcmp (argv[1], "malloc-free-opt1") == 0)
+    {
+            mallopt(M_MMAP_THRESHOLD, 24); //md5_digest_t 16 Byte, uint64_t 8 Byte
+            mallopt(M_TRIM_THRESHOLD, 0);
+            test_malloc_free();
+    }
+    else if(strcmp (argv[1], "map-opt2") == 0)
+    {
+            mallopt(M_MMAP_THRESHOLD, 24); //md5_digest_t 16 Byte, uint64_t 8 Byte
+            mallopt(M_MMAP_MAX, 256*1024);
+            mallopt(M_TRIM_THRESHOLD, 0);
+            test_map();
     }
     else if(strcmp (argv[1], "lazy-allocation") == 0 )
     {

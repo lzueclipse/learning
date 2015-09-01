@@ -265,30 +265,32 @@ ptmalloc2 使用**"smallest-first， best-fit"原则**在空闲 large bin 中查
 
 在某个特定的时候，ptmalloc2会遍历 fast bins中的 chunk，将相邻的空闲 chunk 进行合并，并将合并后的 chunk 加入 unsorted bin 中，然后再将 usorted bin 里的 chunk 加入 bins 中。
 
+**Fast bins 可以看做是一部分Small bins(大小小于或等于max_fast)的cache**
+
 #####3.3.3 Unsorted Bin
 unsorted bin 的队列使用 bins 数组的第一个， 如果被用户释放的 chunk 大于 max_fast(默认128B)，或者 fast bins 中的空闲 chunk 合并后，这些 chunk 首先会被放到 unsorted bin 队列中，
 在进行 malloc 操作的时候，如果在 fast bins 中没有找到合适的 chunk，则 ptmalloc2 会先在 unsorted bin 中查找合适的空闲 chunk， 然后才查找 bins。
 
 如果 unsorted bin 不能满足分配要求。 malloc便会将 unsorted bin 中的 chunk 加入 bins 中。 然后再从 bins 中继续进行查找和分配过程。
 
-从这个过程可以看出来， unsorted bin 可以看做是 bins 的一个缓冲区， 增加它只是为了加快分配的速度。
+**Unsorted Bins可以看做是一部分Small bins(大小大于max_fast）和Large bins的cache**
 
 #####3.3.4 Top chunk
+因为内存是按地址从低向高进行分配的，在空闲内存的最高处(top most)， 必然存在着一块空闲 chunk， 叫做 top chunk。
+
+当 fast bins 和 bins 都不能满足分配需要的时候，ptmalloc2 会设法在 top chunk 中分出一块内存给用户。
+
 Top chunk 对于主分配区和非主分配区是不一样的。
 
 1)对于非主分配区:
 
 会预先从 mmap 区域分配一块较大的空闲内存模拟 sub-heap， 通过管理sub-heap 来响应用户的需求，
-因为内存是按地址从低向高进行分配的， 在空闲内存的最高处， 必然存在着一块空闲 chunk， 叫做 top chunk。 
+这就是非主分配区的top chunk。 
 
-当 bins 和 fast bins 都不能满足分配需要的时候，ptmalloc2 会设法在 top chunk 中分出一块内存给用户，如果 top chunk 本身不够大，
-分配程序会重新分配一个 sub-heap，并将 top chunk 迁移到新的 sub-heap 上，新的 sub-heap
-与已有的 sub-heap 用单向链表连接起来，然后在新的 top chunk 上分配所需的内存以满足分
-配的需要， 实际上， top chunk 在分配时总是在 fast bins 和 bins 之后被考虑， 所以， 不论 top
-chunk 有多大， 它都不会被放到 fast bins 或者是 bins 中。 
+如果 top chunk 本身不够大，分配程序会重新分配一个 sub-heap，并将 top chunk 迁移到新的 sub-heap 上，新的 sub-heap
+与已有的 sub-heap 用单向链表连接起来，然后在新的 top chunk 上分配所需的内存以满足分配的需要 。
 
-Top chunk 的大小是随着分配和回收不停变换的，如果从 top chunk 分配内存会导致 top chunk 减小，如果回收的 chunk 恰好
-与 top chunk 相邻，那么这两个 chunk 就会合并成新的 top chunk，从而使 top chunk 变大。
+如果回收的 chunk 恰好与 top chunk 相邻，那么这两个 chunk 就会合并成新的 top chunk，从而使 top chunk 变大。
 
 如果在 free 时回收的内存大于某个阈值， 并且 top chunk 的大小也超过了收缩阈值， ptmalloc2
 会收缩 sub-heap，如果 top-chunk 包含了整个 sub-heap， ptmalloc2会调用 munmap 把整个sub-heap 的内存返回给操作系统。
