@@ -212,7 +212,7 @@ int main(int argc, char **argv)
 {
     if(argc < 2 )
     {
-        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache|malloc-free|lazy-allocation] [debug] \n", argv[0]);
+        printf("usage: %s [map|cache|malloc-free|malloc-free-opt1|malloc-free-opt2|lazy-allocation] [debug] \n", argv[0]);
         exit(-1);
     }
     
@@ -225,33 +225,32 @@ int main(int argc, char **argv)
     {
             should_debug = false;
             test_map();
-            output_top();
+            //output_top();
     }
     else if(strcmp (argv[1], "cache") == 0 )
     {
             should_debug = false;
             test_cache();
-            output_top();
     }
     else if(strcmp (argv[1], "malloc-free") == 0 )
     {
             test_malloc_free();
-            output_top();
+            //output_top();
     }
     else if(strcmp (argv[1], "malloc-free-opt1") == 0)
     {
-            mallopt(M_MMAP_THRESHOLD, 24); //md5_digest_t 16 Byte, uint64_t 8 Byte
+            mallopt(M_MMAP_THRESHOLD, 24); 
             mallopt(M_TRIM_THRESHOLD, 0);
             test_malloc_free();
-            output_top();
+            //output_top();
     }
-    else if(strcmp (argv[1], "map-opt2") == 0)
+    else if(strcmp (argv[1], "malloc-free-opt2") == 0)
     {
-            mallopt(M_MMAP_THRESHOLD, 24); //md5_digest_t 16 Byte, uint64_t 8 Byte
+            mallopt(M_MMAP_THRESHOLD, 24); 
             mallopt(M_MMAP_MAX, 256*1024);
             mallopt(M_TRIM_THRESHOLD, 0);
             test_malloc_free();
-            output_top();
+            //output_top();
     }
     else if(strcmp (argv[1], "lazy-allocation") == 0 )
     {
@@ -260,7 +259,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        printf("usage: %s [map-none-opt|map-opt1|map-opt2|cache|malloc-free|lazy-allocation] [debug] \n", argv[0]);
+        printf("usage: %s [map|cache|malloc-free|malloc-free-opt1|malloc-free-opt2|lazy-allocation] [debug] \n", argv[0]);
         exit(-1);
     }
     return 0;
