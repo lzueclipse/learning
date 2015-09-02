@@ -1,6 +1,7 @@
 #include "common.h"
 
 bool should_debug = false;
+bool should_malloc_trim = false;
 
 void test_malloc_free(int num_not_free)
 {
@@ -42,7 +43,7 @@ void test_malloc_free(int num_not_free)
         display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
     
-    if(should_debug)
+    if(should_malloc_trim)
     {
         int ret = malloc_trim(0);
         printf("Malloc_trim(0), ret=%d\n", ret);
@@ -212,7 +213,7 @@ int main(int argc, char **argv)
 {
     if(argc < 2 )
     {
-        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|lazy-allocation] [debug] \n", argv[0]);
+        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top-chunk-trim|lazy-allocation] [debug] \n", argv[0]);
         exit(-1);
     }
     
@@ -223,19 +224,15 @@ int main(int argc, char **argv)
 
     if(strcmp (argv[1], "map") == 0 )
     {
-            should_debug = false;
             test_map();
-            //output_top();
     }
     else if(strcmp (argv[1], "cache") == 0 )
     {
-            should_debug = false;
             test_cache();
     }
     else if(strcmp (argv[1], "malloc-free") == 0 )
     {
             test_malloc_free(0);
-            //output_top();
     }
     else if(strcmp (argv[1], "malloc-free-opt") == 0)
     {
@@ -243,21 +240,22 @@ int main(int argc, char **argv)
             mallopt(M_MMAP_MAX, 543210);
             //mallopt(M_TRIM_THRESHOLD, 0);
             test_malloc_free(0);
-            //output_top();
     }
     else if(strcmp (argv[1], "malloc-free-top-chunk") == 0 )
     {
-            test_malloc_free(111);
-            //output_top();
+            test_malloc_free(11);
+    }
+    else if(strcmp (argv[1], "malloc-free-top-trim") == 0 )
+    {
+            test_malloc_free(11);
     }
     else if(strcmp (argv[1], "lazy-allocation") == 0 )
     {
             test_lazy_allocation();
-            //output_top();
     }
     else
     {
-        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|lazy-allocation] [debug] \n", argv[0]);
+        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top-chunk-trim|lazy-allocation] [debug] \n", argv[0]);
         exit(-1);
     }
     return 0;

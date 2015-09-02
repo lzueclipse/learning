@@ -32,6 +32,7 @@
 #define CACHE_FP_NOT_FOUND -3
 
 extern bool should_debug;
+extern bool should_malloc_trim;
 
 /*
  * 128 bits md5sum
