@@ -428,28 +428,27 @@ ptmalloc2 默认开启动态调整 mmap 分配阈值和 收缩阈值。
 a) Mmap 的空间不会被 ptmalloc2 缓存，不会导致 ptmalloc2 内存暴增的问题。
 
 使用 mmap 分配内存的缺点：
+
 a) 会导致更多的内存浪费，因为 mmap 需要4KB对齐。
+
 b)操作系统调用 mmap()分配内存是串行的， 在发生缺页异常时加载新的物理页，需要对新的物理页做清 0 操作，影响效率。
 
 所以用 mmap 来分配长生命周期的大内存块就是最好的选择，其他情况下都不太高效。
 
 4) M_MMAP_MAX
 
-M_MMAP_MAX 用于设置进程中用 mmaped chunk个数最大限制，默认值为 64K，因
+M_MMAP_MAX 用于设置进程中用 mmap chunk个数最大限制，默认值为64K([DEFAULT_MMAP_MAX] (http://10.200.29.172/source-glibc-2.17/xref/glibc-2.17/malloc/malloc.c#1034))。
+如果将 M_MMAP_MAX 设置为 0， ptmalloc2 将不会使用 mmap 分配大块内存。
 
-为有些系统用 mmap 分配的内存块太多会导致系统的性能下降。
-如果将 M_MMAP_MAX 设置为 0， ptmalloc 将不会使用 mmap 分配大块内存。
-Ptmalloc 为优化锁的竞争开销，做了 PER_THREAD 的优化，也提供了两个选项，
-M_ARENA_TEST 和 M_ARENA_MAX，由于 PER_THREAD 的优化默认没有开启，这里暂不对这
-两个选项做介绍。
-另外， ptmalloc 没有提供关闭 mmap 分配阈值动态调整机制的选项， mmap 分配阈值动
-态 调 整 时 默 认 开 启 的 ， 如 果 要 关 闭 mmap 分 配 阈 值 动 态 调 整 机 制 ， 可 以 设 置
+
+5) ptmalloc2 没有提供关闭 mmap 分配阈值动态调整机制的选项， mmap 分配阈值动态 调整默认是开启的，如果要关闭 mmap分配阈值动态调整机制，可以设置
 M_TRIM_THRESHOLD， M_MMAP_THRESHOLD， M_TOP_PAD 和 M_MMAP_MAX 中的任意一个。
-但是强烈建议不要关闭该机制，该机制保证了 ptmalloc 尽量重用缓存中的空闲内存，不用每
-次对相对大一些的内存使用系统调用 mmap 去分配内存
 
-####3.7 使用注意事项
-为了避免 Glibc 内存暴增，使用时需要注意以下几点：
+但是强烈建议不要关闭该机制，该机制保证了 ptmalloc2 尽量重用缓存中的空闲内存，不用每次对相对大一些的内存使用系统调用 mmap 去分配内存
+
+####3.7 ptmalloc2使用注意事项
+为了避免 ptmalloc2内存暴增，使用时需要注意以下几点：
+
 1． 后分配的内存先释放，因为 ptmalloc 收缩内存是从 top chunk 开始，如果与 top chunk 相
 邻的 chunk 不能释放， top chunk 以下的 chunk 都无法释放。
 2． Ptmalloc 不适合用于管理长生命周期的内存，特别是持续不定期分配和释放长生命周期

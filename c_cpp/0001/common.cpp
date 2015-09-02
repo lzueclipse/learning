@@ -11,7 +11,7 @@ void display_mallinfo()
      * After I read the code of "mallinfo", I decide to add this line...
      * This will let us have a good "mallinfo" output after "free", for demo...
      */
-    //mallopt(-332211, 0);
+    mallopt(-321, 0);
 
     mi = mallinfo();
 
