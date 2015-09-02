@@ -451,6 +451,7 @@ M_TRIM_THRESHOLD， M_MMAP_THRESHOLD， M_TOP_PAD 和 M_MMAP_MAX 中的任意一
 
 1． 后分配的内存先释放，因为 ptmalloc 收缩内存是从 top chunk 开始，如果与 top chunk 相
 邻的 chunk 不能释放， top chunk 以下的 chunk 都无法释放。
+
 2． Ptmalloc 不适合用于管理长生命周期的内存，特别是持续不定期分配和释放长生命周期
 的内存，这将导致 ptmalloc 内存暴增。如果要用 ptmalloc 分配长周期内存，在 32 位系
 24
