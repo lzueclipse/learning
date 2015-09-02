@@ -311,41 +311,17 @@ Top chunk 对于主分配区和非主分配区是不一样的。
 
 
 #####3.3.5 mmaped chunk
-当需要分配的 chunk 足够大(x86_64上，大于128 KB, 小于32 MB的一个动态值, [相关代码，DEFAULT_MMAP_THRESHOLD_MIN，DEFAULT_MMAP_THRESHOLD_MAX](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L907))， 而且 fast bins 和 bins 都不能满足要求，甚至 top chunk 本身也不能满足分配需求时， ptmalloc2 会使用 mmap 来直接使用内存映射来将页映射到进程空
-间。这样分配的 chunk 在被 free 时将直接解除映射，于是就将内存归还给了操作系统。
+当需要分配的 chunk 足够大(mmap分配阈值，x86_64上，是大于128 KB, 小于32 MB的一个动态值, [相关代码，DEFAULT_MMAP_THRESHOLD_MIN，DEFAULT_MMAP_THRESHOLD_MAX](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L907))， fast bins 和 bins 都不能满足要求，甚至 top chunk 本身也不能满足分配需求时， ptmalloc2 会使用 mmap 来直接使用内存映射来将页映射到进程空间。
+
+这样分配的 chunk 在被 free 时将直接解除映射，于是就将内存归还给了操作系统；同时会把 mmap 分配阈值调整为当前回收的 chunk 的大小，并将 mmap 收缩阈值（ mmap trim threshold）设置为 mmap 分配阈值的 2 倍。这就是 ptmalloc 的对 mmap分配阈值的动态调整机制，该机制是默认开启的，当然也可以用 mallopt()关闭该机制（3.6节会介绍)
+
 
 #####3.3.6 Last remainder
 Last remainder 是另外一种特殊的 chunk，就像 top chunk 和 mmaped chunk 一样，不会在任何 bins 中找到这种 chunk。
 
 当需要分配一个 small chunk，但在 small bins 中找不到合适的 chunk，如果 last remainder chunk 的大小大于所需的 small chunk 大小，last remainder chunk被分裂成两个 chunk，其中一个 chunk 返回给用户，另一个 chunk 变成新的 last remainder chuk。
 
-####3.4 sbrk 与 mmap
-从进程的内存布局可知， .bss 段之上的这块分配给用户程序的空间被称为 heap（ 堆）。
-start_brk 指向 heap 的开始，而 brk 指向 heap 的顶部。可以使用系统调用 brk()和 sbrk()来增
-加标识 heap 顶部的 brk 值，从而线性的增加分配给用户的 heap 空间。在使 malloc 之前，
-brk的值等于 start_brk，也就是说 heap大小为 0。ptmalloc在开始时，若请求的空间小于 mmap
-分配阈值（ mmap threshold，默认值为 128KB）时，主分配区会调用 sbrk()增加一块大小为 (128
-KB + chunk_size) align 4KB 的空间作为 heap。 非主分配区会调用 mmap 映射一块大小为
-HEAP_MAX_SIZE （ 32 位系统上默认为 1MB，64 位系统上默认为 64MB）的空间作为 sub-heap。
-这就是前面所说的 ptmalloc 所维护的分配空间，当用户请求内存分配时，首先会在这个区
-域内找一块合适的 chunk 给用户。当用户释放了 heap 中的 chunk 时， ptmalloc 又会使用 fast
-bins 和 bins 来组织空闲 chunk。以备用户的下一次分配。若需要分配的 chunk 大小小于 mmap
-分配阈值，而 heap 空间又不够，则此时主分配区会通过 sbrk()调用来增加 heap 大小， 非主
-分配区会调用 mmap 映射一块新的 sub-heap， 也就是增加 top chunk 的大小，每次 heap 增
-加的值都会对齐到 4KB。
-当用户的请求超过 mmap 分配阈值， 并且主分配区使用 sbrk()分配失败的时候， 或是非
-主分配区在 top chunk 中不能分配到需要的内存时， ptmalloc 会尝试使用 mmap()直接映射一
-块内存到进程内存空间。 使用 mmap()直接映射的 chunk 在释放时直接解除映射， 而不再属
-于进程的内存空间。 任何对该内存的访问都会产生段错误。 而在 heap 中或是 sub-heap 中分
-配的空间则可能会留在进程内存空间内， 还可以再次引用（ 当然是很危险的）。
-当 ptmalloc munmap chunk 时，如果回收的 chunk 空间大小大于 mmap 分配阈值的当前
-值，并且小于 DEFAULT_MMAP_THRESHOLD_MAX（ 32 位系统默认为 512KB， 64 位系统默认
-为 32MB）， ptmalloc 会把 mmap 分配阈值调整为当前回收的 chunk 的大小，并将 mmap 收
-缩阈值（ mmap trim threshold）设置为 mmap 分配阈值的 2 倍。这就是 ptmalloc 的对 mmap
-分配阈值的动态调整机制，该机制是默认开启的，当然也可以用 mallopt()关闭该机制（将在
-3.2.6 节介绍如何关闭该机制）。
-
-####3.5 malloc
+####3.4 malloc
 ptmalloc 的响应用户内存分配要求的具体步骤为:
 1) 获取分配区的锁， 为了防止多个线程同时访问同一个分配区， 在进行分配之前需要
 取得分配区域的锁。线程先查看线程私有实例中是否已经存在一个分配区，如果存
@@ -409,7 +385,7 @@ start_brk， 所以实际上 heap 大小为 0， top chunk 大小也是 0。 这
 要求。 而且所需 chunk 大小大于 mmap 分配阈值， 则使用 mmap 进行分配。 否则增加
 heap， 增大 top chunk。 以满足分配要求。
 
-####3.6 free
+####3.5 free
 free() 函数接受一个指向分配区域的指针作为参数，释放该指针所指向的 chunk。而具
 体的释放方法则看该 chunk 所处的位置和该 chunk 的大小。 free()函数的工作步骤如下：
 1) free()函数同样首先需要获取分配区的锁，来保证线程安全。
@@ -449,7 +425,7 @@ fast bins 将变为空， 操作完成之后转下一步。
 free 的 chunk 大小加上前后能合并 chunk 的大小大于 64k，并且要 top chunk 的大
 小要达到 mmap 收缩阈值，才有可能收缩堆。
 
-####3.7 配置选项
+####3.6 配置选项
 Ptmalloc 主要提供以下几个配置选项用于调优，这些选项可以通过 mallopt()进行设置：
 1． M_MXFAST
 M_MXFAST 用于设置 fast bins 中保存的 chunk 的最大大小，默认值为 64B， fast bins 中
@@ -510,7 +486,7 @@ M_TRIM_THRESHOLD， M_MMAP_THRESHOLD， M_TOP_PAD 和 M_MMAP_MAX 中的任意一
 但是强烈建议不要关闭该机制，该机制保证了 ptmalloc 尽量重用缓存中的空闲内存，不用每
 次对相对大一些的内存使用系统调用 mmap 去分配内存
 
-####3.8 使用注意事项
+####3.7 使用注意事项
 为了避免 Glibc 内存暴增，使用时需要注意以下几点：
 1． 后分配的内存先释放，因为 ptmalloc 收缩内存是从 top chunk 开始，如果与 top chunk 相
 邻的 chunk 不能释放， top chunk 以下的 chunk 都无法释放。
@@ -551,7 +527,7 @@ chunk 相邻的那个 chunk 没有回收，将导致 top chunk 一下很多的�
 /proc/sys/vm/overcommit_memory， /proc/sys/vm/overcommit_ratio，以及使用 ulimt –v
 限制程序能使用虚拟内存空间大小，防止程序因 OOM 被杀掉。
 
-####3.9 问题分析与解决
+####3.8 问题分析与解决
 通过前面几节对 ptmalloc 实现的粗略分析，尝试去分析和解决我们遇到的问题，我们系
 统遇到的问题是 glibc 内存暴增，现象是程序已经把内存返回给了 Glibc 库，但 Glibc 库却没
 有把内存归还给操作系统，最终导致系统内存耗尽，程序因为 OOM 被系统杀掉。
@@ -629,13 +605,11 @@ TCMalloc 类似的无锁设计，使用线程私用变量的形式尽量减少�
 用。或者直接使用 TCMalloc，免去了很多的线程池设计考虑。
 
 
-###4. 重现STL map不返还内存问题，并根据malloc debug信息分析
+
+###4. 自己实现内存管理，解决第1节中我们遇到的问题
 
 
-###5. 自己实现的内存管理来解决问题
-
-
-###6. 参考文献:
+###5. 参考文献:
 
 >\[1] glibc内存管理ptmalloc源代码分析4--淘宝工程师力作, <http://pan.baidu.com/s/1G1pIe>
 
