@@ -28,7 +28,7 @@ void test_malloc_free()
     printf("----------------------------------------------------------------------------------------------\n");
 
 
-    for(i = 0; i < MAXNUM; ++i) {
+    for(i = 0; i < MAXNUM ; ++i) {
         free(ptrs[i]);
     }
     free(ptrs);
