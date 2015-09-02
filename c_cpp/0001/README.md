@@ -309,18 +309,15 @@ Top chunk 对于主分配区和非主分配区是不一样的。
 
 如果向主分配区的 top chunk 申请内存， 而 top chunk 中没有空闲内存， ptmalloc2会调用 sbrk()将的进程 heap 的边界 brk 上移，然后修改 top chunk 的大小。
 
+
 #####3.3.5 mmaped chunk
-当需要分配的 chunk 足够大， 而且 fast bins 和 bins 都不能满足要求， 甚至 top chunk 本
-身也不能满足分配需求时， ptmalloc 会使用 mmap 来直接使用内存映射来将页映射到进程空
-间。 这样分配的 chunk 在被 free 时将直接解除映射， 于是就将内存归还给了操作系统， 再
-次对这样的内存区的引用将导致 segmentation fault 错误。 这样的 chunk 也不会包含在任何
-bin 中。
+当需要分配的 chunk 足够大(大于DEFAULT_MMAP_THRESHOLD_MIN, 默认值128 KB；小于DEFAULT_MMAP_THRESHOLD_MAX，默认值 32MB。[相关代码,注意两个宏的定义](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L907))， 而且 fast bins 和 bins 都不能满足要求， 甚至 top chunk 本身也不能满足分配需求时， ptmalloc 会使用 mmap 来直接使用内存映射来将页映射到进程空
+间。这样分配的 chunk 在被 free 时将直接解除映射，于是就将内存归还给了操作系统。
 
 #####3.3.6 Last remainder
-Last remainder 是另外一种特殊的 chunk，就像 top chunk 和 mmaped chunk 一样，不会
-在任何 bins 中找到这种 chunk。当需要分配一个 small chunk，但在 small bins 中找不到合适
-的 chunk，如果 last remainder chunk 的大小大于所需的 small chunk 大小，last remainder chunk
-被分裂成两个 chunk，其中一个 chunk 返回给用户，另一个 chunk 变成新的 last remainder chuk。
+Last remainder 是另外一种特殊的 chunk，就像 top chunk 和 mmaped chunk 一样，不会在任何 bins 中找到这种 chunk。
+
+当需要分配一个 small chunk，但在 small bins 中找不到合适的 chunk，如果 last remainder chunk 的大小大于所需的 small chunk 大小，last remainder chunk被分裂成两个 chunk，其中一个 chunk 返回给用户，另一个 chunk 变成新的 last remainder chuk。
 
 ####3.4 sbrk 与 mmap
 从进程的内存布局可知， .bss 段之上的这块分配给用户程序的空间被称为 heap（ 堆）。
