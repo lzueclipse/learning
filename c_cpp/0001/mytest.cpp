@@ -14,7 +14,7 @@ void test_malloc_free()
         display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
     
-    char ** ptrs = (char **) malloc( sizeof(char *) * MAXNUM );
+    char ** ptrs = (char **) malloc( sizeof(char *) * MAXNUM ); //5000000 * 8, about 40MB
     memset(ptrs, 0, sizeof(char *) * MAXNUM);
     for(i = 0; i < MAXNUM; ++i) {
         ptrs[i] = (char *) malloc( sizeof(cache_node_t) );
