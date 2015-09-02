@@ -359,30 +359,29 @@ chunk 中分出一块来。 否则转到下一步。
 free() 函数接受一个指向分配区域的指针作为参数，释放该指针所指向的 chunk。
 
 而具体的释放方法则看该 chunk 所处的位置和该 chunk 的大小。 free()函数的工作步骤如下：
-1) free()函数同样首先需要获取分配区的锁，来保证线程安全。
-2) 判断传入的指针是否为 0，如果为 0，则什么都不做，直接 return。否则转下一步。
-3) 判断所需释放的 chunk 是否为 mmaped chunk，如果是，则调用 munmap()释放
-mmaped chunk，解除内存空间映射，该该空间不再有效。如果开启了 mmap 分配
-阈值的动态调整机制，并且当前回收的 chunk 大小大于 mmap 分配阈值，将 mmap
-分配阈值设置为该 chunk 的大小，将 mmap 收缩阈值设定为 mmap 分配阈值的 2
-倍，释放完成，否则跳到下一步。
-4) 判断 chunk 的大小和所处的位置，若 chunk_size <= max_fast， 并且 chunk 并不位于
-heap 的顶部，也就是说并不与 top chunk 相邻，则转到下一步，否则跳到第 6 步。
-（ 因为与 top chunk 相邻的小 chunk 也和 top chunk 进行合并，所以这里不仅需要
-判断大小，还需要判断相邻情况）
-5) 将 chunk 放到 fast bins 中， chunk 放入到 fast bins 中时， 并不修改该 chunk 使用状
-态位 P。也不与相邻的 chunk 进行合并。只是放进去， 如此而已。 这一步做完之后
+
+1) 判断传入的指针是否为 0，如果为 0，则什么都不做，直接 return。否则转下一步。
+
+2) 判断所需释放的 chunk 是否为 mmaped chunk，如果是，则调用 munmap()释放mmaped chunk，解除内存空间映射，该该空间不再有效。如果开启了 mmap 分配
+阈值的动态调整机制，并且当前回收的 chunk 大小大于 mmap 分配阈值，将 mmap分配阈值设置为该 chunk 的大小，将 mmap 收缩阈值设定为 mmap 分配阈值的 2倍，释放完成，否则跳到下一步。
+
+3) 找到释放的chunk所在的分配区。
+
+4) 判断 chunk 的大小和所处的位置，若 chunk_size <= max_fast， 并且 chunk不与 top chunk 相邻，则转到下一步，否则跳到第 6 步。
+（ 因为与 top chunk 相邻的小 chunk 也和 top chunk 进行合并，所以这里不仅需要判断大小，还需要判断相邻情况）
+
+5) 将 chunk 放到 fast bins 中， chunk 放入到 fast bins 中时， 并不修改该 chunk 使用状态位 P。也不与相邻的 chunk 进行合并。只是放进去， 如此而已。 这一步做完之后
 释放便结束了， 程序从 free()函数中返回。
-6) 判断前一个 chunk 是否处在使用中， 如果前一个块也是空闲块， 则合并。 并转下一
-步。
-7) 判断当前释放 chunk 的下一个块是否为 top chunk， 如果是， 则转第 9 步， 否则转
-下一步。
-8) 判断下一个 chunk 是否处在使用中， 如果下一个 chunk 也是空闲的， 则合并， 并将
-22
-合并后的 chunk 放到 unsorted bin 中。 注意， 这里在合并的过程中， 要更新 chunk
+
+6) 判断前一个 chunk 是否处在使用中， 如果前一个块也是空闲块， 则合并。 并转下一步。
+
+7) 判断当前释放 chunk 的下一个块是否为 top chunk， 如果是， 则转第 9 步， 否则转下一步。
+
+8) 判断下一个 chunk 是否处在使用中， 如果下一个 chunk 也是空闲的， 则合并， 并将合并后的 chunk 放到 unsorted bin 中。 注意， 这里在合并的过程中， 要更新 chunk
 的大小， 以反映合并后的 chunk 的大小。 并转到第 10 步。
-9) 如果执行到这一步， 说明释放了一个与 top chunk 相邻的 chunk。则无论它有多大，
-都将它与 top chunk 合并， 并更新 top chunk 的大小等信息。 转下一步。
+
+9) 如果执行到这一步， 说明释放了一个与 top chunk 相邻的 chunk。则无论它有多大，都将它与 top chunk 合并， 并更新 top chunk 的大小等信息。 转下一步。
+
 10) 判断合并后的 chunk 的大小是否大于 FASTBIN_CONSOLIDATION_THRESHOLD（默认
 64KB）， 如果是的话， 则会触发进行 fast bins 的合并操作， fast bins 中的 chunk 将被
 遍历，并与相邻的空闲 chunk 进行合并，合并后的 chunk 会被放到 unsorted bin 中。
