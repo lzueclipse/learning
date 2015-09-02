@@ -311,7 +311,7 @@ Top chunk 对于主分配区和非主分配区是不一样的。
 
 
 #####3.3.5 mmaped chunk
-当需要分配的 chunk 足够大(x86_64上，大于128 KB, 小于32 MB的一个动态值)[相关代码，DEFAULT_MMAP_THRESHOLD_MIN， DEFAULT_MMAP_THRESHOLD_MAX](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L907))， 而且 fast bins 和 bins 都不能满足要求， 甚至 top chunk 本身也不能满足分配需求时， ptmalloc 会使用 mmap 来直接使用内存映射来将页映射到进程空
+当需要分配的 chunk 足够大(x86_64上，大于128 KB, 小于32 MB的一个动态值, [相关代码，DEFAULT_MMAP_THRESHOLD_MIN，DEFAULT_MMAP_THRESHOLD_MAX](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L907))， 而且 fast bins 和 bins 都不能满足要求， 甚至 top chunk 本身也不能满足分配需求时， ptmalloc 会使用 mmap 来直接使用内存映射来将页映射到进程空
 间。这样分配的 chunk 在被 free 时将直接解除映射，于是就将内存归还给了操作系统。
 
 #####3.3.6 Last remainder
