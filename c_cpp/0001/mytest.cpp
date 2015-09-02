@@ -240,7 +240,7 @@ int main(int argc, char **argv)
     else if(strcmp (argv[1], "malloc-free-opt") == 0)
     {
             mallopt(M_MMAP_THRESHOLD, sizeof(cache_node_t)); 
-            mallopt(M_MMAP_MAX, 12345);
+            mallopt(M_MMAP_MAX, 543210);
             mallopt(M_TRIM_THRESHOLD, -1);
             test_malloc_free();
             //output_top();
