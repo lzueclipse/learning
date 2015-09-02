@@ -72,7 +72,7 @@ Sleep 15 seconds, Output of 'top':
 。
 可以发现free后，**没有返还内存给操作系统(仍然占用314084 KB)。看来一切的根源在glibc malloc/free上。**
 
-**在第2节和第3节，我们将讲述内存分配基础和glibc malloc/free(ptmalloc2)。**
+在第2节和第3节，我们将讲述内存分配基础和glibc malloc/free(ptmalloc2)。
 
 ####1.3 约定
 因为用std::map做实验不够直观，所以后续实现都直接基于malloc/free。
