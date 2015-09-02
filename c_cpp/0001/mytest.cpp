@@ -212,7 +212,7 @@ int main(int argc, char **argv)
 {
     if(argc < 2 )
     {
-        printf("usage: %s [map|cache|malloc-free|malloc-free-opt1|malloc-free-opt2|lazy-allocation] [debug] \n", argv[0]);
+        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|lazy-allocation] [debug] \n", argv[0]);
         exit(-1);
     }
     
@@ -237,7 +237,7 @@ int main(int argc, char **argv)
             test_malloc_free();
             //output_top();
     }
-    else if(strcmp (argv[1], "malloc-free-opt2") == 0)
+    else if(strcmp (argv[1], "malloc-free-opt") == 0)
     {
             mallopt(M_MMAP_THRESHOLD, sizeof(cache_node_t)); 
             mallopt(M_MMAP_MAX, 12345);
@@ -252,7 +252,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        printf("usage: %s [map|cache|malloc-free|malloc-free-opt1|malloc-free-opt2|lazy-allocation] [debug] \n", argv[0]);
+        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|lazy-allocation] [debug] \n", argv[0]);
         exit(-1);
     }
     return 0;
