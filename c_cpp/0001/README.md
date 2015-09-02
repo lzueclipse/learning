@@ -182,7 +182,7 @@ struct malloc_chunk {
 };
 ```
 
-在x86_64位机器上，**chunk是16B对齐**。[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L354)
+**在x86_64位机器上，chunk是16B对齐**。[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L354)
 
 一个使用中（没有被free）的chunk，在内存中是这个样子：
 
