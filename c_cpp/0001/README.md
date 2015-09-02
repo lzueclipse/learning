@@ -141,8 +141,9 @@ Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支�
 于是 Wolfram Gloger 在 Doug Lea 的基础上改进使得Glibc 的 malloc 可以支持多线程，增加了非主分配区（ non main arena）支持， 主分配区与非主分配区用环形链表进行管理。 
 每一个分配区利用互斥锁（ mutex）使线程对于该分配区的访问互斥。
 
-每个进程只有一个主分配区，但可能存在多个非主分配区， ptmalloc2 根据系统对分配区的争用情况动态增加非主分配区的数量，分配区的数量一旦增加，就不会再减少了。 主分配
-区可以访问进程的 heap 区域和 mmap 映射区域，也就是说主分配区可以使用 brk/sbrk 和 mmap向操作系统申请虚拟内存。
+每个进程只有一个主分配区，但可能存在多个非主分配区， ptmalloc2 根据系统对分配区的争用情况动态增加非主分配区的数量，分配区的数量一旦增加，就不会再减少了。
+
+主分配区可以访问进程的 heap 区域和 mmap 映射区域，也就是说主分配区可以使用 brk/sbrk 和 mmap向操作系统申请虚拟内存。
 
 而非主分配区只能访问进程的 mmap 映射区域， 非主分配区每次使用 mmap()向操作系统"批发" HEAP_MAX_SIZE（ 64 位系统默认为 64MB, 
 [相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/arena.c#L30)）大小的虚拟内存，当用户向非主分配区请求分配内存时再切割成小块“零售”出去。
@@ -189,7 +190,9 @@ struct malloc_chunk {
 
 图中"chunk"指针指向一个chunk的开始，"mem"指针是真正返回给用户的内存指针，这两个指针在64位机器上相差16 Bytes。
 
-chunk的第一个域表示相邻的前一个chunk的size(prev_size)；第二个域表示本chunk的"size"，其最低3位被借用来表示特殊含义。
+chunk的第一个域表示相邻的前一个chunk的size(prev_size)，程序可以使用这个值来找到前一个 chunk 的开始地址[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1327)。
+
+第二个域表示本chunk的"size"，其最低3位被借用来表示特殊含义:
 
 "P"--P为0，表示相邻前一个chunk是free的，**此时prev_size才有效**；P为1，表示相邻前一个chunk正被使用，此时**prev_size无效**
 
