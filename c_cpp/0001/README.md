@@ -382,31 +382,26 @@ free() 函数接受一个指向分配区域的指针作为参数，释放该指�
 
 9) 如果执行到这一步， 说明释放了一个与 top chunk 相邻的 chunk。则无论它有多大，都将它与 top chunk 合并， 并更新 top chunk 的大小等信息。 转下一步。
 
-10) 判断合并后的 chunk 的大小是否大于 FASTBIN_CONSOLIDATION_THRESHOLD（默认
-64KB）， 如果是的话， 则会触发进行 fast bins 的合并操作， fast bins 中的 chunk 将被
-遍历，并与相邻的空闲 chunk 进行合并，合并后的 chunk 会被放到 unsorted bin 中。
+10) 判断合并后的 chunk 的大小是否大于 FASTBIN_CONSOLIDATION_THRESHOLD（默认64KB,[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1632)）， 如果是的话， 则会触发进行 fast bins 的合并操作， fast bins 中的 chunk 将被遍历，并与相邻的空闲 chunk 进行合并，合并后的 chunk 会被放到 unsorted bin 中。
 fast bins 将变为空， 操作完成之后转下一步。
-11) 判断 top chunk 的大小是否大于 mmap 收缩阈值（默认为 128KB）， 如果是的话， 对
-于主分配区， 则会试图归还 top chunk 中的一部分给操作系统。 但是最先分配的
-128KB 空间是不会归还的， ptmalloc 会一直管理这部分内存， 用于响应用户的分配
-请求；如果为非主分配区，会进行 sub-heap 收缩，将 top chunk 的一部分返回给操
-作系统，如果 top chunk 为整个 sub-heap，会把整个 sub-heap 还回给操作系统。 做
-完这一步之后， 释放结束， 从 free() 函数退出。 可以看出， 收缩堆的条件是当前
-free 的 chunk 大小加上前后能合并 chunk 的大小大于 64k，并且要 top chunk 的大
-小要达到 mmap 收缩阈值，才有可能收缩堆。
+
+11) 判断 top chunk 的大小是否大于 mmap 收缩阈值(一个动态值)， 如果是的话， 对于主分配区， 则会通过sbrk()试图归还 top chunk 中的一部分给操作系统。 
+如果为非主分配区，会进行 sub-heap 收缩，将 top chunk 的一部分返回给操作系统，如果 top chunk 为整个 sub-heap，会把整个 sub-heap 还回给操作系统。
 
 ####3.6 配置选项
 Ptmalloc 主要提供以下几个配置选项用于调优，这些选项可以通过 mallopt()进行设置：
+
 1． M_MXFAST
-M_MXFAST 用于设置 fast bins 中保存的 chunk 的最大大小，默认值为 64B， fast bins 中
-保存的 chunk 在一段时间内不会被合并， 分配小对象时可以首先查找 fast bins，如果 fast bins
-找到了所需大小的 chunk，就直接返回该 chunk，大大提高小对象的分配速度，但这个值设
-置得过大，会导致大量内存碎片，并且会导致 ptmalloc 缓存了大量空闲内存，去不能归还给
-操作系统，导致内存暴增。
-M_MXFAST 的最大值为 80B，不能设置比 80B 更大的值，因为设置为更大的值并不能提
-高分配的速度。Fast bins 是为需要分配许多小对象的程序设计的，比如需要分配许多小 struct，
-小对象，小的 string 等等。
+
+M_MXFAST 用于设置 fast bins 中保存的 chunk 的最大大小，默认值为 128 Byte。
+
+Fast bins 中保存的 chunk 在一段时间内不会被合并， 分配小对象时可以首先查找 fast bins，大大提高小对象的分配速度，但这个值设
+置得过大，会导致 ptmalloc 缓存了大量空闲内存，去不能归还给操作系统，导致内存暴增。
+
+M_MXFAST 的最大值为 160 Byte([相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1617)。
+
 如果设置该选项为 0，就会不使用 fast bins。
+
 2． M_TRIM_THRESHOLD
 M_TRIM_THRESHOLD 用于设置 mmap 收缩阈值，默认值为 128KB。自动收缩只会在 free
 时才发生，如果当前 free 的 chunk 大小加上前后能合并 chunk 的大小大于 64KB，并且 top
