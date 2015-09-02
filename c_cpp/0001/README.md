@@ -313,7 +313,7 @@ Top chunk 对于主分配区和非主分配区是不一样的。
 #####3.3.5 mmaped chunk
 当需要分配的 chunk 足够大(mmap threshold，x86_64上，是大于128 KB, 小于32 MB的一个动态值, [相关代码，DEFAULT_MMAP_THRESHOLD_MIN，DEFAULT_MMAP_THRESHOLD_MAX](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L907))， fast bins 和 bins 都不能满足要求，甚至 top chunk 本身也不能满足分配需求时， ptmalloc2 会使用 mmap 来直接使用内存映射来将页映射到进程空间。
 
-这样分配的 chunk 在被 free 时将直接解除映射，于是就将内存归还给了操作系统；同时会把 mmap 分配阈值调整为当前回收的 chunk 的大小，并将 mmap 收缩阈值（ mmap trim threshold）设置为 mmap 分配阈值的 2 倍。这就是 ptmalloc 的对 mmap分配阈值的动态调整机制，该机制是默认开启的，当然也可以用 mallopt()关闭该机制（3.6节会介绍)
+这样分配的 chunk 在被 free 时将直接解除映射，于是就将内存归还给了操作系统；同时会把 mmap 分配阈值调整为当前回收的 chunk 的大小，并将收缩阈值（ trim threshold）设置为 mmap 分配阈值的 2 倍。这就是 ptmalloc 的对 mmap分配阈值的动态调整机制，该机制是默认开启的，当然也可以用 mallopt()关闭该机制（3.6节会介绍)
 
 
 #####3.3.6 Last remainder
@@ -363,7 +363,7 @@ free() 函数接受一个指向分配区域的指针作为参数，释放该指�
 1) 判断传入的指针是否为 0，如果为 0，则什么都不做，直接 return。否则转下一步。
 
 2) 判断所需释放的 chunk 是否为 mmaped chunk，如果是，则调用 munmap()释放mmaped chunk，解除内存空间映射，该该空间不再有效。如果开启了 mmap 分配
-阈值的动态调整机制，并且当前回收的 chunk 大小大于 mmap 分配阈值，将 mmap分配阈值设置为该 chunk 的大小，将 mmap 收缩阈值设定为 mmap 分配阈值的 2倍，释放完成，否则跳到下一步。
+阈值的动态调整机制，并且当前回收的 chunk 大小大于 mmap 分配阈值，将 mmap分配阈值设置为该 chunk 的大小，将收缩阈值设定为 mmap 分配阈值的 2倍，释放完成，否则跳到下一步。
 
 3) 找到释放的chunk所在的分配区。
 
@@ -385,7 +385,7 @@ free() 函数接受一个指向分配区域的指针作为参数，释放该指�
 10) 判断合并后的 chunk 的大小是否大于 FASTBIN_CONSOLIDATION_THRESHOLD（默认64KB,[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1632)）， 如果是的话， 则会触发进行 fast bins 的合并操作， fast bins 中的 chunk 将被遍历，并与相邻的空闲 chunk 进行合并，合并后的 chunk 会被放到 unsorted bin 中。
 fast bins 将变为空， 操作完成之后转下一步。
 
-11) 判断 top chunk 的大小是否大于 mmap 收缩阈值(一个动态值)， 如果是的话， 对于主分配区， 则会通过sbrk()试图归还 top chunk 中的一部分给操作系统。 
+11) 判断 top chunk 的大小是否大于收缩阈值， 如果是的话， 对于主分配区， 则会通过sbrk()试图归还 top chunk 中的一部分给操作系统。 
 如果为非主分配区，会进行 sub-heap 收缩，将 top chunk 的一部分返回给操作系统，如果 top chunk 为整个 sub-heap，会把整个 sub-heap 还回给操作系统。
 
 ####3.6 配置选项
@@ -403,43 +403,40 @@ M_MXFAST 的最大值为 160 Bytes([相关代码](https://github.com/lzueclipse/
 如果设置该选项为 0，就会不使用 fast bins。
 
 2) M_TRIM_THRESHOLD
-M_TRIM_THRESHOLD 用于设置 mmap 收缩阈值，默认值为 128KB。自动收缩只会在 free
-时才发生，如果当前 free 的 chunk 大小加上前后能合并 chunk 的大小大于 64KB，并且 top
-chunk 的大小达到 mmap 收缩阈值， 对于主分配区，调用 malloc_trim()返回一部分内存给操
-作系统，对于非主分配区，调用 heap_trim()返回一部分内存给操作系统，在发生内存收缩
-时，还是从新设置 mmap 分配阈值和 mmap 收缩阈值。
-这个选项一般与 M_MMAP_THRESHOLD 选项一起使用， M_MMAP_THRESHOLD 用于设置
-mmap 分配阈值，对于长时间运行的程序，需要对这两个选项进行调优， 尽量保证在 ptmalloc
-中缓存的空闲 chunk 能够得到重用，尽量少用 mmap 分配临时用的内存。 不停地使用系统
-调用 mmap 分配内存，然后很快又 free 掉该内存，这样是很浪费系统资源的，并且这样分
-配的内存的速度比从 ptmalloc 的空闲 chunk 中分配内存慢得多，由于需要页对齐导致空间利
-用率降低， 并且操作系统调用 mmap()分配内存是串行的， 在发生缺页异常时加载新的物理
-页，需要对新的物理页做清 0 操作，大大影响效率。
-23
-M_TRIM_THRESHOLD 的值必须设置为页大小对齐，设置为-1 会关闭内存收缩设置。
-注意：试图在程序开始运行时分配一块大内存，并马上释放掉，以期望来触发内存收缩，
-这是不可能的，因为该内存马上就返回给操作系统了。
-3． M_MMAP_THRESHOLD
-M_MMAP_THRESHOLD 用于设置 mmap 分配阈值，默认值为 128KB， ptmalloc 默认开启
-动态调整 mmap 分配阈值和 mmap 收缩阈值。
-当用户需要分配的内存大于 mmap分配阈值，ptmalloc的 malloc()函数其实相当于 mmap()
-的简单封装， free 函数相当于 munmap()的简单封装。相当于直接通过系统调用分配内存，
-回收的内存就直接返回给操作系统了。因为这些大块内存不能被 ptmalloc 缓存管理，不能重
-用，所以 ptmalloc 也只有在万不得已的情况下才使用该方式分配内存。
-但使用 mmap 分配有如下的好处：
- Mmap 的空间可以独立从系统中分配和释放的系统，对于长时间运行的程序，申请
-长生命周期的大内存块就很适合有这种方式。
- Mmap 的空间不会被 ptmalloc 锁在缓存的 chunk 中，不会导致 ptmalloc 内存暴增的
-问题。
- 对有些系统的虚拟地址空间存在洞，只能用 mmap()进行分配内存， sbrk()不能运行。
+M_TRIM_THRESHOLD 用于设置收缩阈值。
+
+自动收缩只会在 free时才发生，如果当前 free 的 chunk 大小加上前后能合并 chunk 的大小大于 FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB)，并且 top
+chunk 的大小达到收缩阈值， 对于主分配区，最终会调用 sbrk()返回一部分内存给操作系统，对于非主分配区，最终munmap返回一部分内存给操作系统。
+
+这个选项一般与 M_MMAP_THRESHOLD 选项一起使用， M_MMAP_THRESHOLD 用于设置mmap 分配阈值，对于长时间运行的程序，需要对这两个选项进行调优。
+
+M_TRIM_THRESHOLD 的值设置为4KB对齐，设置为-1会关闭内存收缩设置。
+
+3) M_MMAP_THRESHOLD
+
+M_MMAP_THRESHOLD 用于设置 mmap 分配阈值，是大于128KB小于32MB的一个动态调整值。
+
+ptmalloc2 默认开启动态调整 mmap 分配阈值和 收缩阈值。
+
+当用户需要分配的内存大于 mmap分配阈值，ptmalloc2的 malloc()函数其实相当于 mmap()的简单封装， free 函数相当于 munmap()的简单封装。相当于直接通过系统调用分配内存，
+回收的内存就直接返回给操作系统了。
+
+因为这些大块内存不能被 ptmalloc 缓存管理，不能重用，所以 ptmalloc 也只有在万不得已的情况下才使用该方式分配内存。
+
+使用 mmap 分配有如下的好处：
+
+a) Mmap 的空间不会被 ptmalloc2 缓存，不会导致 ptmalloc2 内存暴增的问题。
+
 使用 mmap 分配内存的缺点：
- 该内存不能被 ptmalloc 回收再利用。
- 会导致更多的内存浪费，因为 mmap 需要按页对齐。
- 它的分配效率跟操作系统提供的 mmap()函数的效率密切相关， Linux 系统强制把匿
-名 mmap 的内存物理页清 0 是很低效的。
+a) 会导致更多的内存浪费，因为 mmap 需要4KB对齐。
+b)操作系统调用 mmap()分配内存是串行的， 在发生缺页异常时加载新的物理页，需要对新的物理页做清 0 操作，影响效率。
+
 所以用 mmap 来分配长生命周期的大内存块就是最好的选择，其他情况下都不太高效。
-4． M_MMAP_MAX
-M_MMAP_MAX 用于设置进程中用 mmap 分配的内存块的最大限制，默认值为 64K，因
+
+4) M_MMAP_MAX
+
+M_MMAP_MAX 用于设置进程中用 mmaped chunk个数最大限制，默认值为 64K，因
+
 为有些系统用 mmap 分配的内存块太多会导致系统的性能下降。
 如果将 M_MMAP_MAX 设置为 0， ptmalloc 将不会使用 mmap 分配大块内存。
 Ptmalloc 为优化锁的竞争开销，做了 PER_THREAD 的优化，也提供了两个选项，
