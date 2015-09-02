@@ -255,7 +255,7 @@ int main(int argc, char **argv)
     else if(strcmp (argv[1], "lazy-allocation") == 0 )
     {
             test_lazy_allocation();
-            output_top();
+            //output_top();
     }
     else
     {
