@@ -391,18 +391,18 @@ fast bins 将变为空， 操作完成之后转下一步。
 ####3.6 配置选项
 Ptmalloc 主要提供以下几个配置选项用于调优，这些选项可以通过 mallopt()进行设置：
 
-1． M_MXFAST
+1) M_MXFAST
 
 M_MXFAST 用于设置 fast bins 中保存的 chunk 的最大大小，默认值为 128 Byte。
 
 Fast bins 中保存的 chunk 在一段时间内不会被合并， 分配小对象时可以首先查找 fast bins，大大提高小对象的分配速度，但这个值设
 置得过大，会导致 ptmalloc 缓存了大量空闲内存，去不能归还给操作系统，导致内存暴增。
 
-M_MXFAST 的最大值为 160 Byte([相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1617)。
+M_MXFAST 的最大值为 160 Bytes([相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1617))。
 
 如果设置该选项为 0，就会不使用 fast bins。
 
-2． M_TRIM_THRESHOLD
+2) M_TRIM_THRESHOLD
 M_TRIM_THRESHOLD 用于设置 mmap 收缩阈值，默认值为 128KB。自动收缩只会在 free
 时才发生，如果当前 free 的 chunk 大小加上前后能合并 chunk 的大小大于 64KB，并且 top
 chunk 的大小达到 mmap 收缩阈值， 对于主分配区，调用 malloc_trim()返回一部分内存给操
