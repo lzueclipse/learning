@@ -218,7 +218,7 @@ chunk的第一个域表示相邻的前一个chunk的size(prev_size)，程序可�
 
 ptmalloc将相似大小的 chunk 用双向链表链接起来，这样的一个链表被称为一个 bin。 
 
-Ptmalloc 一共维护了 128 个 bin，并使用一个数组来存储这些 bin。
+Ptmalloc 一共维护了 128 个 bins[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1481)，并使用一个数组来存储这些 bins。
 
 ![图4](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/4.png "图4")
 
