@@ -245,7 +245,7 @@ int main(int argc, char **argv)
     {
             test_malloc_free(11);
     }
-    else if(strcmp (argv[1], "malloc-free-top-trim") == 0 )
+    else if(strcmp (argv[1], "malloc-free-top-chunk-trim") == 0 )
     {
             test_malloc_free(11);
     }
