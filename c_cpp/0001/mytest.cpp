@@ -241,13 +241,13 @@ int main(int argc, char **argv)
     {
             mallopt(M_MMAP_THRESHOLD, sizeof(cache_node_t)); 
             mallopt(M_MMAP_MAX, 543210);
-            mallopt(M_TRIM_THRESHOLD, -1);
+            mallopt(M_TRIM_THRESHOLD, 0);
             test_malloc_free(0);
             //output_top();
     }
     else if(strcmp (argv[1], "malloc-free-top-chunk") == 0 )
     {
-            test_malloc_free(200);
+            test_malloc_free(111);
             //output_top();
     }
     else if(strcmp (argv[1], "lazy-allocation") == 0 )
