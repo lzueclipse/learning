@@ -311,7 +311,7 @@ Top chunk 对于主分配区和非主分配区是不一样的。
 
 
 #####3.3.5 mmaped chunk
-当需要分配的 chunk 足够大(mmap分配阈值，x86_64上，是大于128 KB, 小于32 MB的一个动态值, [相关代码，DEFAULT_MMAP_THRESHOLD_MIN，DEFAULT_MMAP_THRESHOLD_MAX](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L907))， fast bins 和 bins 都不能满足要求，甚至 top chunk 本身也不能满足分配需求时， ptmalloc2 会使用 mmap 来直接使用内存映射来将页映射到进程空间。
+当需要分配的 chunk 足够大(mmap threshold，x86_64上，是大于128 KB, 小于32 MB的一个动态值, [相关代码，DEFAULT_MMAP_THRESHOLD_MIN，DEFAULT_MMAP_THRESHOLD_MAX](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L907))， fast bins 和 bins 都不能满足要求，甚至 top chunk 本身也不能满足分配需求时， ptmalloc2 会使用 mmap 来直接使用内存映射来将页映射到进程空间。
 
 这样分配的 chunk 在被 free 时将直接解除映射，于是就将内存归还给了操作系统；同时会把 mmap 分配阈值调整为当前回收的 chunk 的大小，并将 mmap 收缩阈值（ mmap trim threshold）设置为 mmap 分配阈值的 2 倍。这就是 ptmalloc 的对 mmap分配阈值的动态调整机制，该机制是默认开启的，当然也可以用 mallopt()关闭该机制（3.6节会介绍)
 
@@ -323,71 +323,42 @@ Last remainder 是另外一种特殊的 chunk，就像 top chunk 和 mmaped chun
 
 ####3.4 malloc
 ptmalloc 的响应用户内存分配要求的具体步骤为:
-1) 获取分配区的锁， 为了防止多个线程同时访问同一个分配区， 在进行分配之前需要
-取得分配区域的锁。线程先查看线程私有实例中是否已经存在一个分配区，如果存
-在尝试对该分配区加锁，如果加锁成功，使用该分配区分配内存，否则，该线程搜
-索分配区循环链表试图获得一个空闲（ 没有加锁） 的分配区。如果所有的分配区都
-已经加锁，那么 ptmalloc 会开辟一个新的分配区，把该分配区加入到全局分配区循
-环链表和线程的私有实例中并加锁，然后使用该分配区进行分配操作。 开辟出来的
-新分配区一定为非主分配区，因为主分配区是从父进程那里继承来的。开辟非主分
-配区时会调用 mmap()创建一个 sub-heap，并设置好 top chunk。
+
+1) 找到合适的分配区(3.1节)
+
 2) 将用户的请求大小转换为实际需要分配的 chunk 空间大小。
-3) 判断所需分配 chunk的大小是否满足 chunk_size <= max_fast (max_fast 默认为 64B)，
-如果是的话， 则转下一步， 否则跳到第 5 步。
-4) 首先尝试在 fast bins 中取一个所需大小的 chunk 分配给用户。 如果可以找到， 则分
-配结束。 否则转到下一步。
-5) 判断所需大小是否处在 small bins 中， 即判断 chunk_size < 512B 是否成立。 如果
-chunk 大小处在 small bins 中， 则转下一步， 否则转到第 6 步。
-6) 根据所需分配的 chunk 的大小， 找到具体所在的某个 small bin， 从该 bin 的尾部摘
-取一个恰好满足大小的 chunk。 若成功， 则分配结束， 否则， 转到下一步。
-7) 到了这一步， 说明需要分配的是一块大的内存， 或者 small bins 中找不到合适的
-chunk。于是， ptmalloc 首先会遍历 fast bins 中的 chunk， 将相邻的 chunk 进行合并，
-并链接到 unsorted bin 中， 然后遍历 unsorted bin 中的 chunk，如果 unsorted bin 只
-有一个 chunk，并且这个 chunk 在上次分配时被使用过，并且所需分配的 chunk 大
-小属于 small bins，并且 chunk 的大小大于等于需要分配的大小，这种情况下就直
-接将该 chunk 进行切割，分配结束，否则将根据 chunk 的空间大小将其放入 small
-bins 或是 large bins 中，遍历完成后，转入下一步。
-8) 到了这一步，说明需要分配的是一块大的内存，或者 small bins 和 unsorted bin 中
-都找不到合适的 chunk，并且 fast bins 和 unsorted bin 中所有的 chunk 都清除干净
-了。 从 large bins 中按照“ smallest-first， best-fit”原则， 找一个合适的 chunk， 从
-中划分一块所需大小的 chunk， 并将剩下的部分链接回到 bins 中。 若操作成功， 则
+
+3) 判断所需分配 chunk的大小是否满足 chunk_size <= max_fast (max_fast 默认为 128 Bytes)，如果是的话， 则转下一步，否则跳到第 5 步。
+
+4) 首先尝试在 fast bins 中取一个所需大小的 chunk 分配给用户。 如果可以找到，则分配结束。否则转到下一步。
+
+5) 判断所需大小是否处在 small bins 中， 即判断 chunk_size < 1024 Byte 是否成立。 如果chunk 大小处在 small bins 中， 则转下一步， 否则转到第 6 步。
+
+6) 根据所需分配的 chunk 的大小， 找到具体所在的某个 small bin， 从该 bin 的尾部摘取一个恰好满足大小的 chunk。 若成功， 则分配结束， 否则， 转到下一步。
+
+7) 到了这一步， 说明需要分配的是一块大的内存， 或者 small bins 中找不到合适的chunk。于是，ptmalloc2 首先会遍历 fast bins 中的 chunk， 将相邻的 chunk 进行合并，并链接到 unsorted bin 中， 
+然后遍历 unsorted bin 中的 chunk，如果 unsorted bin 只有一个 chunk，并且这个 chunk 在上次分配时被使用过，并且所需分配的 chunk 大小属于 small bins，并且 chunk 的大小大于等于需要分配的大小，
+这种情况下就直接将该 chunk 进行切割，分配结束，否则将根据 chunk 的空间大小将其放入 small bins 或是 large bins 中，遍历完成后，转入下一步。
+
+8) 到了这一步，说明需要分配的是一块大的内存，或者 small bins 和 unsorted bin 中都找不到合适的 chunk，并且 fast bins 和 unsorted bin 中所有的 chunk 都清除干净
+了。 从 large bins 中按照"smallest-first， best-fit"原则， 找一个合适的 chunk， 从中划分一块所需大小的 chunk， 并将剩下的部分链接回到 bins 中。 若操作成功， 则
 分配结束， 否则转到下一步。
-9) 如果搜索 fast bins 和 bins 都没有找到合适的 chunk， 那么就需要操作 top chunk 来
-进行分配了。 判断 top chunk 大小是否满足所需 chunk 的大小， 如果是， 则从 top
+
+9) 如果搜索 fast bins 和 bins 都没有找到合适的 chunk， 那么就需要操作 top chunk 来进行分配了。 判断 top chunk 大小是否满足所需 chunk 的大小， 如果是， 则从 top
 chunk 中分出一块来。 否则转到下一步。
-10) 到了这一步， 说明 top chunk 也不能满足分配要求， 所以， 于是就有了两个选择: 如
-果是主分配区， 调用 sbrk()， 增加 top chunk 大小； 如果是非主分配区，调用 mmap
-来分配一个新的 sub-heap，增加 top chunk 大小； 或者使用 mmap()来直接分配。 在
-这里， 需要依靠 chunk 的大小来决定到底使用哪种方法。 判断所需分配的 chunk
-大小是否大于等于 mmap 分配阈值， 如果是的话， 则转下一步， 调用 mmap 分配，
-否则跳到第 12 步， 增加 top chunk 的大小。
-11) 使用 mmap 系统调用为程序的内存空间映射一块 chunk_size align 4kB 大小的空间。
-然后将内存指针返回给用户。
-12) 判断是否为第一次调用 malloc， 若是主分配区， 则需要进行一次初始化工作， 分配
-21
-一块大小为(chunk_size + 128KB) align 4KB 大小的空间作为初始的 heap。 若已经初
-始化过了， 主分配区则调用 sbrk()增加 heap 空间， 分主分配区则在 top chunk 中切
-割出一个 chunk， 使之满足分配需求， 并将内存指针返回给用户。
-总结一下： 根据用户请求分配的内存的大小， ptmalloc 有可能会在两个地方为用户
-分配内存空间。 在第一次分配内存时，一般情况下只存在一个主分配区，但也有可能从
-父进程那里继承来了多个非主分配区，在这里主要讨论主分配区的情况， brk 值等于
-start_brk， 所以实际上 heap 大小为 0， top chunk 大小也是 0。 这时， 如果不增加 heap
-大小， 就不能满足任何分配要求。所以， 若用户的请求的内存大小小于 mmap 分配阈值，
-则 ptmalloc 会初始 heap。 然后在 heap 中分配空间给用户， 以后的分配就基于这个 heap
-进行。若第一次用户的请求就大于 mmap 分配阈值， 则 ptmalloc 直接使用 mmap()分配
-一块内存给用户， 而 heap 也就没有被初始化， 直到用户第一次请求小于 mmap 分配阈
-值的内存分配。第一次以后的分配就比较复杂了，简单说来，ptmalloc 首先会查找 fast bins，
-如果不能找到匹配的 chunk， 则查找 small bins。 若还是不行，合并 fast bins，把 chunk
-加入 unsorted bin，在 unsorted bin 中查找， 若还是不行， 把 unsorted bin 中的 chunk 全
-加入 large bins 中，并查找 large bins。在 fast bins 和 small bins 中的查找都需要精确匹配，
-而在 large bins 中查找时， 则遵循“ smallest-first， best-fit”的原则， 不需要精确匹配。
-若以上方法都失败了， 则 ptmalloc 会考虑使用 top chunk。 若 top chunk 也不能满足分配
-要求。 而且所需 chunk 大小大于 mmap 分配阈值， 则使用 mmap 进行分配。 否则增加
-heap， 增大 top chunk。 以满足分配要求。
+
+10) 到了这一步， 说明 top chunk 也不能满足分配要求， 所以， 于是就有了3个选择: 如果是主分配区， 调用 sbrk()， 增加 top chunk 大小； 如果是非主分配区，调用 mmap
+来分配一个新的 sub-heap，增加 top chunk 大小； 或者使用 mmap()来直接分配。 在这里， 需要依靠 chunk 的大小来决定到底使用哪种方法。 判断所需分配的 chunk大小是否大于等于 mmap 分配阈值， 
+如果是的话， 则转下一步， 调用 mmap 分配，否则跳到第 12 步， 增加 top chunk 的大小。
+
+11) 使用 mmap 系统调用为程序的内存空间映射一块 chunk_size align 4kB 大小的空间(**mmap系统调用以4KB对齐**)。然后将内存指针返回给用户。
+
+12)简言之，就是从top chunk 中找到一个一块合适大小的内存块，如果top chunk不够用，就需要增加top chunk，对此主分配区和非主分配区处理是不同的(3.3.4节)。
 
 ####3.5 free
-free() 函数接受一个指向分配区域的指针作为参数，释放该指针所指向的 chunk。而具
-体的释放方法则看该 chunk 所处的位置和该 chunk 的大小。 free()函数的工作步骤如下：
+free() 函数接受一个指向分配区域的指针作为参数，释放该指针所指向的 chunk。
+
+而具体的释放方法则看该 chunk 所处的位置和该 chunk 的大小。 free()函数的工作步骤如下：
 1) free()函数同样首先需要获取分配区的锁，来保证线程安全。
 2) 判断传入的指针是否为 0，如果为 0，则什么都不做，直接 return。否则转下一步。
 3) 判断所需释放的 chunk 是否为 mmaped chunk，如果是，则调用 munmap()释放
