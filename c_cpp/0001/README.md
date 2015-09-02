@@ -207,15 +207,13 @@ chunk的第一个域表示相邻的前一个chunk的size(prev_size)，程序可�
 
 当chunk空闲时, M状态不存在，只有A和P(P为1)状态。
 
-原本是用户数据的地方存储了4个指针，指针 fd 指向后一个空闲的 chunk，而 bk 指向前一个空闲的 chunk， ptmalloc2通过这两个指针将大小相近的 chunk 连成一个双向链表。
+原本是用户数据的地方存储了4个指针，指针 fd 指向后一个空闲的 chunk，而 bk 指向前一个空闲的 chunk， ptmalloc2通过这两个指针将大小相近的 chunk 连成一个双向链表（就是3.3节讲的各种bins，用来缓存已经被free的chunk）。
 
 对于 large bin 中的空闲 chunk，还有两个指针，fd_nextsize 和 bk_nextsize，这两个指针用于加快在large bin 中查找最匹配的空闲chunk（smallest first, best fit)。 
 
-接下来的3.3节会探讨bins。
-
 ####3.3 空闲chunk容器
 
-#####3.3.1 bins
+#####3.3.1 Small bins, large bins
 用户 free 掉的内存并不是都会马上归还给系统， ptmalloc 会统一管理 heap 和 mmap 映 射区域中的空闲的 chunk，当用户进行下一次分配请求时， ptmalloc 会首先试图在空闲的chunk 中挑选一块给用户，这样就避免了频繁的系统调用，降低了内存分配的开销。 
 
 ptmalloc将相似大小的 chunk 用双向链表链接起来，这样的一个链表被称为一个 bin。 
