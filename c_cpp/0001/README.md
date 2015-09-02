@@ -3,9 +3,10 @@
 ###1. 问题
 我们的程序要向std::map中插入大量的数据，但每个数据只有几十字节；当使用完该std::map，调用map.clear()，删除map里的所有元素，sleep 15秒后，发现std::map所占内存没有返还给操作系统。
 
+本文所有实验基于**Red Hat Enterprise 7.0，glibc版本2.17**
+
 ####1.1 实验--1
 
-本文所有实验基于**Red Hat Enterprise 7.0，glibc版本2.17**
 
 编译:
 ```
@@ -16,7 +17,7 @@ Complile mytest success
 运行:
 ```
 
-[root@node1 0001]# ./mytest map-none-opt
+[root@node1 0001]# ./mytest map
 ----------------------------------------------------------------------------------------------
 At the beginning, map.size=0
 Output of 'top':
@@ -37,10 +38,10 @@ Sleep 15 seconds, Output of 'top':
 小提示：'top'输出的**第6列表示某程序使用的物理内存大小。**
 
 在实验--1里，我们向std::map插入5,000,000个数据
-[(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L99)
+[(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L107)
 来模拟我们的业务场景(一个md5值作为key，对应一个uint64_t值作为value)。
 可以发现map.clear()删除数据后
-[(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L127)，
+[(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L133)，
 **没有返还内存给操作系统(仍然占用314188 KB)。**
 
 是std::map自身造成的？还是new/delete造成的？或者是malloc/free造成的？实验--2将为我们揭晓答案。
@@ -73,8 +74,8 @@ Sleep 15 seconds, Output of 'top':
 
 **在第2节和第3节，我们将讲述内存分配基础和glibc malloc/free(ptmalloc2)。**
 
-
-
+####1.3 约定
+因为用std::map做实验不够直观，所以后续实现都直接基于malloc/free。
 
 ###2. 内存分配基础知识
 
