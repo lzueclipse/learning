@@ -2,7 +2,7 @@
 
 bool should_debug = false;
 
-void test_malloc_free()
+void test_malloc_free(int num_not_free)
 {
     int i;
     
@@ -20,7 +20,7 @@ void test_malloc_free()
         ptrs[i] = (char *) malloc( sizeof(cache_node_t) );
         memset( ptrs[i], 0, sizeof(cache_node_t) );
     }
-    printf("Malloc:\n");
+    printf("Malloc: number = %u\n", MAXNUM);
     printf("Output of 'top':\n");
     output_top();
     if(should_debug)
@@ -28,11 +28,11 @@ void test_malloc_free()
     printf("----------------------------------------------------------------------------------------------\n");
 
 
-    for(i = 0; i < MAXNUM -100; ++i) {
+    for(i = 0; i < MAXNUM - num_not_free; ++i) {
         free(ptrs[i]);
     }
     free(ptrs);
-    printf("Free:\n");
+    printf("Free: number = %u\n", MAXNUM - num_not_free);
     /* sleep and monitor */
     printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);
@@ -234,7 +234,7 @@ int main(int argc, char **argv)
     }
     else if(strcmp (argv[1], "malloc-free") == 0 )
     {
-            test_malloc_free();
+            test_malloc_free(0);
             //output_top();
     }
     else if(strcmp (argv[1], "malloc-free-opt") == 0)
@@ -242,7 +242,12 @@ int main(int argc, char **argv)
             mallopt(M_MMAP_THRESHOLD, sizeof(cache_node_t)); 
             mallopt(M_MMAP_MAX, 543210);
             mallopt(M_TRIM_THRESHOLD, -1);
-            test_malloc_free();
+            test_malloc_free(0);
+            //output_top();
+    }
+    else if(strcmp (argv[1], "malloc-free-top-chunk") == 0 )
+    {
+            test_malloc_free(200);
             //output_top();
     }
     else if(strcmp (argv[1], "lazy-allocation") == 0 )
