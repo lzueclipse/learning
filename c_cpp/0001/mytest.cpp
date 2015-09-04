@@ -9,7 +9,7 @@ void test_malloc_free()
     int i;
     
     printf("----------------------------------------------------------------------------------------------\n");
-    printf("Enter test_malloc_free()\n\n");
+    printf("test_malloc_free 1\n\n");
     printf("At the beginning:\n");
     printf("Output of 'top':\n");
     output_top();
@@ -17,17 +17,17 @@ void test_malloc_free()
         display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
     
-    char ** ptrs = (char **) malloc( sizeof(char *) * MAXNUM ); //5000000 * 8, about 40MB
-    memset(ptrs, 0, sizeof(char *) * MAXNUM);
+    char * ptrs[MAXNUM]; //500000 * 8, about 4MB on stack
     for(i = 0; i < MAXNUM; ++i) {
-        ptrs[i] = (char *) malloc( sizeof(cache_node_t) );
-        memset( ptrs[i], 0, sizeof(cache_node_t) );
+        ptrs[i] = (char *) malloc(1* 1024 ) ;
+        memset( ptrs[i], 0, sizeof(1 * 1024));
     }
     if(should_top_chunk)
     {
         char *tmp1 = (char *) malloc(127 * 1024); //never free，only 127KB memory leak, what it will impact to the system?
         memset( tmp1, 0, 127 * 1024);
     }
+    printf("test_malloc_free 2\n\n");
     printf("Malloc: number = %u\n", MAXNUM);
     printf("Output of 'top':\n");
     output_top();
@@ -39,7 +39,7 @@ void test_malloc_free()
     for(i = 0; i < MAXNUM; ++i) {
         free(ptrs[i]);
     }
-    free(ptrs);
+    printf("test_malloc_free 2\n\n");
     printf("Free: number = %u\n", MAXNUM);
     /* sleep and monitor */
     printf("Sleep %u seconds, ", SLEEP); 
@@ -48,7 +48,6 @@ void test_malloc_free()
     output_top();
     if(should_debug)
         display_mallinfo();
-    printf("\nExit test_malloc_free()\n");
     printf("----------------------------------------------------------------------------------------------\n");
     
 }
@@ -95,7 +94,7 @@ void test_map()
     int ret;
     
     printf("----------------------------------------------------------------------------------------------\n");
-    printf("Enter test_map()\n\n");
+    printf("test_map() 1\n\n");
     printf("At the beginning, map.size=%" PRIu64 "\n", my_map.size());
     printf("Output of 'top':\n");
     output_top();
@@ -109,6 +108,7 @@ void test_map()
     }
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
+    printf("test_map() 2\n\n");
     printf("Insert all FPs into std::map, map.size=%" PRIu64 ", cost time = %.f seconds\n", my_map.size(), seconds);
     printf("Output of 'top':\n");
     output_top();
@@ -131,6 +131,7 @@ void test_map()
     }
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
+    printf("test_map() 3\n\n");
     printf("Lookup all FPs from std::map, map.size=%" PRIu64 ", cost time = %.f seconds\n", my_map.size(), seconds);
     printf("-----------------------------------------------------------------------------------------------\n");
 
@@ -139,13 +140,13 @@ void test_map()
     my_map.clear();
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
+    printf("test_map() 4\n\n");
     printf("Delete all FPs from std::map, map.size=%" PRIu64 ", cost time = %.f seconds\n", my_map.size(), seconds);
     /* sleep and monitor */
     printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);
     printf("Output of 'top':\n");
     output_top();
-    printf("\nExit test_map()\n");
     printf("----------------------------------------------------------------------------------------------\n");
     
     
@@ -163,8 +164,6 @@ void test_cache()
     const uint64_t bits = 16;
     uint64_t dcid;
      
-    printf("----------------------------------------------------------------------------------------------\n");
-    printf("Enter test_cache()\n\n");
     cache_t *cache = cache_create(areaSize, bits);
     if(cache == NULL)
     {
@@ -173,6 +172,7 @@ void test_cache()
     }
     
     printf("---------------------------------------------------------------------------------------------\n");
+    printf("test_cache 1\n\n");
     printf("At the beginning, cache.size=%" PRIu64 "\n", cache->nitems);
     printf("Output of 'top':\n");
     output_top();
@@ -186,6 +186,7 @@ void test_cache()
     }
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
+    printf("test_cache 2\n\n");
     printf("Insert all FPs into cache, cache.size=%" PRIu64 ", cost time = %.f seconds\n", cache->nitems, seconds);
     printf("Output of 'top':\n");
     output_top();
@@ -202,6 +203,7 @@ void test_cache()
     }
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
+    printf("test_cache 3\n\n");
     printf("Lookup all FPs from cache, cache.size=%" PRIu64 ", cost time = %.f seconds\n", cache->nitems, seconds);
     printf("---------------------------------------------------------------------------------------------\n");
 
@@ -210,10 +212,10 @@ void test_cache()
     cache_destroy(cache);
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
+    printf("test_cache 4\n\n");
     printf("Delete all FPs from cache, cost time = %.f seconds\n", seconds);
     printf("Output of 'top':\n");
     output_top();
-    printf("\nExit test_cache()\n");
     printf("----------------------------------------------------------------------------------------------\n");
 
 }
@@ -253,8 +255,8 @@ int main(int argc, char **argv)
     }
     else if(strcmp (argv[1], "malloc-free-opt") == 0)
     {
-        mallopt(M_MMAP_THRESHOLD, sizeof(cache_node_t)); 
-        mallopt(M_MMAP_MAX, 555555);
+        mallopt(M_MMAP_THRESHOLD, sizeof(80)); 
+        mallopt(M_MMAP_MAX, 54321);
         //mallopt(M_TRIM_THRESHOLD, 0);
         test_malloc_free();
     }

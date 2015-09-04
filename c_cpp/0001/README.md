@@ -20,23 +20,31 @@ Complile mytest success
 
 运行:
 ```
-
 [root@node1 0001]# ./mytest map
 ----------------------------------------------------------------------------------------------
+Enter test_map()
+
 At the beginning, map.size=0
 Output of 'top':
-7399 root      20   0   22900   1532   1172 S   0.0  0.0   0:00.00 mytest
+  530 root      20   0   22900   1532   1172 S   0.0  0.0   0:00.00 mytest
 ----------------------------------------------------------------------------------------------
-Insert all FPs into std::map, map.size=5000000, cost time = 11 seconds
+Insert all FPs into std::map, map.size=5000000, cost time = 12 seconds
 Output of 'top':
-7399 root      20   0  335344 314140   1280 S   0.0  3.9   0:10.20 mytest
+  530 root      20   0  335344 314140   1276 S   0.0  3.9   0:11.65 mytest
 -------------------------------------------------------------------------------------------------
-Lookup all FPs from std::map, map.size=5000000, cost time = 9 seconds
+Lookup all FPs from std::map, map.size=5000000, cost time = 11 seconds
 -----------------------------------------------------------------------------------------------
 Delete all FPs from std::map, map.size=0, cost time = 1 seconds
 Sleep 15 seconds, Output of 'top':
-7399 root      20   0  335344 314188   1324 S   0.0  3.9   0:20.91 mytest
+  530 root      20   0  335344 314184   1320 S   0.0  3.9   0:23.51 mytest
+
+Exit test_map()
+----------------------------------------------------------------------------------------------
+Now the process wil exit and die:
+Output of 'top':
+  530 root      20   0   22900   1812   1320 S   0.0  0.0   0:25.50 mytest
 -----------------------------------------------------------------------------------------------
+
 ```
 
 小提示：'top'输出的**第6列表示某程序使用的物理内存大小。**
