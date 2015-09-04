@@ -140,19 +140,21 @@ Output of 'top':
 -----------------------------------------------------------------------------------------------
 
 ```
-和实验--2唯一的不同在于：
-
-实验--3故意的malloc了1 Byte空间，却不去释放[(1 Byte memory代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L27)
-
 在实验--3里:
 
-1)在free了500,000个1KB内存空间后，**内存并没有返还给操作系统(513308 KB)**
+1)在free了500,000个1KB内存空间后，**内存并没有返还给操作系统(占用513308 KB)**
 
 2)在程序将要退出前[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L275)，
-**内存仍然没有返还给操作系统(513308 KB)**
+**内存仍然没有返还给操作系统(占用513308 KB)**
+
+3)和实验--2唯一的不同是： 实验--3故意malloc了1 Byte空间，却不去释放[(1 Byte memory leak代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L27)
+
 
 思考：
+
 这个行为和实验--1，map调用clear后，甚至map析构后，内存不返还给操作系统的行为是一样的。
+
+为什么这1 Byte的故意的memory leak严重影响了free的行为？在第2节和第3节会展开讲述。
 
 
 ####1.4 约定
