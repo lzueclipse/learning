@@ -442,7 +442,7 @@ M_MMAP_MAX 用于设置进程中用 mmap chunk个数最大限制，默认值为6
 
 
 5) ptmalloc2 没有提供关闭 mmap 分配阈值动态调整机制的选项， mmap 分配阈值动态 调整默认是开启的，如果要关闭 mmap分配阈值动态调整机制，可以设置
-M_TRIM_THRESHOLD， M_MMAP_THRESHOLD， M_TOP_PAD 和 M_MMAP_MAX 中的任意一个。
+M_TRIM_THRESHOLD， M_MMAP_THRESHOLD， M_MMAP_MAX 中的任意一个。
 
 但是强烈建议不要关闭该机制，该机制保证了 ptmalloc2 尽量重用缓存中的空闲内存，不用每次对相对大一些的内存使用系统调用 mmap 去分配内存
 

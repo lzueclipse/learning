@@ -1,9 +1,9 @@
 #include "common.h"
 
 bool should_debug = false;
-bool should_malloc_trim = false;
+bool should_top_chunk = false;
 
-void test_malloc_free(int num_not_free)
+void test_malloc_free()
 {
     int i;
     
@@ -21,6 +21,11 @@ void test_malloc_free(int num_not_free)
         ptrs[i] = (char *) malloc( sizeof(cache_node_t) );
         memset( ptrs[i], 0, sizeof(cache_node_t) );
     }
+    if(should_top_chunk)
+    {
+        char *tmp = (char *) malloc(510 * 1024); //never free
+        memset( tmp, 0, 510 * 1024);
+    }
     printf("Malloc: number = %u\n", MAXNUM);
     printf("Output of 'top':\n");
     output_top();
@@ -29,11 +34,11 @@ void test_malloc_free(int num_not_free)
     printf("----------------------------------------------------------------------------------------------\n");
 
 
-    for(i = 0; i < MAXNUM - num_not_free; ++i) {
+    for(i = 0; i < MAXNUM; ++i) {
         free(ptrs[i]);
     }
     free(ptrs);
-    printf("Free: number = %u\n", MAXNUM - num_not_free);
+    printf("Free: number = %u\n", MAXNUM);
     /* sleep and monitor */
     printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);
@@ -43,7 +48,7 @@ void test_malloc_free(int num_not_free)
         display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
     
-    if(should_malloc_trim)
+    if(should_top_chunk)
     {
         int ret = malloc_trim(0);
         printf("Malloc_trim(0), ret=%d\n", ret);
@@ -213,7 +218,7 @@ int main(int argc, char **argv)
 {
     if(argc < 2 )
     {
-        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top-chunk-trim|lazy-allocation] [debug] \n", argv[0]);
+        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top|lazy-allocation] [debug] \n", argv[0]);
         exit(-1);
     }
     
@@ -232,23 +237,19 @@ int main(int argc, char **argv)
     }
     else if(strcmp (argv[1], "malloc-free") == 0 )
     {
-            test_malloc_free(0);
+            test_malloc_free();
     }
     else if(strcmp (argv[1], "malloc-free-opt") == 0)
     {
             mallopt(M_MMAP_THRESHOLD, sizeof(cache_node_t)); 
-            mallopt(M_MMAP_MAX, 543210);
+            mallopt(M_MMAP_MAX, 55555);
             //mallopt(M_TRIM_THRESHOLD, 0);
-            test_malloc_free(0);
+            test_malloc_free();
     }
     else if(strcmp (argv[1], "malloc-free-top-chunk") == 0 )
     {
-            test_malloc_free(11);
-    }
-    else if(strcmp (argv[1], "malloc-free-top-chunk-trim") == 0 )
-    {
-            should_malloc_trim = true;
-            test_malloc_free(11);
+            test_malloc_free();
+            should_top_chunk = true;
     }
     else if(strcmp (argv[1], "lazy-allocation") == 0 )
     {
@@ -256,7 +257,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top-chunk-trim|lazy-allocation] [debug] \n", argv[0]);
+        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|lazy-allocation] [debug] \n", argv[0]);
         exit(-1);
     }
     return 0;
