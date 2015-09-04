@@ -9,6 +9,8 @@ void test_malloc_free()
     int i;
     
     printf("----------------------------------------------------------------------------------------------\n");
+    printf("Enter test_malloc_free()\n");
+    printf("----------------------------------------------------------------------------------------------\n");
     printf("At the beginning:\n");
     printf("Output of 'top':\n");
     output_top();
@@ -47,6 +49,8 @@ void test_malloc_free()
     output_top();
     if(should_debug)
         display_mallinfo();
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Exit test_malloc_free()\n");
     printf("----------------------------------------------------------------------------------------------\n");
     
 }
@@ -92,6 +96,8 @@ void test_map()
     double seconds;
     int ret;
     
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Enter test_map()\n");
     printf("----------------------------------------------------------------------------------------------\n");
     printf("At the beginning, map.size=%" PRIu64 "\n", my_map.size());
     printf("Output of 'top':\n");
@@ -143,6 +149,8 @@ void test_map()
     printf("Output of 'top':\n");
     output_top();
     printf("-----------------------------------------------------------------------------------------------\n");
+    printf("Exit test_map()\n");
+    printf("----------------------------------------------------------------------------------------------\n");
     
     
 }
@@ -159,6 +167,8 @@ void test_cache()
     const uint64_t bits = 16;
     uint64_t dcid;
      
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Enter test_cache()\n");
     cache_t *cache = cache_create(areaSize, bits);
     if(cache == NULL)
     {
@@ -208,6 +218,8 @@ void test_cache()
     printf("Output of 'top':\n");
     output_top();
     printf("---------------------------------------------------------------------------------------------\n");
+    printf("Exit test_cache()\n");
+    printf("----------------------------------------------------------------------------------------------\n");
 
 }
 
@@ -272,7 +284,7 @@ int main(int argc, char **argv)
         exit(-1);
     }
 
-    printf("Now the process wil exit and die:\n");
+    printf("Now the process wil exit and die(:\n");
     printf("Output of 'top':\n");
     output_top();
     
