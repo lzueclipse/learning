@@ -221,7 +221,7 @@ int main(int argc, char **argv)
 {
     if(argc < 2 )
     {
-        printf("usage: %s [map|map-top-chunk|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top-chunk-mtrim|lazy-allocation] [debug] \n", argv[0]);
+        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top-chunk-mtrim|lazy-allocation] [debug] \n", argv[0]);
         exit(-1);
     }
     
@@ -268,7 +268,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        printf("usage: %s [map|map-top-chunk|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top-chunk-mtrim|lazy-allocation] [debug] \n", argv[0]);
+        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top-chunk-mtrim|lazy-allocation] [debug] \n", argv[0]);
         exit(-1);
     }
 
