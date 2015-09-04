@@ -223,11 +223,9 @@ Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支�
 我**仅仅列出我所关注的部分，比较粗浅**，详细请阅读参考文献 1。
 
 ####3.1 main arena 与 non main arena
-在 Doug Lea 实现的内存分配器中只有一个主分配区( main arena)，每次分配内存都必须对主分配区加锁，分配完成后释放锁，在 SMP 多线程环境下，对主分配区的锁的争用很激烈，
-严重影响了 malloc 的分配效率。
+在 Doug Lea 实现的内存分配器中只有一个主分配区(main arena)，每次分配内存都必须对主分配区加锁，分配完成后释放锁，在 SMP 多线程环境下，对主分配区的锁的争用很激烈，严重影响了 malloc 的分配效率。
 
-于是 Wolfram Gloger 在 Doug Lea 的基础上改进使得Glibc 的 malloc 可以支持多线程，增加了非主分配区( non main arena)支持， 主分配区与非主分配区用环形链表进行管理。 
-每一个分配区利用互斥锁( mutex)使线程对于该分配区的访问互斥。
+于是 Wolfram Gloger 在 Doug Lea 的基础上改进使得Glibc 的 malloc 可以支持多线程，增加了非主分配区( non main arena)支持， 主分配区与非主分配区用环形链表进行管理。 每一个分配区利用互斥锁( mutex)使线程对于该分配区的访问互斥。
 
 每个进程只有一个主分配区，但可能存在多个非主分配区， ptmalloc2 根据系统对分配区的争用情况动态增加非主分配区的数量，分配区的数量一旦增加，就不会再减少了。
 
