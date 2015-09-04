@@ -51,12 +51,19 @@ Output of 'top':
 
 小提示：'top'输出的**第6列表示某程序使用的物理内存大小。**
 
-在实验--1里，我们向std::map插入500,000个数据
+在实验--1里:
+
+我们向std::map插入500,000个数据
 [(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L107)
 来模拟我们的业务场景(一个md5值作为key，对应一个uint64_t值作为value)。
+
 可以发现map.clear()删除数据后
-[(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L133)，
-**没有返还内存给操作系统(仍然占用314188 KB)。**
+[(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L135)，
+**没有返还内存给操作系统(仍然占用32924 KB)。**
+
+甚至map析构后
+[(map析构后)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L275)，
+**没有返还内存给操作系统(仍然占用32924 KB)。**
 
 是std::map自身造成的？还是new/delete造成的？或者是malloc/free造成的？实验--2将为我们揭晓答案。
 
