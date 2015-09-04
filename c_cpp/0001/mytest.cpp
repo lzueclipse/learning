@@ -39,7 +39,7 @@ void test_malloc_free()
     for(i = 0; i < MAXNUM; ++i) {
         free(ptrs[i]);
     }
-    printf("test_malloc_free 2\n\n");
+    printf("test_malloc_free 3\n\n");
     printf("Free: number = %u\n", MAXNUM);
     /* sleep and monitor */
     printf("Sleep %u seconds, ", SLEEP); 
@@ -149,7 +149,7 @@ void test_map()
     output_top();
     printf("----------------------------------------------------------------------------------------------\n");
     
-    
+    printf("test_map() 5\n\n");
 }
 
 
@@ -217,6 +217,8 @@ void test_cache()
     printf("Output of 'top':\n");
     output_top();
     printf("----------------------------------------------------------------------------------------------\n");
+    
+    printf("test_cache 5\n\n");
 
 }
 
@@ -236,12 +238,6 @@ int main(int argc, char **argv)
     if(strcmp (argv[1], "map") == 0 )
     {
         should_debug = false;
-        test_map();
-    }
-    else if(strcmp (argv[1], "map-top-chunk") == 0 )
-    {
-        should_debug = false;
-        should_top_chunk = true;
         test_map();
     }
     else if(strcmp (argv[1], "cache") == 0 )
