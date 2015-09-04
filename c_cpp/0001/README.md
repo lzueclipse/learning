@@ -343,7 +343,7 @@ ptmalloc2 使用**"smallest-first， best-fit"原则**在空闲 large bin 中查
 
 4)当空闲的 chunk 被链接到 bin 中的时候， ptmalloc2 会把表示该 chunk 是否处于使用中的标志 P 设为 0(注意，这个标志实际上处在下一个chunk中)， 同时 ptmalloc2 还会检查它前后的 chunk 是否也是空闲的，如果是的话，ptmalloc2 会首先把它们合并为一个大的 chunk，然后将合并后的 chunk 放到 unstored bin 中。 
 
-要注意的是， 并不是所有的 chunk 被释放后就立即被放到 bin 中。 ptmalloc 为了提高分配的速度， 会把一些小的的 chunk 先放到一个叫做fast bins的容器内。
+要注意的是， 并不是所有的 chunk 被释放后就立即被放到 bin 中。 ptmalloc2 为了提高分配的速度， 会把一些小的的 chunk 先放到一个叫做fast bins的容器内。
 
 #####3.3.2 Fast Bins
 一般的情况是， 程序在运行时会经常需要申请和释放一些较小的内存空间。
