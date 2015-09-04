@@ -154,7 +154,7 @@ Output of 'top':
 
 这个行为和实验--1，map调用clear后，甚至map析构后，内存不返还给操作系统的行为是一样的。
 
-为什么这1 Byte的故意的memory leak严重影响了free的行为？在第3节ptmalloc2原理会展开讲述。
+为什么这1 Byte的故意的memory leak严重影响了free的行为？在第3节ptmalloc2中会展开讲述。
 
 
 ####1.4 约定
