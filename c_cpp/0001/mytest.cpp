@@ -226,15 +226,18 @@ int main(int argc, char **argv)
 
     if(strcmp (argv[1], "map") == 0 )
     {
+        should_debug = false;
         test_map();
     }
     else if(strcmp (argv[1], "map-top-chunk") == 0 )
     {
+        should_debug = false;
         should_top_chunk = true;
         test_map();
     }
     else if(strcmp (argv[1], "cache") == 0 )
     {
+        should_debug = false;
         test_cache();
     }
     else if(strcmp (argv[1], "malloc-free") == 0 )

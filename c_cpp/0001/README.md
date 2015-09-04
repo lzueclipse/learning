@@ -7,7 +7,7 @@
 
 内存仍然没有返还给操作系统。
 
-本文所有实验基于**Red Hat Enterprise 7.0，glibc版本2.17**
+本文所有实验基于**Red Hat Enterprise 7.0，glibc版本2.17。**
 
 ####1.1 实验--1
 
