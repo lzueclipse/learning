@@ -24,8 +24,8 @@ void test_malloc_free()
     }
     if(should_top_chunk)
     {
-        char *tmp1 = (char *) malloc(127 * 1024); //never free，only 127KB memory leak, what it will impact to the system?
-        memset( tmp1, 0, 127 * 1024);
+        char *tmp1 = (char *) malloc(1); //never free，only 1B memory leak, what it will impact to the system?
+        memset( tmp1, 0, 1);
     }
     printf("test_malloc_free 2\n\n");
     printf("Malloc: number = %u\n", MAXNUM);
