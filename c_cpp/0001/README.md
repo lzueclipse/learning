@@ -233,7 +233,7 @@ Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支�
 
 主分配区可以访问进程的 heap 区域和 mmap 映射区域，也就是说主分配区可以使用 brk/sbrk 和 mmap向操作系统申请虚拟内存。
 
-而非主分配区只能访问进程的 mmap 映射区域， 非主分配区每次使用 mmap()向操作系统"批发" HEAP_MAX_SIZE（ 64 位系统默认为 64MB, 
+而非主分配区只能访问进程的 mmap 映射区域， 非主分配区每次使用 mmap()向操作系统"批发" HEAP_MAX_SIZE（x86_64 位系统默认为 64MB, 
 [相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/arena.c#L30)）大小的虚拟内存，当用户向非主分配区请求分配内存时再切割成小块“零售”出去。
 
 当某一线程需要调用 malloc()分配内存空间时， 该线程先查看线程私有变量中是否已经存在一个分配区，如果存在， 尝试对该分配区加锁，如果加锁成功，使用该分配区分配内存，
