@@ -335,7 +335,7 @@ Ptmalloc2 一共维护了 128 个 bins[(相关代码)](https://github.com/lzuecl
 
 **根据large bins的公式，可以用Excel计算出，每一个large bin包含的字节范围, 请查看 [malloc_bins.xlsx](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/malloc_bins.xlsx?raw=true)**
 
-**注意：此Excel给出的large bins数据中，"结束(字节)没有考虑16字节对齐，仅供理解原理用**
+**注意：此Excel给出的large bins数据中，"结束(字节)"没有考虑16字节对齐，仅供理解原理用**
 
 large bins 中的每一个 bin 分别包含了一个给定范围内的 chunk，**其中的 chunk 按大小序排列。相同大小的 chunk 同样按照最近使用顺序排列**。
 
