@@ -23,14 +23,8 @@ void test_malloc_free()
     }
     if(should_top_chunk)
     {
-        char *tmp1 = (char *) malloc(510 * 1024); //never free
-        memset( tmp1, 0, 510 * 1024);
-        
-        char *tmp2 = (char *) malloc(510 * 1024); //never free
-        memset( tmp2, 0, 510 * 1024);
-        
-        char *tmp3 = (char *) malloc(510 * 1024); //never free
-        memset( tmp3, 0, 510 * 1024);
+        char *tmp1 = (char *) malloc(127 * 1024); //never free
+        memset( tmp1, 0, 127 * 1024);
     }
     printf("Malloc: number = %u\n", MAXNUM);
     printf("Output of 'top':\n");
