@@ -1,8 +1,7 @@
 ##由STL map调用clear后，内存不返还给操作系统的问题出发(甚至map析构了也不返还)，探讨ptmalloc2(glibc malloc) malloc/free行为
 
 ###1. 问题
-我们的程序有几十个线程，每个线程拥有一个std::map，每个线程都要向自己的std::map中插入大量的数据，但每个数据只有几十字节；
-当使用完std::map，调用map.clear()，删除map里的所有元素，发现std::map所占内存没有返还给操作系统，甚至std::map析构后，
+我们的程序有几十个线程，每个线程拥有一个std::map，每个线程都要向自己的std::map中插入大量的数据，但每个数据只有几十字节；当使用完std::map，调用map.clear()，删除map里的所有元素，发现std::map所占内存没有返还给操作系统；甚至std::map析构后，
 内存仍然没有返还给操作系统。
 
 本文所有实验基于**Red Hat Enterprise 7.0，glibc版本2.17。**
