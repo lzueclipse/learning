@@ -1,10 +1,8 @@
-##由STL map调用clear后，内存不返还给操作系统的问题出发()，探讨ptmalloc2(glibc malloc) malloc/free行为
+##由STL map调用clear后，内存不返还给操作系统的问题出发(甚至map析构了也不返还)，探讨ptmalloc2(glibc malloc) malloc/free行为
 
 ###1. 问题
-我们的程序有32个线程，每个线程拥有一个std::map，每个线程都要向自己的std::map中插入大量的数据，但每个数据只有几十字节；
-
+我们的程序有几十个线程，每个线程拥有一个std::map，每个线程都要向自己的std::map中插入大量的数据，但每个数据只有几十字节；
 当使用完std::map，调用map.clear()，删除map里的所有元素，发现std::map所占内存没有返还给操作系统，甚至std::map析构后，
-
 内存仍然没有返还给操作系统。
 
 本文所有实验基于**Red Hat Enterprise 7.0，glibc版本2.17。**
@@ -20,36 +18,41 @@ Complile mytest success
 
 运行:
 ```
-[root@node1 0001]# ./mytest map
 ----------------------------------------------------------------------------------------------
-Enter test_map()
+test_map() 1
 
 At the beginning, map.size=0
 Output of 'top':
-  530 root      20   0   22900   1532   1172 S   0.0  0.0   0:00.00 mytest
+ 2919 root      20   0   22900   1532   1172 S   0.0  0.0   0:00.00 mytest
 ----------------------------------------------------------------------------------------------
-Insert all FPs into std::map, map.size=5000000, cost time = 12 seconds
-Output of 'top':
-  530 root      20   0  335344 314140   1276 S   0.0  3.9   0:11.65 mytest
--------------------------------------------------------------------------------------------------
-Lookup all FPs from std::map, map.size=5000000, cost time = 11 seconds
------------------------------------------------------------------------------------------------
-Delete all FPs from std::map, map.size=0, cost time = 1 seconds
-Sleep 15 seconds, Output of 'top':
-  530 root      20   0  335344 314184   1320 S   0.0  3.9   0:23.51 mytest
+test_map() 2
 
-Exit test_map()
+Insert all FPs into std::map, map.size=500000, cost time = 0 seconds
+Output of 'top':
+  2919 root      20   0   54052  32720   1272 S   0.0  0.4   0:00.72 mytest
+-------------------------------------------------------------------------------------------------
+test_map() 3
+
+Lookup all FPs from std::map, map.size=500000, cost time = 0 seconds
+-----------------------------------------------------------------------------------------------
+test_map() 4
+
+Delete all FPs from std::map, map.size=0, cost time = 0 seconds
+Sleep 15 seconds, Output of 'top':
+  2919 root      20   0   54052  32924   1312 S   0.0  0.4   0:01.54 mytest
 ----------------------------------------------------------------------------------------------
+test_map() 5
+
 Now the process wil exit and die:
 Output of 'top':
-  530 root      20   0   22900   1812   1320 S   0.0  0.0   0:25.50 mytest
+  2919 root      20   0   54052  32924   1312 S   0.0  0.4   0:01.54 mytest
 -----------------------------------------------------------------------------------------------
 
 ```
 
 小提示：'top'输出的**第6列表示某程序使用的物理内存大小。**
 
-在实验--1里，我们向std::map插入5,000,000个数据
+在实验--1里，我们向std::map插入500,000个数据
 [(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L107)
 来模拟我们的业务场景(一个md5值作为key，对应一个uint64_t值作为value)。
 可以发现map.clear()删除数据后
