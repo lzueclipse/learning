@@ -69,7 +69,7 @@ Output of 'top':
 
 思考：
 
-是std::map自身造成的？还是new/delete造成的？或者是malloc/free造成的？实验--2将为我们揭晓答案。
+是std::map自身造成的？还是new/delete造成的？或者是malloc/free造成的？实验--2和实验--3将为我们揭晓答案。
 
 ####1.2 实验--2
 
@@ -105,12 +105,14 @@ Output of 'top':
 
 1)我们用malloc分配一些内存空间，存入数据(全0)，[(分配空间，存入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L22)。
 
-2)用free释放内存空间[(释放空间代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L5)
+2)用free释放内存空间[(释放空间代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L40)
 ; 可以发现free后，**返还了内存给操作系统**。
 
-思考：
+看来这个实验里，free立即把内存还给了操作系统。在了解了glibc malloc/free的原理后，基于实验--2，我又设计了实验--3.
 
-####1.3 约定
+####1.3
+
+####1.4 约定
 因为用std::map做实验不够直观，所以后续实现都直接基于malloc/free。
 
 ###2. 内存分配基础知识
