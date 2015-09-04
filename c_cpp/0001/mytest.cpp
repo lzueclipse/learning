@@ -28,7 +28,7 @@ void test_malloc_free()
         memset( tmp1, 0, 1);
     }
     printf("test_malloc_free 2\n\n");
-    printf("Malloc: number = %u\n", MAXNUM);
+    printf("Malloc: number = %u\n", i);
     printf("Output of 'top':\n");
     output_top();
     if(should_debug)
@@ -40,7 +40,7 @@ void test_malloc_free()
         free(ptrs[i]);
     }
     printf("test_malloc_free 3\n\n");
-    printf("Free: number = %u\n", MAXNUM);
+    printf("Free: number = %u\n", i);
     /* sleep and monitor */
     printf("Sleep %u seconds, ", SLEEP); 
     sleep(SLEEP);

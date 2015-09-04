@@ -103,9 +103,9 @@ Output of 'top':
 
 在实验--2里:
 
-1)我们用malloc分配一些内存空间，存入数据(全0)，[(分配空间，存入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L22)。
+1)我们用malloc分配一些内存空间(500,000个1KB)，存入数据(全0)，[(分配空间，存入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L22)。
 
-2)用free释放内存空间[(释放空间代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L40)
+2)用free释放了500,000个1KB内存空间后[(释放空间代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L40)
 ; 可以发现free后，**返还了内存给操作系统**。
 
 思考：
@@ -120,28 +120,34 @@ test_malloc_free 1
 
 At the beginning:
 Output of 'top':
- 3787 root      20   0   26688   1532   1168 S   0.0  0.0   0:00.00 mytest
+4017 root      20   0   26692   1536   1164 S   0.0  0.0   0:00.00 mytest
 ----------------------------------------------------------------------------------------------
 test_malloc_free 2
 
 Malloc: number = 500000
 Output of 'top':
-  3787 root      20   0  534624 513392   1220 S   0.0  6.4   0:00.24 mytest
+ 4017 root      20   0  534496 513136   1220 S   0.0  6.4   0:00.25 mytest
 ----------------------------------------------------------------------------------------------
 test_malloc_free 3
 
 Free: number = 500000
 Sleep 15 seconds, Output of 'top':
-3787 root      20   0  534624 513428   1224 S   0.0  6.4   0:00.37 mytest
-----------------------------------------------------------------------------------------------
+  4017 root      20   0  534496 513308   1224 S   0.0  6.4   0:00.35 mytest
+ ----------------------------------------------------------------------------------------------
 Now the process wil exit and die:
 Output of 'top':
-  3787 root      20   0  534624 513428   1224 S   0.0  6.4   0:00.37 mytest
+  4017 root      20   0  534496 513308   1224 S   0.0  6.4   0:00.35 mytest
 -----------------------------------------------------------------------------------------------
+
 ```
+和实验--2唯一的不同在于：
+实验--3故意的malloc了1 Byte空间，却不去释放[(1 Byte memory代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L27)
+
+在实验--3里:
+在free了500,000个1KB内存空间后，内存并没有`
 
 ####1.4 约定
-因为用std::map做实验不够直观，所以后续实现都直接基于malloc/free。
+**因为用std::map做实验不够直观，所以后续大部分实验都直接基于malloc/free。**
 
 ###2. 内存分配基础知识
 
