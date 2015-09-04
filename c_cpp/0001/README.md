@@ -11,12 +11,13 @@
 
 编译:
 ```
-[root@node1 0001]# sh build.sh
+[root@mydev-rosvile-redhat 0001]# ./mytest map
 Complile mytest success
 ```
 
 运行:
 ```
+[root@mydev-rosvile-redhat 0001]# ./mytest map
 ----------------------------------------------------------------------------------------------
 test_map() 1
 
@@ -53,17 +54,20 @@ Output of 'top':
 
 在实验--1里:
 
-我们向std::map插入500,000个数据
+1)我们向std::map插入500,000个数据
 [(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L107)
 来模拟我们的业务场景(一个md5值作为key，对应一个uint64_t值作为value)。
 
-可以发现map.clear()删除数据后
+2)可以发现map.clear()删除数据后
 [(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L135)，
-**没有返还内存给操作系统(仍然占用32924 KB)。**
+**没有返还内存给操作系统(占用32924 KB)。**
 
-甚至map析构后
+3)甚至map析构后
 [(map析构后)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L275)，
-**没有返还内存给操作系统(仍然占用32924 KB)。**
+**仍然没有返还内存给操作系统(占用32924 KB)。**
+
+
+思考：
 
 是std::map自身造成的？还是new/delete造成的？或者是malloc/free造成的？实验--2将为我们揭晓答案。
 
@@ -71,24 +75,33 @@ Output of 'top':
 
 运行：
 ```
-
-[root@node1 0001]# ./mytest malloc-free
+root@mydev-rosvile-redhat 0001]# ./mytest malloc-free
 ----------------------------------------------------------------------------------------------
+test_malloc_free 1
+
 At the beginning:
 Output of 'top':
-7461 root      20   0   22900   1532   1172 S   0.0  0.0   0:00.00 mytest
+ 3417 root      20   0   26692   1532   1168 S   0.0  0.0   0:00.00 mytest
 ----------------------------------------------------------------------------------------------
-Malloc:
-Output of 'top':
-7461 root      20   0  374408 353048   1220 S   0.0  4.4   0:00.27 mytest
-----------------------------------------------------------------------------------------------
-Free:
-Sleep 15 seconds, Output of 'top':
-7461 root      20   0  335344 314084   1220 S   0.0  3.9   0:00.44 mytest
-----------------------------------------------------------------------------------------------
+test_malloc_free 2
 
+Malloc: number = 500000
+Output of 'top':
+  3417 root      20   0  534496 513128   1220 S   0.0  6.4   0:00.43 mytest
+----------------------------------------------------------------------------------------------
+test_malloc_free 3
+
+Free: number = 500000
+Sleep 15 seconds, Output of 'top':
+  3417 root      20   0   26692   5620   1224 S   0.0  0.1   0:00.55 mytest
+----------------------------------------------------------------------------------------------
+Now the process wil exit and die:
+Output of 'top':
+  3417 root      20   0   26692   5620   1224 S   0.0  0.1   0:00.55 mytest
+-----------------------------------------------------------------------------------------------
 ```
-在实验--2里，我们用malloc分配一些内存空间，存入数据后(全0)，用free释放空间
+
+在实验--2里，我们用malloc分配一些内存空间，存入数据(全0)；用free释放空间
 [(对应的代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L5)
 。
 可以发现free后，**没有返还内存给操作系统(仍然占用314084 KB)。看来一切的根源在glibc malloc/free上。**

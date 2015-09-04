@@ -20,7 +20,7 @@ void test_malloc_free()
     char * ptrs[MAXNUM]; //500000 * 8, about 4MB on stack
     for(i = 0; i < MAXNUM; ++i) {
         ptrs[i] = (char *) malloc(1* 1024 ) ;
-        memset( ptrs[i], 0, sizeof(1 * 1024));
+        memset( ptrs[i], 0, 1 * 1024);
     }
     if(should_top_chunk)
     {
