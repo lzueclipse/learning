@@ -4,14 +4,14 @@
 我们的程序有几十个线程，每个线程拥有一个std::map，每个线程都要向自己的std::map中插入大量的数据，但每个数据只有几十字节；当使用完std::map，调用map.clear()，删除map里的所有元素，发现std::map所占内存没有返还给操作系统；甚至std::map析构后，
 内存仍然没有返还给操作系统。
 
-本文所有实验基于**Red Hat Enterprise 7.0，glibc版本2.17。**
+**了解了glibc malloc/free原理后，我设计了几个实验，目的是辅助理解。所有测试结果基于Red Hat Enterprise 7.0，glibc版本2.17。**
 
 ####1.1 实验--1
 
 
 编译:
 ```
-[root@mydev-rosvile-redhat 0001]# ./mytest map
+[root@mydev-rosvile-redhat 0001]# sh build.sh
 Complile mytest success
 ```
 
@@ -101,12 +101,14 @@ Output of 'top':
 -----------------------------------------------------------------------------------------------
 ```
 
-在实验--2里，我们用malloc分配一些内存空间，存入数据(全0)；用free释放空间
-[(对应的代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L5)
-。
-可以发现free后，**没有返还内存给操作系统(仍然占用314084 KB)。看来一切的根源在glibc malloc/free上。**
+在实验--2里:
 
-在第2节和第3节，我们将讲述内存分配基础和glibc malloc/free(ptmalloc2)。
+1)我们用malloc分配一些内存空间，存入数据(全0)，[(分配空间，存入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L22)。
+
+2)用free释放内存空间[(释放空间代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L5)
+; 可以发现free后，**返还了内存给操作系统**。
+
+思考：
 
 ####1.3 约定
 因为用std::map做实验不够直观，所以后续实现都直接基于malloc/free。
