@@ -180,7 +180,7 @@ Output of 'top':
 ####2.3 内存的延迟分配
 只有在真正访问一个地址的时候才建立这个地址的物理映射，这是 Linux 内存管理的基本思想之一。 
 
-Linux 内核在用户申请内存的时候，只是给它分配了一个线性区(也就是虚拟内存），并没有分配实际物理内存；
+Linux 内核在用户申请内存的时候，只是给它分配了一个线性区(也就是虚拟内存)，并没有分配实际物理内存；
 只有当用户使用这块内存的时候，内核才会分配具体的物理页面给用户，这时候才占用宝贵的物理内存。
 
 内核释放物理页面是通过释放线性区，找到其所对应的物理页面，将其全部释放的过程。
@@ -223,18 +223,18 @@ Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支�
 我**仅仅列出我所关注的部分，比较粗浅**，详细请阅读参考文献 1。
 
 ####3.1 main arena 与 non main arena
-在 Doug Lea 实现的内存分配器中只有一个主分配区( main arena），每次分配内存都必须对主分配区加锁，分配完成后释放锁，在 SMP 多线程环境下，对主分配区的锁的争用很激烈，
+在 Doug Lea 实现的内存分配器中只有一个主分配区( main arena)，每次分配内存都必须对主分配区加锁，分配完成后释放锁，在 SMP 多线程环境下，对主分配区的锁的争用很激烈，
 严重影响了 malloc 的分配效率。
 
-于是 Wolfram Gloger 在 Doug Lea 的基础上改进使得Glibc 的 malloc 可以支持多线程，增加了非主分配区( non main arena）支持， 主分配区与非主分配区用环形链表进行管理。 
-每一个分配区利用互斥锁( mutex）使线程对于该分配区的访问互斥。
+于是 Wolfram Gloger 在 Doug Lea 的基础上改进使得Glibc 的 malloc 可以支持多线程，增加了非主分配区( non main arena)支持， 主分配区与非主分配区用环形链表进行管理。 
+每一个分配区利用互斥锁( mutex)使线程对于该分配区的访问互斥。
 
 每个进程只有一个主分配区，但可能存在多个非主分配区， ptmalloc2 根据系统对分配区的争用情况动态增加非主分配区的数量，分配区的数量一旦增加，就不会再减少了。
 
 主分配区可以访问进程的 heap 区域和 mmap 映射区域，也就是说主分配区可以使用 brk/sbrk 和 mmap向操作系统申请虚拟内存。
 
 而非主分配区只能访问进程的 mmap 映射区域， 非主分配区每次使用 mmap()向操作系统"批发" HEAP_MAX_SIZE(x86_64 位系统默认为 64MB, 
-[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/arena.c#L30)）大小的虚拟内存，当用户向非主分配区请求分配内存时再切割成小块“零售”出去。
+[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/arena.c#L30))大小的虚拟内存，当用户向非主分配区请求分配内存时再切割成小块“零售”出去。
 
 当某一线程需要调用 malloc()分配内存空间时， 该线程先查看线程私有变量中是否已经存在一个分配区，如果存在， 尝试对该分配区加锁，如果加锁成功，使用该分配区分配内存，
 如果失败， 该线程搜索循环链表试图获得一个没有加锁的分配区。如果所有的分配区都已经加锁，那么 malloc()会开辟一个新的分配区，把该分配区加入到全局分配区循环链表并加锁，
@@ -272,7 +272,7 @@ struct malloc_chunk {
 
 **在x86_64位机器上，chunk是16B对齐**。[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L354)
 
-一个使用中(没有被free）的chunk，在内存中是这个样子：
+一个使用中(没有被free)的chunk，在内存中是这个样子：
 
 ![图2](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/2.png "图2")
 
@@ -295,7 +295,7 @@ chunk的第一个域表示相邻的前一个chunk的size(prev_size)，程序可�
 
 当chunk空闲时, M状态不存在，只有A和P(P为1)状态。
 
-原本是用户数据的地方存储了4个指针，指针 fd 指向后一个空闲的 chunk，而 bk 指向前一个空闲的 chunk， ptmalloc2通过这两个指针将大小相近的 chunk 连成一个双向链表(就是3.3节讲的各种bins，用来缓存已经被free的chunk）。
+原本是用户数据的地方存储了4个指针，指针 fd 指向后一个空闲的 chunk，而 bk 指向前一个空闲的 chunk， ptmalloc2通过这两个指针将大小相近的 chunk 连成一个双向链表(就是3.3节讲的各种bins，用来缓存已经被free的chunk)。
 
 对于 large bin 中的空闲 chunk，还有两个指针，fd_nextsize 和 bk_nextsize，这两个指针用于加快在large bin 中查找最匹配的空闲chunk(smallest first, best fit)。 
 
@@ -343,7 +343,7 @@ large bins 中的每一个 bin 分别包含了一个给定范围内的 chunk，*
 
 ptmalloc2 使用**"smallest-first， best-fit"原则**在空闲 large bin 中查找合适的 chunk。
 
-4)当空闲的 chunk 被链接到 bin 中的时候， ptmalloc2 会把表示该 chunk 是否处于使用中的标志 P 设为 0(注意，这个标志实际上处在下一个chunk中）， 同时 ptmalloc2 还会检查它前后的 chunk 是否也是空闲的，如果是的话，ptmalloc2 会首先把它们合并为一个大的 chunk，然后将合并后的 chunk 放到 unstored bin 中。 
+4)当空闲的 chunk 被链接到 bin 中的时候， ptmalloc2 会把表示该 chunk 是否处于使用中的标志 P 设为 0(注意，这个标志实际上处在下一个chunk中)， 同时 ptmalloc2 还会检查它前后的 chunk 是否也是空闲的，如果是的话，ptmalloc2 会首先把它们合并为一个大的 chunk，然后将合并后的 chunk 放到 unstored bin 中。 
 
 要注意的是， 并不是所有的 chunk 被释放后就立即被放到 bin 中。 ptmalloc 为了提高分配的速度， 会把一些小的的 chunk 先放到一个叫做fast bins的容器内。
 
@@ -352,7 +352,7 @@ ptmalloc2 使用**"smallest-first， best-fit"原则**在空闲 large bin 中查
 
 当合并了相邻的几个小的 chunk 之后， 也许马上就会有另一个小块内存的请求， 这样分配器又需要从大的空闲内存中切分出一块，这样无疑是比较低效的。
 
-故而，ptmalloc2 中在分配过程中引入了 fast bins，不大于max_fast(默认128 Bytes)[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L798)）的 chunk 被释放后，首先会被放到 fast bins中， fast bins 中的 chunk 并不改变它的使用标志 P。 这样也就无法将它们合并。
+故而，ptmalloc2 中在分配过程中引入了 fast bins，不大于max_fast(默认128 Bytes)[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L798))的 chunk 被释放后，首先会被放到 fast bins中， fast bins 中的 chunk 并不改变它的使用标志 P。 这样也就无法将它们合并。
 
 当需要给用户分配的 chunk 小于或等于max_fast(默认128 Bytes) 时， ptmalloc2 首先会在 fast bins 中查找相应的空闲块，然后才会去查找 bins中的空闲 chunk。
 
@@ -366,7 +366,7 @@ unsorted bin 的队列使用 bins 数组的第一个， 如果被用户释放的
 
 如果 unsorted bin 不能满足分配要求。 malloc便会将 unsorted bin 中的 chunk 加入 bins 中。 然后再从 bins 中继续进行查找和分配过程。
 
-**Unsorted Bins可以看做是一部分Small bins(大于max_fast的chunk）和Large bins的cache**
+**Unsorted Bins可以看做是一部分Small bins(大于max_fast的chunk)和Large bins的cache**
 
 #####3.3.4 Top chunk
 
@@ -401,7 +401,7 @@ Top chunk 对于主分配区和非主分配区是不一样的。
 #####3.3.5 mmaped chunk
 当需要分配的 chunk 足够大(mmap threshold，x86_64上，是大于128 KB, 小于32 MB的一个动态值, [相关代码，DEFAULT_MMAP_THRESHOLD_MIN，DEFAULT_MMAP_THRESHOLD_MAX](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L907))， fast bins 和 bins 都不能满足要求，甚至 top chunk 本身也不能满足分配需求时， ptmalloc2 会使用 mmap 来直接使用内存映射来将页映射到进程空间。
 
-这样分配的 chunk 在被 free 时将直接解除映射，于是就将内存归还给了操作系统；同时会把 mmap 分配阈值调整为当前回收的 chunk 的大小，并将收缩阈值( trim threshold）设置为 mmap 分配阈值的 2 倍。这就是 ptmalloc 的对 mmap分配阈值的动态调整机制，该机制是默认开启的，当然也可以用 mallopt()关闭该机制(3.6节会介绍)
+这样分配的 chunk 在被 free 时将直接解除映射，于是就将内存归还给了操作系统；同时会把 mmap 分配阈值调整为当前回收的 chunk 的大小，并将收缩阈值( trim threshold)设置为 mmap 分配阈值的 2 倍。这就是 ptmalloc 的对 mmap分配阈值的动态调整机制，该机制是默认开启的，当然也可以用 mallopt()关闭该机制(3.6节会介绍)
 
 
 #####3.3.6 Last remainder
@@ -456,7 +456,7 @@ free() 函数接受一个指向分配区域的指针作为参数，释放该指�
 3) 找到释放的chunk所在的分配区。
 
 4) 判断 chunk 的大小和所处的位置，若 chunk_size <= max_fast， 并且 chunk不与 top chunk 相邻，则转到下一步，否则跳到第 6 步。
-( 因为与 top chunk 相邻的小 chunk 也和 top chunk 进行合并，所以这里不仅需要判断大小，还需要判断相邻情况）
+( 因为与 top chunk 相邻的小 chunk 也和 top chunk 进行合并，所以这里不仅需要判断大小，还需要判断相邻情况)
 
 5) 将 chunk 放到 fast bins 中， chunk 放入到 fast bins 中时， 并不修改该 chunk 使用状态位 P。也不与相邻的 chunk 进行合并。只是放进去， 如此而已。 这一步做完之后
 释放便结束了， 程序从 free()函数中返回。
@@ -470,7 +470,7 @@ free() 函数接受一个指向分配区域的指针作为参数，释放该指�
 
 9) 如果执行到这一步， 说明释放了一个与 top chunk 相邻的 chunk。则无论它有多大，都将它与 top chunk 合并， 并更新 top chunk 的大小等信息。 转下一步。
 
-10) 判断合并后的 chunk 的大小是否大于 FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB,[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1632)）， 如果是的话， 则会触发进行 fast bins 的合并操作， fast bins 中的 chunk 将被遍历，并与相邻的空闲 chunk 进行合并，合并后的 chunk 会被放到 unsorted bin 中。
+10) 判断合并后的 chunk 的大小是否大于 FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB,[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1632))， 如果是的话， 则会触发进行 fast bins 的合并操作， fast bins 中的 chunk 将被遍历，并与相邻的空闲 chunk 进行合并，合并后的 chunk 会被放到 unsorted bin 中。
 fast bins 将变为空， 操作完成之后转下一步。
 
 11) 判断 top chunk 的大小是否大于收缩阈值， 如果是的话， 对于主分配区， 则会通过sbrk()试图归还 top chunk 中的一部分给操作系统。 
@@ -540,7 +540,7 @@ M_TRIM_THRESHOLD， M_MMAP_THRESHOLD， M_MMAP_MAX 中的任意一个。
 
 top chunk 以下的空闲内存都无法返回给系统，即使这些空闲内存有几十个 G 也不行。
 
-2)当进程的线程数很多，在高压力高并发环境下， 频繁分配和释放内存，导致malloc()的内存在不同的分配区，1）中的情况非常容易出现
+2)当进程的线程数很多，在高压力高并发环境下， 频繁分配和释放内存，导致malloc()的内存在不同的分配区，1)中的情况非常容易出现
 
 
 
@@ -557,7 +557,7 @@ top chunk 以下的空闲内存都无法返回给系统，即使这些空闲内�
 
 >\[3] ptmalloc, <http://blog.csdn.net/phenics/article/details/777053#node_sec_1>
 
->\[4] glibc(ptmalloc）内存暴增问题解决 <http://www.blog.chinaunix.net/uid-18770639-id-3385860.html>
+>\[4] glibc(ptmalloc)内存暴增问题解决 <http://www.blog.chinaunix.net/uid-18770639-id-3385860.html>
 
 >\[5] Linux Allocator Does Not Release Small Chunks of Memory, <http://stackoverflow.com/questions/10943907/linux-allocator-does-not-release-small-chunks-of-memory>
 
@@ -577,6 +577,6 @@ top chunk 以下的空闲内存都无法返回给系统，即使这些空闲内�
 
 >\[13] GLIBC内存分配机制引发的“内存泄露”(关于edata的描述，不正确), <http://www.nosqlnotes.net/archives/105>
 
->\[14] Understanding glibc malloc (自备梯子） <https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/>
+>\[14] Understanding glibc malloc (自备梯子) <https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/>
 
 >\[15] ptmalloc2 source code <http://www.malloc.de/en/>
