@@ -19,7 +19,7 @@
 #define __COMMON__
 
 #define LEN 2048
-#define MAXNUM 500000 //do not change me to a very large number
+#define MAXNUM 500000 //do not change me to a very large number, as we will use char *ptrs[MAXNUM], make sure "ulimit -s" large engough
 #define SLEEP 15
 #define CACHE_MAGIC 0x12345678
 #define PAGE_SIZE 4096
