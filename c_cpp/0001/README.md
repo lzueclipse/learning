@@ -519,7 +519,7 @@ b)操作系统调用 mmap()分配内存是串行的，在发生缺页异常时�
 4)M_MMAP_MAX
 
 M_MMAP_MAX用于设置进程中用 mmap chunk个数最大限制，默认值为64K
-([DEFAULT_MMAP_MAX]https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1034
+[(DEFAULT_MMAP_MAX)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1034)
 
 如果将M_MMAP_MAX设置为 0，ptmalloc2 将不会使用mmap 分配大块内存。
 
