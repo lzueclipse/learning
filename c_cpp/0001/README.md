@@ -611,13 +611,17 @@ Output of 'top':
 
 1)和实验--3唯一的区别在于，当程序要退出前，调用了malloc_trim(0)，强制trim内存[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L285)。
 
-2)可以看出malloc_trim(0)能够释放一部分内存给操作系统，但是malloc_trim开销非常大，要遍历所有分配区(遍历要加mutex)，查找并清理的内存空间(bins和top chunk)。
+2)可以看出malloc_trim(0)能够释放一部分内存给操作系统，但是malloc_trim开销非常大，要遍历所有分配区(遍历要加mutex)，查找并清理内存空间(bins和top chunk)。
 [(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L4480)。
 
 
-
-
 ###4. 自己实现内存管理，解决第1节中我们遇到的问题
+
+看来ptmalloc2不适合我们的业务场景。
+
+我们基于mmap来实现一个自己的内存管理机制，目的是能快速返还内存给操作系统。
+
+
 
 
 ###5. 参考文献:
