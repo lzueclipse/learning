@@ -527,9 +527,43 @@ M_MMAP_MAX用于设置进程中用 mmap chunk个数最大限制，默认值为64
 5)ptmalloc2 没有提供关闭 mmap 分配阈值动态调整机制的选项， mmap 分配阈值动态调整默认是开启的，如果要关闭 mmap分配阈值动态调整机制，可以设置
 M_TRIM_THRESHOLD， M_MMAP_THRESHOLD， M_MMAP_MAX 中的任意一个。 但是强烈建议不要关闭该机制，该机制保证了 ptmalloc2 尽量重用缓存中的空闲内存，不用每次对相对大一些的内存使用系统调用 mmap 去分配内存
 
-#####3.7.1 
+#####3.6.1 实验--5
 
-####3.8 使用ptmalloc2需要注意的
+运行:
+```
+[root@mydev-rosvile-redhat 0001]# ./mytest malloc-free-opt
+----------------------------------------------------------------------------------------------
+test_malloc_free 1
+
+At the beginning:
+Output of 'top':
+11903 root      20   0   26560   1532   1168 S   0.0  0.0   0:00.00 mytest
+----------------------------------------------------------------------------------------------
+test_malloc_free 2
+
+Malloc: number = 500000
+Output of 'top':
+11903 root      20   0 2026688 1.913g   1220 S   0.0 25.0   0:01.48 mytest
+----------------------------------------------------------------------------------------------
+test_malloc_free 3
+
+Free: number = 500000
+Sleep 15 seconds, Output of 'top':
+11903 root      20   0   26688   5492   1224 S   0.0  0.1   0:02.05 mytest
+----------------------------------------------------------------------------------------------
+Now the process wil exit and die:
+Output of 'top':
+11903 root      20   0   26688   5492   1224 S   0.0  0.1   0:02.05 mytest
+-----------------------------------------------------------------------------------------------
+```
+
+在实验--5里，我们设置了M_MMAP_THRESHOLD为1024，设置了M_MMAP_MAX为500,000[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L249)。
+
+这样的话ptmalloc2的mmap分配阈值动态调整机制将被关闭，这两个参数的设置，限制了实验--5的malloc()只能在mmaped chunk分配内存。
+从'top'输出上，我们看到内存从原来的513MB，激增到了1.913GB，这个和mmap 4KB对齐有关。
+
+
+####3.7 使用ptmalloc2需要注意的
 
 1)因为 ptmalloc2 的内存收缩是从 top chunk 开始，如果与 top chunk 相邻的那个 chunk没有释放， 
 
