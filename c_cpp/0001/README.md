@@ -484,6 +484,7 @@ M_MXFAST 的最大值为 160 Bytes([相关代码](https://github.com/lzueclipse/
 如果设置该选项为 0，就会不使用 fast bins。
 
 2)M_TRIM_THRESHOLD
+
 M_TRIM_THRESHOLD 用于设置收缩阈值。
 
 自动收缩只会在 free时才发生，如果当前 free 的 chunk 大小加上前后能合并 chunk 的大小大于 FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB)，
