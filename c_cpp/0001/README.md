@@ -388,7 +388,7 @@ Top chunk 对于主分配区和非主分配区是不一样的。
 用户从 top chunk 分配内存时，可以直接取出一块内存给用户。
 
 在回收内存时， 回收的内存恰好与 top chunk 相邻则合并成新的 top chunk，从而使top chunk变大；
-当该次回收的空闲内存大小达到FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB,[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L3971))， 并且 top chunk 的大小也超过了收缩阈值(trim threshold)， 会执行内存收缩，减小 top chunk 的大小， 但至少要保留一个页大小的空闲内存， 从而把内存归还给操作系统。 
+当该次回收的空闲内存大小达到FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB,[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L3971))， 并且 top chunk 的大小也超过了收缩阈值(trim threshold)， 会执行内存收缩，减小 top chunk 的大小， 但至少要保留一个页大小(4KB)的空闲内存， 从而把内存归还给操作系统。 
 
 如果向主分配区的 top chunk 申请内存， 而 top chunk 中没有空闲内存， ptmalloc2会调用 sbrk()将的进程 heap 的边界 brk 上移，然后修改 top chunk 的大小。
 
