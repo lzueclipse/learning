@@ -466,7 +466,7 @@ free() 函数接受一个指向分配区域的指针作为参数，释放该指�
 并与相邻的空闲 chunk 进行合并，合并后的 chunk 会被放到 unsorted bin 中。fast bins 将变为空， 操作完成之后转下一步。
 
 11)如果为主分配区，判断 top chunk 的大小是否大于收缩阈值， 如果是的话，则会通过sbrk()试图归还 top chunk 中的一部分给操作系统。 
-如果为非主分配区，会进行 sub-heap 收缩，将 top chunk 的一部分返回给操作系统，如果 top chunk 为整个 sub-heap，会把整个 sub-heap 还回给操作系统。[相关代码](
+如果为非主分配区，会进行 sub-heap 收缩，将 top chunk 的一部分返回给操作系统，如果 top chunk 为整个 sub-heap，会把整个 sub-heap 还回给操作系统。[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L3971)
 
 ####3.6 配置选项
 Ptmalloc 主要提供以下几个配置选项用于调优，这些选项可以通过 mallopt()进行设置：
