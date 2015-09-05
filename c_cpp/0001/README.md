@@ -472,7 +472,7 @@ free() 函数接受一个指向分配区域的指针作为参数，释放该指�
 ####3.6 配置选项
 Ptmalloc2 主要提供以下几个配置选项用于调优，这些选项可以通过 mallopt()进行设置：
 
-1) M_MXFAST
+1)M_MXFAST
 
 M_MXFAST 用于设置 fast bins 中保存的 chunk 的最大大小，默认值为 128 Byte。
 
@@ -483,11 +483,11 @@ M_MXFAST 的最大值为 160 Bytes([相关代码](https://github.com/lzueclipse/
 
 如果设置该选项为 0，就会不使用 fast bins。
 
-2) M_TRIM_THRESHOLD
+2)M_TRIM_THRESHOLD
 M_TRIM_THRESHOLD 用于设置收缩阈值。
 
 自动收缩只会在 free时才发生，如果当前 free 的 chunk 大小加上前后能合并 chunk 的大小大于 FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB)，
-对于主分配区，当top chunk 的大小达到收缩阈值， 对于主分配区，最终会调用 sbrk()返回一部分内存给操作系统，对于非主分配区，
+对于主分配区，当top chunk 的大小达到收缩阈值， 最终会调用 sbrk()返回一部分内存给操作系统；对于非主分配区，
 最终munmap返回一部分内存给操作系统。
 
 这个选项一般与 M_MMAP_THRESHOLD 选项一起使用， M_MMAP_THRESHOLD 用于设置mmap 分配阈值，对于长时间运行的程序，需要对这两个选项进行调优。
