@@ -246,8 +246,8 @@ int main(int argc, char **argv)
     }
     else if(strcmp (argv[1], "malloc-free-opt") == 0)
     {
-        mallopt(M_MMAP_THRESHOLD, sizeof(80)); 
-        mallopt(M_MMAP_MAX, 54321);
+        mallopt(M_MMAP_THRESHOLD, sizeof(1 * 1024)); 
+        mallopt(M_MMAP_MAX, MAXNUM);
         //mallopt(M_TRIM_THRESHOLD, 0);
         test_malloc_free();
     }
