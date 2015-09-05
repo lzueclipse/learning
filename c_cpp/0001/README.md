@@ -380,7 +380,8 @@ Top chunk 对于主分配区和非主分配区是不一样的。
 如果 top chunk 本身不够大，分配程序会重新分配一个 sub-heap，并将 top chunk 迁移到新的 sub-heap 上，新的 sub-heap
 与已有的 sub-heap 用单向链表连接起来，然后在新的 top chunk 上分配所需的内存以满足分配的需要 。
 
-回收内存时，如果回收的 chunk 恰好与 top chunk 相邻，那么这两个 chunk 就会合并成新的 top chunk，从而使 top chunk 变大；如果该次回收的内存大小达到FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB, [相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L3971))， ptmalloc2会收缩 sub-heap，如果 top-chunk 包含了整个 sub-heap， ptmalloc2会调用 munmap 把整个sub-heap 的内存返回给操作系统。
+回收内存时，如果回收的 chunk 恰好与 top chunk 相邻，那么这两个 chunk 就会合并成新的 top chunk，从而使 top chunk 变大；
+如果当前 free 的 chunk 大小加上前后能合并 chunk 的大小大于FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB, [相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L3971))， ptmalloc2会收缩 sub-heap，如果 top-chunk 包含了整个 sub-heap， ptmalloc2会调用 munmap 把整个sub-heap 的内存返回给操作系统。
 
 2)主分配区:
 
@@ -388,7 +389,7 @@ Top chunk 对于主分配区和非主分配区是不一样的。
 用户从 top chunk 分配内存时，可以直接取出一块内存给用户。
 
 在回收内存时， 回收的内存恰好与 top chunk 相邻则合并成新的 top chunk，从而使top chunk变大；
-当该次回收的空闲内存大小达到FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB,[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L3971))， 并且 top chunk 的大小也超过了收缩阈值(trim threshold)， 会执行内存收缩，减小 top chunk 的大小， 但至少要保留一个页大小(4KB)的空闲内存， 从而把内存归还给操作系统。 
+如果当前 free 的 chunk 大小加上前后能合并 chunk 的大小大于FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB,[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L3971))， 并且 top chunk 的大小也超过了收缩阈值(trim threshold)， 会执行内存收缩，减小 top chunk 的大小， 但至少要保留一个页大小(4KB)的空闲内存， 从而把内存归还给操作系统。 
 
 如果向主分配区的 top chunk 申请内存， 而 top chunk 中没有空闲内存， ptmalloc2会调用 sbrk()将的进程 heap 的边界 brk 上移，然后修改 top chunk 的大小。
 
@@ -469,14 +470,14 @@ free() 函数接受一个指向分配区域的指针作为参数，释放该指�
 如果为非主分配区，会进行 sub-heap 收缩，将 top chunk 的一部分返回给操作系统，如果 top chunk 为整个 sub-heap，会把整个 sub-heap 还回给操作系统。[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L3971)
 
 ####3.6 配置选项
-Ptmalloc 主要提供以下几个配置选项用于调优，这些选项可以通过 mallopt()进行设置：
+Ptmalloc2 主要提供以下几个配置选项用于调优，这些选项可以通过 mallopt()进行设置：
 
 1) M_MXFAST
 
 M_MXFAST 用于设置 fast bins 中保存的 chunk 的最大大小，默认值为 128 Byte。
 
 Fast bins 中保存的 chunk 在一段时间内不会被合并， 分配小对象时可以首先查找 fast bins，大大提高小对象的分配速度，但这个值设
-置得过大，会导致 ptmalloc 缓存了大量空闲内存，去不能归还给操作系统，导致内存暴增。
+置得过大，会导致 ptmalloc2 缓存了大量空闲内存，去不能归还给操作系统，导致内存暴增。
 
 M_MXFAST 的最大值为 160 Bytes([相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1617))。
 
@@ -485,8 +486,9 @@ M_MXFAST 的最大值为 160 Bytes([相关代码](https://github.com/lzueclipse/
 2) M_TRIM_THRESHOLD
 M_TRIM_THRESHOLD 用于设置收缩阈值。
 
-自动收缩只会在 free时才发生，如果当前 free 的 chunk 大小加上前后能合并 chunk 的大小大于 FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB)，并且 top
-chunk 的大小达到收缩阈值， 对于主分配区，最终会调用 sbrk()返回一部分内存给操作系统，对于非主分配区，最终munmap返回一部分内存给操作系统。
+自动收缩只会在 free时才发生，如果当前 free 的 chunk 大小加上前后能合并 chunk 的大小大于 FASTBIN_CONSOLIDATION_THRESHOLD(默认64KB)，
+对于主分配区，当top chunk 的大小达到收缩阈值， 对于主分配区，最终会调用 sbrk()返回一部分内存给操作系统，对于非主分配区，
+最终munmap返回一部分内存给操作系统。
 
 这个选项一般与 M_MMAP_THRESHOLD 选项一起使用， M_MMAP_THRESHOLD 用于设置mmap 分配阈值，对于长时间运行的程序，需要对这两个选项进行调优。
 
