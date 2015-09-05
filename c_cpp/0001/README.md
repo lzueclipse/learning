@@ -382,7 +382,7 @@ Top chunk 对于主分配区和非主分配区是不一样的。
 
 如果回收的 chunk 恰好与 top chunk 相邻，那么这两个 chunk 就会合并成新的 top chunk，从而使 top chunk 变大。
 
-如果在 free 时回收的内存大于某个阈值， 并且 top chunk 的大小也超过了收缩阈值， ptmalloc2
+如果在 free 时， top chunk 的大小也超过了收缩阈值， ptmalloc2
 会收缩 sub-heap，如果 top-chunk 包含了整个 sub-heap， ptmalloc2会调用 munmap 把整个sub-heap 的内存返回给操作系统。
 
 2)主分配区:
