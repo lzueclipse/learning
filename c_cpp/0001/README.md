@@ -495,33 +495,33 @@ M_TRIM_THRESHOLD 用于设置收缩阈值。
 
 M_TRIM_THRESHOLD 的值设置为4KB对齐，设置为-1会关闭内存收缩设置。
 
-3) M_MMAP_THRESHOLD
+3)M_MMAP_THRESHOLD
 
-M_MMAP_THRESHOLD 用于设置 mmap 分配阈值，是大于128KB小于32MB的一个动态调整值。
+M_MMAP_THRESHOLD用于设置mmap分配阈值，是大于128KB小于32MB的一个动态调整值。
 
-ptmalloc2 默认开启动态调整 mmap 分配阈值和 收缩阈值。
+ptmalloc2 默认开启动态调整 "mmap分配阈值"和"收缩阈值(trim threshold)"。
 
-当用户需要分配的内存大于 mmap分配阈值，ptmalloc2的 malloc()函数其实相当于 mmap()的简单封装， free 函数相当于 munmap()的简单封装。相当于直接通过系统调用分配内存，
-回收的内存就直接返回给操作系统了。
+当用户需要分配的内存大于 mmap分配阈值，ptmalloc2的 malloc()函数其实相当于 mmap()的简单封装，free函数相当于 munmap()的简单封装。
+相当于直接通过系统调用分配内存，回收的内存就直接返回给操作系统了。
 
 因为这些大块内存不能被 ptmalloc 缓存管理，不能重用，所以 ptmalloc 也只有在万不得已的情况下才使用该方式分配内存。
 
-使用 mmap 分配有如下的好处：
-
-a) Mmap 的空间不会被 ptmalloc2 缓存，不会导致 ptmalloc2 内存暴增的问题。
+使用 mmap 分配有如下的好处： Mmap 的空间不会被 ptmalloc2 缓存，不会导致 ptmalloc2 内存暴增的问题。
 
 使用 mmap 分配内存的缺点：
 
 a) 会导致更多的内存浪费，因为 mmap 需要4KB对齐。
 
-b)操作系统调用 mmap()分配内存是串行的， 在发生缺页异常时加载新的物理页，需要对新的物理页做清 0 操作，影响效率。
+b)操作系统调用 mmap()分配内存是串行的，在发生缺页异常时加载新的物理页，需要对新的物理页做清 0 操作，影响效率。
 
 所以用 mmap 来分配长生命周期的大内存块就是最好的选择，其他情况下都不太高效。
 
-4) M_MMAP_MAX
+4)M_MMAP_MAX
 
-M_MMAP_MAX 用于设置进程中用 mmap chunk个数最大限制，默认值为64K([DEFAULT_MMAP_MAX] (http://10.200.29.172/source-glibc-2.17/xref/glibc-2.17/malloc/malloc.c#1034))。
-如果将 M_MMAP_MAX 设置为 0， ptmalloc2 将不会使用 mmap 分配大块内存。
+M_MMAP_MAX用于设置进程中用 mmap chunk个数最大限制，默认值为64K
+([DEFAULT_MMAP_MAX]https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1034
+
+如果将M_MMAP_MAX设置为 0，ptmalloc2 将不会使用mmap 分配大块内存。
 
 
 5) ptmalloc2 没有提供关闭 mmap 分配阈值动态调整机制的选项， mmap 分配阈值动态 调整默认是开启的，如果要关闭 mmap分配阈值动态调整机制，可以设置
