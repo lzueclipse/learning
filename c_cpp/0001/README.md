@@ -567,9 +567,12 @@ Output of 'top':
 
 1)因为 ptmalloc2 的内存收缩是从 top chunk 开始，如果与 top chunk 相邻的那个 chunk没有释放， 
 
-top chunk 以下的空闲内存都无法返回给系统，即使这些空闲内存有几十个GB也不行。
+top chunk 以下的空闲内存都无法返回给系统，即使这些空闲内存有几十个GB也不行(**这解释了1.3节中实验--3**，为什么只有1 Byte的memory leak，
 
-2)当进程的线程数很多，在高压力高并发环境下，频繁分配和释放内存，会有很多的分配区，1)中的情况非常容易出现
+却造成了大量内存无法返还给操作系统)。
+
+2)当进程的线程数很多，在高并发环境下，频繁分配和释放内存，会有很多的分配区(arena)，1)中的情况非常容易出现。
+
 
 #####3.7.1 实验--6
 
@@ -606,8 +609,10 @@ Output of 'top':
 ```
 在实验--6里：
 
+1)和实验--3唯一的区别在于，当程序要退出前，调用了malloc_trim(0)，强制trim内存[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L285)。
 
-
+2)可以看出malloc_trim(0)能够释放一部分内存给操作系统，但是malloc_trim开销非常大，要遍历所有分配区(遍历要加mutex)，并找到能清理的内存空间。
+[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L4480)
 
 
 
