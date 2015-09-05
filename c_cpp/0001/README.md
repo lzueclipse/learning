@@ -374,7 +374,7 @@ Top chunk 对于主分配区和非主分配区是不一样的。
 
 1)对于非主分配区:
 
-会预先从 mmap 区域分配一块较大的(HEAP_MAX_SIZE，64 位系统默认为 64MB, [相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/arena.c#L30) )
+会预先从 mmap 区域分配一块较大的(HEAP_MAX_SIZE，x86_64 位系统默认为 64MB, [相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/arena.c#L30) )
 空闲内存模拟 sub-heap， 通过管理sub-heap 来响应用户的需求，这就是非主分配区的top chunk。 
 
 如果 top chunk 本身不够大，分配程序会重新分配一个 sub-heap，并将 top chunk 迁移到新的 sub-heap 上，新的 sub-heap
