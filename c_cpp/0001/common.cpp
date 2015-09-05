@@ -5,6 +5,7 @@
  */
 void display_mallinfo()
 {
+#if 0
     struct mallinfo mi;
     
     /*
@@ -36,6 +37,8 @@ void display_mallinfo()
     //printf("\nmalloc_stats: \n");
     //malloc_stats(); 
     ///printf("...............................................................\n");
+    //
+#endif
 }
 
 /*
