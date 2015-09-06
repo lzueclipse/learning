@@ -626,12 +626,21 @@ Output of 'top':
 
 为了快速插入和查找，我们使用了hash table这个数据结构。
 
-如下图所示：
+下图展示了hash table的数据结构：
 
 ![图5](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/5.jpg "图5")
 
-我们用65536大小(不是固定值，[第2个参数的16次方](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L308))的指针数组来存储，
+我们用65536大小的指针数组(可修改大小，[2的第2个参数次方](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L308))，作为hash table的头，
+每个指针指向一棵BST(binary search tree)的树根。
 
+每一个BST node，代表一个[cache_node_t](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.h#L47)。
+
+用来查找hash 表头的hash 算法：md5值的第13个字节 & 65535 ，[hash 算法代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L142)。
+
+因为BST的插入和查找需要比较cache_node_t大小，[比较算法代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L87)。
+
+BST 采用非递归插入和非递归查找算法，[插入算法](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L393)，
+[查找算法](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L452)。
 
 ###5. 参考文献:
 
