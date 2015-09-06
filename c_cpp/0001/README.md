@@ -611,7 +611,7 @@ Output of 'top':
 1)和实验--3唯一的区别在于，当程序要退出前，调用了malloc_trim(0)，强制trim内存[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L270)。
 
 2)可以看出malloc_trim(0)能够释放一部分内存给操作系统(所有分配区的bins，和主分配区的top chunk)，但是malloc_trim开销非常大，
-要遍历所有分配区(遍历要加mutex)，查找并清理内存空间(bins和top chunk)。
+要遍历所有分配区(遍历要加mutex)，查找并清理内存空间。
 [(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L4480)。
 
 
