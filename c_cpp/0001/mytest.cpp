@@ -1,6 +1,5 @@
 #include "common.h"
 
-bool should_debug = false;
 bool should_top_chunk = false;
 bool should_mtrim = false;
 
@@ -13,8 +12,6 @@ void test_malloc_free()
     printf("At the beginning:\n");
     printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
     
     char * ptrs[MAXNUM]; //500000 * 8, about 4MB on stack
@@ -31,8 +28,6 @@ void test_malloc_free()
     printf("Malloc: number = %u\n", i);
     printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
 
 
@@ -46,8 +41,6 @@ void test_malloc_free()
     sleep(SLEEP);
     printf("Output of 'top':\n");
     output_top();
-    if(should_debug)
-        display_mallinfo();
     printf("----------------------------------------------------------------------------------------------\n");
     
 }
@@ -219,25 +212,19 @@ void test_cache()
 
 int main(int argc, char **argv) 
 {
-    if(argc < 2 )
+    if(argc != 2 )
     {
-        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top-chunk-mtrim|lazy-allocation] [debug] \n", argv[0]);
+        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top-chunk-mtrim|lazy-allocation] \n", argv[0]);
         exit(-1);
     }
     
-    if(argc >=3 && strcmp (argv[2], "debug") == 0)
-    {
-        should_debug = true;
-    }
 
     if(strcmp (argv[1], "map") == 0 )
     {
-        should_debug = false;
         test_map();
     }
     else if(strcmp (argv[1], "cache") == 0 )
     {
-        should_debug = false;
         test_cache();
     }
     else if(strcmp (argv[1], "malloc-free") == 0 )
@@ -268,16 +255,13 @@ int main(int argc, char **argv)
     }
     else
     {
-        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top-chunk-mtrim|lazy-allocation] [debug] \n", argv[0]);
+        printf("usage: %s [map|cache|malloc-free|malloc-free-opt|malloc-free-top-chunk|malloc-free-top-chunk-mtrim|lazy-allocation] \n", argv[0]);
         exit(-1);
     }
 
     printf("Now the process wil exit and die:\n");
     printf("Output of 'top':\n");
     output_top();
-    
-    if(should_debug)
-        display_mallinfo();
     printf("-----------------------------------------------------------------------------------------------\n");
     
     if(should_mtrim)
@@ -286,8 +270,6 @@ int main(int argc, char **argv)
         printf("Malloc_trim(0), ret=%d\n", ret);
         printf("Output of 'top':\n");
         output_top();
-        if(should_debug)
-            display_mallinfo();
     }
 
     return 0;

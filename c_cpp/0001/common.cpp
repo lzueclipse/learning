@@ -108,6 +108,30 @@ int32_t md5_digest_compare(const md5_digest_t &a, const md5_digest_t &b)
     return res;
 }
 
+void set_stack_limit()
+{
+    const rlim_t stack_size = 128L * 1024L * 1024L;   // min stack size = 128MB
+    struct rlimit rl;
+    int32_t result;
+
+    result = getrlimit(RLIMIT_STACK, &rl);
+    if (result == 0)
+    {
+        if(rl.rlim_cur < stack_size)
+        {
+            rl.rlim_cur = stack_size;
+            result = setrlimit(RLIMIT_STACK, &rl);
+            if (result != 0)
+            {
+                printf("setrlimit failed\n");
+            }
+        }
+    }
+    else
+    {
+        printf("getrlimit failed\n");
+    }
+}
 
 static __inline__ void align_to_pow2(uint64_t *size, uint64_t pow2)
 {
