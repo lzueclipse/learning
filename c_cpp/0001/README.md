@@ -476,7 +476,7 @@ Ptmalloc2 主要提供以下几个配置选项用于调优，这些选项可以�
 M_MXFAST 用于设置 fast bins 中保存的 chunk 的最大大小，默认值为 128 Byte。
 
 Fast bins 中保存的 chunk 在一段时间内不会被合并， 分配小对象时可以首先查找 fast bins，大大提高小对象的分配速度，但这个值设
-置得过大，会导致 ptmalloc2 缓存了大量空闲内存，去不能归还给操作系统，导致内存暴增。
+置得过大，会导致 ptmalloc2 缓存了大量空闲内存，却不能归还给操作系统，导致内存暴增。
 
 M_MXFAST 的最大值为 160 Bytes([相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L1617))。
 
@@ -658,6 +658,8 @@ BST 采用非递归插入和非递归查找算法，[插入算法](https://githu
 内存分配算法，当4096个cache_node_t的空间被用完，就用mmap分配下一个4096个cache_node_t空间，并修改链表指针，[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L187)。
 
 内存释放算法，从头遍历链表，并用munmap释放空间，[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L339)。
+
+提示：关于[第一个参数大小的选择](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L308))，因为mmap要求4KB对齐，所以最好是4096的整数倍。
 
 ####4.3 试验--7
 
