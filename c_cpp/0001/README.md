@@ -659,7 +659,7 @@ BST 采用非递归插入和非递归查找算法，[插入算法](https://githu
 
 内存释放算法，从头遍历链表，并用munmap释放空间，[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L339)。
 
-提示：关于[第一个参数大小的选择](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L308))，因为mmap要求4KB对齐，所以最好是4096的整数倍。
+提示：关于[第一个参数大小的选择](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L308)，因为mmap要求4KB对齐，所以最好是4096的整数倍。
 
 ####4.3 试验--7
 
