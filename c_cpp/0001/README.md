@@ -143,10 +143,10 @@ Output of 'top':
 
 1)在free了500,000个1KB内存空间后，**内存并没有返还给操作系统(占用513308 KB)**
 
-2)在程序将要退出前[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L275)，
+2)在程序将要退出前[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L263)，
 **内存仍然没有返还给操作系统(占用513308 KB)**
 
-3)和实验--2唯一的不同是： 实验--3故意malloc了1 Byte空间，却不去释放[(1 Byte memory leak代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L27)
+3)和实验--2唯一的不同是： 实验--3故意malloc了1 Byte空间，却不去释放[(1 Byte memory leak代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L24)
 
 
 思考：
