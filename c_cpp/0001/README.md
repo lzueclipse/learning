@@ -648,6 +648,7 @@ BST 采用非递归插入和非递归查找算法，[插入算法](https://githu
 
 我们实现了一种粗糙有效的方法。
 
+![图5](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/6.jpg "图6")
 
 
 ###5. 参考文献:
