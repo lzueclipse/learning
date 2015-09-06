@@ -622,8 +622,15 @@ Output of 'top':
 
 我们基于mmap来实现一个自己的内存管理机制，目的是能快速返还内存给操作系统。
 
+####4.1 使用hash table作为插入和查找的数据结构
+
+为了快速插入和查找，我们使用了hash table这个数据结构。
+
+如下图所示：
+
 ![图5](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/5.jpg "图5")
 
+我们用65536大小(不是固定值，[第2个参数的16次方](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L308))的指针数组来存储，
 
 
 ###5. 参考文献:
