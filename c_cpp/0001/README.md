@@ -505,7 +505,9 @@ ptmalloc2 默认开启动态调整 "mmap分配阈值"和"收缩阈值(trim thres
 
 因为这些大块内存不能被 ptmalloc2 缓存管理，不能重用，所以 ptmalloc2 也只有在万不得已的情况下才使用该方式分配内存。
 
-使用 mmap 分配有如下的好处： Mmap 的空间不会被 ptmalloc2 缓存，不会导致 ptmalloc2 内存暴增的问题。
+使用 mmap 分配有如下的好处： 
+
+Mmap 的空间不会被 ptmalloc2 缓存，不会导致 ptmalloc2 内存暴增的问题。
 
 使用 mmap 分配内存的缺点：
 
