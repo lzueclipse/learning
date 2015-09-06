@@ -651,7 +651,7 @@ BST 采用非递归插入和非递归查找算法，[插入算法代码](https:/
 
 链表中的每一个元素是一个4096 * sizeof(cache_node_t) 大小的mmap内存块(4096可修改，[第一个参数](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L308))。
 
-第0个[cache_node_t](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.h#L47)被借用来表示[cache_page_t](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.h#L57)， cache_page_t中比较重要的是双向链表的前向指针prev和后向指针next。 比较trikey的地方是，故意让cache_page_t和cache_node_t大小相同，这样代码写起来比较简单。
+第0个[cache_node_t](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.h#L47)被借用来表示[cache_page_t](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.h#L57)， cache_page_t中比较重要的是双向链表的前向指针prev和后向指针next。 比较tricky的地方是，故意让cache_page_t和cache_node_t大小相同，这样代码写起来比较简单。
 
 第1到4095个cache_node_t是真正用来分配给BST node的。
 
