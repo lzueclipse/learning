@@ -503,7 +503,7 @@ ptmalloc2 默认开启动态调整 "mmap分配阈值"和"收缩阈值(trim thres
 当用户需要分配的内存大于 mmap分配阈值，ptmalloc2的 malloc()函数其实相当于 mmap()的简单封装，free函数相当于 munmap()的简单封装。
 相当于直接通过系统调用分配内存，回收的内存就直接返回给操作系统了。
 
-因为这些大块内存不能被 ptmalloc 缓存管理，不能重用，所以 ptmalloc 也只有在万不得已的情况下才使用该方式分配内存。
+因为这些大块内存不能被 ptmalloc2 缓存管理，不能重用，所以 ptmalloc2 也只有在万不得已的情况下才使用该方式分配内存。
 
 使用 mmap 分配有如下的好处： Mmap 的空间不会被 ptmalloc2 缓存，不会导致 ptmalloc2 内存暴增的问题。
 
