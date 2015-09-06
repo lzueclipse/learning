@@ -646,10 +646,11 @@ BST 采用非递归插入和非递归查找算法，[插入算法](https://githu
 
 问题来了，4.1用hash表实现了插入和查找，BST node内存从哪里分配？ 显然不能用malloc/free。
 
-我们实现了一种粗糙有效的方法。
+我们实现了一种粗糙有效的方法，本质是是一个双向链表，如下图所示：
 
 ![图5](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/6.jpg "图6")
 
+链表中的每一个元素是一个4096 * sizeof(cache_node_t) 大小的mmap内存块(4096可修改大小，[第一个参数](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L308))。
 
 ###5. 参考文献:
 
