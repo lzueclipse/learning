@@ -218,6 +218,7 @@ int main(int argc, char **argv)
         exit(-1);
     }
     
+    set_stack_limit();
 
     if(strcmp (argv[1], "map") == 0 )
     {

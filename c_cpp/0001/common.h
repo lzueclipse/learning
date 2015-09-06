@@ -104,4 +104,5 @@ extern void cache_destroy(cache_t *cache);
 extern int32_t cache_add(cache_t *cache, const md5_digest_t& digest, uint64_t dcid);
 extern int32_t cache_exists(cache_t *cache, const md5_digest_t digest, uint64_t &dcid);
 
+extern void set_stack_limit();
 #endif
