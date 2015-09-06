@@ -102,9 +102,9 @@ Output of 'top':
 
 在实验--2里:
 
-1)我们用malloc分配一些内存空间(500,000个1KB)，存入数据(全0)，[(分配空间，存入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L22)。
+1)我们用malloc分配一些内存空间(500,000个1KB)，存入数据(全0)，[(分配空间，存入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L19)。
 
-2)用free释放了500,000个1KB内存空间后[(释放空间代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L40)
+2)用free释放了500,000个1KB内存空间后[(释放空间代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L35)
 ; 可以发现free后，**返还了内存给操作系统**。
 
 思考：
