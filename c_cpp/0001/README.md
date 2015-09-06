@@ -140,7 +140,8 @@ Output of 'top':
 ```
 在实验--3里:
 
-1)在free了500,000个1KB内存空间后，**内存并没有返还给操作系统(占用513308 KB)**
+1)在free了500,000个1KB内存空间后[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L35)
+，**内存并没有返还给操作系统(占用513308 KB)**
 
 2)在程序将要退出前[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L263)，
 **内存仍然没有返还给操作系统(占用513308 KB)**
