@@ -616,7 +616,7 @@ Output of 'top':
 [(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/glibc-2.17/malloc/malloc.c#L4480)。
 
 
-###4. 自己实现内存管理，解决第1节中我们遇到的问题
+###4. 自己实现数据结构，解决第1节中我们遇到的问题
 
 看来ptmalloc2不适合我们的业务场景。
 
@@ -641,6 +641,14 @@ Output of 'top':
 
 BST 采用非递归插入和非递归查找算法，[插入算法](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L393)，
 [查找算法](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L452)。
+
+####4.2 用mmap，自己实现内存管理
+
+问题来了，4.1用hash表实现了插入和查找，BST node内存从哪里分配？ 显然不能用malloc/free。
+
+我们实现了一种粗糙有效的方法。
+
+
 
 ###5. 参考文献:
 
