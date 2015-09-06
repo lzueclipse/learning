@@ -23,31 +23,30 @@ test_map() 1
 
 At the beginning, map.size=0
 Output of 'top':
- 2919 root      20   0   22900   1532   1172 S   0.0  0.0   0:00.00 mytest
+26503 root      20   0   22900   1528   1172 S   0.0  0.0   0:00.00 mytest
 ----------------------------------------------------------------------------------------------
 test_map() 2
 
-Insert all FPs into std::map, map.size=500000, cost time = 0 seconds
+Insert all FPs into std::map, map.size=500000, cost time = 1 seconds
 Output of 'top':
-  2919 root      20   0   54052  32720   1272 S   0.0  0.4   0:00.72 mytest
+26503 root      20   0   54052  32716   1280 S   0.0  0.4   0:00.80 mytest
 -------------------------------------------------------------------------------------------------
 test_map() 3
 
-Lookup all FPs from std::map, map.size=500000, cost time = 0 seconds
+Lookup all FPs from std::map, map.size=500000, cost time = 1 seconds
 -----------------------------------------------------------------------------------------------
 test_map() 4
 
 Delete all FPs from std::map, map.size=0, cost time = 0 seconds
 Sleep 15 seconds, Output of 'top':
-  2919 root      20   0   54052  32924   1312 S   0.0  0.4   0:01.54 mytest
+26503 root      20   0   54052  32928   1320 S   0.0  0.4   0:01.68 mytest
 ----------------------------------------------------------------------------------------------
 test_map() 5
 
 Now the process wil exit and die:
 Output of 'top':
-  2919 root      20   0   54052  32924   1312 S   0.0  0.4   0:01.54 mytest
+26503 root      20   0   54052  32928   1320 S   0.0  0.4   0:01.68 mytest
 -----------------------------------------------------------------------------------------------
-
 ```
 
 小提示：'top'输出的**第6列表示某程序使用的物理内存大小。**
@@ -55,16 +54,16 @@ Output of 'top':
 在实验--1里:
 
 1)我们向std::map插入500,000个数据
-[(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L107)
+[(插入数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L100)
 来模拟我们的业务场景(一个md5值作为key，对应一个uint64_t值作为value)。
 
 2)可以发现map.clear()删除数据后
-[(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L135)，
-**没有返还内存给操作系统(占用32924 KB)。**
+[(删除数据代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L128)，
+**没有返还内存给操作系统(占用32928 KB)。**
 
 3)甚至map析构后
-[(map析构后)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L275)，
-**仍然没有返还内存给操作系统(占用32924 KB)。**
+[(map析构后)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L268)，
+**仍然没有返还内存给操作系统(占用32928 KB)。**
 
 
 思考：
