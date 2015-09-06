@@ -7,6 +7,7 @@
 
 ####1.1 实验--1
 
+编译需要提前安装openssl, openssl-devel库rpm包。
 
 编译:
 ```
