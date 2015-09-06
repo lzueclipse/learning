@@ -622,6 +622,7 @@ Output of 'top':
 
 我们基于mmap来实现一个自己的内存管理机制，目的是能快速返还内存给操作系统。
 
+![图5](https://raw.githubusercontent.com/lzueclipse/learning/master/c_cpp/0001/5.jpg "图5")
 
 
 
