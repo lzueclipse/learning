@@ -145,7 +145,7 @@ Output of 'top':
 2)在程序将要退出前[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L263)，
 **内存仍然没有返还给操作系统(占用513308 KB)**
 
-3)和实验--2唯一的不同是： 实验--3故意malloc了1 Byte空间，却不去释放，[1 Byte memory leak代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L24)。
+3)和实验--2唯一的不同是： 实验--3故意malloc了1 Byte空间，却不去释放，[(1 Byte memory leak代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L24)。
 
 
 思考：
@@ -205,7 +205,7 @@ Output of 'top':
  4337 root      20   0   22900   1580   1220 S   0.0  0.0   0:00.00 mytest
 -----------------------------------------------------------------------------------------------
 ```
-在实验--4里，我们仅仅malloc()一块内存，却没有向这块内存区间写入任何数据[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L56)，观察'top'输出的第5列和第6列，能发现仅仅分配了**虚拟内存(285048 KB)**，没有分配物理内存(**仅仅1580 KB**)。
+在实验--4里，我们仅仅malloc()一块内存，却没有向这块内存区间写入任何数据[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L48)，观察'top'输出的第5列和第6列，能发现仅仅分配了**虚拟内存(285048 KB)**，没有分配物理内存(**仅仅1580 KB**)。
 
 
 ###3. ptmalloc2
@@ -555,7 +555,7 @@ Output of 'top':
 -----------------------------------------------------------------------------------------------
 ```
 
-在实验--5里，我们设置了M_MMAP_THRESHOLD为1024，设置了M_MMAP_MAX为500,000[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L249)。
+在实验--5里，我们设置了M_MMAP_THRESHOLD为1024，设置了M_MMAP_MAX为500,000[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L237)。
 
 这两个参数的设置，使得ptmalloc2的mmap分配阈值动态调整机制将被关闭，并且限制了实验--5的malloc()只能在mmaped chunk分配内存。
 从'top'输出上，我们看到内存从原来的513MB，激增到了1.913GB，这个和mmap 4KB对齐有关。
@@ -607,7 +607,7 @@ Output of 'top':
 ```
 在实验--6里：
 
-1)和实验--3唯一的区别在于，当程序要退出前，调用了malloc_trim(0)，强制trim内存[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L285)。
+1)和实验--3唯一的区别在于，当程序要退出前，调用了malloc_trim(0)，强制trim内存[(相关代码)](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/mytest.cpp#L270)。
 
 2)可以看出malloc_trim(0)能够释放一部分内存给操作系统(所有分配区的bins，和主分配区的top chunk)，但是malloc_trim开销非常大，
 要遍历所有分配区(遍历要加mutex)，查找并清理内存空间(bins和top chunk)。
@@ -654,9 +654,53 @@ BST 采用非递归插入和非递归查找算法，[插入算法](https://githu
 
 第1到4095个cache_node_t是真正用来分配给BST node的。
 
-内存分配算法，当4096个cache_node_t的空间被用完，就用mmap分配一个4096个cache_node_t空间，并修改链表指针，[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L187)。
+内存分配算法，当4096个cache_node_t的空间被用完，就用mmap分配下一个4096个cache_node_t空间，并修改链表指针，[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L187)。
 
 内存释放算法，从头遍历链表，并用munmap释放空间，[相关代码](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.cpp#L339)。
+
+####4.3 试验--7
+
+试验下自己的实现：
+
+运行:
+```
+[root@mydev-rosvile-redhat 0001]# ./mytest cache
+---------------------------------------------------------------------------------------------
+test_cache 1
+
+At the beginning, cache.size=0
+Output of 'top':
+26853 root      20   0   23416   2060   1184 S   0.0  0.0   0:00.00 mytest
+---------------------------------------------------------------------------------------------
+test_cache 2
+
+Insert all FPs into cache, cache.size=500000, cost time = 1 seconds
+Output of 'top':
+26853 root      20   0   47032  25584   1268 S   0.0  0.3   0:00.57 mytest
+---------------------------------------------------------------------------------------------
+test_cache 3
+
+Lookup all FPs from cache, cache.size=500000, cost time = 1 seconds
+---------------------------------------------------------------------------------------------
+test_cache 4
+
+Delete all FPs from cache, cost time = 0 seconds
+Output of 'top':
+26853 root      20   0   22900   1668   1304 S   0.0  0.0   0:01.11 mytest
+----------------------------------------------------------------------------------------------
+test_cache 5
+
+Now the process wil exit and die:
+Output of 'top':
+26853 root      20   0   22900   1668   1304 S   0.0  0.0   0:01.11 mytest
+-----------------------------------------------------------------------------------------------
+```
+
+可以看到内存能够迅速返还给操作系统。
+
+关于performance, 修改[MAXNUM](https://github.com/lzueclipse/learning/blob/master/c_cpp/0001/common.h#L23)为一个很大值并编译，经过测试，发现单线程下，
+
+我们自己的实现比std::map要快。
 
 ###5. 参考文献:
 
