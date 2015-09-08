@@ -162,7 +162,7 @@ Output of 'top':
 
 ###2. 内存分配基础知识
 
-本章节大部分节选自[参考文献 1，淘宝工程师力作](http://pan.baidu.com/s/1G1pIe)
+本章节部分节选自[参考文献 1，淘宝工程师力作](http://pan.baidu.com/s/1G1pIe)，有改动。
 
 ####2.1 x86_64位下内存布局
 
@@ -218,7 +218,7 @@ Wolfram Gloger 在 Doug Lea 的基础上改进使得 Glibc 的 malloc 可以支�
 
 我们仅仅针对ptmalloc2展开讨论，不涉及业界流行的**jemalloc，tcmalloc**等其他内存分配器。
 
-本章节大部分节选自[参考文献 1，淘宝工程师力作](http://pan.baidu.com/s/1G1pIe)
+本章节部分节选自[参考文献 1，淘宝工程师力作](http://pan.baidu.com/s/1G1pIe),有改动。
 
 我**仅仅列出我所关注的部分，比较粗浅**，详细请阅读参考文献 1。
 
