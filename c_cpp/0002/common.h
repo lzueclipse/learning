@@ -22,15 +22,12 @@
 #define LEN 2048
 #define MAXNUM 50000000
 #define SLEEP 15
-#define CACHE_MAGIC 0x12345678
-#define PAGE_SIZE 4096
-#define CACHE_AREA_SIZE_MIN  1024
 #define MEGABYTE (1024 * 1024)
 
-#define CACHE_OK 0
-#define CACHE_NO_MEM -1
-#define CACHE_NULL_POINTER -2
-#define CACHE_FP_NOT_FOUND -3
+#define DCID_NONE 0
+#define DCID_INVALID 1
+
+#define CACHE_NODE_DELETED     1
 
 /*
  * 128 bits md5sum
@@ -43,6 +40,31 @@ typedef struct
         uint32_t digest_uint[4];
     };
 }md5_digest_t;
+
+/*
+ * linked list node
+ */
+typedef struct cache_l_node
+{
+    struct cache_l_node *child;
+    md5_digest_t digest;
+    uint64_t flag:8;
+    uint64_t dcid:56;
+} cache_l_node_t;
+
+/*
+ * linked list cache
+ */
+typedef struct cache_l
+{
+    cache_l_node_t **cache_root;
+    
+    uint32_t bits;
+    uint32_t mask;
+    
+    size_t max_nodes;
+    size_t num_nodes;
+} cache_l_t;
 
 extern void display_mallinfo();
 extern void output_top();
