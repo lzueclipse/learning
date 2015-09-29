@@ -102,3 +102,24 @@ static __inline__ uint32_t get_digest_index(const cache_t *cache, const md5_dige
 {
     return ((uint32_t)digest->digest_uchar[8]) & cache->mask;
 }
+
+/*linked list node cache */
+#ifdef LINKEDLIST
+
+static __inline__  cache_ll_node_t* get_root_node_slot(cache_t *cache, const md5_digest_t *digest)
+{
+    return cache->cache_root[get_digest_index(cache, digest)];
+}
+
+#endif
+
+
+/*bst node cache */
+#ifdef BST
+
+static __inline__  cache_bst_node_t* get_root_node_slot(cache_t *cache, const md5_digest_t *digest)
+{
+    return cache->cache_root[get_digest_index(cache, digest)];
+}
+
+#endif

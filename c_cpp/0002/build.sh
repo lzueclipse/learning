@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+mydef=LINKEDLIST
+
 if [ "n$1" = "nbst" ]
 then
     mydef=BST

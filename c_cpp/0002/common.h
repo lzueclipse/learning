@@ -70,20 +70,6 @@ typedef struct allocator
 
 }allocator_t;
 
-/*
- * cache
- */
-typedef struct cache
-{
-    void **cache_root;
-    
-    uint32_t bits;
-    uint32_t mask;
-    
-    size_t max_nodes;
-    size_t num_nodes;
-} cache_t;
-
 #ifdef LINKEDLIST
 /*
  * linked list node
@@ -96,7 +82,23 @@ typedef struct cache_ll_node
     uint64_t dcid:56;
 } cache_ll_node_t;
 
+/*
+ * linked list node cache
+ */
+typedef struct cache
+{
+    cache_ll_node_t **cache_root;
+    
+    uint32_t bits;
+    uint32_t mask;
+    
+    size_t max_nodes;
+    size_t num_nodes;
+} cache_t;
+
 #endif
+
+
 
 #ifdef BST
 /*
@@ -110,6 +112,21 @@ typedef struct cache_bst_node
     uint64_t flag:8;
     uint64_t dcid:56;
 } cache_bst_node_t;
+
+/*
+ * bst node cache
+ */
+typedef struct cache
+{
+    cache_bst_node_t **cache_root;
+    
+    uint32_t bits;
+    uint32_t mask;
+    
+    size_t max_nodes;
+    size_t num_nodes;
+} cache_t;
+
 #endif
 
 extern void output_top();
