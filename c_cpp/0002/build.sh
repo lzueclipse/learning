@@ -43,7 +43,7 @@ then
     
     #main.c
     cd ../
-    gcc -D$mydef -I./linkedlist -Wl,-rpath=./ -Wl,-rpath=./linkedlist -o mytest mytest.c  -L./ -L./linkedlist  -lcommon -lll -lcrypto
+    gcc -D$mydef -I./ -I./linkedlist -Wl,-rpath=./ -Wl,-rpath=./linkedlist -o mytest mytest.c  -L./ -L./linkedlist  -lcommon -lll -lcrypto
     echo "Complile mytest $mydef success"
 fi
 
