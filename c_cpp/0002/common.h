@@ -82,6 +82,8 @@ typedef struct cache_ll_node
     uint64_t dcid:56;
 } cache_ll_node_t;
 
+
+
 /*
  * linked list node cache
  */
@@ -128,6 +130,7 @@ typedef struct cache
 } cache_t;
 
 #endif
+
 
 #ifdef SKIPLIST
 #endif
