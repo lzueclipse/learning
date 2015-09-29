@@ -70,40 +70,10 @@ typedef struct allocator
 
 }allocator_t;
 
-
-/*
- * linked list node
- */
-typedef struct cache_ll_node
-{
-    struct cache_ll_node *next;
-    md5_digest_t digest;
-    uint64_t flag:8;
-    uint64_t dcid:56;
-} cache_ll_node_t;
-
-
-
-/*
- * linked list node cache
- */
-typedef struct cache
-{
-    cache_ll_node_t **cache_root;
-    
-    uint32_t bits;
-    uint32_t mask;
-    
-    size_t max_nodes;
-    size_t num_nodes;
-} cache_t;
-
-
-
 extern void output_top();
 extern void uint64_to_md5(uint64_t input, md5_digest_t *output );
 extern int32_t md5_digest_compare(const md5_digest_t *a, const md5_digest_t *b);
 extern void set_stack_limit();
-
+extern void align_to_pow2(uint64_t *size, uint64_t pow2);
 
 #endif
