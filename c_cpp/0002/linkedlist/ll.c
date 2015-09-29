@@ -1,4 +1,5 @@
 #include "common.h"
+#include "ll.h"
 
 static __inline__ uint32_t get_digest_index(const cache_t *cache, const md5_digest_t *digest)
 {
