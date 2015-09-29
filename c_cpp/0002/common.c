@@ -1,47 +1,6 @@
 #include "common.h"
 
 /*
- * Display malloc info
- */
-void display_mallinfo()
-{
-#if 0
-    struct mallinfo mi;
-    
-    /*
-     * After I read the code of "mallinfo", I decide to add this line...
-     * This will let us have a good "mallinfo" output after "free", for demo...
-     */
-    //mallopt(-321, 0);
-
-    mi = mallinfo();
-
-    printf("\nMalloc debug info:\n");
-    printf("None-mmap:\n");
-    printf("Total non-mmapped bytes (arena),                              (Bytes):  %u\n", mi.arena);
-    printf("....Total none-free space (uordblks),                         (Bytes):  %u\n", mi.uordblks);
-    printf("....Total free space (fordblks),                              (Bytes):  %u\n", mi.fordblks);
-    printf("........Free bytes held in fast bins (fsmblks),               (Bytes):  %u\n", mi.fsmblks);
-    printf("........Free bytes held in reguar bins (Caculated by robin)   (Bytes):  %u\n", (mi.fordblks - mi.fsmblks - mi.keepcost) );
-    printf("........Free bytes held in top chunk (keepcost),              (Bytes):  %u\n", mi.keepcost);
-    printf("Mmap:\n");
-    printf("....Number of mmapped regions (hblks),                       (Number):  %u\n", mi.hblks);
-    printf("....Bytes in mmapped regions (hblkhd),                        (Bytes):  %u\n", mi.hblkhd);
-    
-    //usmblks is always 0
-    //printf("Max. total allocated space (usmblks),    (Bytes):  %u\n", mi.usmblks);
-    //printf("    Number of free chunks (ordblks),        (Number):  %u\n", mi.ordblks);
-    //printf("Number of free fastbin blocks (smblks),     (Number):  %u\n", mi.smblks);
-    
-
-    //printf("\nmalloc_stats: \n");
-    //malloc_stats(); 
-    ///printf("...............................................................\n");
-    //
-#endif
-}
-
-/*
  * top -p <my pid> -n -1 
  */
 void output_top()
@@ -70,7 +29,7 @@ void output_top()
 /*
  * uint64   --md5-->   128bits md5sum
  */
-void uint64_to_md5(uint64_t input, md5_digest_t &output )
+void uint64_to_md5(uint64_t input, md5_digest_t *output )
 {
     char data[LEN] = {'\0'};
     snprintf(data, sizeof(data), "%" PRIu64, input);
@@ -80,29 +39,29 @@ void uint64_to_md5(uint64_t input, md5_digest_t &output )
     
     MD5_Update(&ctx,data,strlen(data));
     
-    MD5_Final(output.digest_uchar,&ctx);
+    MD5_Final(output->digest_uchar,&ctx);
 }
 
 
-int32_t md5_digest_compare(const md5_digest_t &a, const md5_digest_t &b)
+int32_t md5_digest_compare(const md5_digest_t *a, const md5_digest_t *b)
 {
     int32_t res = 0;
 
-    if(a.digest_uint[0] != b.digest_uint[0])
+    if(a->digest_uint[0] != b->digest_uint[0])
     {
-        res = (int32_t)a.digest_uint[0] - (int32_t)b.digest_uint[0];
+        res = (int32_t)a->digest_uint[0] - (int32_t)b->digest_uint[0];
     }
-    else if(a.digest_uint[1] != b.digest_uint[1])
+    else if(a->digest_uint[1] != b->digest_uint[1])
     {
-        res = (int32_t)a.digest_uint[1] - (int32_t)b.digest_uint[1];
+        res = (int32_t)a->digest_uint[1] - (int32_t)b->digest_uint[1];
     }
-    else if(a.digest_uint[2] != b.digest_uint[2])
+    else if(a->digest_uint[2] != b->digest_uint[2])
     {
-        res = (int32_t)a.digest_uint[2] - (int32_t)b.digest_uint[2];
+        res = (int32_t)a->digest_uint[2] - (int32_t)b->digest_uint[2];
     }
-    else if(a.digest_uint[3] != b.digest_uint[3])
+    else if(a->digest_uint[3] != b->digest_uint[3])
     {
-        res = (int32_t)a.digest_uint[3] - (int32_t)b.digest_uint[3];
+        res = (int32_t)a->digest_uint[3] - (int32_t)b->digest_uint[3];
     }
     
     return res;
