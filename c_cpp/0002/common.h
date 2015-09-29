@@ -41,6 +41,21 @@ typedef struct
     };
 }md5_digest_t;
 
+typedef struct block
+{
+    void *free_block_marker;
+    struct block *prev, *next;
+}block_t;
+
+typedef struct slab
+{
+    struct slab *next;
+    uint32_t flags;
+
+    /*The data blocks */
+    char data[0];
+}slab_t;
+
 /*
  * linked list node
  */
