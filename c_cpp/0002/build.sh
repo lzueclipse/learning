@@ -1,4 +1,7 @@
 #!/bin/sh
+
+##should run on the top directory of this project
+
 set -e
 
 mydef=LINKEDLIST
