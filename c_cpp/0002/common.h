@@ -56,6 +56,22 @@ typedef struct slab
     char data[0];
 }slab_t;
 
+typedef struct allocator
+{
+    size_t block_size;
+    size_t bloks_per_slab;
+    size_t slab_size;
+
+    /*slabs*/
+    slab_t *slabs;
+    size_t slabs_num;
+
+    /*free blocks */
+    block_t *free_blocks;
+    size_t free_blocks_num;
+
+}allocator_t;
+
 /*
  * linked list node
  */
