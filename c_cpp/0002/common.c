@@ -98,3 +98,7 @@ static __inline__ void align_to_pow2(uint64_t *size, uint64_t pow2)
     *size =((*size) + pow2) & (~pow2);
 }
 
+static __inline__ uint32_t get_digest_index(const cache_t *cache, const md5_digest_t *digest)
+{
+    return ((uint32_t)digest->digest_uchar[8]) & cache->mask;
+}
