@@ -6,6 +6,9 @@ mydef=LINKEDLIST
 if [ "n$1" = "nbst" ]
 then
     mydef=BST
+elif [ "n$1" = "nskiplist" ]
+then
+    mydef=SKIPLIST
 else
     mydef=LINKEDLIST
 fi

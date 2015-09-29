@@ -123,3 +123,7 @@ static __inline__  cache_bst_node_t* get_root_node_slot(cache_t *cache, const md
 }
 
 #endif
+
+/*skip list cache*/
+#ifdef SKIPLIST
+#endif

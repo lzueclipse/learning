@@ -129,6 +129,9 @@ typedef struct cache
 
 #endif
 
+#ifdef SKIPLIST
+#endif
+
 extern void output_top();
 extern void uint64_to_md5(uint64_t input, md5_digest_t *output );
 extern int32_t md5_digest_compare(const md5_digest_t *a, const md5_digest_t *b);
