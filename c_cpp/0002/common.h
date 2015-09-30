@@ -27,6 +27,9 @@
 
 #define CACHE_NODE_DELETED     1
 
+#define CACHE_INIT_OK 0
+#define CACHE_INIT_ERROR -1
+
 /*
  * 128 bits md5sum
  */
@@ -69,6 +72,8 @@ typedef struct allocator
     size_t free_blocks_num;
 
 }allocator_t;
+
+#define SLAB_T_DATA_OFFSET ( (size_t) (((slab_t *)(NULL))->data) )
 
 extern void output_top();
 extern void uint64_to_md5(uint64_t input, md5_digest_t *output );

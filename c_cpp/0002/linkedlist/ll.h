@@ -15,19 +15,22 @@ typedef struct cache_ll_node
 } cache_ll_node_t;
 
 
-
 /*
  * linked list node cache
  */
 typedef struct cache
 {
     cache_ll_node_t **cache_root;
+    allocator_t allocator;
     
-    uint32_t bits;
-    uint32_t mask;
+    uint64_t bits;
+    uint64_t mask;
     
     size_t max_nodes;
     size_t num_nodes;
 } cache_t;
+
+extern int32_t cache_init(cache_t *cache, uint64_t bits, size_t slab_size, size_t node_size, size_t max_nodes);
+
 
 #endif

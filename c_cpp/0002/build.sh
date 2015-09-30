@@ -20,26 +20,22 @@ echo "*****************************************"
 echo "mydef=$mydef"
 echo 
 
+rm -f common.o
+rm -f libcommon*
+gcc -fPIC -c -o common.o common.c
+gcc -shared -fPIC -o libcommon.so common.o
+echo "Complile libcommon.so success"
+echo 
 
 if [ $mydef == LINKEDLIST ]
 then
-
-    TOPDIR=`pwd`
-    rm -f common.o
-    rm -f libcommon*
-    gcc -fPIC -c -o common.o common.c
-    gcc -shared -fPIC -o libcommon.so common.o
-    echo "Complile libcommon.so success"
-    echo 
-
     cd linkedlist
     rm -f ll.o
     rm -f libll*
-    gcc  -I$TOPDIR -fPIC -c -o ll.o ll.c
+    gcc  -I../ -fPIC -c -o ll.o ll.c
     gcc  -shared -fPIC -o libll.so ll.o
     echo "Complile libll.so success"
     echo 
-
     
     #main.c
     cd ../
