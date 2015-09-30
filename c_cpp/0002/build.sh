@@ -20,20 +20,20 @@ echo "*****************************************"
 echo "mydef=$mydef"
 echo 
 
-rm -f allocator.o
 rm -f liballocator*
 gcc -fPIC -c -o allocator.o allocator.c
 gcc -shared -fPIC -o liballocator.so allocator.o
+rm -f allocator.o
 echo "Complile liballocator.so success"
 echo 
 
 if [ $mydef == LINKEDLIST ]
 then
     cd linkedlist_cache
-    rm -f ll.o
     rm -f libll*
     gcc  -I../ -fPIC -c -o ll.o ll.c
     gcc  -shared -fPIC -o libll.so ll.o
+    rm -f ll.o
     echo "Complile libll.so success"
     echo 
     
