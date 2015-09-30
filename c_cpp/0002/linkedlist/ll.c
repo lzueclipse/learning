@@ -43,6 +43,8 @@ int32_t cache_init(cache_t *cache, uint64_t bits, size_t slab_size, size_t block
         printf("cache bits larger than 32\n");
         return CACHE_INIT_ERROR;
     }
+    
+    memset(cache, 0, sizeof(cache_t));
 
     cache->bits = bits;
     while(1)

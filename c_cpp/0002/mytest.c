@@ -11,7 +11,6 @@ int main(int argc, char **argv)
     set_stack_limit();
 
     cache_t cache;
-    memset(&cache, 0, sizeof(cache_t));
 
 #ifdef LINKEDLIST
     ret = cache_init(&cache, 16, 2 * MEGABYTE, sizeof(cache_ll_node_t), MAXNUM);
