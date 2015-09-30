@@ -31,6 +31,7 @@ typedef struct cache
 } cache_t;
 
 extern int32_t cache_init(cache_t *cache, uint64_t bits, size_t slab_size, size_t node_size, size_t max_nodes);
+extern void cache_deinit(cache_t *cache);
 
 
 #endif
