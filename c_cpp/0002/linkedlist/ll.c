@@ -107,3 +107,12 @@ void cache_deinit(cache_t *cache)
 
     memset(cache, 0, sizeof(cache_t));
 }
+
+/*
+ * 0 -- equal
+ * others -- not equal
+ */
+int32_t cache_compare_slot(cache_t *cache, const md5_digest_t *digest1, const md5_digest_t *digest2)
+{
+    return (int32_t) (get_digest_index(cache, digest1) - get_digest_index(cache, digest2));
+}
