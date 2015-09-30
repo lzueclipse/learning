@@ -1,7 +1,7 @@
 #ifndef __LINKEDLIST__
 #define __LINKEDLIST__
 
-#include "common.h"
+#include "allocator.h"
 
 /*
  * linked list node

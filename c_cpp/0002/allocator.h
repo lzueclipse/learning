@@ -1,3 +1,5 @@
+#ifndef __COMMON__
+#define __COMMON__
 #include <unistd.h>
 #include <sys/mman.h>
 #include <stdlib.h>
@@ -14,8 +16,6 @@
 #include <mcheck.h>
 #include <sys/resource.h>
 
-#ifndef __COMMON__
-#define __COMMON__
 
 #define LEN 2048
 #define MAXNUM 50000000
