@@ -30,7 +30,7 @@ static __inline__ cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, cons
     return pn;
 }
 
-int32_t cache_init(cache_t *cache, uint64_t bits, size_t slab_size, size_t node_size, size_t max_nodes)
+int32_t cache_init(cache_t *cache, uint64_t bits, size_t slab_size, size_t block_size, size_t max_nodes)
 {
     if(cache == NULL)
     {
@@ -70,14 +70,38 @@ int32_t cache_init(cache_t *cache, uint64_t bits, size_t slab_size, size_t node_
     memset(cache->cache_root, 0, (1ULL << cache->bits) * sizeof(cache_ll_node_t *));
 
     //printf("SLAB_T_DATA_OFFSET = %" PRIu64 "\n", SLAB_T_DATA_OFFSET);
-    if(slab_size < (SLAB_T_DATA_OFFSET + node_size) )
+    if(slab_size < (SLAB_T_DATA_OFFSET + block_size) )
     {
         printf("slab_size < SLAB_T_DATA_OFFSET + node_size \n");
         return CACHE_INIT_ERROR;
     }
+    if(block_size < sizeof(block_t))
+    {
+        printf("block_size < sizeof(block_t) \n");
+        return CACHE_INIT_ERROR;
+    }
+
 
     cache->allocator.slab_size = slab_size;
-    cache->allocator.block_size = node_size;
+    cache->allocator.block_size = block_size;
+    cache->allocator.blocks_per_slab = (slab_size - SLAB_T_DATA_OFFSET) / block_size;
+    cache->allocator.slabs = NULL;
+    cache->allocator.slabs_num = 0;
+    cache->allocator.free_blocks = NULL;
+    cache->allocator.free_blocks_num = 0;
+
+    //printf("slab_size = %" PRIu64 ", block_size = %" PRIu64 ", blocks_per_slab = %" PRIu64 "\n", slab_size, block_size, cache->allocator.blocks_per_slab);
 
     return CACHE_INIT_OK;
+}
+
+void cache_deinit(cache_t *cache)
+{
+    if(cache == NULL)
+        return;
+
+    if(cache->cache_root)
+        free(cache->cache_root);
+
+    memset(cache, 0, sizeof(cache_t));
 }

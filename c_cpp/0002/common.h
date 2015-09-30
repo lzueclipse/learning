@@ -60,7 +60,7 @@ typedef struct slab
 typedef struct allocator
 {
     size_t block_size;
-    size_t bloks_per_slab;
+    size_t blocks_per_slab;
     size_t slab_size;
 
     /*slabs*/
