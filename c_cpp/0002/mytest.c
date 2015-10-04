@@ -13,7 +13,7 @@ int main(int argc, char **argv)
     cache_t cache;
 
 #ifdef LINKEDLIST
-    ret = cache_init(&cache, 16, 2 * MEGABYTE, sizeof(cache_ll_node_t), MAXNUM);
+    ret = cache_init(&cache, 16, 2 * MEGABYTE, sizeof(cache_ll_node_t), MAXNUM + 100);
     if(ret != CACHE_INIT_OK)
     {
         printf("cache_init fails\n");

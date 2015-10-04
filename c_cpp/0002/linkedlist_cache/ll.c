@@ -116,3 +116,25 @@ int32_t cache_compare_slot(cache_t *cache, const md5_digest_t *digest1, const md
 {
     return (int32_t) (get_digest_index(cache, digest1) - get_digest_index(cache, digest2));
 }
+
+cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
+{
+    if(cache->num_nodes < cache->max_nodes)
+    {
+        cache_ll_node_t *node;
+
+        node = allocator_alloc(cache->allocator);
+
+        if(node == NULL)
+            return NULL;
+
+        node->next = NULL;
+        node->digest = digest;
+
+        cache->num_nodes++;
+
+        return node;
+    }
+
+    return NULL;
+}

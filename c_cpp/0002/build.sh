@@ -2,6 +2,10 @@
 
 ##should run on the top directory of this project
 
+##sh build.sh linkedlist
+##sh build.sh bst
+##sh build.sh skiplist
+
 set -e
 
 mydef=LINKEDLIST
@@ -20,15 +24,16 @@ echo "*****************************************"
 echo "mydef=$mydef"
 echo 
 
-rm -f liballocator*
-gcc -fPIC -c -o allocator.o allocator.c
-gcc -shared -fPIC -o liballocator.so allocator.o
-rm -f allocator.o
-echo "Complile liballocator.so success"
-echo 
 
 if [ $mydef == LINKEDLIST ]
 then
+    rm -f liballocator*
+    gcc -I./ -I./linkedlist_cache -fPIC -c -o allocator.o allocator.c
+    gcc -shared -fPIC -o liballocator.so allocator.o
+    rm -f allocator.o
+    echo "Complile liballocator.so success"
+    echo 
+    
     cd linkedlist_cache
     rm -f libll*
     gcc  -I../ -fPIC -c -o ll.o ll.c
