@@ -36,7 +36,7 @@ int main()
 
     linked_list_t **tmp = &b;
 
-    printf("a->next address is = %p, tmp is = %p, *tmp is = %p\n", a->next, tmp, *tmp);
+    printf("a->next = %p, *tmp is = %p\n", a->next, *tmp);
 
     free(a);
     free(b);
