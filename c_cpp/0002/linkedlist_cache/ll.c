@@ -1,15 +1,18 @@
 #include "ll.h"
 
+/* hash algorithm */
 static __inline__ uint32_t get_digest_index(const cache_t *cache, const md5_digest_t *digest)
 {
     return ((uint32_t)digest->digest_uchar[8]) & cache->mask;
 }
 
+/* root node  of one slot*/
 static __inline__  cache_ll_node_t* get_root_node_slot(cache_t *cache, const md5_digest_t *digest)
 {
     return cache->cache_root[get_digest_index(cache, digest)];
 }
 
+/* If we can find node in cache, return it; else return NULL */
 static __inline__ cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, const md5_digest_t *digest)
 {
     while(pn)
@@ -29,6 +32,16 @@ static __inline__ cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, cons
 
     return pn;
 }
+
+/*
+ * 0 -- equal
+ * others -- not equal
+ */
+static int32_t cache_compare_slot(cache_t *cache, const md5_digest_t *digest1, const md5_digest_t *digest2)
+{
+    return (int32_t) (get_digest_index(cache, digest1) - get_digest_index(cache, digest2));
+}
+
 
 int32_t cache_init(cache_t *cache, uint64_t bits, size_t slab_size, size_t block_size, size_t max_nodes)
 {
@@ -108,15 +121,6 @@ void cache_deinit(cache_t *cache)
     memset(cache, 0, sizeof(cache_t));
 }
 
-/*
- * 0 -- equal
- * others -- not equal
- */
-int32_t cache_compare_slot(cache_t *cache, const md5_digest_t *digest1, const md5_digest_t *digest2)
-{
-    return (int32_t) (get_digest_index(cache, digest1) - get_digest_index(cache, digest2));
-}
-
 cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
 {
     if(cache->num_nodes < cache->max_nodes)
@@ -137,4 +141,9 @@ cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
     }
 
     return NULL;
+}
+
+cache_ll_node_t* cache_lookup(cache_t *cache, const md5_digest_t *digest)
+{
+    return get_node_under_slot(get_root_node_slot(cache,digest), digest);
 }
