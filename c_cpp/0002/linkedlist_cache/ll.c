@@ -155,5 +155,18 @@ void cache_delete(cache_t *cache, const md5_digest_t *digest)
     if(node == NULL)
         return;
 
-
+    cache_ll_node_t **tmp = &node;
+    
+    /* tricky */
+    /* *tmp "equals with" (node's parent)->next*/
+    /* Delete node from the linked list */
+    if(node->next)
+    {
+        *tmp = node->next;
+    }
+    else
+    {
+        *tmp = NULL;
+    }
+    node->next = NULL;
 }
