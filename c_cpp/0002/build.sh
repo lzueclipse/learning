@@ -23,17 +23,19 @@ fi
 echo "*****************************************"
 echo "mydef=$mydef"
 echo 
+    
+##allocator.c
+rm -f liballocator*
+gcc -fPIC -c -o allocator.o allocator.c
+gcc -shared -fPIC -o liballocator.so allocator.o
+rm -f allocator.o
+echo "Complile liballocator.so success"
+echo 
 
 
 if [ $mydef == LINKEDLIST ]
 then
-    rm -f liballocator*
-    gcc -I./ -I./linkedlist_cache -fPIC -c -o allocator.o allocator.c
-    gcc -shared -fPIC -o liballocator.so allocator.o
-    rm -f allocator.o
-    echo "Complile liballocator.so success"
-    echo 
-    
+    ##ll.c
     cd linkedlist_cache
     rm -f libll*
     gcc  -I../ -fPIC -c -o ll.o ll.c
@@ -47,6 +49,5 @@ then
     gcc -D$mydef -I./ -I./linkedlist_cache -Wl,-rpath=./ -Wl,-rpath=./linkedlist_cache -o mytest mytest.c  -L./ -L./linkedlist_cache  -lallocator -lll -lcrypto
     echo "Complile mytest $mydef success"
 fi
-
 
 echo "*****************************************"

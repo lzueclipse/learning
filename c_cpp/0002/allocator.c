@@ -1,5 +1,4 @@
 #include "allocator.h"
-#include "ll.h"
 
 /*
  * top -p <my pid> -n -1 
@@ -104,7 +103,7 @@ __inline__ void align_to_pow2(uint64_t *size, uint64_t pow2)
     *size =((*size) + pow2) & (~pow2);
 }
 
-cache_ll_node_t* allocator(allocator_t allocator)
+void* allocator_alloc(allocator_t allocator)
 {
-    return NULL;
+    return  NULL;
 }

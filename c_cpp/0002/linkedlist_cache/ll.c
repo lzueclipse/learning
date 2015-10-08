@@ -123,7 +123,7 @@ cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
     {
         cache_ll_node_t *node;
 
-        node = allocator_alloc(cache->allocator);
+        node = (cache_ll_node_t *)allocator_alloc(cache->allocator);
 
         if(node == NULL)
             return NULL;
