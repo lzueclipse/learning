@@ -20,6 +20,26 @@ typedef struct linked_list
 
 int main()
 {
+    linked_list_t *a, *b, *c;
 
+    a = (linked_list_t *) malloc(sizeof(linked_list_t));
+    b = (linked_list_t *) malloc(sizeof(linked_list_t));
+    c = (linked_list_t *) malloc(sizeof(linked_list_t));
+
+    a->member = 1;
+    b->member = 2;
+    c->member = 3;
+
+    a->next = b;
+    b->next = c;
+    c->next = NULL;
+
+    linked_list_t **tmp = &b;
+
+    printf("a->next address is = %p, tmp is = %p, *tmp is = %p\n", a->next, tmp, *tmp);
+
+    free(a);
+    free(b);
+    free(c);
     return 0;
 }
