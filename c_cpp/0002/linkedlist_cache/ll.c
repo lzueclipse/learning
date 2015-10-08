@@ -148,18 +148,16 @@ cache_ll_node_t* cache_lookup(cache_t *cache, const md5_digest_t *digest)
     return get_node_under_slot(get_root_node_slot(cache,digest), digest);
 }
 
-void cache_delete(cache_t *cache, const md5_digest_t *digest)
+void cache_unlink_node(cache_t *cache, cache_ll_node_t *node)
 {
-    cache_ll_node_t *node = cache_lookup(cache, digest);
-
     if(node == NULL)
         return;
-
+    
     cache_ll_node_t **tmp = &node;
     
     /* tricky */
-    /* *tmp "equals with" (node's parent)->next*/
-    /* Delete node from the linked list */
+    /* "*tmp" equals with "(node's parent)->next"*/
+    /* Delete "node" from the linked list */
     if(node->next)
     {
         *tmp = node->next;
@@ -169,4 +167,14 @@ void cache_delete(cache_t *cache, const md5_digest_t *digest)
         *tmp = NULL;
     }
     node->next = NULL;
+}
+
+void cache_delete(cache_t *cache, const md5_digest_t *digest)
+{
+    cache_ll_node_t *node = cache_lookup(cache, digest);
+
+    if(node == NULL)
+        return;
+
+    cache_unlink_node(cache, node);
 }
