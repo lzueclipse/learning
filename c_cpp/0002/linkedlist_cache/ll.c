@@ -7,17 +7,17 @@ static __inline__ uint32_t get_digest_index(const cache_t *cache, const md5_dige
 }
 
 /* root node  of one slot*/
-static __inline__  cache_ll_node_t* get_root_node_slot(cache_t *cache, const md5_digest_t *digest)
+static __inline__  cache_ll_node_t** get_root_node_slot(cache_t *cache, const md5_digest_t *digest)
 {
-    return cache->cache_root[get_digest_index(cache, digest)];
+    return  (& (cache->cache_root[get_digest_index(cache, digest)]) );
 }
 
 /* If we can find node in cache, return it; else return NULL */
-static __inline__ cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, const md5_digest_t *digest)
+static __inline__ cache_ll_node_t** get_node_under_slot(cache_ll_node_t **pn, const md5_digest_t *digest)
 {
-    while(pn)
+    while(*pn)
     {
-        int32_t ret = md5_digest_compare(&pn->digest, digest);
+        int32_t ret = md5_digest_compare( &((*pn)->digest), digest);
 
         if(ret == 0)
         {
@@ -26,7 +26,7 @@ static __inline__ cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, cons
         }
         else
         {
-            pn = pn->next;
+            pn = ( &(*pn)->next );
         }
     }
 
@@ -143,7 +143,17 @@ cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
     return NULL;
 }
 
-cache_ll_node_t* cache_lookup(cache_t *cache, const md5_digest_t *digest)
+cache_ll_node_t** cache_lookup(cache_t *cache, const md5_digest_t *digest)
 {
     return get_node_under_slot(get_root_node_slot(cache,digest), digest);
+}
+
+void cache_delete(cache_t *cache, const md5_digest_t *digest)
+{
+    cache_ll_node_t **node = cache_lookup(cache, digest);
+
+    if(*node == NULL)
+        return;
+
+
 }
