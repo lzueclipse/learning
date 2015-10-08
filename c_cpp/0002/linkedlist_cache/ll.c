@@ -127,7 +127,7 @@ cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
     {
         cache_ll_node_t *node;
 
-        node = (cache_ll_node_t *)allocator_alloc(cache->allocator);
+        node = (cache_ll_node_t *)allocator_alloc( &(cache->allocator) );
 
         if(node == NULL)
             return NULL;
@@ -177,4 +177,6 @@ void cache_delete(cache_t *cache, const md5_digest_t *digest)
         return;
 
     cache_unlink_node(cache, node);
+
+    allocator_free(&(cache->allocator), node);
 }

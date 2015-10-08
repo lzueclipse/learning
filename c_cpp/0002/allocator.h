@@ -79,6 +79,7 @@ extern void uint64_to_md5(uint64_t input, md5_digest_t *output );
 extern int32_t md5_digest_compare(const md5_digest_t *a, const md5_digest_t *b);
 extern void set_stack_limit();
 extern void align_to_pow2(uint64_t *size, uint64_t pow2);
-extern void* allocator_alloc(allocator_t allocator);
+extern void* allocator_alloc(allocator_t *allocator);
+extern void allocator_free(allocator_t *allocator, void *block);
 
 #endif
