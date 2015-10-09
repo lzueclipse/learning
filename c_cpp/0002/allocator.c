@@ -112,4 +112,9 @@ void allocator_free(allocator_t *allocator, void *block)
 {
 }
 
-
+size_t allocator_slab_reclaim(allocator_t *allocator, 
+        void (*relocate) (const void *source, void * dst, size_t block_size, void *user_data),
+        void *user_data)
+{
+    return 0;
+}

@@ -200,3 +200,10 @@ void cache_relocate(const void *source, void *dst, size_t block_size, void *user
     /* Relocate "node" from "source memory" to "dst memory". */
     *tmp = dst;
 }
+
+size_t cache_slab_reclaim(cache_t *cache, relocator_func_t relocator, void *user_data)
+{
+    size_t slab_size = cache->allocator.slab_size;
+
+    allocator_slab_reclaim(&cache->allocator, relocator, user_data);
+}

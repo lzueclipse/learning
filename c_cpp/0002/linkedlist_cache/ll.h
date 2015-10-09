@@ -30,6 +30,8 @@ typedef struct cache
     size_t num_nodes;
 } cache_t;
 
+typedef void (*relocator_func_t) (const void *source, void *dst, size_t block_size, void *user_data);
+
 extern int32_t cache_init(cache_t *cache, uint64_t bits, size_t slab_size, size_t node_size, size_t max_nodes);
 extern void cache_deinit(cache_t *cache);
 
