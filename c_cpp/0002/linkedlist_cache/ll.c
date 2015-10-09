@@ -23,6 +23,7 @@ static __inline__ cache_ll_node_t* get_next_root_node_slot(cache_t *cache, cache
     return NULL;
 }
 
+
 /* If we can find node in cache, return it; else return NULL */
 static __inline__ cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, const md5_digest_t *digest)
 {
@@ -220,12 +221,37 @@ size_t cache_slab_reclaim(cache_t *cache, relocator_func_t relocator, void *user
     allocator_slab_reclaim(&cache->allocator, relocator, user_data);
 }
 
-cache_ll_node_t* cache_node_first(cache_allocator_iterator_t *iter, cache_t *cache)
+cache_ll_node_t* cache_node_first_by_allocator(cache_allocator_iterator_t *iter, cache_t *cache)
 {
     return (cache_ll_node_t *)allocator_iterator_first(&iter->allocator_iter, &cache->allocator);
 }
 
-cache_ll_node_t* cache_node_next(cache_allocator_iterator_t *iter)
+cache_ll_node_t* cache_node_next_by_allocator(cache_allocator_iterator_t *iter)
 {
     return (cache_ll_node_t *)allocator_iterator_next(&iter->allocator_iter);
+}
+
+cache_ll_node_t* cache_node_first_by_slot(cache_ll_slot_iterator_t *iter, cache_t *cache, size_t cache_root_start_index, size_t cache_root_end_index)
+{
+    size_t cache_root_size = ((size_t) 1) << cache->bits;
+    size_t start_index = (cache_root_start_index < cache_root_size)?cache_root_start_index:cache_root_size;
+    size_t end_index = (cache_root_end_index < cache_root_size)?cache_root_end_index:cache_root_size;
+
+    iter->cache = cache;
+    iter->start = cache->cache_root + (cache_root_start_index - 1);
+    iter->stop = cache->cache_root + cache_root_end_index;
+    iter->current_deleted = 0;
+
+    cache_ll_node_t *node = get_next_root_node_slot(cache, iter->start, iter->stop);
+
+    if(node)
+    {
+        iter->current = &node;
+    }
+    else
+    {
+        iter->current = NULL;
+    }
+
+    return node;
 }

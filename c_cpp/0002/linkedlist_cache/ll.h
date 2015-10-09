@@ -35,15 +35,15 @@ typedef struct cache_allocator_iterator
     allocator_iterator_t allocator_iter;
 }cache_allocator_iterator_t;
 
-typedef struct cache_ll_node_iterator
+typedef struct cache_ll_slot_iterator
 {
     cache_t *cache;
-    cache_ll_node_t *start;
-    cache_ll_node_t *stop;
-    cache_ll_node_t *current;
+    cache_ll_node_t **start;
+    cache_ll_node_t **stop;
+    cache_ll_node_t **current;
 
     uint64_t current_deleted;
-}cache_ll_node_iterator_t;
+}cache_ll_slot_iterator_t;
 
 typedef void (*relocator_func_t) (const void *source, void *dst, size_t block_size, void *user_data);
 
