@@ -72,6 +72,12 @@ typedef struct allocator
 
 }allocator_t;
 
+typedef struct allocator_iterator
+{
+    void *slab;
+    void *block;
+}allocator_iterator_t;
+
 #define SLAB_T_DATA_OFFSET ( (size_t) (((slab_t *)(NULL))->data) )
 
 extern void output_top();
