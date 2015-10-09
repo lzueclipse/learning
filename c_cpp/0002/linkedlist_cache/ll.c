@@ -7,12 +7,12 @@ static __inline__ uint32_t get_digest_index(const cache_t *cache, const md5_dige
 }
 
 /* root node  of one slot*/
-static __inline__  cache_ll_node_t* get_root_node_slot(cache_t *cache, const md5_digest_t *digest)
+static __inline__  cache_ll_node_t* get_cache_root_slot(cache_t *cache, const md5_digest_t *digest)
 {
     return  cache->cache_root[get_digest_index(cache, digest)];
 }
 
-static __inline__ cache_ll_node_t* get_next_root_node_slot(cache_t *cache, cache_ll_node_t **node, cache_ll_node_t **cache_root_end)
+static __inline__ cache_ll_node_t* get_next_cache_root_slot(cache_t *cache, cache_ll_node_t **node, cache_ll_node_t **cache_root_end)
 {
     for(node++; node < cache_root_end; node++)
     {
@@ -49,7 +49,7 @@ static __inline__ cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, cons
  * 0 -- equal
  * others -- not equal
  */
-static __inline__ int32_t cache_compare_slot(cache_t *cache, const md5_digest_t *digest1, const md5_digest_t *digest2)
+static __inline__ int32_t cache_compare_cache_root_slot(cache_t *cache, const md5_digest_t *digest1, const md5_digest_t *digest2)
 {
     return (int32_t) (get_digest_index(cache, digest1) - get_digest_index(cache, digest2));
 }
@@ -158,7 +158,7 @@ cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
 
 cache_ll_node_t* cache_lookup(cache_t *cache, const md5_digest_t *digest)
 {
-    return get_node_under_slot(get_root_node_slot(cache,digest), digest);
+    return get_node_under_slot(get_cache_root_slot(cache,digest), digest);
 }
 
 void cache_unlink_node(cache_t *cache, cache_ll_node_t *node)
@@ -221,17 +221,17 @@ size_t cache_slab_reclaim(cache_t *cache, relocator_func_t relocator, void *user
     allocator_slab_reclaim(&cache->allocator, relocator, user_data);
 }
 
-cache_ll_node_t* cache_node_first_by_allocator(cache_allocator_iterator_t *iter, cache_t *cache)
+cache_ll_node_t* allocator_iterator_cache_node_first(cache_allocator_iterator_t *iter, cache_t *cache)
 {
     return (cache_ll_node_t *)allocator_iterator_first(&iter->allocator_iter, &cache->allocator);
 }
 
-cache_ll_node_t* cache_node_next_by_allocator(cache_allocator_iterator_t *iter)
+cache_ll_node_t* allocator_iterator_cache_node_next(cache_allocator_iterator_t *iter)
 {
     return (cache_ll_node_t *)allocator_iterator_next(&iter->allocator_iter);
 }
 
-cache_ll_node_t* cache_node_first_by_slot(cache_ll_slot_iterator_t *iter, cache_t *cache, size_t cache_root_start_index, size_t cache_root_end_index)
+cache_ll_node_t* slot_iterator_cache_node_first(cache_ll_slot_iterator_t *iter, cache_t *cache, size_t cache_root_start_index, size_t cache_root_end_index)
 {
     size_t cache_root_size = ((size_t) 1) << cache->bits;
     size_t start_index = (cache_root_start_index < cache_root_size)?cache_root_start_index:cache_root_size;
@@ -242,7 +242,7 @@ cache_ll_node_t* cache_node_first_by_slot(cache_ll_slot_iterator_t *iter, cache_
     iter->stop = cache->cache_root + cache_root_end_index;
     iter->current_deleted = 0;
 
-    cache_ll_node_t *node = get_next_root_node_slot(cache, iter->start, iter->stop);
+    cache_ll_node_t *node = get_next_cache_root_slot(cache, iter->start, iter->stop);
 
     if(node)
     {
@@ -254,4 +254,39 @@ cache_ll_node_t* cache_node_first_by_slot(cache_ll_slot_iterator_t *iter, cache_
     }
 
     return node;
+}
+
+cache_ll_node_t* slot_iterator_cache_node_current(cache_ll_slot_iterator_t *iter)
+{
+    if(iter->current_deleted || iter->current == NULL)
+        return NULL;
+    else
+        return *(iter->current);
+}
+
+cache_ll_node_t* slot_iterator_next_cache_root(cache_ll_slot_iterator_t *iter)
+{
+}
+
+/* delete the node, but do not disturb the iteration */
+void slot_iterator_cache_node_delete(cache_ll_slot_iterator_t *iter)
+{
+    cache_ll_node_t **tmp, *node;
+
+    if(iter->current_deleted || iter->current == NULL)
+        return;
+
+    tmp = iter->current;
+    node = *tmp;
+
+    if(node->next)
+    {
+        /* tricky */
+        /* "*tmp" equals with "(node's parent)->next"*/
+        /* Delete "node" from linked list */
+        *tmp = node->next;
+    }
+    else
+    {
+    }
 }
