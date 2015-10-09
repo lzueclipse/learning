@@ -332,3 +332,15 @@ void slot_iterator_cache_node_delete(cache_ll_slot_iterator_t *iter)
     allocator_free(&(iter->cache->allocator), node);
     iter->cache->num_nodes--;
 }
+
+int32_t slot_iterator_cache_node_slot_intex(cache_ll_slot_iterator_t *iter)
+{
+    if(iter->current)
+    {
+        return get_digest_index(iter->cache, &((*(iter->current))->digest));
+    }
+    else
+    {
+        return iter->stop - iter->cache->cache_root;
+    }
+}
