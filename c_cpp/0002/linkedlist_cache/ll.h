@@ -37,6 +37,7 @@ typedef struct cache_allocator_iterator
 
 typedef struct cache_ll_node_iterator
 {
+    cache_t *cache;
     cache_ll_node_t *start;
     cache_ll_node_t *stop;
     cache_ll_node_t *current;
