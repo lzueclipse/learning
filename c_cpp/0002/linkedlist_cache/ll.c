@@ -207,3 +207,13 @@ size_t cache_slab_reclaim(cache_t *cache, relocator_func_t relocator, void *user
 
     allocator_slab_reclaim(&cache->allocator, relocator, user_data);
 }
+
+cache_ll_node_t* cache_node_first(cache_allocator_iterator_t *iter, cache_t *cache)
+{
+    return (cache_ll_node_t *)allocator_iterator_first(&iter->allocator_iter, &cache->allocator);
+}
+
+cache_ll_node_t* cache_node_next(cache_allocator_iterator_t *iter)
+{
+    return (cache_ll_node_t *)allocator_iterator_next(&iter->allocator_iter);
+}

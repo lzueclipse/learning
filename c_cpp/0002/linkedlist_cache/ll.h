@@ -32,7 +32,7 @@ typedef struct cache
 
 typedef struct cache_allocator_iterator
 {
-    allocator_iterator_t iter;
+    allocator_iterator_t allocator_iter;
 }cache_allocator_iterator_t;
 
 typedef struct cache_ll_node_iterator
