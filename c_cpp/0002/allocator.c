@@ -118,3 +118,13 @@ size_t allocator_slab_reclaim(allocator_t *allocator,
 {
     return 0;
 }
+
+void* allocator_iterator_first(allocator_iterator_t *iter, allocator_t *allocator)
+{
+    return NULL;
+}
+
+void* allocator_iterator_next(allocator_iterator_t *iter)
+{
+    return NULL;
+}
