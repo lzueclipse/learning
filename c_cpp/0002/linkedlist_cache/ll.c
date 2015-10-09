@@ -154,7 +154,6 @@ void cache_unlink_node(cache_t *cache, cache_ll_node_t *node)
         return;
     
     cache_ll_node_t **tmp = &node;
-    
     /* tricky */
     /* "*tmp" equals with "(node's parent)->next"*/
     /* Delete "node" from the linked list */
@@ -179,4 +178,25 @@ void cache_delete(cache_t *cache, const md5_digest_t *digest)
     cache_unlink_node(cache, node);
 
     allocator_free(&(cache->allocator), node);
+}
+
+void cache_relocate(const void *source, void *dst, size_t block_size, void *user_data)
+{
+    md5_digest_t *digest;
+    cache_ll_node_t *node, **tmp;
+    cache_t *cache;
+ 
+    /*copy to "dst", include data and "next pointer" */
+    memcpy(dst, source, block_size);
+    
+    digest = &( ((cache_ll_node_t *)source)->digest );
+    cache = (cache_t *)user_data;
+
+    node = cache_lookup(cache, digest);
+
+    tmp = &node;
+    /* tricky */
+    /* "*tmp" equals with "(node's parent)->next"*/
+    /* Relocate "node" from "source memory" to "dst memory". */
+    *tmp = dst;
 }
