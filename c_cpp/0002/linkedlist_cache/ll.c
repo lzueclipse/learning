@@ -319,5 +319,16 @@ void slot_iterator_cache_node_delete(cache_ll_slot_iterator_t *iter)
     }
     else
     {
+        /*move on the iterator */
+        slot_iterator_cache_node_next(iter);
+        /* tricky */
+        /* "*tmp" equals with "(node's parent)->next"*/
+        /* Delete "node" from linked list */
+        *tmp = NULL;
     }
+
+    iter->current_deleted = 1;
+
+    allocator_free(&(iter->cache->allocator), node);
+    iter->cache->num_nodes--;
 }
