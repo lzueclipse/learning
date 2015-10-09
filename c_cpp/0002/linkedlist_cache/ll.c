@@ -256,16 +256,47 @@ cache_ll_node_t* slot_iterator_cache_node_first(cache_ll_slot_iterator_t *iter, 
     return node;
 }
 
+cache_ll_node_t* slot_iterator_cache_node_next(cache_ll_slot_iterator_t *iter)
+{
+    cache_ll_node_t *node, *start;
+    md5_digest_t *digest;
+
+    if(iter->current == NULL)
+        return NULL;
+
+    if(iter->current_deleted)
+    {
+        iter->current_deleted = 0;
+        return (*(iter->current));
+    }
+
+    node = *(iter->current);
+
+    if(node->next)
+    {
+        iter->current = &(node->next);
+        return (*(iter->current));
+    }
+
+    /*go down to next slot */
+    digest = &((*(iter->current))->digest);
+    start = get_cache_root_slot(iter->cache, digest);
+    node = get_next_cache_root_slot(iter->cache, &start, iter->stop);
+
+    if(node)
+        iter->current = &node;
+    else
+        iter->current = NULL;
+
+    return node;
+}
+
 cache_ll_node_t* slot_iterator_cache_node_current(cache_ll_slot_iterator_t *iter)
 {
     if(iter->current_deleted || iter->current == NULL)
         return NULL;
     else
         return *(iter->current);
-}
-
-cache_ll_node_t* slot_iterator_next_cache_root(cache_ll_slot_iterator_t *iter)
-{
 }
 
 /* delete the node, but do not disturb the iteration */
