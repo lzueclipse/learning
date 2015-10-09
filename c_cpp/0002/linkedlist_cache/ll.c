@@ -12,6 +12,17 @@ static __inline__  cache_ll_node_t* get_root_node_slot(cache_t *cache, const md5
     return  cache->cache_root[get_digest_index(cache, digest)];
 }
 
+static __inline__ cache_ll_node_t* get_next_root_node_slot(cache_t *cache, cache_ll_node_t **node, cache_ll_node_t **cache_root_end)
+{
+    for(node++; node < cache_root_end; node++)
+    {
+        if(*node)
+            return (*node);
+    }
+
+    return NULL;
+}
+
 /* If we can find node in cache, return it; else return NULL */
 static __inline__ cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, const md5_digest_t *digest)
 {
@@ -37,10 +48,11 @@ static __inline__ cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, cons
  * 0 -- equal
  * others -- not equal
  */
-static int32_t cache_compare_slot(cache_t *cache, const md5_digest_t *digest1, const md5_digest_t *digest2)
+static __inline__ int32_t cache_compare_slot(cache_t *cache, const md5_digest_t *digest1, const md5_digest_t *digest2)
 {
     return (int32_t) (get_digest_index(cache, digest1) - get_digest_index(cache, digest2));
 }
+
 
 
 int32_t cache_init(cache_t *cache, uint64_t bits, size_t slab_size, size_t block_size, size_t max_nodes)
