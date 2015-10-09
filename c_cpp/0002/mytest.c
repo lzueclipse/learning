@@ -22,7 +22,11 @@ int main(int argc, char **argv)
         
         exit(-1);
     }
+    printf("*************************************************************************************************\n");
+    printf("After init:\n");
+    output_top();
 #endif
+    
 
     return 0;
 }
