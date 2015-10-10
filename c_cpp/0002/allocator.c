@@ -103,6 +103,35 @@ __inline__ void align_to_pow2(uint64_t *size, uint64_t pow2)
     *size =((*size) + pow2) & (~pow2);
 }
 
+void allocator_slab_to_free_blocks(allocator_t *allocator, slab_t *slab)
+{
+    block_t *block;
+    char *p, *block_char;
+
+    block_char = (char *)slab + allocator->slab_size - allocator->block_size;
+    block = allocator->free_blocks;
+
+    if(block)
+        block->prev = (block_t *)block_char;
+
+    for(p = block_char; p >= (char *)slab->data;)
+    {
+        ((block_t *)p)->free_block_marker = FREE_BLOCK_MARKER;
+        
+        /*next block */
+        block_char = p - allocator->block_size;
+     
+        ((block_t *)p)->next = (block_t *)block;
+        ((block_t *)p)->prev = (block_t *)block_char;
+
+        block = (block_t *)p;
+        p = block_char;
+    }
+
+    block->prev = NULL;
+    allocator->free_blocks = block;
+    allocator->free_blocks_num += allocator->blocks_per_slab;
+}
 
 void* allocator_alloc(allocator_t *allocator)
 {

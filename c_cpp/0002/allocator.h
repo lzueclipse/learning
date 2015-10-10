@@ -19,15 +19,16 @@
 #define LEN 2048
 #define MAXNUM 50000000
 #define SLEEP 15
+
 #define MEGABYTE (1024 * 1024)
 
 #define DCID_NONE 0
 #define DCID_INVALID 1
 
-#define CACHE_NODE_DELETED     1
-
 #define CACHE_INIT_OK 0
 #define CACHE_INIT_ERROR -1
+
+#define FREE_BLOCK_MARKER ((void *) -1)
 
 /*
  * 128 bits md5sum
