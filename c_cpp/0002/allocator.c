@@ -218,7 +218,20 @@ void* allocator_alloc(allocator_t *allocator)
 
 void allocator_free(allocator_t *allocator, void *block)
 {
+    if(allocator == NULL || block == NULL)
+        return;
 
+    block_t *my_block = (block_t *)block;
+
+    my_block->free_block_marker = FREE_BLOCK_MARKER;
+    my_block->prev = NULL;
+    my_block->next = allocator->free_blocks;
+    
+    if(my_block->next != NULL)
+        my_block->next->prev = my_block;
+
+    allocator->free_blocks = my_block;
+    allocator->free_blocks_num++;
 }
 
 size_t allocator_slab_reclaim(allocator_t *allocator, 
