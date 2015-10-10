@@ -30,6 +30,8 @@
 
 #define FREE_BLOCK_MARKER ((void *) -1)
 
+#define MALLOCED_FLAG 1
+
 /*
  * 128 bits md5sum
  */

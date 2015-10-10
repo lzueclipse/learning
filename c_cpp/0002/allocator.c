@@ -108,6 +108,9 @@ void allocator_slab_to_free_blocks(allocator_t *allocator, slab_t *slab)
     block_t *block;
     char *p, *block_char;
 
+    if(allocator == NULL || slab == NULL)
+        return;
+
     block_char = (char *)slab + allocator->slab_size - allocator->block_size;
     block = allocator->free_blocks;
 
@@ -133,13 +136,89 @@ void allocator_slab_to_free_blocks(allocator_t *allocator, slab_t *slab)
     allocator->free_blocks_num += allocator->blocks_per_slab;
 }
 
+int32_t allocator_slab_add(allocator_t *allocator)
+{
+    slab_t *slab;
+    if(allocator == NULL)
+        return -1;
+
+    slab = (slab_t *)mmap(NULL, allocator->slab_size, PROT_READ|PROT_WRITE, MAP_ANON|MAP_PRIVATE, -1, 0);
+
+    if(slab != MAP_FAILED)
+    {
+        memset(slab, 0, sizeof(*slab));
+    }
+    else
+    {
+        slab = (slab_t *)malloc(allocator->slab_size);
+        if(slab != NULL)
+        {
+            memset(slab, 0, sizeof(*slab));
+            slab->flags = MALLOCED_FLAG;
+        }
+        else
+        {
+            printf("Both mmap and malloc failed\n");
+            return -1;
+        }
+    }
+
+    mlock(slab, allocator->slab_size);
+
+    slab->next = allocator->slabs;
+    allocator->slabs = slab;
+    allocator->slabs_num++;
+
+    allocator_slab_to_free_blocks(allocator, slab);
+    return 0;
+}
+
+void allocator_slab_delete(allocator_t *allocator, slab_t *slab)
+{
+    if(allocator == NULL || slab == NULL)
+        return;
+    
+    munlock(slab, allocator->slab_size);
+
+    if(slab->flags == MALLOCED_FLAG)
+        free(slab);
+    else
+        munmap(slab, allocator->slab_size);
+}
+
 void* allocator_alloc(allocator_t *allocator)
 {
-    return  NULL;
+    block_t *block;
+
+    if(allocator == NULL)
+        return  NULL;
+
+    if(allocator->free_blocks == NULL)
+    {
+        allocator_slab_add(allocator);
+        if(allocator->free_blocks == NULL)
+        {
+            printf("Could not alloca memory\n");
+            return NULL;
+        }
+    }
+
+    block = allocator->free_blocks;
+    if(block->next)
+        block->next->prev = NULL;
+
+    allocator->free_blocks = block->next;
+    allocator->free_blocks_num--;
+
+    /*-1 to 0 */
+    (*((char *)(block->free_block_marker)))++;
+
+    return block;
 }
 
 void allocator_free(allocator_t *allocator, void *block)
 {
+
 }
 
 size_t allocator_slab_reclaim(allocator_t *allocator, 
