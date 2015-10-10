@@ -103,6 +103,7 @@ __inline__ void align_to_pow2(uint64_t *size, uint64_t pow2)
     *size =((*size) + pow2) & (~pow2);
 }
 
+
 void* allocator_alloc(allocator_t *allocator)
 {
     return  NULL;
