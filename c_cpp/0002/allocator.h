@@ -77,6 +77,7 @@ typedef struct allocator
 
 typedef struct allocator_iterator
 {
+    allocator_t allocator;
     void *slab;
     void *block;
 }allocator_iterator_t;
