@@ -25,7 +25,7 @@ static __inline__ cache_ll_node_t* get_next_cache_root_slot(cache_t *cache, cach
 
 
 /* If we can find node in cache, return it; else return NULL */
-static __inline__ cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, const md5_digest_t *digest)
+static cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, const md5_digest_t *digest)
 {
     while(pn)
     {
@@ -161,7 +161,7 @@ cache_ll_node_t* cache_lookup(cache_t *cache, const md5_digest_t *digest)
     return get_node_under_slot(get_cache_root_slot(cache,digest), digest);
 }
 
-void cache_unlink_node(cache_t *cache, cache_ll_node_t *node)
+static void cache_unlink_node(cache_t *cache, cache_ll_node_t *node)
 {
     if(node == NULL)
         return;
@@ -333,7 +333,7 @@ void slot_iterator_cache_node_delete(cache_ll_slot_iterator_t *iter)
     iter->cache->num_nodes--;
 }
 
-int32_t slot_iterator_cache_node_slot_intex(cache_ll_slot_iterator_t *iter)
+static int32_t slot_iterator_cache_node_slot_index(cache_ll_slot_iterator_t *iter)
 {
     if(iter->current)
     {
@@ -342,5 +342,33 @@ int32_t slot_iterator_cache_node_slot_intex(cache_ll_slot_iterator_t *iter)
     else
     {
         return iter->stop - iter->cache->cache_root;
+    }
+}
+
+void cache_simple_check(cache_t *cache)
+{
+    cache_allocator_iterator_t iter_alloc;
+    cache_ll_slot_iterator_t iter_slot;
+    uint64_t count_alloc = 0, count_slot = 0;
+
+    cache_ll_node_t *node;
+
+    for(node = allocator_iterator_cache_node_first(&iter_alloc, cache); node; node = allocator_iterator_cache_node_next(&iter_alloc))
+    {
+        count_alloc++;
+    }
+
+    for(node = slot_iterator_cache_node_first(&iter_slot, cache, 0, ((size_t)-1)); node; node = slot_iterator_cache_node_next(&iter_slot))
+    {
+        count_slot++;
+    }
+
+    if(count_alloc == count_slot)
+    {
+        printf("Cache simple check OK....\n");
+    }
+    else
+    {
+        printf("Cache simple check fail....\n");
     }
 }
