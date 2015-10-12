@@ -55,7 +55,11 @@ int main(int argc, char **argv)
         if(node != NULL)
         {
             if(i != node->dcid)
-                 printf("i = %" PRIu64 ", node->dcid = %" PRIu64 "\n", i, node->dcid);
+                 printf("Not found in cache, i = %" PRIu64 ", node->dcid = %" PRIu64 "\n", i, node->dcid);
+        }
+        else
+        {
+            printf("Not found in cache, i = %" PRIu64 "\n", i);
         }
     }
     my_end = time(NULL);
