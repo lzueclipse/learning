@@ -215,8 +215,10 @@ void* allocator_alloc(allocator_t *allocator)
     allocator->free_blocks_num--;
 
     /*-1 to 0 */
-    (*((char *)(block->free_block_marker)))++;
+    //(*((char **) &(block->free_block_marker)))++;
 
+    /*-1 to -2 */
+    block->free_block_marker = NOT_FREE_BLOCK_MARKER;
     return block;
 }
 

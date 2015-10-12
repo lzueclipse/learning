@@ -26,6 +26,7 @@
 #define CACHE_INIT_ERROR -1
 
 #define FREE_BLOCK_MARKER ((void *) -1)
+#define NOT_FREE_BLOCK_MARKER ((void *) -2)
 
 #define MALLOCED_FLAG 1
 
