@@ -366,5 +366,30 @@ void* allocator_iterator_first(allocator_iterator_t *iter, allocator_t *allocato
 
 void* allocator_iterator_next(allocator_iterator_t *iter)
 {
-    return NULL;
+    if(iter == NULL)
+        return NULL;
+
+    if(iter->block == NULL)
+        return NULL;
+
+    do
+    {
+        iter->block = (char *)(iter->block) - iter->allocator->block_size;
+
+        if( (char *)(iter->block) < (char *)(((slab_t *)(iter->slab))->data) )
+        {
+            //next slab
+            iter->slab = ((slab_t *)(iter->slab))->next;
+
+            if(iter->slab)
+                iter->block = (char *)iter->slab + iter->allocator->slab_size - iter->allocator->block_size;
+            else
+            {
+                iter->block = NULL;
+                break;
+            }
+        }
+    }while( ((block_t *)(iter->block))->free_block_marker == FREE_BLOCK_MARKER );
+
+    return iter->block;
 }
