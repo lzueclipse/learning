@@ -262,13 +262,34 @@ static void allocator_block_reclaim(allocator_t *allocator, block_t *block)
     }
 }
 
-/* -1 ---fail
+/* -1 ---no need to reclaim
  * 0 ----success
  */
 int32_t allocator_slab_reclaim(allocator_t *allocator, 
         void (*relocate) (const void *source, void * dst, size_t block_size, void *user_data),
         void *user_data)
 {
+    slab_t *slab;
+    char *p, *block_char;
+    if(allocator == NULL || user_data == NULL)
+        return -1;
+
+    if(allocator->slabs == NULL)
+        return -1;
+
+    if(allocator->free_blocks_num < allocator->blocks_per_slab)
+    {
+        /*
+         * not engough free blocks, no need to reclaim
+         */
+        return -1;
+    }
+
+    slab = allocator->slabs;
+    allocator->slabs = slab->next;
+    allocator->slabs_num--;
+
+
     return 0;
 }
 
