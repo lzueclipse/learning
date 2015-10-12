@@ -49,7 +49,7 @@ typedef void (*relocator_func_t) (const void *source, void *dst, size_t block_si
 extern int32_t cache_init(cache_t *cache, uint64_t bits, size_t slab_size, size_t node_size, size_t max_nodes);
 extern void cache_deinit(cache_t *cache);
 
-extern cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest, uint64_t dcid);
+extern cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest);
 extern cache_ll_node_t* cache_lookup(cache_t *cache, const md5_digest_t *digest);
 extern void cache_delete(cache_t *cache, const md5_digest_t *digest);
 

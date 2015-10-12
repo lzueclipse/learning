@@ -134,7 +134,7 @@ void cache_deinit(cache_t *cache)
     memset(cache, 0, sizeof(cache_t));
 }
 
-cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest, const uint64_t dcid)
+cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
 {
     if(cache->num_nodes < cache->max_nodes)
     {
@@ -147,7 +147,6 @@ cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest, const ui
 
         node->next = NULL;
         node->digest = digest;
-        node->dcid = dcid;
 
         cache->num_nodes++;
 
@@ -366,7 +365,7 @@ void cache_simple_check(cache_t *cache)
 
     if(count_alloc == count_slot)
     {
-        printf("Cache simple check OK....\n");
+        printf("Cache simple check OK, count=%" PRIu64 "\n", count_alloc);
     }
     else
     {
