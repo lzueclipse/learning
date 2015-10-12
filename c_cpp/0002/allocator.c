@@ -234,6 +234,30 @@ void allocator_free(allocator_t *allocator, void *block)
     allocator->free_blocks_num++;
 }
 
+void allocator_block_reclaim(allocator_t *allocator, block_t *block)
+{
+    if(allocator == NULL || block == NULL)
+        return;
+
+    if(block->prev || block->next)
+    {
+        if(block->prev)
+            block->prev->next = block->next;
+        else
+            allocator->free_blocks = block->next;
+
+        if(block->next)
+            block->next->prev = block->prev;
+
+        allocator->free_blocks_num--;
+    }
+    else if(allocator->free_blocks == block)
+    {
+        allocator->free_blocks = NULL;
+        allocator->free_blocks_num = 0;
+    }
+}
+
 size_t allocator_slab_reclaim(allocator_t *allocator, 
         void (*relocate) (const void *source, void * dst, size_t block_size, void *user_data),
         void *user_data)
