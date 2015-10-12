@@ -7,6 +7,11 @@
 int main(int argc, char **argv) 
 {
     int32_t ret = 0;
+    uint64_t i = 0;
+    md5_digest_t my_fp;
+    time_t my_start, my_end;
+    double seconds;
+    uint64_t dcid;
     
     set_stack_limit();
 
@@ -22,9 +27,24 @@ int main(int argc, char **argv)
         
         exit(-1);
     }
-    printf("*************************************************************************************************\n");
-    printf("After init:\n");
+    printf("---------------------------------------------------------------------------------------------\n");
+    printf("After cache_init:\n");
+    printf("Output of 'top':\n");
     output_top();
+    printf("---------------------------------------------------------------------------------------------\n");
+
+    my_start = time(NULL);
+    for(i = 0; i < MAXNUM; ++i) {
+        uint64_to_md5(i, &my_fp);
+        cache_insert(&cache, &my_fp, i);
+    }
+    my_end = time(NULL);
+    seconds = difftime(my_end, my_start);
+    printf("Insert all FPs into cache, cost time = %.f seconds\n", seconds);
+    printf("Output of 'top':\n");
+    output_top();
+    printf("---------------------------------------------------------------------------------------------\n");
+
 #endif
     
 

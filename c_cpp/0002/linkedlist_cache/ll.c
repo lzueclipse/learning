@@ -134,7 +134,7 @@ void cache_deinit(cache_t *cache)
     memset(cache, 0, sizeof(cache_t));
 }
 
-cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
+cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t *digest)
 {
     if(cache->num_nodes < cache->max_nodes)
     {
@@ -146,7 +146,7 @@ cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
             return NULL;
 
         node->next = NULL;
-        node->digest = digest;
+        node->digest = *digest;
 
         cache->num_nodes++;
 
@@ -159,6 +159,26 @@ cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
 cache_ll_node_t* cache_lookup(cache_t *cache, const md5_digest_t *digest)
 {
     return get_node_under_slot(get_cache_root_slot(cache,digest), digest);
+}
+
+cache_ll_node_t* cache_insert(cache_t *cache, const md5_digest_t *digest, uint64_t dcid)
+{
+    cache_ll_node_t *node;
+    node = cache_lookup(cache, digest);
+
+    if(node == NULL)
+    {
+        node = cache_alloc(cache, digest);
+    }
+
+    if(node == NULL)
+    {
+        printf("Can not insert a node\n");
+        return NULL;
+    }
+
+    //update dcid
+    node->dcid = dcid;
 }
 
 static void cache_unlink_node(cache_t *cache, cache_ll_node_t *node)
