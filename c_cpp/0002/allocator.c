@@ -103,7 +103,7 @@ __inline__ void align_to_pow2(uint64_t *size, uint64_t pow2)
     *size =((*size) + pow2) & (~pow2);
 }
 
-void allocator_slab_to_free_blocks(allocator_t *allocator, slab_t *slab)
+static void allocator_slab_to_free_blocks(allocator_t *allocator, slab_t *slab)
 {
     block_t *block;
     char *p, *block_char;
@@ -136,7 +136,11 @@ void allocator_slab_to_free_blocks(allocator_t *allocator, slab_t *slab)
     allocator->free_blocks_num += allocator->blocks_per_slab;
 }
 
-int32_t allocator_slab_add(allocator_t *allocator)
+/*
+ * -1 ----fail
+ * 0 -----success
+ */
+static int32_t allocator_slab_add(allocator_t *allocator)
 {
     slab_t *slab;
     if(allocator == NULL)
@@ -173,7 +177,7 @@ int32_t allocator_slab_add(allocator_t *allocator)
     return 0;
 }
 
-void allocator_slab_delete(allocator_t *allocator, slab_t *slab)
+static void allocator_slab_delete(allocator_t *allocator, slab_t *slab)
 {
     if(allocator == NULL || slab == NULL)
         return;
@@ -234,7 +238,7 @@ void allocator_free(allocator_t *allocator, void *block)
     allocator->free_blocks_num++;
 }
 
-void allocator_block_reclaim(allocator_t *allocator, block_t *block)
+static void allocator_block_reclaim(allocator_t *allocator, block_t *block)
 {
     if(allocator == NULL || block == NULL)
         return;
@@ -258,7 +262,10 @@ void allocator_block_reclaim(allocator_t *allocator, block_t *block)
     }
 }
 
-size_t allocator_slab_reclaim(allocator_t *allocator, 
+/* -1 ---fail
+ * 0 ----success
+ */
+int32_t allocator_slab_reclaim(allocator_t *allocator, 
         void (*relocate) (const void *source, void * dst, size_t block_size, void *user_data),
         void *user_data)
 {
