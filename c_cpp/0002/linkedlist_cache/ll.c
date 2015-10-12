@@ -134,7 +134,7 @@ void cache_deinit(cache_t *cache)
     memset(cache, 0, sizeof(cache_t));
 }
 
-cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
+cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest, const uint64_t dcid)
 {
     if(cache->num_nodes < cache->max_nodes)
     {
@@ -147,6 +147,7 @@ cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t digest)
 
         node->next = NULL;
         node->digest = digest;
+        node->dcid = dcid;
 
         cache->num_nodes++;
 
