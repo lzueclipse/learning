@@ -18,6 +18,12 @@ typedef struct linked_list
     struct linked_list *next;
 }linked_list_t;
 
+typedef struct s
+{
+    int32_t m;
+    char data[0];
+}s_t;
+
 int main()
 {
     linked_list_t *a, *b, *c;
@@ -41,5 +47,7 @@ int main()
     free(a);
     free(b);
     free(c);
+
+    printf("sizeof(s_t) = %d\n",sizeof(s_t));
     return 0;
 }
