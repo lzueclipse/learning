@@ -6,30 +6,31 @@ static __inline__ uint32_t get_digest_index(const cache_t *cache, const md5_dige
     return ((uint32_t)digest->digest_uchar[8]) & cache->mask;
 }
 
-/* root node  of one slot*/
-static __inline__  cache_ll_node_t* get_cache_root_slot(cache_t *cache, const md5_digest_t *digest)
+/* root node's slot (pointer to location)*/
+static __inline__  cache_ll_node_t** get_cache_root_slot(cache_t *cache, const md5_digest_t *digest)
 {
-    return  cache->cache_root[get_digest_index(cache, digest)];
+    return  &(cache->cache_root[get_digest_index(cache, digest)]);
 }
 
-static __inline__ cache_ll_node_t* get_next_cache_root_slot(cache_t *cache, cache_ll_node_t **node, cache_ll_node_t **cache_root_end)
+/* next root node's slot (pointer to location)*/
+static __inline__ cache_ll_node_t** get_next_cache_root_slot(cache_t *cache, cache_ll_node_t **node, cache_ll_node_t **cache_root_end)
 {
     for(node++; node < cache_root_end; node++)
     {
         if(*node)
-            return (*node);
+            return node;
     }
 
     return NULL;
 }
 
-
-/* If we can find node in cache, return it; else return NULL */
-static cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, const md5_digest_t *digest)
+/*If the node exits, get the slot (pointer to location;
+/*Else get the slot (pointer to location) to store a new node (the tail of the linked list) */
+static cache_ll_node_t** get_slot_to_store(cache_ll_node_t **pn, const md5_digest_t *digest)
 {
-    while(pn)
+    while(*pn)
     {
-        int32_t ret = md5_digest_compare( &(pn->digest), digest);
+        int32_t ret = md5_digest_compare( &((*pn)->digest), digest);
 
         if(ret == 0)
         {
@@ -38,23 +39,12 @@ static cache_ll_node_t* get_node_under_slot(cache_ll_node_t *pn, const md5_diges
         }
         else
         {
-            pn = pn->next;
+            pn = &((*pn)->next);
         }
     }
 
     return pn;
 }
-
-/*
- * 0 -- equal
- * others -- not equal
- */
-static __inline__ int32_t cache_compare_cache_root_slot(cache_t *cache, const md5_digest_t *digest1, const md5_digest_t *digest2)
-{
-    return (int32_t) (get_digest_index(cache, digest1) - get_digest_index(cache, digest2));
-}
-
-
 
 int32_t cache_init(cache_t *cache, uint64_t bits, size_t slab_size, size_t block_size, size_t max_nodes)
 {
@@ -156,18 +146,23 @@ cache_ll_node_t* cache_alloc(cache_t *cache, const md5_digest_t *digest)
     return NULL;
 }
 
-cache_ll_node_t* cache_lookup(cache_t *cache, const md5_digest_t *digest)
+/*
+ * find a slot pointer to existing node, or find a slot to store a new node
+ */
+cache_ll_node_t** cache_lookup_slot(cache_t *cache, const md5_digest_t *digest)
 {
-    return get_node_under_slot(get_cache_root_slot(cache,digest), digest);
+    return get_slot_to_store(get_cache_root_slot(cache,digest), digest);
 }
 
 cache_ll_node_t* cache_insert(cache_t *cache, const md5_digest_t *digest, uint64_t dcid)
 {
-    cache_ll_node_t *node;
-    node = cache_lookup(cache, digest);
+    cache_ll_node_t **slot, *node;
+    slot = cache_lookup_slot(cache, digest);
+    node = *slot;
 
     if(node == NULL)
     {
+        //alloc memory
         node = cache_alloc(cache, digest);
     }
 
@@ -179,6 +174,10 @@ cache_ll_node_t* cache_insert(cache_t *cache, const md5_digest_t *digest, uint64
 
     //update dcid
     node->dcid = dcid;
+
+    //append the node to linked list tail
+    *slot = node;
+    return node;
 }
 
 static void cache_unlink_node(cache_t *cache, cache_ll_node_t *node)
@@ -203,7 +202,7 @@ static void cache_unlink_node(cache_t *cache, cache_ll_node_t *node)
 
 void cache_delete(cache_t *cache, const md5_digest_t *digest)
 {
-    cache_ll_node_t *node = cache_lookup(cache, digest);
+    cache_ll_node_t *node = *(cache_lookup_slot(cache, digest));
 
     if(node == NULL)
         return;
@@ -225,7 +224,7 @@ void cache_relocate(const void *source, void *dest, size_t block_size, void *use
     digest = &( ((cache_ll_node_t *)source)->digest );
     cache = (cache_t *)user_data;
 
-    node = cache_lookup(cache, digest);
+    node = *(cache_lookup_slot(cache, digest));
 
     tmp = &node;
     /* tricky */
@@ -262,23 +261,15 @@ cache_ll_node_t* slot_iterator_cache_node_first(cache_ll_slot_iterator_t *iter, 
     iter->stop = cache->cache_root + cache_root_end_index;
     iter->current_deleted = 0;
 
-    cache_ll_node_t *node = get_next_cache_root_slot(cache, iter->start, iter->stop);
+    iter->current = get_next_cache_root_slot(cache, iter->start, iter->stop);
 
-    if(node)
-    {
-        iter->current = &node;
-    }
-    else
-    {
-        iter->current = NULL;
-    }
 
-    return node;
+    return (iter->current)? *(iter->current):NULL;
 }
 
 cache_ll_node_t* slot_iterator_cache_node_next(cache_ll_slot_iterator_t *iter)
 {
-    cache_ll_node_t *node, *start;
+    cache_ll_node_t *node, **start;
     md5_digest_t *digest;
 
     if(iter->current == NULL)
@@ -298,17 +289,13 @@ cache_ll_node_t* slot_iterator_cache_node_next(cache_ll_slot_iterator_t *iter)
         return (*(iter->current));
     }
 
-    /*go down to next slot */
+    /*go down to next cache root*/
     digest = &((*(iter->current))->digest);
     start = get_cache_root_slot(iter->cache, digest);
-    node = get_next_cache_root_slot(iter->cache, &start, iter->stop);
+    iter->current = get_next_cache_root_slot(iter->cache, start, iter->stop);
 
-    if(node)
-        iter->current = &node;
-    else
-        iter->current = NULL;
 
-    return node;
+    return (iter->current)?*(iter->current):NULL;
 }
 
 cache_ll_node_t* slot_iterator_cache_node_current(cache_ll_slot_iterator_t *iter)
