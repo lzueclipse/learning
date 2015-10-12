@@ -270,7 +270,7 @@ int32_t allocator_slab_reclaim(allocator_t *allocator,
         void *user_data)
 {
     slab_t *slab;
-    char *p, *block_char;
+    char *p, *slab_end_char;
     if(allocator == NULL || user_data == NULL)
         return -1;
 
@@ -289,7 +289,53 @@ int32_t allocator_slab_reclaim(allocator_t *allocator,
     allocator->slabs = slab->next;
     allocator->slabs_num--;
 
+    slab_end_char = (char *)slab + allocator->slab_size;
 
+    for(p = slab_end_char - allocator->block_size; p >= (char *)slab->data; p -= allocator->block_size)
+    {
+        block_t *source = (block_t *) p;
+
+        if(source->free_block_marker = FREE_BLOCK_MARKER)
+        {
+            /*
+             * the block is not used, just need to reclaim this block
+             */
+            allocator_block_reclaim(allocator, source);
+        }
+        else
+        {
+            block_t *dest;
+
+            /*
+             * until we find a "dest" block in different slab
+             */
+            while(1)
+            {
+                dest = (block_t *)allocator_alloc(allocator);
+
+                if(dest == NULL)
+                {
+                    return -1;
+                }
+
+                if((char *)dest < (char *)slab || (char *)dest >= slab_end_char)
+                {
+                    //"dest" block in different slab
+                    break;
+                }
+
+                //"dest" block is in same slab, mark it as not used, the slab which "source" in will be freed soon
+                dest->free_block_marker = FREE_BLOCK_MARKER;
+                dest->next = NULL;
+                dest->prev = NULL;
+            }
+            
+            //the slab which "source" in will be freed soon, so no need to update "source"
+            move(source, dest, allocator->block_size, user_data);
+        }
+    }
+
+    allocator_slab_delete(allocator, slab);
 
     return 0;
 }

@@ -193,14 +193,14 @@ void cache_delete(cache_t *cache, const md5_digest_t *digest)
     allocator_free(&(cache->allocator), node);
 }
 
-void cache_relocate(const void *source, void *dst, size_t block_size, void *user_data)
+void cache_relocate(const void *source, void *dest, size_t block_size, void *user_data)
 {
     md5_digest_t *digest;
     cache_ll_node_t *node, **tmp;
     cache_t *cache;
  
-    /*copy to "dst", include data and "next pointer" */
-    memcpy(dst, source, block_size);
+    /*copy to "dest", include data and "next pointer" */
+    memcpy(dest, source, block_size);
     
     digest = &( ((cache_ll_node_t *)source)->digest );
     cache = (cache_t *)user_data;
@@ -210,8 +210,8 @@ void cache_relocate(const void *source, void *dst, size_t block_size, void *user
     tmp = &node;
     /* tricky */
     /* "*tmp" equals with "(node's parent)->next"*/
-    /* Relocate "node" from "source memory" to "dst memory". */
-    *tmp = dst;
+    /* Relocate "node" from "source memory" to "dest memory". */
+    *tmp = dest;
 }
 
 size_t cache_slab_reclaim(cache_t *cache, relocator_func_t relocator, void *user_data)
