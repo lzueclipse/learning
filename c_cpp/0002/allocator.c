@@ -342,7 +342,26 @@ int32_t allocator_slab_reclaim(allocator_t *allocator,
 
 void* allocator_iterator_first(allocator_iterator_t *iter, allocator_t *allocator)
 {
-    return NULL;
+    if(iter == NULL || allocator == NULL)
+        return NULL;
+
+    iter->allocator = allocator;
+    iter->slab = allocator->slabs;
+
+    if(iter->slab)
+    {
+        iter->block = (char *)(iter->slab) + allocator->slab_size - allocator->block_size;
+        if( ((block_t *)iter->block)->free_block_marker == FREE_BLOCK_MARKER )
+        {
+            return allocator_iterator_next(iter);
+        }
+    }
+    else
+    {
+        iter->block = NULL;
+    }
+
+    return iter->block;
 }
 
 void* allocator_iterator_next(allocator_iterator_t *iter)
