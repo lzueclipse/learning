@@ -105,34 +105,34 @@ __inline__ void align_to_pow2(uint64_t *size, uint64_t pow2)
 
 static void allocator_slab_to_free_blocks(allocator_t *allocator, slab_t *slab)
 {
-    block_t *block;
-    char *p, *block_char;
+    block_t *next;
+    char *p, *prev;
 
     if(allocator == NULL || slab == NULL)
         return;
 
-    block_char = (char *)slab + allocator->slab_size - allocator->block_size;
-    block = allocator->free_blocks;
+    prev = (char *)slab + allocator->slab_size - allocator->block_size;
+    next = allocator->free_blocks;
 
-    if(block)
-        block->prev = (block_t *)block_char;
+    if(next)
+        next->prev = (block_t *)prev;
 
-    for(p = block_char; p >= (char *)slab->data;)
+    for(p = prev; p >= (char *)slab->data;)
     {
         ((block_t *)p)->free_block_marker = FREE_BLOCK_MARKER;
         
         /*next block */
-        block_char = p - allocator->block_size;
+        prev = p - allocator->block_size;
      
-        ((block_t *)p)->next = (block_t *)block;
-        ((block_t *)p)->prev = (block_t *)block_char;
+        ((block_t *)p)->next = (block_t *)next;
+        ((block_t *)p)->prev = (block_t *)prev;
 
-        block = (block_t *)p;
-        p = block_char;
+        next = (block_t *)p;
+        p = prev;
     }
 
-    block->prev = NULL;
-    allocator->free_blocks = block;
+    next->prev = NULL;
+    allocator->free_blocks = next;
     allocator->free_blocks_num += allocator->blocks_per_slab;
 }
 
@@ -238,6 +238,7 @@ void allocator_free(allocator_t *allocator, void *block)
 
     allocator->free_blocks = my_block;
     allocator->free_blocks_num++;
+
 }
 
 static void allocator_block_reclaim(allocator_t *allocator, block_t *block)
@@ -273,12 +274,19 @@ int32_t allocator_slab_reclaim(allocator_t *allocator,
 {
     slab_t *slab;
     char *p, *slab_end_char;
+
     if(allocator == NULL || user_data == NULL)
+    {
         return -1;
+    }
 
     if(allocator->slabs == NULL)
+    {
+        printf("No slabs left to reclaim\n");
         return -1;
+    }
 
+    printf("allocator->free_blocks_num = %" PRIu64 " , allocator->blocks_per_slab = %" PRIu64 "\n", allocator->free_blocks_num, allocator->blocks_per_slab);
     if(allocator->free_blocks_num < allocator->blocks_per_slab)
     {
         /*

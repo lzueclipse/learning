@@ -94,7 +94,11 @@ int main(int argc, char **argv)
 
 
     printf("Reclaim some slabs:\n");
-    cache_slab_reclaim(&cache, cache_relocate);
+    uint64_t count = 0;
+    do
+    {
+        printf("Reclaim count = %" PRIu64 "\n", ++count);
+    }while( cache_slab_reclaim(&cache, cache_relocate) == 0);
     output_top();
 #endif
     
