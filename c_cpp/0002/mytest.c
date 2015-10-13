@@ -67,6 +67,10 @@ int main(int argc, char **argv)
     printf("Lookup all FPs in cache, cost time = %.f seconds\n", seconds);
     output_top();
     printf("---------------------------------------------------------------------------------------------\n");
+    
+    printf("Cache dump:\n");
+    cache_dump(&cache);
+    printf("---------------------------------------------------------------------------------------------\n");
 
 #endif
     

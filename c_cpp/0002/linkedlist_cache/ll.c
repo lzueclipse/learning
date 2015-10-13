@@ -257,11 +257,11 @@ cache_ll_node_t* slot_iterator_cache_node_first(cache_ll_slot_iterator_t *iter, 
     size_t end_index = (cache_root_end_index < cache_root_size)?cache_root_end_index:cache_root_size;
 
     iter->cache = cache;
-    iter->start = cache->cache_root + (cache_root_start_index - 1);
-    iter->stop = cache->cache_root + cache_root_end_index;
+    iter->start = cache->cache_root + start_index ;
+    iter->stop = cache->cache_root + end_index;
     iter->current_deleted = 0;
 
-    iter->current = get_next_cache_root_slot(cache, iter->start, iter->stop);
+    iter->current = get_next_cache_root_slot(cache, iter->start - 1 , iter->stop);
 
 
     return (iter->current)? *(iter->current):NULL;
@@ -352,30 +352,28 @@ static int32_t slot_iterator_cache_node_slot_index(cache_ll_slot_iterator_t *ite
     }
 }
 
-void cache_simple_check(cache_t *cache)
+void cache_dump(cache_t *cache)
 {
     cache_allocator_iterator_t iter_alloc;
     cache_ll_slot_iterator_t iter_slot;
-    uint64_t count_alloc = 0, count_slot = 0;
+    uint64_t count = 0;
 
     cache_ll_node_t *node;
 
+    printf("Dump by slab:\n");
     for(node = allocator_iterator_cache_node_first(&iter_alloc, cache); node; node = allocator_iterator_cache_node_next(&iter_alloc))
     {
-        count_alloc++;
+        count++;
+        printf("dcid = %" PRIu64 "\n", node->dcid);
     }
+    printf("count = %" PRIu64 "\n\n\n", count);
 
+    count = 0;
+    printf("Dump by cache root:\n");
     for(node = slot_iterator_cache_node_first(&iter_slot, cache, 0, ((size_t)-1)); node; node = slot_iterator_cache_node_next(&iter_slot))
     {
-        count_slot++;
+        count++;
+        printf("dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
     }
-
-    if(count_alloc == count_slot)
-    {
-        printf("Cache simple check OK, count=%" PRIu64 "\n", count_alloc);
-    }
-    else
-    {
-        printf("Cache simple check fail....\n");
-    }
+    printf("count = %" PRIu64 "\n", count);
 }

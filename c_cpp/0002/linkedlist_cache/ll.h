@@ -64,6 +64,6 @@ extern cache_ll_node_t* slot_iterator_cache_node_next(cache_ll_slot_iterator_t *
 extern cache_ll_node_t* slot_iterator_cache_node_current(cache_ll_slot_iterator_t *iter);
 extern void slot_iterator_cache_node_delete(cache_ll_slot_iterator_t *iter);
 
-extern void cache_simple_check(cache_t *cache);
+extern void cache_dump(cache_t *cache);
 
 #endif
