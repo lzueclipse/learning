@@ -50,4 +50,21 @@ then
     echo "Complile mytest $mydef success"
 fi
 
+if [ $mydef == BST ]
+then
+    ##bst.c
+    cd binarysearchtree_cache
+    rm -f libbst*
+    gcc  -I../ -fPIC -c -g -o bst.o bst.c
+    gcc  -shared -fPIC -g -o libbst.so bst.o
+    rm -f ll.o
+    echo "Complile libbst.so success"
+    echo 
+    
+    #main.c
+    cd ../
+    gcc -D$mydef -I./ -I./binarysearchtree_cache -Wl,-rpath=./ -Wl,-rpath=./binarysearchtree_cache -g -o mytest mytest.c  -L./ -L./binarysearchtree_cache  -lallocator -lbst -lcrypto
+    echo "Complile mytest $mydef success"
+fi
+
 echo "*****************************************"
