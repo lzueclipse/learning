@@ -304,7 +304,7 @@ int32_t allocator_slab_reclaim(allocator_t *allocator,
     {
         block_t *source = (block_t *) p;
 
-        if(source->free_block_marker = FREE_BLOCK_MARKER)
+        if(source->free_block_marker == FREE_BLOCK_MARKER)
         {
             /*
              * the block is not used, just need to reclaim this block
@@ -340,7 +340,7 @@ int32_t allocator_slab_reclaim(allocator_t *allocator,
             }
             
             //the slab which "source" in will be freed soon, so no need to update "source"
-            move(source, dest, allocator->block_size, user_data);
+            relocate(source, dest, allocator->block_size, user_data);
         }
     }
 
