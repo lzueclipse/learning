@@ -34,6 +34,7 @@ int main(int argc, char **argv)
     output_top();
     printf("---------------------------------------------------------------------------------------------\n");
 
+
     my_start = time(NULL);
     for(i = 0; i < MAXNUM; ++i) {
         uint64_to_md5(i, &my_fp);
@@ -41,10 +42,11 @@ int main(int argc, char **argv)
     }
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
-    printf("Insert all FPs into cache, cost time = %.f seconds\n", seconds);
+    printf("Insert %" PRIu64 " FPs into cache, cost time = %.f seconds\n", MAXNUM, seconds);
     printf("Output of 'top':\n");
     output_top();
     printf("---------------------------------------------------------------------------------------------\n");
+
 
     my_start = time(NULL);
     for(i = 0; i < MAXNUM; ++i) {
@@ -64,14 +66,36 @@ int main(int argc, char **argv)
     }
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
-    printf("Lookup all FPs in cache, cost time = %.f seconds\n", seconds);
+    printf("Lookup %" PRIu64 " FPs in cache, cost time = %.f seconds\n", MAXNUM, seconds);
     output_top();
     printf("---------------------------------------------------------------------------------------------\n");
     
-    printf("Cache dump to file dump.txt:\n");
-    cache_dump(&cache);
+
+    printf("Cache dump to file dump1.txt:\n");
+    cache_dump(&cache, "dump1.txt");
     printf("---------------------------------------------------------------------------------------------\n");
 
+
+    my_start = time(NULL);
+    for(i = 0; i < MAXNUM/2; ++i) {
+        uint64_to_md5(i, &my_fp);
+        cache_delete(&cache, &my_fp);
+    }
+    my_end = time(NULL);
+    seconds = difftime(my_end, my_start);
+    printf("Delete %" PRIu64 " FPs in cache, cost time = %.f seconds\n", MAXNUM/2, seconds);
+    output_top();
+    printf("---------------------------------------------------------------------------------------------\n");
+    
+
+    printf("Cache dump to file dump2.txt:\n");
+    cache_dump(&cache, "dump2.txt");
+    printf("---------------------------------------------------------------------------------------------\n");
+
+
+    printf("Reclaim some slabs:\n");
+    cache_slab_reclaim(&cache, cache_relocate);
+    output_top();
 #endif
     
 

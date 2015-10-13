@@ -180,34 +180,35 @@ cache_ll_node_t* cache_insert(cache_t *cache, const md5_digest_t *digest, uint64
     return node;
 }
 
-static void cache_unlink_node(cache_t *cache, cache_ll_node_t *node)
+static void cache_unlink_node(cache_t *cache, cache_ll_node_t **slot)
 {
+    cache_ll_node_t *node = *slot;
+
     if(node == NULL)
         return;
     
-    cache_ll_node_t **tmp = &node;
-    /* tricky */
-    /* "*tmp" equals with "(node's parent)->next"*/
     /* Delete "node" from the linked list */
     if(node->next)
     {
-        *tmp = node->next;
+        *slot = node->next;
     }
     else
     {
-        *tmp = NULL;
+        *slot = NULL;
     }
+
     node->next = NULL;
 }
 
 void cache_delete(cache_t *cache, const md5_digest_t *digest)
 {
-    cache_ll_node_t *node = *(cache_lookup_slot(cache, digest));
+    cache_ll_node_t **slot = cache_lookup_slot(cache, digest);
+    cache_ll_node_t *node = *slot;
 
     if(node == NULL)
         return;
 
-    cache_unlink_node(cache, node);
+    cache_unlink_node(cache, slot);
 
     allocator_free(&(cache->allocator), node);
 }
@@ -233,11 +234,11 @@ void cache_relocate(const void *source, void *dest, size_t block_size, void *use
     *tmp = dest;
 }
 
-size_t cache_slab_reclaim(cache_t *cache, relocator_func_t relocator, void *user_data)
+int32_t cache_slab_reclaim(cache_t *cache, relocator_func_t relocator)
 {
     size_t slab_size = cache->allocator.slab_size;
 
-    allocator_slab_reclaim(&cache->allocator, relocator, user_data);
+    return allocator_slab_reclaim(&cache->allocator, relocator, cache);
 }
 
 cache_ll_node_t* allocator_iterator_cache_node_first(cache_allocator_iterator_t *iter, cache_t *cache)
@@ -352,7 +353,7 @@ static int32_t slot_iterator_cache_node_slot_index(cache_ll_slot_iterator_t *ite
     }
 }
 
-void cache_dump(cache_t *cache)
+void cache_dump(cache_t *cache, const char *file_name)
 {
     cache_allocator_iterator_t iter_alloc;
     cache_ll_slot_iterator_t iter_slot;
@@ -361,7 +362,7 @@ void cache_dump(cache_t *cache)
     cache_ll_node_t *node;
 
     FILE * file;
-    file = fopen ("dump.txt","w");
+    file = fopen (file_name,"w");
     if(file == NULL)
     {
         printf("fopen fails\n");
