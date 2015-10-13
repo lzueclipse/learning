@@ -360,20 +360,30 @@ void cache_dump(cache_t *cache)
 
     cache_ll_node_t *node;
 
-    printf("Dump by slab:\n");
+    FILE * file;
+    file = fopen ("dump.txt","w");
+    if(file == NULL)
+    {
+        printf("fopen fails\n");
+        return;
+    }
+
+    fprintf(file, "Dump by slab:\n");
     for(node = allocator_iterator_cache_node_first(&iter_alloc, cache); node; node = allocator_iterator_cache_node_next(&iter_alloc))
     {
         count++;
-        printf("dcid = %" PRIu64 "\n", node->dcid);
+        fprintf(file, "dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
     }
-    printf("count = %" PRIu64 "\n\n\n", count);
+    fprintf(file, "count = %" PRIu64 "\n\n\n", count);
 
     count = 0;
-    printf("Dump by cache root:\n");
+    fprintf(file, "Dump by cache root:\n");
     for(node = slot_iterator_cache_node_first(&iter_slot, cache, 0, ((size_t)-1)); node; node = slot_iterator_cache_node_next(&iter_slot))
     {
         count++;
-        printf("dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
+        fprintf(file, "dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
     }
-    printf("count = %" PRIu64 "\n", count);
+    fprintf(file, "count = %" PRIu64 "\n", count);
+                          
+    fclose (file);
 }
