@@ -286,7 +286,6 @@ int32_t allocator_slab_reclaim(allocator_t *allocator,
         return -1;
     }
 
-    printf("allocator->free_blocks_num = %" PRIu64 " , allocator->blocks_per_slab = %" PRIu64 "\n", allocator->free_blocks_num, allocator->blocks_per_slab);
     if(allocator->free_blocks_num < allocator->blocks_per_slab)
     {
         /*
