@@ -116,7 +116,7 @@ int main(int argc, char **argv)
   
 #ifdef BST
     cache_bst_node_t *node, **slot;
-    ret = cache_init(&cache, 16, 2 * MEGABYTE, sizeof(cache_bst_node_t), MAXNUM + 100);
+    ret = cache_init(&cache, 1, 2 * MEGABYTE, sizeof(cache_bst_node_t), MAXNUM + 100);
     if(ret != CACHE_INIT_OK)
     {
         printf("cache_init fails\n");
