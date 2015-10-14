@@ -8,8 +8,8 @@
  */
 typedef struct cache_bst_node
 {
-    struct cache_ll_node *left;
-    struct cache_ll_node *right;
+    struct cache_bst_node *left;
+    struct cache_bst_node *right;
     md5_digest_t digest;
     uint64_t dcid;
 } cache_bst_node_t;
@@ -43,7 +43,7 @@ typedef struct cache_ll_slot_iterator
     cache_bst_node_t **current;
 
     uint64_t current_deleted;
-}cache_ll_slot_iterator_t;
+}cache_bst_slot_iterator_t;
 
 typedef void (*relocator_func_t) (const void *source, void *dst, size_t block_size, void *user_data);
 
@@ -60,10 +60,10 @@ extern int32_t cache_slab_reclaim(cache_t *cache, relocator_func_t relocator);
 
 extern cache_bst_node_t* allocator_iterator_cache_node_first(cache_allocator_iterator_t *iter, cache_t *cache);
 extern cache_bst_node_t* allocator_iterator_cache_node_next(cache_allocator_iterator_t *iter);
-extern cache_bst_node_t* slot_iterator_cache_node_first(cache_ll_slot_iterator_t *iter, cache_t *cache, size_t cache_root_start_index, size_t cache_root_end_index);
-extern cache_bst_node_t* slot_iterator_cache_node_next(cache_ll_slot_iterator_t *iter);
-extern cache_bst_node_t* slot_iterator_cache_node_current(cache_ll_slot_iterator_t *iter);
-extern void slot_iterator_cache_node_delete(cache_ll_slot_iterator_t *iter);
+extern cache_bst_node_t* slot_iterator_cache_node_first(cache_bst_slot_iterator_t *iter, cache_t *cache, size_t cache_root_start_index, size_t cache_root_end_index);
+extern cache_bst_node_t* slot_iterator_cache_node_next(cache_bst_slot_iterator_t *iter);
+extern cache_bst_node_t* slot_iterator_cache_node_current(cache_bst_slot_iterator_t *iter);
+extern void slot_iterator_cache_node_delete(cache_bst_slot_iterator_t *iter);
 
 extern void cache_dump(cache_t *cache, const char *file_name);
 

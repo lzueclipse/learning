@@ -255,7 +255,7 @@ cache_bst_node_t* allocator_iterator_cache_node_next(cache_allocator_iterator_t 
     return (cache_bst_node_t *)allocator_iterator_next(&iter->allocator_iter);
 }
 
-cache_bst_node_t* slot_iterator_cache_node_first(cache_ll_slot_iterator_t *iter, cache_t *cache, size_t cache_root_start_index, size_t cache_root_end_index)
+cache_bst_node_t* slot_iterator_cache_node_first(cache_bst_slot_iterator_t *iter, cache_t *cache, size_t cache_root_start_index, size_t cache_root_end_index)
 {
     size_t cache_root_size = ((size_t) 1) << cache->bits;
     size_t start_index = (cache_root_start_index < cache_root_size)?cache_root_start_index:cache_root_size;
@@ -272,7 +272,7 @@ cache_bst_node_t* slot_iterator_cache_node_first(cache_ll_slot_iterator_t *iter,
     return (iter->current)? *(iter->current):NULL;
 }
 
-cache_bst_node_t* slot_iterator_cache_node_next(cache_ll_slot_iterator_t *iter)
+cache_bst_node_t* slot_iterator_cache_node_next(cache_bst_slot_iterator_t *iter)
 {
     cache_bst_node_t *node, **start;
     md5_digest_t *digest;
@@ -303,7 +303,7 @@ cache_bst_node_t* slot_iterator_cache_node_next(cache_ll_slot_iterator_t *iter)
     return (iter->current)?*(iter->current):NULL;
 }
 
-cache_bst_node_t* slot_iterator_cache_node_current(cache_ll_slot_iterator_t *iter)
+cache_bst_node_t* slot_iterator_cache_node_current(cache_bst_slot_iterator_t *iter)
 {
     if(iter->current_deleted || iter->current == NULL)
         return NULL;
@@ -312,7 +312,7 @@ cache_bst_node_t* slot_iterator_cache_node_current(cache_ll_slot_iterator_t *ite
 }
 
 /* delete the node, but do not disturb the iteration */
-void slot_iterator_cache_node_delete(cache_ll_slot_iterator_t *iter)
+void slot_iterator_cache_node_delete(cache_bst_slot_iterator_t *iter)
 {
     cache_bst_node_t **tmp, *node;
 
@@ -345,7 +345,7 @@ void slot_iterator_cache_node_delete(cache_ll_slot_iterator_t *iter)
     iter->cache->num_nodes--;
 }
 
-static int32_t slot_iterator_cache_node_slot_index(cache_ll_slot_iterator_t *iter)
+static int32_t slot_iterator_cache_node_slot_index(cache_bst_slot_iterator_t *iter)
 {
     if(iter->current)
     {
@@ -360,7 +360,7 @@ static int32_t slot_iterator_cache_node_slot_index(cache_ll_slot_iterator_t *ite
 void cache_dump(cache_t *cache, const char *file_name)
 {
     cache_allocator_iterator_t iter_alloc;
-    cache_ll_slot_iterator_t iter_slot;
+    cache_bst_slot_iterator_t iter_slot;
     uint64_t count = 0;
 
     cache_bst_node_t *node;
