@@ -293,6 +293,19 @@ cache_bst_node_t* allocator_iterator_cache_node_next(cache_allocator_iterator_t 
     return (cache_bst_node_t *)allocator_iterator_next(&iter->allocator_iter);
 }
 
+uint64_t inorder_traverse(cache_bst_node_t *node, FILE *file)
+{
+    uint64_t count = 0;
+    if(node != NULL && file != NULL)
+    {
+        count += inorder_traverse(node->left, file);
+        fprintf(file, "dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
+        count += inorder_traverse(node->left, file);
+    }
+
+    return count;
+}
+
 void cache_dump(cache_t *cache, const char *file_name)
 {
     cache_allocator_iterator_t iter_alloc;
@@ -317,9 +330,12 @@ void cache_dump(cache_t *cache, const char *file_name)
     fprintf(file, "count = %" PRIu64 "\n\n\n", count);
 
     count = 0;
+    size_t i = 0;
     fprintf(file, "Dump by cache root:\n");
-    
-
+    for(i = 0; i < ( ((size_t)1)  << cache->bits); i++ )
+    {
+        count += inorder_traverse(cache->cache_root[i], file);
+    }
     fprintf(file, "count = %" PRIu64 "\n", count);
                           
     fclose (file);
