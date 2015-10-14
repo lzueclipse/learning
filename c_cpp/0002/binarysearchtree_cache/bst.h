@@ -60,10 +60,6 @@ extern int32_t cache_slab_reclaim(cache_t *cache, relocator_func_t relocator);
 
 extern cache_bst_node_t* allocator_iterator_cache_node_first(cache_allocator_iterator_t *iter, cache_t *cache);
 extern cache_bst_node_t* allocator_iterator_cache_node_next(cache_allocator_iterator_t *iter);
-extern cache_bst_node_t* slot_iterator_cache_node_first(cache_bst_slot_iterator_t *iter, cache_t *cache, size_t cache_root_start_index, size_t cache_root_end_index);
-extern cache_bst_node_t* slot_iterator_cache_node_next(cache_bst_slot_iterator_t *iter);
-extern cache_bst_node_t* slot_iterator_cache_node_current(cache_bst_slot_iterator_t *iter);
-extern void slot_iterator_cache_node_delete(cache_bst_slot_iterator_t *iter);
 
 extern void cache_dump(cache_t *cache, const char *file_name);
 

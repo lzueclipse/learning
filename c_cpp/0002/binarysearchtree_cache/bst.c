@@ -25,7 +25,7 @@ static __inline__ cache_bst_node_t** get_next_cache_root_slot(cache_t *cache, ca
 }
 
 /*If the node exits, get the slot (pointer to location;
-/*Else get the slot (pointer to location) to store a new node (the tail of the linked list) */
+/*Else get the slot (pointer to location) to store a new node  */
 static cache_bst_node_t** get_slot_to_store(cache_bst_node_t **pn, const md5_digest_t *digest)
 {
     while(*pn)
@@ -139,7 +139,8 @@ cache_bst_node_t* cache_alloc(cache_t *cache, const md5_digest_t *digest)
         if(node == NULL)
             return NULL;
 
-        node->next = NULL;
+        node->left = NULL;
+        node->right = NULL;
         node->digest = *digest;
 
         cache->num_nodes++;
@@ -179,29 +180,63 @@ cache_bst_node_t* cache_insert(cache_t *cache, const md5_digest_t *digest, uint6
     //update dcid
     node->dcid = dcid;
 
-    //append the node to linked list tail
+    //append the node 
     *slot = node;
     return node;
 }
 
-static void cache_unlink_node(cache_t *cache, cache_bst_node_t **slot)
+/*
+ *
+ *       https://zh.wikipedia.org/wiki/%E4%BA%8C%E5%85%83%E6%90%9C%E5%B0%8B%E6%A8%B9
+ */
+static cache_bst_node_t* cache_unlink_node(cache_t *cache, cache_bst_node_t **slot)
 {
     cache_bst_node_t *node = *slot;
+    cache_bst_node_t *q, *s;
 
     if(node == NULL)
         return;
     
-    /* Delete "node" from the linked list */
-    if(node->next)
+    if(node->left == NULL && node->right == NULL)
     {
-        *slot = node->next;
+        /* Delete "node" from BST  */
+        *slot = NULL;
+    }
+    else if(node->left == NULL)
+    {
+        /* Delete "node" from BST */
+        *slot = node->right;
+    }
+    else if(node->right == NULL)
+    {
+        /* Delete "node" from BST */
+        *slot = node->left;
     }
     else
     {
-        *slot = NULL;
+        /* Swap "node" with "s" on BST */
+        /* Turn left, to the end of right */
+        s = node->left;
+        while(s->right)
+        {
+            q = s;
+            s = s->right;
+        }
+
+        node->digest = s->digest;
+        node->dcid = s->dcid;
+        
+        if(q != node)
+            q->right = s->left;
+        else
+            q->left = s->left;
+
+        //We do not delete "node", but delete "s"
+        node = s;
     }
 
-    node->next = NULL;
+    /*return the node to be deleted */
+    return node;
 }
 
 void cache_delete(cache_t *cache, const md5_digest_t *digest)
@@ -212,7 +247,10 @@ void cache_delete(cache_t *cache, const md5_digest_t *digest)
     if(node == NULL)
         return;
 
-    cache_unlink_node(cache, slot);
+    node = cache_unlink_node(cache, slot);
+    
+    if(node == NULL)
+        return;
 
     allocator_free(&(cache->allocator), node);
 }
@@ -255,112 +293,9 @@ cache_bst_node_t* allocator_iterator_cache_node_next(cache_allocator_iterator_t 
     return (cache_bst_node_t *)allocator_iterator_next(&iter->allocator_iter);
 }
 
-cache_bst_node_t* slot_iterator_cache_node_first(cache_bst_slot_iterator_t *iter, cache_t *cache, size_t cache_root_start_index, size_t cache_root_end_index)
-{
-    size_t cache_root_size = ((size_t) 1) << cache->bits;
-    size_t start_index = (cache_root_start_index < cache_root_size)?cache_root_start_index:cache_root_size;
-    size_t end_index = (cache_root_end_index < cache_root_size)?cache_root_end_index:cache_root_size;
-
-    iter->cache = cache;
-    iter->start = cache->cache_root + start_index ;
-    iter->stop = cache->cache_root + end_index;
-    iter->current_deleted = 0;
-
-    iter->current = get_next_cache_root_slot(cache, iter->start - 1 , iter->stop);
-
-
-    return (iter->current)? *(iter->current):NULL;
-}
-
-cache_bst_node_t* slot_iterator_cache_node_next(cache_bst_slot_iterator_t *iter)
-{
-    cache_bst_node_t *node, **start;
-    md5_digest_t *digest;
-
-    if(iter->current == NULL)
-        return NULL;
-
-    if(iter->current_deleted)
-    {
-        iter->current_deleted = 0;
-        return (*(iter->current));
-    }
-
-    node = *(iter->current);
-
-    if(node->next)
-    {
-        iter->current = &(node->next);
-        return (*(iter->current));
-    }
-
-    /*go down to next cache root*/
-    digest = &((*(iter->current))->digest);
-    start = get_cache_root_slot(iter->cache, digest);
-    iter->current = get_next_cache_root_slot(iter->cache, start, iter->stop);
-
-
-    return (iter->current)?*(iter->current):NULL;
-}
-
-cache_bst_node_t* slot_iterator_cache_node_current(cache_bst_slot_iterator_t *iter)
-{
-    if(iter->current_deleted || iter->current == NULL)
-        return NULL;
-    else
-        return *(iter->current);
-}
-
-/* delete the node, but do not disturb the iteration */
-void slot_iterator_cache_node_delete(cache_bst_slot_iterator_t *iter)
-{
-    cache_bst_node_t **tmp, *node;
-
-    if(iter->current_deleted || iter->current == NULL)
-        return;
-
-    tmp = iter->current;
-    node = *tmp;
-
-    if(node->next)
-    {
-        /* tricky */
-        /* "*tmp" equals with "(node's parent)->next"*/
-        /* Delete "node" from linked list */
-        *tmp = node->next;
-    }
-    else
-    {
-        /*move on the iterator */
-        slot_iterator_cache_node_next(iter);
-        /* tricky */
-        /* "*tmp" equals with "(node's parent)->next"*/
-        /* Delete "node" from linked list */
-        *tmp = NULL;
-    }
-
-    iter->current_deleted = 1;
-
-    allocator_free(&(iter->cache->allocator), node);
-    iter->cache->num_nodes--;
-}
-
-static int32_t slot_iterator_cache_node_slot_index(cache_bst_slot_iterator_t *iter)
-{
-    if(iter->current)
-    {
-        return get_digest_index(iter->cache, &((*(iter->current))->digest));
-    }
-    else
-    {
-        return iter->stop - iter->cache->cache_root;
-    }
-}
-
 void cache_dump(cache_t *cache, const char *file_name)
 {
     cache_allocator_iterator_t iter_alloc;
-    cache_bst_slot_iterator_t iter_slot;
     uint64_t count = 0;
 
     cache_bst_node_t *node;
@@ -383,11 +318,8 @@ void cache_dump(cache_t *cache, const char *file_name)
 
     count = 0;
     fprintf(file, "Dump by cache root:\n");
-    for(node = slot_iterator_cache_node_first(&iter_slot, cache, 0, ((size_t)-1)); node; node = slot_iterator_cache_node_next(&iter_slot))
-    {
-        count++;
-        fprintf(file, "dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
-    }
+    
+
     fprintf(file, "count = %" PRIu64 "\n", count);
                           
     fclose (file);

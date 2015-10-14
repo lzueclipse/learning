@@ -105,6 +105,13 @@ int main(int argc, char **argv)
         printf("Reclaim  slab total num = %" PRIu64 "\n", ++count);
     }while( cache_slab_reclaim(&cache, cache_relocate) == 0);
     output_top();
+    printf("---------------------------------------------------------------------------------------------\n");
+     
+
+    printf("Cache deinit\n");
+    cache_deinit(&cache);
+    output_top();
+    printf("---------------------------------------------------------------------------------------------\n");
 #endif
   
 #ifdef BST
@@ -191,6 +198,13 @@ int main(int argc, char **argv)
         printf("Reclaim  slab total num = %" PRIu64 "\n", ++count);
     }while( cache_slab_reclaim(&cache, cache_relocate) == 0);
     output_top();
+    printf("---------------------------------------------------------------------------------------------\n");
+    
+    
+    printf("Cache deinit\n");
+    cache_deinit(&cache);
+    output_top();
+    printf("---------------------------------------------------------------------------------------------\n");
 #endif
 
 
