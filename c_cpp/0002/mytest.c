@@ -161,6 +161,8 @@ int main(int argc, char **argv)
         {
             printf("Not found in cache, i = %" PRIu64 "\n", i);
         }
+                 
+        printf("found in cache, i = %" PRIu64 ", node->dcid = %" PRIu64 "\n", i, node->dcid);
     }
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
@@ -177,7 +179,7 @@ int main(int argc, char **argv)
     my_start = time(NULL);
     for(i = 0; i < MAXNUM/2; ++i) {
         uint64_to_md5(i, &my_fp);
-        cache_delete(&cache, &my_fp);
+        //cache_delete(&cache, &my_fp);
     }
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);

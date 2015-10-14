@@ -216,6 +216,7 @@ static cache_bst_node_t* cache_unlink_node(cache_t *cache, cache_bst_node_t **sl
     {
         /* Swap "node" with "s" on BST */
         /* Turn left, to the end of right */
+        q = node;
         s = node->left;
         while(s->right)
         {
@@ -299,13 +300,27 @@ uint64_t inorder_traverse(cache_bst_node_t *node, FILE *file)
     if(node != NULL && file != NULL)
     {
         count += inorder_traverse(node->left, file);
+        count++;
         fprintf(file, "dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
-        count += inorder_traverse(node->left, file);
+        count += inorder_traverse(node->right, file);
     }
 
     return count;
 }
 
+uint64_t preorder_traverse(cache_bst_node_t *node, FILE *file)
+{
+    uint64_t count = 0;
+    if(node != NULL && file != NULL)
+    {
+        count++;
+        fprintf(file, "dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
+        count += preorder_traverse(node->left, file);
+        count += preorder_traverse(node->right, file);
+    }
+
+    return count;
+}
 void cache_dump(cache_t *cache, const char *file_name)
 {
     cache_allocator_iterator_t iter_alloc;
@@ -331,10 +346,20 @@ void cache_dump(cache_t *cache, const char *file_name)
 
     count = 0;
     size_t i = 0;
-    fprintf(file, "Dump by cache root:\n");
+    fprintf(file, "Dump by cache root inorder:\n");
     for(i = 0; i < ( ((size_t)1)  << cache->bits); i++ )
     {
         count += inorder_traverse(cache->cache_root[i], file);
+        fprintf(file, "*********\n");
+    }
+    fprintf(file, "count = %" PRIu64 "\n\n\n", count);
+                          
+    count = 0;
+    fprintf(file, "Dump by cache root preorder:\n");
+    for(i = 0; i < ( ((size_t)1)  << cache->bits); i++ )
+    {
+        count += preorder_traverse(cache->cache_root[i], file);
+        fprintf(file, "*********\n");
     }
     fprintf(file, "count = %" PRIu64 "\n", count);
                           
