@@ -98,6 +98,7 @@ int main(int argc, char **argv)
     printf("---------------------------------------------------------------------------------------------\n");
 
 
+#if 0
     printf("Reclaim some slabs:\n");
     uint64_t count = 0;
     do
@@ -106,7 +107,8 @@ int main(int argc, char **argv)
     }while( cache_slab_reclaim(&cache, cache_relocate) == 0);
     output_top();
     printf("---------------------------------------------------------------------------------------------\n");
-     
+#endif 
+
     printf("Cache dump to file dump3.txt:\n");
     cache_dump(&cache, "dump3.txt");
     printf("---------------------------------------------------------------------------------------------\n");
@@ -119,7 +121,7 @@ int main(int argc, char **argv)
   
 #ifdef BST
     cache_bst_node_t *node, **slot;
-    ret = cache_init(&cache, 2, 2 * MEGABYTE, sizeof(cache_bst_node_t), MAXNUM + 100);
+    ret = cache_init(&cache, 16, 2 * MEGABYTE, sizeof(cache_bst_node_t), MAXNUM + 100);
     if(ret != CACHE_INIT_OK)
     {
         printf("cache_init fails\n");

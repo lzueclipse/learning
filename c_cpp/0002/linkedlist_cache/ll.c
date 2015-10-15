@@ -251,112 +251,10 @@ cache_ll_node_t* allocator_iterator_cache_node_next(cache_allocator_iterator_t *
     return (cache_ll_node_t *)allocator_iterator_next(&iter->allocator_iter);
 }
 
-cache_ll_node_t* slot_iterator_cache_node_first(cache_ll_slot_iterator_t *iter, cache_t *cache, size_t cache_root_start_index, size_t cache_root_end_index)
-{
-    size_t cache_root_size = ((size_t) 1) << cache->bits;
-    size_t start_index = (cache_root_start_index < cache_root_size)?cache_root_start_index:cache_root_size;
-    size_t end_index = (cache_root_end_index < cache_root_size)?cache_root_end_index:cache_root_size;
-
-    iter->cache = cache;
-    iter->start = cache->cache_root + start_index ;
-    iter->stop = cache->cache_root + end_index;
-    iter->current_deleted = 0;
-
-    iter->current = get_next_cache_root_slot(cache, iter->start - 1 , iter->stop);
-
-
-    return (iter->current)? *(iter->current):NULL;
-}
-
-cache_ll_node_t* slot_iterator_cache_node_next(cache_ll_slot_iterator_t *iter)
-{
-    cache_ll_node_t *node, **start;
-    md5_digest_t *digest;
-
-    if(iter->current == NULL)
-        return NULL;
-
-    if(iter->current_deleted)
-    {
-        iter->current_deleted = 0;
-        return (*(iter->current));
-    }
-
-    node = *(iter->current);
-
-    if(node->next)
-    {
-        iter->current = &(node->next);
-        return (*(iter->current));
-    }
-
-    /*go down to next cache root*/
-    digest = &((*(iter->current))->digest);
-    start = get_cache_root_slot(iter->cache, digest);
-    iter->current = get_next_cache_root_slot(iter->cache, start, iter->stop);
-
-
-    return (iter->current)?*(iter->current):NULL;
-}
-
-cache_ll_node_t* slot_iterator_cache_node_current(cache_ll_slot_iterator_t *iter)
-{
-    if(iter->current_deleted || iter->current == NULL)
-        return NULL;
-    else
-        return *(iter->current);
-}
-
-/* delete the node, but do not disturb the iteration */
-void slot_iterator_cache_node_delete(cache_ll_slot_iterator_t *iter)
-{
-    cache_ll_node_t **tmp, *node;
-
-    if(iter->current_deleted || iter->current == NULL)
-        return;
-
-    tmp = iter->current;
-    node = *tmp;
-
-    if(node->next)
-    {
-        /* tricky */
-        /* "*tmp" equals with "(node's parent)->next"*/
-        /* Delete "node" from linked list */
-        *tmp = node->next;
-    }
-    else
-    {
-        /*move on the iterator */
-        slot_iterator_cache_node_next(iter);
-        /* tricky */
-        /* "*tmp" equals with "(node's parent)->next"*/
-        /* Delete "node" from linked list */
-        *tmp = NULL;
-    }
-
-    iter->current_deleted = 1;
-
-    allocator_free(&(iter->cache->allocator), node);
-    iter->cache->num_nodes--;
-}
-
-static int32_t slot_iterator_cache_node_slot_index(cache_ll_slot_iterator_t *iter)
-{
-    if(iter->current)
-    {
-        return get_digest_index(iter->cache, &((*(iter->current))->digest));
-    }
-    else
-    {
-        return iter->stop - iter->cache->cache_root;
-    }
-}
 
 void cache_dump(cache_t *cache, const char *file_name)
 {
     cache_allocator_iterator_t iter_alloc;
-    cache_ll_slot_iterator_t iter_slot;
     uint64_t count = 0;
 
     cache_ll_node_t *node;
@@ -377,12 +275,22 @@ void cache_dump(cache_t *cache, const char *file_name)
     }
     fprintf(file, "count = %" PRIu64 "\n\n\n", count);
 
+    size_t i = 0;
     count = 0;
     fprintf(file, "Dump by cache root:\n");
-    for(node = slot_iterator_cache_node_first(&iter_slot, cache, 0, ((size_t)-1)); node; node = slot_iterator_cache_node_next(&iter_slot))
+    for(i = 0; i < ( ((size_t)1)  << cache->bits); i++ )
     {
-        count++;
-        fprintf(file, "dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
+        fprintf(file, "cache_root[%u]:\n", i);
+        fprintf(file, "...........\n");
+
+        node = cache->cache_root[i];
+
+        while(node != NULL)
+        {
+            count++;
+            fprintf(file, "dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
+            node = node->next;
+        }
     }
     fprintf(file, "count = %" PRIu64 "\n", count);
                           

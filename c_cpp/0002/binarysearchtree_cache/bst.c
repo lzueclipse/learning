@@ -354,7 +354,7 @@ void cache_dump(cache_t *cache, const char *file_name)
     fprintf(file, "Dump by cache root inorder:\n");
     for(i = 0; i < ( ((size_t)1)  << cache->bits); i++ )
     {
-        fprintf(file, "cache_root[%u]\n", i);
+        fprintf(file, "cache_root[%u]:\n", i);
         fprintf(file, "...........\n");
         count += inorder_traverse(cache->cache_root[i], file);
     }
@@ -364,7 +364,7 @@ void cache_dump(cache_t *cache, const char *file_name)
     fprintf(file, "Dump by cache root preorder:\n");
     for(i = 0; i < ( ((size_t)1)  << cache->bits); i++ )
     {
-        fprintf(file, "cache_root[%u]\n", i);
+        fprintf(file, "cache_root[%u]:\n", i);
         fprintf(file, "...........\n");
         count += preorder_traverse(cache->cache_root[i], file);
     }
