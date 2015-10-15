@@ -216,7 +216,7 @@ void cache_delete(cache_t *cache, const md5_digest_t *digest)
 void cache_relocate(const void *source, void *dest, size_t block_size, void *user_data)
 {
     md5_digest_t *digest;
-    cache_ll_node_t *node, **tmp;
+    cache_ll_node_t *node, **slot;
     cache_t *cache;
  
     /*copy to "dest", include data and "next pointer" */
@@ -225,13 +225,14 @@ void cache_relocate(const void *source, void *dest, size_t block_size, void *use
     digest = &( ((cache_ll_node_t *)source)->digest );
     cache = (cache_t *)user_data;
 
-    node = *(cache_lookup_slot(cache, digest));
+    slot = cache_lookup_slot(cache, digest);
 
-    tmp = &node;
-    /* tricky */
-    /* "*tmp" equals with "(node's parent)->next"*/
-    /* Relocate "node" from "source memory" to "dest memory". */
-    *tmp = dest;
+    if(node == NULL)
+        printf("not find\n");
+    
+    //printf("relocat %p ->  %p ,  dcid = %u ,", source, dest, ((cache_bst_node_t *)source)->dcid);
+
+    *slot = dest;
 }
 
 int32_t cache_slab_reclaim(cache_t *cache, relocator_func_t relocator)

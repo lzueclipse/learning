@@ -346,7 +346,7 @@ int32_t allocator_slab_reclaim(allocator_t *allocator,
 
     allocator_slab_delete(allocator, slab);
 
-    //printf("slab = %p, slab end = %p, block = %p\n ", (char *)slab, (char *)slab + allocator->slab_size, (char *)slab + allocator->slab_size - allocator->block_size);
+    printf("slab = %p, slab end = %p, block = %p\n ", (char *)slab, (char *)slab + allocator->slab_size, (char *)slab + allocator->slab_size - allocator->block_size);
 
     return 0;
 }
