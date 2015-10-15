@@ -141,7 +141,7 @@ static __inline__ void align_to_pow2(uint64_t *size, uint64_t pow2)
 
 static __inline__ uint64_t get_digest_index(cache_t *cache, const md5_digest_t& digest)
 {
-    return digest.digest_uchar[12] & cache->mask;
+    return ( (*((uint32_t*)(&(digest.digest_uchar[12])))) & cache->mask );
 }
 
 static __inline__ cache_node_t* get_root_node(cache_t *cache, const md5_digest_t& digest)
