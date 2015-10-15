@@ -97,7 +97,7 @@ typedef struct cache
 extern void display_mallinfo();
 extern void output_top();
 extern void uint64_to_md5(uint64_t input, md5_digest_t &output );
-extern int32_t md5_digest_compare(const md5_digest_t &a, const md5_digest_t &b);
+extern int64_t md5_digest_compare(const md5_digest_t &a, const md5_digest_t &b);
 
 extern cache_t* cache_create(uint64_t area_size, uint64_t root_bits);
 extern void cache_destroy(cache_t *cache);
