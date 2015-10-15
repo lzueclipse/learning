@@ -3,7 +3,7 @@
 /* hash algorithm */
 static __inline__ uint32_t get_digest_index(const cache_t *cache, const md5_digest_t *digest)
 {
-    return ((uint32_t)digest->digest_uchar[8]) & cache->mask;
+    return ( (*((uint32_t*)(&(digest->digest_uchar[8])))) & cache->mask );
 }
 
 /* root node's slot (pointer to location)*/
@@ -329,7 +329,7 @@ uint64_t preorder_traverse(cache_bst_node_t *node, FILE *file)
 void cache_dump(cache_t *cache, const char *file_name)
 {
     cache_allocator_iterator_t iter_alloc;
-    uint64_t count = 0;
+    uint64_t count_total = 0;
 
     cache_bst_node_t *node;
 
@@ -344,31 +344,41 @@ void cache_dump(cache_t *cache, const char *file_name)
     fprintf(file, "Dump by slab:\n");
     for(node = allocator_iterator_cache_node_first(&iter_alloc, cache); node; node = allocator_iterator_cache_node_next(&iter_alloc))
     {
-        count++;
+        count_total++;
         fprintf(file, "dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
     }
-    fprintf(file, "count = %" PRIu64 "\n\n\n", count);
+    fprintf(file, "count_total = %" PRIu64 "\n\n\n", count_total);
 
-    count = 0;
+    count_total = 0;
     size_t i = 0;
     fprintf(file, "Dump by cache root inorder:\n");
     for(i = 0; i < ( ((size_t)1)  << cache->bits); i++ )
     {
+        uint64_t count_for_this_cache_root = 0;
         fprintf(file, "............................\n");
         fprintf(file, "cache_root[%u]:\n", i);
-        count += inorder_traverse(cache->cache_root[i], file);
+        count_for_this_cache_root = inorder_traverse(cache->cache_root[i], file);
+
+        count_total += count_for_this_cache_root;
+    
+        fprintf(file, "count_for_this_cache_root[%u] = %" PRIu64 "\n", i, count_for_this_cache_root);
     }
-    fprintf(file, "count = %" PRIu64 "\n\n\n", count);
+    fprintf(file, "count_total = %" PRIu64 "\n\n\n", count_total);
                           
-    count = 0;
+    count_total = 0;
     fprintf(file, "Dump by cache root preorder:\n");
     for(i = 0; i < ( ((size_t)1)  << cache->bits); i++ )
     {
+        uint64_t count_for_this_cache_root = 0;
         fprintf(file, "............................\n");
         fprintf(file, "cache_root[%u]:\n", i);
-        count += preorder_traverse(cache->cache_root[i], file);
+        count_for_this_cache_root = preorder_traverse(cache->cache_root[i], file);
+
+        count_total += count_for_this_cache_root;
+    
+        fprintf(file, "count_for_this_cache_root[%u] = %" PRIu64 "\n", i, count_for_this_cache_root);
     }
-    fprintf(file, "count = %" PRIu64 "\n", count);
+    fprintf(file, "count_total = %" PRIu64 "\n", count_total);
                           
     fclose (file);
 }

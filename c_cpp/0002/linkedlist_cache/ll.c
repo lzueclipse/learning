@@ -256,7 +256,7 @@ cache_ll_node_t* allocator_iterator_cache_node_next(cache_allocator_iterator_t *
 void cache_dump(cache_t *cache, const char *file_name)
 {
     cache_allocator_iterator_t iter_alloc;
-    uint64_t count = 0;
+    uint64_t count_total = 0;
 
     cache_ll_node_t *node;
 
@@ -271,13 +271,13 @@ void cache_dump(cache_t *cache, const char *file_name)
     fprintf(file, "Dump by slab:\n");
     for(node = allocator_iterator_cache_node_first(&iter_alloc, cache); node; node = allocator_iterator_cache_node_next(&iter_alloc))
     {
-        count++;
+        count_total++;
         fprintf(file, "dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
     }
-    fprintf(file, "count = %" PRIu64 "\n\n\n", count);
+    fprintf(file, "count_total = %" PRIu64 "\n\n\n", count_total);
 
     size_t i = 0;
-    count = 0;
+    count_total = 0;
     fprintf(file, "Dump by cache root:\n");
     for(i = 0; i < ( ((size_t)1)  << cache->bits); i++ )
     {
@@ -286,14 +286,18 @@ void cache_dump(cache_t *cache, const char *file_name)
 
         node = cache->cache_root[i];
 
+        uint64_t count_for_this_cache_root = 0;
         while(node != NULL)
         {
-            count++;
+            count_for_this_cache_root++;
             fprintf(file, "dcid = %" PRIu64 ", digest[8] = %u\n", node->dcid, node->digest.digest_uchar[8]);
             node = node->next;
         }
+
+        count_total += count_for_this_cache_root;
+        fprintf(file, "count_for_this_cache_root[%u] = %" PRIu64 "\n", i, count_for_this_cache_root);
     }
-    fprintf(file, "count = %" PRIu64 "\n", count);
+    fprintf(file, "count_total = %" PRIu64 "\n", count_total);
                           
     fclose (file);
 }
