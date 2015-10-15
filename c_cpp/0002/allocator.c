@@ -42,6 +42,25 @@ void uint64_to_md5(uint64_t input, md5_digest_t *output )
     MD5_Final(output->digest_uchar,&ctx);
 }
 
+/* 
+ * 0  -- equal
+ * 1  -- not equal
+ */
+int64_t md5_digest_equal(const md5_digest_t *a, const md5_digest_t *b)
+{
+    size_t i;
+    int64_t res = 0;
+
+    for(i = 0; i < (sizeof(md5_digest_t)/sizeof(uint32_t)); i++)
+    {
+        if(a->digest_uint[i] != b->digest_uint[i])
+        {
+            res = 1;
+            break;
+        }
+    }
+    return res;
+}
 
 /*
  * 0  -- equal
@@ -346,7 +365,7 @@ int32_t allocator_slab_reclaim(allocator_t *allocator,
 
     allocator_slab_delete(allocator, slab);
 
-    printf("slab = %p, slab end = %p, block = %p\n ", (char *)slab, (char *)slab + allocator->slab_size, (char *)slab + allocator->slab_size - allocator->block_size);
+    //printf("slab = %p, slab end = %p, block = %p\n ", (char *)slab, (char *)slab + allocator->slab_size, (char *)slab + allocator->slab_size - allocator->block_size);
 
     return 0;
 }

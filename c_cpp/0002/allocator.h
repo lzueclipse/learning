@@ -17,12 +17,12 @@
 #include <sys/resource.h>
 
 #define LEN 2048
-#define MAXNUM  26
-//#define MAXNUM  500000
+//#define MAXNUM  26
+#define MAXNUM  1000000
 #define SLEEP 15
 
-#define MEGABYTE (32)
-//#define MEGABYTE (1024 * 1024)
+//#define MEGABYTE (32)
+#define MEGABYTE (1024 * 1024)
 
 #define CACHE_INIT_OK 0
 #define CACHE_INIT_ERROR -1
@@ -87,6 +87,7 @@ typedef struct allocator_iterator
 extern void output_top();
 extern void uint64_to_md5(uint64_t input, md5_digest_t *output );
 extern int64_t md5_digest_compare(const md5_digest_t *a, const md5_digest_t *b);
+extern int64_t md5_digest_equal(const md5_digest_t *a, const md5_digest_t *b);
 extern void set_stack_limit();
 extern void align_to_pow2(uint64_t *size, uint64_t pow2);
 

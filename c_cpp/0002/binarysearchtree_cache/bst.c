@@ -112,7 +112,7 @@ int32_t cache_init(cache_t *cache, uint64_t bits, size_t slab_size, size_t block
     cache->allocator.free_blocks = NULL;
     cache->allocator.free_blocks_num = 0;
 
-    //printf("slab_size = %" PRIu64 ", block_size = %" PRIu64 ", blocks_per_slab = %" PRIu64 "\n", slab_size, block_size, cache->allocator.blocks_per_slab);
+    printf("slab_size = %" PRIu64 ", block_size = %" PRIu64 ", blocks_per_slab = %" PRIu64 ", cache_root_num = %" PRIu64 "\n", slab_size, block_size, cache->allocator.blocks_per_slab, cache->mask);
 
     return CACHE_INIT_OK;
 }
