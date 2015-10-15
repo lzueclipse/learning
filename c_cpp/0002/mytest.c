@@ -107,6 +107,9 @@ int main(int argc, char **argv)
     output_top();
     printf("---------------------------------------------------------------------------------------------\n");
      
+    printf("Cache dump to file dump3.txt:\n");
+    cache_dump(&cache, "dump3.txt");
+    printf("---------------------------------------------------------------------------------------------\n");
 
     printf("Cache deinit\n");
     cache_deinit(&cache);
@@ -116,7 +119,7 @@ int main(int argc, char **argv)
   
 #ifdef BST
     cache_bst_node_t *node, **slot;
-    ret = cache_init(&cache, 1, 2 * MEGABYTE, sizeof(cache_bst_node_t), MAXNUM + 100);
+    ret = cache_init(&cache, 2, 2 * MEGABYTE, sizeof(cache_bst_node_t), MAXNUM + 100);
     if(ret != CACHE_INIT_OK)
     {
         printf("cache_init fails\n");
@@ -149,6 +152,7 @@ int main(int argc, char **argv)
     my_start = time(NULL);
     for(i = 0; i < MAXNUM; ++i) {
         uint64_to_md5(i, &my_fp);
+        //printf("dcid = %u, %u, %u, %u, %u\n",i, my_fp.digest_uint[0], my_fp.digest_uint[1], my_fp.digest_uint[2], my_fp.digest_uint[3]);
         slot = cache_lookup_slot(&cache, &my_fp);
         node = *slot;
 
@@ -161,8 +165,6 @@ int main(int argc, char **argv)
         {
             printf("Not found in cache, i = %" PRIu64 "\n", i);
         }
-                 
-        printf("found in cache, i = %" PRIu64 ", node->dcid = %" PRIu64 "\n", i, node->dcid);
     }
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
@@ -179,7 +181,7 @@ int main(int argc, char **argv)
     my_start = time(NULL);
     for(i = 0; i < MAXNUM/2; ++i) {
         uint64_to_md5(i, &my_fp);
-        //cache_delete(&cache, &my_fp);
+        cache_delete(&cache, &my_fp);
     }
     my_end = time(NULL);
     seconds = difftime(my_end, my_start);
@@ -191,7 +193,7 @@ int main(int argc, char **argv)
     printf("Cache dump to file dump2.txt:\n");
     cache_dump(&cache, "dump2.txt");
     printf("---------------------------------------------------------------------------------------------\n");
-
+    
 
     printf("Reclaim some slabs:\n");
     uint64_t count = 0;
@@ -202,6 +204,10 @@ int main(int argc, char **argv)
     output_top();
     printf("---------------------------------------------------------------------------------------------\n");
     
+    printf("Cache dump to file dump3.txt:\n");
+    cache_dump(&cache, "dump3.txt");
+    printf("---------------------------------------------------------------------------------------------\n");
+
     
     printf("Cache deinit\n");
     cache_deinit(&cache);

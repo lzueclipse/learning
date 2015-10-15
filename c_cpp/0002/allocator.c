@@ -48,25 +48,25 @@ void uint64_to_md5(uint64_t input, md5_digest_t *output )
  * >0 -- more than
  * <0 -- less than
  */
-int32_t md5_digest_compare(const md5_digest_t *a, const md5_digest_t *b)
+int64_t md5_digest_compare(const md5_digest_t *a, const md5_digest_t *b)
 {
-    int32_t res = 0;
+    int64_t res = 0;
 
     if(a->digest_uint[0] != b->digest_uint[0])
     {
-        res = (int32_t)a->digest_uint[0] - (int32_t)b->digest_uint[0];
+        res = (int64_t)a->digest_uint[0] - (int64_t)b->digest_uint[0];
     }
     else if(a->digest_uint[1] != b->digest_uint[1])
     {
-        res = (int32_t)a->digest_uint[1] - (int32_t)b->digest_uint[1];
+        res = (int64_t)a->digest_uint[1] - (int64_t)b->digest_uint[1];
     }
     else if(a->digest_uint[2] != b->digest_uint[2])
     {
-        res = (int32_t)a->digest_uint[2] - (int32_t)b->digest_uint[2];
+        res = (int64_t)a->digest_uint[2] - (int64_t)b->digest_uint[2];
     }
     else if(a->digest_uint[3] != b->digest_uint[3])
     {
-        res = (int32_t)a->digest_uint[3] - (int32_t)b->digest_uint[3];
+        res = (int64_t)a->digest_uint[3] - (int64_t)b->digest_uint[3];
     }
     
     return res;
@@ -345,6 +345,8 @@ int32_t allocator_slab_reclaim(allocator_t *allocator,
     }
 
     allocator_slab_delete(allocator, slab);
+
+    //printf("slab = %p, slab end = %p, block = %p\n ", (char *)slab, (char *)slab + allocator->slab_size, (char *)slab + allocator->slab_size - allocator->block_size);
 
     return 0;
 }

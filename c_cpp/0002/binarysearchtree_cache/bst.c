@@ -30,7 +30,7 @@ static cache_bst_node_t** get_slot_to_store(cache_bst_node_t **pn, const md5_dig
 {
     while(*pn)
     {
-        int32_t ret = md5_digest_compare( &((*pn)->digest), digest);
+        int64_t ret = md5_digest_compare( &((*pn)->digest), digest);
 
         if(ret == 0)
         {
@@ -259,22 +259,27 @@ void cache_delete(cache_t *cache, const md5_digest_t *digest)
 void cache_relocate(const void *source, void *dest, size_t block_size, void *user_data)
 {
     md5_digest_t *digest;
-    cache_bst_node_t *node, **tmp;
+    cache_bst_node_t *node, **slot;
     cache_t *cache;
  
-    /*copy to "dest", include data and "next pointer" */
+    /*copy to "dest" */
     memcpy(dest, source, block_size);
     
     digest = &( ((cache_bst_node_t *)source)->digest );
     cache = (cache_t *)user_data;
 
-    node = *(cache_lookup_slot(cache, digest));
+    slot = cache_lookup_slot(cache, digest);
 
-    tmp = &node;
-    /* tricky */
-    /* "*tmp" equals with "(node's parent)->next"*/
+    node = *slot;
+
+    if(node == NULL)
+        printf("not find\n");
+
+    //printf("relocat %p ->  %p ,  dcid = %u ,", source, dest, ((cache_bst_node_t *)source)->dcid);
+
     /* Relocate "node" from "source memory" to "dest memory". */
-    *tmp = dest;
+    *slot = (cache_bst_node_t *)dest;
+
 }
 
 int32_t cache_slab_reclaim(cache_t *cache, relocator_func_t relocator)
@@ -349,8 +354,9 @@ void cache_dump(cache_t *cache, const char *file_name)
     fprintf(file, "Dump by cache root inorder:\n");
     for(i = 0; i < ( ((size_t)1)  << cache->bits); i++ )
     {
+        fprintf(file, "cache_root[%u]\n", i);
+        fprintf(file, "...........\n");
         count += inorder_traverse(cache->cache_root[i], file);
-        fprintf(file, "*********\n");
     }
     fprintf(file, "count = %" PRIu64 "\n\n\n", count);
                           
@@ -358,8 +364,9 @@ void cache_dump(cache_t *cache, const char *file_name)
     fprintf(file, "Dump by cache root preorder:\n");
     for(i = 0; i < ( ((size_t)1)  << cache->bits); i++ )
     {
+        fprintf(file, "cache_root[%u]\n", i);
+        fprintf(file, "...........\n");
         count += preorder_traverse(cache->cache_root[i], file);
-        fprintf(file, "*********\n");
     }
     fprintf(file, "count = %" PRIu64 "\n", count);
                           
