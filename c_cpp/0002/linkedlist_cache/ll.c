@@ -280,8 +280,8 @@ void cache_dump(cache_t *cache, const char *file_name)
     fprintf(file, "Dump by cache root:\n");
     for(i = 0; i < ( ((size_t)1)  << cache->bits); i++ )
     {
+        fprintf(file, "............................\n");
         fprintf(file, "cache_root[%u]:\n", i);
-        fprintf(file, "...........\n");
 
         node = cache->cache_root[i];
 

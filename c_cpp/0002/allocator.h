@@ -17,12 +17,12 @@
 #include <sys/resource.h>
 
 #define LEN 2048
-//#define MAXNUM  26
-#define MAXNUM  500000
+#define MAXNUM  26
+//#define MAXNUM  500000
 #define SLEEP 15
 
-//#define MEGABYTE (32)
-#define MEGABYTE (1024 * 1024)
+#define MEGABYTE (32)
+//#define MEGABYTE (1024 * 1024)
 
 #define CACHE_INIT_OK 0
 #define CACHE_INIT_ERROR -1

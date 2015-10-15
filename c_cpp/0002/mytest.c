@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 
 #ifdef LINKEDLIST
     cache_ll_node_t *node, **slot;
-    ret = cache_init(&cache, 16, 2 * MEGABYTE, sizeof(cache_ll_node_t), MAXNUM + 100);
+    ret = cache_init(&cache, 2, 2 * MEGABYTE, sizeof(cache_ll_node_t), MAXNUM + 100);
     if(ret != CACHE_INIT_OK)
     {
         printf("cache_init fails\n");
@@ -92,6 +92,27 @@ int main(int argc, char **argv)
     output_top();
     printf("---------------------------------------------------------------------------------------------\n");
     
+    my_start = time(NULL);
+    for(i = 0; i < MAXNUM; ++i) {
+        uint64_to_md5(i, &my_fp);
+        slot = cache_lookup_slot(&cache, &my_fp);
+        node = *slot;
+
+        if(node != NULL)
+        {
+            if(i != node->dcid)
+                 printf("Not found in cache, i = %" PRIu64 ", node->dcid = %" PRIu64 "\n", i, node->dcid);
+        }
+        else
+        {
+            printf("Not found in cache, i = %" PRIu64 "\n", i);
+        }
+    }
+    my_end = time(NULL);
+    seconds = difftime(my_end, my_start);
+    printf("Lookup %" PRIu64 " FPs in cache, cost time = %.f seconds\n", MAXNUM, seconds);
+    output_top();
+    printf("---------------------------------------------------------------------------------------------\n");
 
     printf("Cache dump to file dump2.txt:\n");
     cache_dump(&cache, "dump2.txt");
@@ -107,7 +128,8 @@ int main(int argc, char **argv)
     }while( cache_slab_reclaim(&cache, cache_relocate) == 0);
     output_top();
     printf("---------------------------------------------------------------------------------------------\n");
-#endif 
+#endif
+
 
     printf("Cache dump to file dump3.txt:\n");
     cache_dump(&cache, "dump3.txt");
