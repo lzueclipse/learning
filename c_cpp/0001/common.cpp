@@ -84,25 +84,25 @@ void uint64_to_md5(uint64_t input, md5_digest_t &output )
 }
 
 
-int32_t md5_digest_compare(const md5_digest_t &a, const md5_digest_t &b)
+int64_t md5_digest_compare(const md5_digest_t &a, const md5_digest_t &b)
 {
-    int32_t res = 0;
+    int64_t res = 0;
 
     if(a.digest_uint[0] != b.digest_uint[0])
     {
-        res = (int32_t)a.digest_uint[0] - (int32_t)b.digest_uint[0];
+        res = (int64_t)a.digest_uint[0] - (int64_t)b.digest_uint[0];
     }
     else if(a.digest_uint[1] != b.digest_uint[1])
     {
-        res = (int32_t)a.digest_uint[1] - (int32_t)b.digest_uint[1];
+        res = (int64_t)a.digest_uint[1] - (int64_t)b.digest_uint[1];
     }
     else if(a.digest_uint[2] != b.digest_uint[2])
     {
-        res = (int32_t)a.digest_uint[2] - (int32_t)b.digest_uint[2];
+        res = (int64_t)a.digest_uint[2] - (int64_t)b.digest_uint[2];
     }
     else if(a.digest_uint[3] != b.digest_uint[3])
     {
-        res = (int32_t)a.digest_uint[3] - (int32_t)b.digest_uint[3];
+        res = (int64_t)a.digest_uint[3] - (int64_t)b.digest_uint[3];
     }
     
     return res;
@@ -364,7 +364,7 @@ void cache_destroy(cache_t *cache)
 
 int32_t cache_add(cache_t *cache, const md5_digest_t& digest, uint64_t dcid)
 {
-    int32_t compare;
+    int64_t compare;
     cache_node_t *node;
     int32_t status = CACHE_OK;
 
@@ -436,7 +436,7 @@ int32_t cache_add(cache_t *cache, const md5_digest_t& digest, uint64_t dcid)
 
 int32_t cache_exists(cache_t *cache, const md5_digest_t digest, uint64_t &dcid)
 {
-    int32_t compare;
+    int64_t compare;
     cache_node_t *node;
 
     if(cache == NULL || cache->magic != CACHE_MAGIC)
