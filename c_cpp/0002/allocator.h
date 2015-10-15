@@ -17,7 +17,7 @@
 #include <sys/resource.h>
 
 #define LEN 2048
-#define MAXNUM  800000
+#define MAXNUM  5000000
 #define SLEEP 15
 
 #define MEGABYTE (1024 * 1024)

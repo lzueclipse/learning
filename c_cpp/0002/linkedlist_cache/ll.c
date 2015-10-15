@@ -3,7 +3,7 @@
 /* hash algorithm */
 static __inline__ uint32_t get_digest_index(const cache_t *cache, const md5_digest_t *digest)
 {
-    return ((uint32_t)digest->digest_uchar[8]) & cache->mask;
+    return ( (*((uint32_t*)(&(digest->digest_uchar[8])))) & cache->mask );
 }
 
 /* root node's slot (pointer to location)*/
