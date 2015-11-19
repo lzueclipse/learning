@@ -65,6 +65,7 @@ IPV6_PRIVACY="no"
 
 ####1.5 Clone出另外5台虚拟机，并配置IP地址，host name
 简单，略去
+
 所以最终，6台虚拟机如下：
 
 | hostname   | cpu     | memory   | hard disk       | eth0 IP        |
@@ -125,7 +126,7 @@ yum install ceph-deploy
 [node1][DEBUG ] find the location of an executable
 [node1][INFO  ] Running command: /usr/sbin/ip link show
 [node1][INFO  ] Running command: /usr/sbin/ip addr show
-[node1][DEBUG ] IP addresses found: ['10.200.128.81', '192.168.29.191']
+[node1][DEBUG ] IP addresses found: ['10.200.128.81']
 [ceph_deploy.new][DEBUG ] Resolving host node1
 [ceph_deploy.new][DEBUG ] Monitor node1 at 10.200.128.81
 [ceph_deploy.new][DEBUG ] Monitor initial members are ['node1']
