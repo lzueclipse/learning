@@ -1581,72 +1581,10 @@ node2:
 [node2][INFO  ] monitor: mon.node2 is running
 ```
 
-node3:
+node3(log略):
 
 ```
-[root@node1 ~]# ceph-deploy mon add node2
-[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
-[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy mon add node2
-[ceph_deploy.mon][INFO  ] ensuring configuration of new mon host: node2
-[ceph_deploy.admin][DEBUG ] Pushing admin keys and conf to node2
-[node2][DEBUG ] connected to host: node2
-[node2][DEBUG ] detect platform information from remote host
-[node2][DEBUG ] detect machine type
-[node2][DEBUG ] write cluster configuration to /etc/ceph/{cluster}.conf
-[ceph_deploy.mon][DEBUG ] Adding mon to cluster ceph, host node2
-[ceph_deploy.mon][DEBUG ] using mon address by resolving host: 10.200.128.82
-[ceph_deploy.mon][DEBUG ] detecting platform for host node2 ...
-[node2][DEBUG ] connected to host: node2
-[node2][DEBUG ] detect platform information from remote host
-[node2][DEBUG ] detect machine type
-[ceph_deploy.mon][INFO  ] distro info: CentOS Linux 7.1.1503 Core
-[node2][DEBUG ] determining if provided host has same hostname in remote
-[node2][DEBUG ] get remote short hostname
-[node2][DEBUG ] adding mon to node2
-[node2][DEBUG ] get remote short hostname
-[node2][DEBUG ] write cluster configuration to /etc/ceph/{cluster}.conf
-[node2][DEBUG ] create the mon path if it does not exist
-[node2][DEBUG ] checking for done path: /var/lib/ceph/mon/ceph-node2/done
-[node2][DEBUG ] create a done file to avoid re-doing the mon deployment
-[node2][DEBUG ] create the init path if it does not exist
-[node2][INFO  ] Running command: ceph-mon -i node2 --public-addr 10.200.128.82
-[node2][INFO  ] Running command: ceph --cluster=ceph --admin-daemon /var/run/ceph/ceph-mon.node2.asok mon_status
-[node2][WARNIN] node2 is not defined in `mon initial members`
-[node2][INFO  ] Running command: ceph --cluster=ceph --admin-daemon /var/run/ceph/ceph-mon.node2.asok mon_status
-[node2][DEBUG ] ********************************************************************************
-[node2][DEBUG ] status for monitor: mon.node2
-[node2][DEBUG ] {
-[node2][DEBUG ]   "election_epoch": 1,
-[node2][DEBUG ]   "extra_probe_peers": [
-[node2][DEBUG ]     "10.200.128.81:6789/0"
-[node2][DEBUG ]   ],
-[node2][DEBUG ]   "monmap": {
-[node2][DEBUG ]     "created": "0.000000",
-[node2][DEBUG ]     "epoch": 2,
-[node2][DEBUG ]     "fsid": "8c3fb7e2-6750-4e8e-b3f0-ad6afe25bb1a",
-[node2][DEBUG ]     "modified": "2015-07-05 15:33:41.996295",
-[node2][DEBUG ]     "mons": [
-[node2][DEBUG ]       {
-[node2][DEBUG ]         "addr": "10.200.128.81:6789/0",
-[node2][DEBUG ]         "name": "node1",
-[node2][DEBUG ]         "rank": 0
-[node2][DEBUG ]       },
-[node2][DEBUG ]       {
-[node2][DEBUG ]         "addr": "10.200.128.82:6789/0",
-[node2][DEBUG ]         "name": "node2",
-[node2][DEBUG ]         "rank": 1
-[node2][DEBUG ]       }
-[node2][DEBUG ]     ]
-[node2][DEBUG ]   },
-[node2][DEBUG ]   "name": "node2",
-[node2][DEBUG ]   "outside_quorum": [],
-[node2][DEBUG ]   "quorum": [],
-[node2][DEBUG ]   "rank": 1,
-[node2][DEBUG ]   "state": "electing",
-[node2][DEBUG ]   "sync_provider": []
-[node2][DEBUG ] }
-[node2][DEBUG ] ********************************************************************************
-[node2][INFO  ] monitor: mon.node2 is running
+[root@node1 ~]# ceph-deploy mon add node3
 ```
 
 ####10.3 查看ceph status
