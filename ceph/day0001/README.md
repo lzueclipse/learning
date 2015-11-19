@@ -67,24 +67,24 @@ IPV6_PRIVACY="no"
 简单，略去
 所以最终，6台虚拟机如下：
 
-| hostname   | cpu     | memory   | hard disk       | eth0 IP        | eth1 IP        |
-| ---------- | ------- | -------- | --------------- | -------------- | -------------- |
-| node1      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.191  | 192.168.29.191 |
-| node2      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.192  | 192.168.29.192 |
-| node3      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.193  | 192.168.29.193 |
-| node4      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.194  | 192.168.29.194 |
-| node5      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.195  | 192.168.29.195 |
-| node6      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.29.196  | 192.168.29.196 |
+| hostname   | cpu     | memory   | hard disk       | eth0 IP        |
+| ---------- | ------- | -------- | --------------- | -------------- |
+| node1      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.128.81  |
+| node2      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.128.82  |
+| node3      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.128.83  |
+| node4      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.128.84  |
+| node5      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.128.85  |
+| node6      | 4 core  | 8GB      | sda,sdb,sdc,sdd | 10.200.128.86  |
 
 ####1.6 将如下加入所有6台虚拟机的/etc/hosts
 
 ```
-10.200.29.191 node1
-10.200.29.192 node2
-10.200.29.193 node3
-10.200.29.194 node4
-10.200.29.195 node5
-10.200.29.196 node6
+10.200.128.81 node1
+10.200.128.82 node2
+10.200.128.83 node3
+10.200.128.84 node4
+10.200.128.85 node5
+10.200.128.86 node6
 ```
 
 ##2.配置ssh, 让node1可以无密码登录node2,node3
@@ -125,11 +125,11 @@ yum install ceph-deploy
 [node1][DEBUG ] find the location of an executable
 [node1][INFO  ] Running command: /usr/sbin/ip link show
 [node1][INFO  ] Running command: /usr/sbin/ip addr show
-[node1][DEBUG ] IP addresses found: ['10.200.29.191', '192.168.29.191']
+[node1][DEBUG ] IP addresses found: ['10.200.128.81', '192.168.29.191']
 [ceph_deploy.new][DEBUG ] Resolving host node1
-[ceph_deploy.new][DEBUG ] Monitor node1 at 10.200.29.191
+[ceph_deploy.new][DEBUG ] Monitor node1 at 10.200.128.81
 [ceph_deploy.new][DEBUG ] Monitor initial members are ['node1']
-[ceph_deploy.new][DEBUG ] Monitor addrs are ['10.200.29.191']
+[ceph_deploy.new][DEBUG ] Monitor addrs are ['10.200.128.81']
 [ceph_deploy.new][DEBUG ] Creating a random mon key...
 [ceph_deploy.new][DEBUG ] Writing monitor keyring to ceph.mon.keyring...
 [ceph_deploy.new][DEBUG ] Writing initial config to ceph.conf...
@@ -1016,7 +1016,7 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 [node1][INFO  ] creating keyring file: /var/lib/ceph/tmp/ceph-node1.mon.keyring
 [node1][DEBUG ] create the monitor keyring file
 [node1][INFO  ] Running command: ceph-mon --cluster ceph --mkfs -i node1 --keyring /var/lib/ceph/tmp/ceph-node1.mon.keyring
-[node1][DEBUG ] ceph-mon: mon.noname-a 10.200.29.191:6789/0 is local, renaming to mon.node1
+[node1][DEBUG ] ceph-mon: mon.noname-a 10.200.128.81:6789/0 is local, renaming to mon.node1
 [node1][DEBUG ] ceph-mon: set fsid to 8c3fb7e2-6750-4e8e-b3f0-ad6afe25bb1a
 [node1][DEBUG ] ceph-mon: created monfs at /var/lib/ceph/mon/ceph-node1 for mon.node1
 [node1][INFO  ] unlinking keyring file /var/lib/ceph/tmp/ceph-node1.mon.keyring
@@ -1053,7 +1053,7 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
 [node1][DEBUG ]     "modified": "0.000000",
 [node1][DEBUG ]     "mons": [
 [node1][DEBUG ]       {
-[node1][DEBUG ]         "addr": "10.200.29.191:6789/0",
+[node1][DEBUG ]         "addr": "10.200.128.81:6789/0",
 [node1][DEBUG ]         "name": "node1",
 [node1][DEBUG ]         "rank": 0
 [node1][DEBUG ]       }
@@ -1113,7 +1113,7 @@ ceph version 0.94.2 (5fb85614ca8f354284c713a2f9c610860720bbf3)
             64 pgs stuck inactive
             64 pgs stuck unclean
             no osds
-     monmap e1: 1 mons at {node1=10.200.29.191:6789/0}
+     monmap e1: 1 mons at {node1=10.200.128.81:6789/0}
             election epoch 2, quorum 0 node1
      osdmap e1: 0 osds: 0 up, 0 in
       pgmap v2: 64 pgs, 1 pools, 0 bytes data, 0 objects
@@ -1468,7 +1468,7 @@ Disk /dev/sdc: 21.5 GB, 21474836480 bytes, 41943040 sectors
             64 pgs stuck undersized
             64 pgs undersized
             too few PGs per OSD (21 < min 30)
-     monmap e1: 1 mons at {node1=10.200.29.191:6789/0}
+     monmap e1: 1 mons at {node1=10.200.128.81:6789/0}
             election epoch 2, quorum 0 node1
      osdmap e13: 3 osds: 3 up, 3 in
       pgmap v20: 64 pgs, 1 pools, 0 bytes data, 0 objects
@@ -1525,7 +1525,7 @@ node2:
 [node2][DEBUG ] detect machine type
 [node2][DEBUG ] write cluster configuration to /etc/ceph/{cluster}.conf
 [ceph_deploy.mon][DEBUG ] Adding mon to cluster ceph, host node2
-[ceph_deploy.mon][DEBUG ] using mon address by resolving host: 10.200.29.192
+[ceph_deploy.mon][DEBUG ] using mon address by resolving host: 10.200.128.82
 [ceph_deploy.mon][DEBUG ] detecting platform for host node2 ...
 [node2][DEBUG ] connected to host: node2
 [node2][DEBUG ] detect platform information from remote host
@@ -1540,7 +1540,7 @@ node2:
 [node2][DEBUG ] checking for done path: /var/lib/ceph/mon/ceph-node2/done
 [node2][DEBUG ] create a done file to avoid re-doing the mon deployment
 [node2][DEBUG ] create the init path if it does not exist
-[node2][INFO  ] Running command: ceph-mon -i node2 --public-addr 10.200.29.192
+[node2][INFO  ] Running command: ceph-mon -i node2 --public-addr 10.200.128.82
 [node2][INFO  ] Running command: ceph --cluster=ceph --admin-daemon /var/run/ceph/ceph-mon.node2.asok mon_status
 [node2][WARNIN] node2 is not defined in `mon initial members`
 [node2][INFO  ] Running command: ceph --cluster=ceph --admin-daemon /var/run/ceph/ceph-mon.node2.asok mon_status
@@ -1549,7 +1549,7 @@ node2:
 [node2][DEBUG ] {
 [node2][DEBUG ]   "election_epoch": 1,
 [node2][DEBUG ]   "extra_probe_peers": [
-[node2][DEBUG ]     "10.200.29.191:6789/0"
+[node2][DEBUG ]     "10.200.128.81:6789/0"
 [node2][DEBUG ]   ],
 [node2][DEBUG ]   "monmap": {
 [node2][DEBUG ]     "created": "0.000000",
@@ -1558,12 +1558,12 @@ node2:
 [node2][DEBUG ]     "modified": "2015-07-05 15:33:41.996295",
 [node2][DEBUG ]     "mons": [
 [node2][DEBUG ]       {
-[node2][DEBUG ]         "addr": "10.200.29.191:6789/0",
+[node2][DEBUG ]         "addr": "10.200.128.81:6789/0",
 [node2][DEBUG ]         "name": "node1",
 [node2][DEBUG ]         "rank": 0
 [node2][DEBUG ]       },
 [node2][DEBUG ]       {
-[node2][DEBUG ]         "addr": "10.200.29.192:6789/0",
+[node2][DEBUG ]         "addr": "10.200.128.82:6789/0",
 [node2][DEBUG ]         "name": "node2",
 [node2][DEBUG ]         "rank": 1
 [node2][DEBUG ]       }
@@ -1593,7 +1593,7 @@ node3:
 [node2][DEBUG ] detect machine type
 [node2][DEBUG ] write cluster configuration to /etc/ceph/{cluster}.conf
 [ceph_deploy.mon][DEBUG ] Adding mon to cluster ceph, host node2
-[ceph_deploy.mon][DEBUG ] using mon address by resolving host: 10.200.29.192
+[ceph_deploy.mon][DEBUG ] using mon address by resolving host: 10.200.128.82
 [ceph_deploy.mon][DEBUG ] detecting platform for host node2 ...
 [node2][DEBUG ] connected to host: node2
 [node2][DEBUG ] detect platform information from remote host
@@ -1608,7 +1608,7 @@ node3:
 [node2][DEBUG ] checking for done path: /var/lib/ceph/mon/ceph-node2/done
 [node2][DEBUG ] create a done file to avoid re-doing the mon deployment
 [node2][DEBUG ] create the init path if it does not exist
-[node2][INFO  ] Running command: ceph-mon -i node2 --public-addr 10.200.29.192
+[node2][INFO  ] Running command: ceph-mon -i node2 --public-addr 10.200.128.82
 [node2][INFO  ] Running command: ceph --cluster=ceph --admin-daemon /var/run/ceph/ceph-mon.node2.asok mon_status
 [node2][WARNIN] node2 is not defined in `mon initial members`
 [node2][INFO  ] Running command: ceph --cluster=ceph --admin-daemon /var/run/ceph/ceph-mon.node2.asok mon_status
@@ -1617,7 +1617,7 @@ node3:
 [node2][DEBUG ] {
 [node2][DEBUG ]   "election_epoch": 1,
 [node2][DEBUG ]   "extra_probe_peers": [
-[node2][DEBUG ]     "10.200.29.191:6789/0"
+[node2][DEBUG ]     "10.200.128.81:6789/0"
 [node2][DEBUG ]   ],
 [node2][DEBUG ]   "monmap": {
 [node2][DEBUG ]     "created": "0.000000",
@@ -1626,12 +1626,12 @@ node3:
 [node2][DEBUG ]     "modified": "2015-07-05 15:33:41.996295",
 [node2][DEBUG ]     "mons": [
 [node2][DEBUG ]       {
-[node2][DEBUG ]         "addr": "10.200.29.191:6789/0",
+[node2][DEBUG ]         "addr": "10.200.128.81:6789/0",
 [node2][DEBUG ]         "name": "node1",
 [node2][DEBUG ]         "rank": 0
 [node2][DEBUG ]       },
 [node2][DEBUG ]       {
-[node2][DEBUG ]         "addr": "10.200.29.192:6789/0",
+[node2][DEBUG ]         "addr": "10.200.128.82:6789/0",
 [node2][DEBUG ]         "name": "node2",
 [node2][DEBUG ]         "rank": 1
 [node2][DEBUG ]       }
@@ -1661,7 +1661,7 @@ node3:
             64 pgs undersized
             too few PGs per OSD (21 < min 30)
             clock skew detected on mon.node2, mon.node3
-     monmap e3: 3 mons at {node1=10.200.29.191:6789/0,node2=10.200.29.192:6789/0,node3=10.200.29.193:6789/0}
+     monmap e3: 3 mons at {node1=10.200.128.81:6789/0,node2=10.200.128.82:6789/0,node3=10.200.128.83:6789/0}
             election epoch 8, quorum 0,1,2 node1,node2,node3
      osdmap e13: 3 osds: 3 up, 3 in
       pgmap v20: 64 pgs, 1 pools, 0 bytes data, 0 objects
@@ -2242,7 +2242,7 @@ ln -s '/usr/lib/systemd/system/ntpd.service' '/etc/systemd/system/multi-user.tar
      health HEALTH_WARN
             too few PGs per OSD (21 < min 30)
             clock skew detected on mon.node2, mon.node3
-     monmap e3: 3 mons at {node1=10.200.29.191:6789/0,node2=10.200.29.192:6789/0,node3=10.200.29.193:6789/0}
+     monmap e3: 3 mons at {node1=10.200.128.81:6789/0,node2=10.200.128.82:6789/0,node3=10.200.128.83:6789/0}
             election epoch 8, quorum 0,1,2 node1,node2,node3
      osdmap e43: 9 osds: 9 up, 9 in
       pgmap v84: 64 pgs, 1 pools, 0 bytes data, 0 objects
