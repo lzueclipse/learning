@@ -2188,3 +2188,9 @@ ln -s '/usr/lib/systemd/system/ntpd.service' '/etc/systemd/system/multi-user.tar
             304 MB used, 134 GB / 134 GB avail
                   64 active+clean
 ```
+###参考文献:
+
+>\[1] Learning Ceph, <http://pan.baidu.com/s/1kTEK70j>
+
+>\[2] Ceph Essentials, <http://pan.baidu.com/s/1sj3EmJV>
+

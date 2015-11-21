@@ -524,3 +524,10 @@ I am a test file
 ```
 
 看到了object1的内容。
+
+###参考文献:
+
+>\[1] Learning Ceph, <http://pan.baidu.com/s/1kTEK70j>
+
+>\[2] Ceph Essentials, <http://pan.baidu.com/s/1sj3EmJV>
+

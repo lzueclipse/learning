@@ -618,3 +618,9 @@ Ceph File System。
 
 不成熟，不要用于生产环境，我暂时不去涉及这块。
 
+###参考文献:
+
+>\[1] Learning Ceph, <http://pan.baidu.com/s/1kTEK70j>
+
+>\[2] Ceph Essentials, <http://pan.baidu.com/s/1sj3EmJV>
+
