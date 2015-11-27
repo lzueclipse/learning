@@ -27,6 +27,16 @@ RBD协议在Linux mainline kernel中，这是一大优势，要知道想往Linux
 rbd1-for-node4
 ```
 
+查看RBD image详细信息:
+```
+[root@node1 ~]# rbd --image rbd1-for-node4 info
+rbd image 'rbd1-for-node4':
+        size 10240 MB in 2560 objects
+        order 22 (4096 kB objects)
+        block_name_prefix: rb.0.11d0.2ae8944a
+        format: 1
+```
+
 ###1.2
 
 ###1.3
