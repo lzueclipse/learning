@@ -12,7 +12,20 @@ Ceph支持Object存储（兼容S3和Swift），块存储（RBD），文件存储
 
 RBD协议在Linux mainline kernel中，这是一大优势，要知道想往Linux mainline里合并代码，要求是非常苛刻的。
 
-###1.1 
+在以下实验中，我们将使用node4作为RBD client，来访问在Ceph cluster server(node1, node2, node3)端创建的RBD块设备。
+
+###1.1 在node1上创建RBD
+
+创建rbd1-for-node4, 大小是10240MB
+```
+[root@node1 ~]# rbd create rbd1-for-node4 --size 10240
+```
+
+查看RBD:
+```
+[root@node1 ~]# rbd ls
+rbd1-for-node4
+```
 
 ###1.2
 
