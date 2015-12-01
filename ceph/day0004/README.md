@@ -623,6 +623,17 @@ total 102404
 -rw-r--r--. 1 root root        38 Dec  1 20:35 snapshot_test_file
 ```
 
+删除snapshot:
+```
+[root@node4 ~]# rbd snap rm rbd/rbd1-for-node4@snap1
+```
+
+Ceph提供了一个删除某imge下所有snapshot的命令：
+```
+[root@node4 ~]# rbd snap purge rbd/rbd1-for-node4
+Removing all snapshots: 100% complete...done.
+```
+
 ###1.7
 
 ###1.8
