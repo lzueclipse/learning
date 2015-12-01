@@ -556,7 +556,72 @@ tmpfs           3.9G     0  3.9G   0% /sys/fs/cgroup
 /dev/sda1       497M  121M  377M  25% /boot
 /dev/rbd0        20G  134M   20G   1% /mnt/ceph-vol1
 ```
-###1.6
+
+###1.6 RBD snapshot 测试
+创建测试文件:
+```
+[root@node4 ~]# echo "Hello, this is Ceph RBD snapshot test" > /mnt/ceph-vol1/snapshot_test_file
+```
+
+检查/mnt/ceph-vol1下的文件：
+```
+[root@node4 ~]# ls -l /mnt/ceph-vol1/
+total 102404
+-rw-r--r--. 1 root root 104857600 Dec  1 19:44 file1
+-rw-r--r--. 1 root root        38 Dec  1 20:35 snapshot_test_file
+```
+
+对rbd1-for-node4创建snapshot:
+```
+[root@node4 ~]# rbd snap create rbd/rbd1-for-node4@snap1
+```
+
+查看rbd1-for-node4的snapshot:
+```
+[root@node4 ~]# rbd snap ls rbd/rbd1-for-node4
+SNAPID NAME      SIZE
+     2 snap1 20480 MB
+```
+
+删除/mnt/ceph-vol1下的文件：
+```
+[root@node4 ~]# rm -f /mnt/ceph-vol1/file1
+[root@node4 ~]# rm -f /mnt/ceph-vol1/snapshot_test_file
+```
+
+检查/mnt/ceph-vol1下的文件：
+```
+[root@node4 ~]# ls -l /mnt/ceph-vol1/
+total 0
+```
+
+rollback 数据：
+```
+[root@node4 ~]# rbd snap rollback rbd/rbd1-for-node4@snap1
+Rolling back to snapshot: 100% complete...done.
+```
+
+查看/mnt/ceph-vol1，数据没回来：
+```
+[root@node4 ~]# ls -l /mnt/ceph-vol1/
+total 0
+```
+
+卸载并重新挂载/mnt/ceph-vol1:
+```
+[root@node4 ~]# umount /mnt/ceph-vol1/
+[root@node4 ~]#
+[root@node4 ~]# mount /dev/rbd0 /mnt/ceph-vol1/
+[root@node4 ~]#
+```
+
+查看/mnt/ceph-vol1，数据回来了：
+```
+[root@node4 ~]# ls -l /mnt/ceph-vol1/
+total 102404
+-rw-r--r--. 1 root root 104857600 Dec  1 19:44 file1
+-rw-r--r--. 1 root root        38 Dec  1 20:35 snapshot_test_file
+```
 
 ###1.7
 
