@@ -52,7 +52,7 @@ Linux node4 3.10.0-229.el7.x86_64 #1 SMP Fri Mar 6 11:36:42 UTC 2015 x86_64 x86_
 [root@node4 ~]# modprobe rbd
 ```
 
-###1.4 在node1，用ceph-deploy 向node4安装ceph二进制文件和配置文件
+###1.3 在node1，用ceph-deploy 向node4安装ceph二进制文件和配置文件
 
 用ceph-deploy向node4安装ceph二进制:
 ```
@@ -423,7 +423,7 @@ root@node4's password:
 ```
 
 
-###1.5 在node4节点检查
+###1.4 在node4节查找rbd1-for-node4，并挂载
 
 ceph.conf和ceph.client.admin.keyring文件
 ```
@@ -436,6 +436,23 @@ total 12
 -rw-------. 1 root root   0 Dec  1 10:38 tmp8JOlh0
 ```
 
+查看RBD设备：
+```
+[root@node4 ~]# rbd ls
+rbd1-for-node4
+```
+
+查看RBD image info:
+```
+[root@node4 ~]# rbd info --image rbd1-for-node4
+rbd image 'rbd1-for-node4':
+        size 10240 MB in 2560 objects
+        order 22 (4096 kB objects)
+        block_name_prefix: rb.0.11d0.2ae8944a
+        format: 1
+```
+
+###1.5
 
 ###1.6
 ###1.7
