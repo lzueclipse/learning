@@ -37,9 +37,27 @@ rbd image 'rbd1-for-node4':
         format: 1
 ```
 
-###1.2
+**rbd1-for-node4默认创建在rbd pool(rados lspools可查看所有pool)下。**
 
-###1.3
+###1.2 在node4节点检查内核版本，加载rbd内核模块
+
+检查内核版本：
+```
+[root@node4 ~]# uname -a
+Linux node4 3.10.0-229.el7.x86_64 #1 SMP Fri Mar 6 11:36:42 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+```
+
+加载rbd内核模块:
+```
+[root@node4 ~]# modprobe rbd
+```
+
+###1.4
+###1.5
+###1.6
+###1.7
+###1.8
+###1.9
 
 ###参考文献:
 
