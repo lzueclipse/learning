@@ -452,6 +452,69 @@ rbd image 'rbd1-for-node4':
         format: 1
 ```
 
+在node4，map rbd1-for-node4:
+```
+[root@node4 ~]# rbd map --image rbd1-for-node4
+/dev/rbd0
+```
+
+列出node4已经map的RBD设备：
+```
+[root@node4 ~]# rbd showmapped
+id pool image          snap device
+0  rbd  rbd1-for-node4 -    /dev/rbd0
+```
+
+用fdisk查看/dev/rbd0:
+```
+[root@node4 ~]# fdisk -l /dev/rbd0
+
+Disk /dev/rbd0: 10.7 GB, 10737418240 bytes, 20971520 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 4194304 bytes / 4194304 bytes
+```
+
+格式化/dev/rbd0为xfs文件系统：
+```
+[root@node4 ~]# mkfs.xfs /dev/rbd0
+log stripe unit (4194304 bytes) is too large (maximum is 256KiB)
+log stripe unit adjusted to 32KiB
+meta-data=/dev/rbd0              isize=256    agcount=17, agsize=162816 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=0        finobt=0
+data     =                       bsize=4096   blocks=2621440, imaxpct=25
+         =                       sunit=1024   swidth=1024 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=0
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=8 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+```
+
+挂载/dev/rbd0:
+```
+[root@node4 ~]# mkdir /mnt/ceph-vol1
+[root@node4 ~]#
+[root@node4 ~]# mount /dev/rbd0 /mnt/ceph-vol1/
+[root@node4 ~]#
+```
+
+写文件测试：
+```
+[root@node4 ~]# dd if=/dev/zero of=/mnt/ceph-vol1/file1 count=100 bs=1M
+100+0 records in
+100+0 records out
+104857600 bytes (105 MB) copied, 0.10709 s, 979 MB/s
+[root@node4 ~]# ls -la /mnt/ceph-vol1/
+total 102400
+drwxr-xr-x. 2 root root        18 Dec  1 19:44 .
+drwxr-xr-x. 3 root root        22 Dec  1 19:33 ..
+-rw-r--r--. 1 root root 104857600 Dec  1 19:44 file1
+```
+
+
+
+
 ###1.5
 
 ###1.6
