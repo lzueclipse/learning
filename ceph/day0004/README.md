@@ -511,16 +511,62 @@ drwxr-xr-x. 2 root root        18 Dec  1 19:44 .
 drwxr-xr-x. 3 root root        22 Dec  1 19:33 ..
 -rw-r--r--. 1 root root 104857600 Dec  1 19:44 file1
 ```
+###1.5 在node4，改变rbd1-for-node4的大小
 
+rbd1-for-node4大小从10GB扩大到20GB：
+```
+[root@node4 ~]# rbd resize rbd/rbd1-for-node4 --size 20480
+Resizing image: 100% complete...done.
+```
 
+查看rbd1-for-node4 image info:
+```
+[root@node4 ~]# rbd info --image rbd1-for-node4
+rbd image 'rbd1-for-node4':
+        size 20480 MB in 5120 objects
+        order 22 (4096 kB objects)
+        block_name_prefix: rb.0.11d0.2ae8944a
+        format: 1
+```
 
+xfs resize:
+```
+[root@node4 ~]# xfs_growfs -d /mnt/ceph-vol1/
+meta-data=/dev/rbd0              isize=256    agcount=17, agsize=162816 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=0        finobt=0
+data     =                       bsize=4096   blocks=2621440, imaxpct=25
+         =                       sunit=1024   swidth=1024 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=0
+log      =internal               bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=8 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+data blocks changed from 2621440 to 5242880
+```
 
-###1.5
-
+df 查看：
+```
+[root@node4 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3        36G  3.9G   32G  11% /
+devtmpfs        3.9G     0  3.9G   0% /dev
+tmpfs           3.9G   80K  3.9G   1% /dev/shm
+tmpfs           3.9G   17M  3.9G   1% /run
+tmpfs           3.9G     0  3.9G   0% /sys/fs/cgroup
+/dev/sda1       497M  121M  377M  25% /boot
+/dev/rbd0        20G  134M   20G   1% /mnt/ceph-vol1
+```
 ###1.6
+
 ###1.7
+
 ###1.8
+
 ###1.9
+
+##2
+##3.
+##4. 
 
 ###参考文献:
 
