@@ -634,10 +634,14 @@ Ceph提供了一个删除某imge下所有snapshot的命令：
 Removing all snapshots: 100% complete...done.
 ```
 
+删除RBD image rbd1-for-node4可使用命令（我没有执行，因为我还要用rbd1-for-node4):
+```
+[root@node4 ~]# rbd rm rbd1-for-node4 -p rbd
+```
+
 ###1.7
 
 ###1.8
-
 ###1.9
 
 ##2
