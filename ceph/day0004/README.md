@@ -55,7 +55,6 @@ Linux node4 3.10.0-229.el7.x86_64 #1 SMP Fri Mar 6 11:36:42 UTC 2015 x86_64 x86_
 ###1.4 在node1，用ceph-deploy 向node4安装ceph二进制文件和配置文件
 
 用ceph-deploy向node4安装ceph二进制:
-
 ```
 [root@node1 ~]# ceph-deploy install node4
 [ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
@@ -407,10 +406,37 @@ root@node4's password:
 [node4][DEBUG ] Complete!
 [node4][INFO  ] Running command: ceph --version
 [node4][DEBUG ] ceph version 0.94.5 (9764da52395923e0b32908d83a9f7304401fee43)
-
 ```
 
-###1.5
+用ceph-deploy向node4推送配置文件ceph.conf，和用于认证的秘钥文件ceph.client.admin.keyring ：
+```
+[root@node1 ~]# ceph-deploy admin node4
+[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
+[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy admin node4
+[ceph_deploy.admin][DEBUG ] Pushing admin keys and conf to node4
+root@node4's password:
+root@node4's password:
+[node4][DEBUG ] connected to host: node4
+[node4][DEBUG ] detect platform information from remote host
+[node4][DEBUG ] detect machine type
+[node4][DEBUG ] write cluster configuration to /etc/ceph/{cluster}.conf
+```
+
+
+###1.5 在node4节点检查
+
+ceph.conf和ceph.client.admin.keyring文件
+```
+[root@node4 ~]# cd /etc/ceph/
+[root@node4 ceph]# ll
+total 12
+-rw-------. 1 root root  63 Dec  1 10:38 ceph.client.admin.keyring
+-rw-r--r--. 1 root root 228 Dec  1 10:38 ceph.conf
+-rwxr-xr-x. 1 root root  92 Oct 27 00:12 rbdmap
+-rw-------. 1 root root   0 Dec  1 10:38 tmp8JOlh0
+```
+
+
 ###1.6
 ###1.7
 ###1.8
