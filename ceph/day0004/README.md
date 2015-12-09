@@ -733,7 +733,7 @@ rbd image 'rbd3-for-node4':
 
 ##2. Ceph 文件系统(CephFS)
 
-CephFS需要用到Metadata Server(MDS)，我们向node2安装MDS。
+CephFS需要用到Metadata Server(MDS)，我们在node1向node2安装MDS。
 
 ```
 [root@node1 ~]# ceph-deploy mds create node2
@@ -769,12 +769,44 @@ CephFS需要用到Metadata Server(MDS)，我们向node2安装MDS。
 [node2][WARNIN]    D-Bus, udev, scripted systemctl call, ...).
 ```
 
-支持两种
+CephFS支持两种挂载方法，从kernel挂载和从FUSE(File System in User Space)挂载。
+
 ###2.1 从内核挂载CephFS
 
-创建挂载点:
+在node4，创建挂载目录:
 ```
+[root@node4 ~]# mkdir /mnt/kernel_cephfs
 ```
+
+在node4，检查admin秘钥：
+```
+[root@node4 ~]# cat /etc/ceph/ceph.client.admin.keyring
+[client.admin]
+        key = AQAvzU1WCo1qOhAA9wPRhJVTsgbUh9e1sT9bGQ==
+```
+
+在node4，挂载CephFS, **失败了**：
+```
+[root@node4 ~]# mount -t ceph node1:6789:/ /mnt/kernel_cephfs/ -o name=admin,secret=AQAvzU1WCo1qOhAA9wPRhJVTsgbUh9e1sT9bGQ==
+mount error 5 = Input/output error
+```
+
+Trouble shooting，"ceph -s"没有mdsmap信息:
+```
+[root@node4 ~]# ceph -s
+    cluster f109ad6d-e9a2-45a2-8794-05af916b4174
+     health HEALTH_WARN
+            clock skew detected on mon.node2
+            tool few PGs per OSD (21 < min 30)
+            Monitor clock skew detected
+     monmap e3: 3 mons at {node1=10.200.128.81:6789/0,node2=10.200.128.82:6789/0,node3=10.200.128.83:6789/0}
+            election epoch 22, quorum 0,1,2 node1,node2,node3
+     osdmap e66: 9 osds: 9 up, 9 in
+      pgmap v1993: 64 pgs, 1 pools, 214 MB data, 2654 objects
+            1023 MB used, 133 GB / 134 GB avail
+                 64 active+clean
+```
+
 
 ###2.2
 ###2.3
