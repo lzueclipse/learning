@@ -703,7 +703,24 @@ rbd image 'rbd3-for-node4':
         verlap: 10240 MB
 ```
 
+Clone中包含了parent snapshot的数据，我们可以用如下命令拆分开COW clone和parent snapshot，在node1节点：
+```
+[root@node1 ~]# rbd flatten rbd/rbd3-for-node4
+Image flatten: 100% complete...done.
+```
 
+在node1，再次查看rbd3-for-node4，
+```
+
+[root@node1 ~]# rbd info --pool rbd --image rbd3-for-node4
+rbd image 'rbd3-for-node4':
+        size 10240 MB in 2560 objects
+        order 22 (4096 kB objects)
+        lock_name_prefix: rbd_data.123c3d1b58ba
+        format: 2
+        features: layering
+        flags:
+```
 
 
 ###1.8
