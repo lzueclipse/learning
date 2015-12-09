@@ -731,8 +731,50 @@ rbd image 'rbd3-for-node4':
 [root@node1 ~]# rbd snap rm rbd/rbd2-for-node4@snapshot_for_clone
 ```
 
-##2
-###2.1
+##2. Ceph 文件系统(CephFS)
+CephFS需要用到Metadata Server(MDS)，我们向node2安装MDS。
+
+```
+[root@node1 ~]# ceph-deploy mds create node2
+[ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
+[ceph_deploy.cli][INFO  ] Invoked (1.5.25): /usr/bin/ceph-deploy mds create node2
+[ceph_deploy.mds][DEBUG ] Deploying mds, cluster ceph hosts node2:node2
+[node2][DEBUG ] connected to host: node2
+[node2][DEBUG ] detect platform information from remote host
+[node2][DEBUG ] detect machine type
+[ceph_deploy.mds][INFO  ] Distro info: CentOS Linux 7.1.1503 Core
+[ceph_deploy.mds][DEBUG ] remote host will use sysvinit
+[ceph_deploy.mds][DEBUG ] deploying mds bootstrap to node2
+[node2][DEBUG ] write cluster configuration to /etc/ceph/{cluster}.conf
+[node2][WARNIN] mds keyring does not exist yet, creating one
+[node2][DEBUG ] create a keyring file
+[node2][DEBUG ] create path if it doesn't exist
+[node2][INFO  ] Running command: ceph --cluster ceph --name client.bootstrap-mds --keyring /var/lib/ceph/bootstrap-mds/ceph.keyring auth get-or-create mds.node2 osd allow rwx mds allow mon allow profile mds -o /var/lib/ceph/mds/ceph-node2/keyring
+[node2][INFO  ] Running command: service ceph start mds.node2
+[node2][DEBUG ] === mds.node2 ===
+[node2][DEBUG ] Starting Ceph mds.node2 on node2...
+[node2][WARNIN] Running as unit run-30145.service.
+[node2][INFO  ] Running command: systemctl enable ceph
+[node2][WARNIN] ceph.service is not a native service, redirecting to /sbin/chkconfig.
+[node2][WARNIN] Executing /sbin/chkconfig ceph on
+[node2][WARNIN] The unit files have no [Install] section. They are not meant to be enabled
+[node2][WARNIN] using systemctl.
+[node2][WARNIN] Possible reasons for having this kind of units are:
+[node2][WARNIN] 1) A unit may be statically enabled by being symlinked from another unit's
+[node2][WARNIN]    .wants/ or .requires/ directory.
+[node2][WARNIN] 2) A unit's purpose may be to act as a helper for some other unit which has
+[node2][WARNIN]    a requirement dependency on it.
+[node2][WARNIN] 3) A unit may be started when needed via activation (socket, path, timer,
+[node2][WARNIN]    D-Bus, udev, scripted systemctl call, ...).
+```
+
+支持两种
+###2.1 从内核挂载CephFS
+
+创建挂载点:
+```
+```
+
 ###2.2
 ###2.3
 ###2.4
