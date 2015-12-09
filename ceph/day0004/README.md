@@ -662,7 +662,6 @@ RBD imgae定义了两种格式format-1和format-2，这两种格式都支持RBD 
 
 在node1上查看rbd2-for-node4:
 ```
-
 [root@node1 ~]# rbd info --image rbd/rbd2-for-node4
 rbd image 'rbd2-for-node4':
         size 10240 MB in 2560 objects
@@ -673,6 +672,37 @@ rbd image 'rbd2-for-node4':
         flags:
 
 ```
+
+在node1创建snapshot:
+```
+[root@node1 ~]# rbd snap create rbd/rbd2-for-node4@snapshot_for_clone
+```
+
+在node1需要保护snapshot，**这步非常重要**，如果snapshot丢了，后续的COW clone会被损坏：
+```
+[root@node1 ~]# rbd snap protect rbd/rbd2-for-node4@snapshot_for_clone
+```
+
+在node1，创建COW clone，名字为rbd3-for-node4:
+```
+[root@node1 ~]# rbd clone rbd/rbd2-for-node4@snapshot_for_clone rbd/rbd3-for-node4
+```
+
+在node1，查看rbd3-for-node4，注意到它的parent为一个snapshot:
+```
+
+[root@node1 ~]# rbd info --pool rbd --image rbd3-for-node4
+rbd image 'rbd3-for-node4':
+        size 10240 MB in 2560 objects
+        order 22 (4096 kB objects)
+        block_name_prefix: rbd_data.123c3d1b58ba
+        format: 2
+        features: layering
+        flags:
+        parent: rbd/rbd2-for-node4@snapshot_for_clone
+        verlap: 10240 MB
+```
+
 
 
 
