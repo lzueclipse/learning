@@ -639,7 +639,10 @@ Removing all snapshots: 100% complete...done.
 [root@node4 ~]# rbd rm rbd1-for-node4 -p rbd
 ```
 
-###1.7
+###1.7 RBD clone测试
+Ceph能从RBD snapshot创建Copy-on-write(COW) clones。
+
+Snapshot是只读的，但COW clone是可写的。
 
 ###1.8
 ###1.9
