@@ -652,6 +652,16 @@ Ceph会保留clone到它parent snapshot的引用关系，也会保护parent snap
 
 **Clone和RBD一样，is writable, is resizable, can create new snapshot, can be cloned further!!**
 
+RBD imgae定义了两种格式format-1和format-2，这两种格式都支持RBD snapshot，**但只有format-2支持COW clone**。
+
+在node1上创建类型为format-2的RBD image，名字为rbd2-for-node4:
+```
+[root@node1 ~]# rbd create rbd2-for-node4 --size 10240 --image-format 2
+
+```
+
+
+
 ###1.8
 
 
