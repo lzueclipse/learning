@@ -807,6 +807,17 @@ Trouble shooting，"ceph -s"没有mdsmap信息:
                  64 active+clean
 ```
 
+**限于目前对Ceph的了解，我没能解决这个问题，导致没有mount成功，随着下面深入的学习，我会找到相关代码来Trouble shooting.**
+
+为了避免暴露秘钥，可以将秘钥写入/etc/ceph/mykey，然后:
+```
+mount -t ceph node1:6789:/ /mnt/kernel_cephfs -o name=admin,secretfile=/etc/ceph/mykey
+```
+
+也可以加入/etc/fstab：
+```
+192.168.57.101:6789:/ /mnt/kernel_cephfs ceph name=admin,secretfile=/etc/ceph/adminkey,noatime 0 2
+```
 
 ###2.2
 ###2.3
