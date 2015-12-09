@@ -660,6 +660,19 @@ RBD imgae定义了两种格式format-1和format-2，这两种格式都支持RBD 
 
 ```
 
+在node1上查看rbd2-for-node4:
+```
+
+[root@node1 ~]# rbd info --image rbd/rbd2-for-node4
+rbd image 'rbd2-for-node4':
+        size 10240 MB in 2560 objects
+        order 22 (4096 kB objects)
+        block_name_prefix: rbd_data.12302ae8944a
+        format: 2
+        features: layering
+        flags:
+
+```
 
 
 ###1.8
