@@ -644,6 +644,10 @@ Ceph能从RBD snapshot创建Copy-on-write(COW) clones。
 
 Snapshot是只读的，但COW clone是可写的。
 
+下图给出了RBD块设备，RBD snapshot，RBD COW clone三者之间的关系。
+
+![图2](https://github.com/lzueclipse/learning/blob/master/ceph/day0004/2.png "图2")
+
 ###1.8
 ###1.9
 
