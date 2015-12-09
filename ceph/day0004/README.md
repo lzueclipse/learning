@@ -678,7 +678,7 @@ rbd image 'rbd2-for-node4':
 [root@node1 ~]# rbd snap create rbd/rbd2-for-node4@snapshot_for_clone
 ```
 
-在node1需要保护snapshot，**这步非常重要**，如果snapshot丢了，后续的COW clone会被损坏：
+在node1需要保护该snapshot，**这步非常重要**，如果snapshot丢了，后续的COW clone会被损坏：
 ```
 [root@node1 ~]# rbd snap protect rbd/rbd2-for-node4@snapshot_for_clone
 ```
@@ -709,9 +709,8 @@ Clone中包含了parent snapshot的数据，我们可以用如下命令拆分开
 Image flatten: 100% complete...done.
 ```
 
-在node1，再次查看rbd3-for-node4，
+在node1，再次查看rbd3-for-node4，发现其parent snapshot已经不存在，rbd3-for-node4成为独立的RBD image：
 ```
-
 [root@node1 ~]# rbd info --pool rbd --image rbd3-for-node4
 rbd image 'rbd3-for-node4':
         size 10240 MB in 2560 objects
@@ -722,6 +721,15 @@ rbd image 'rbd3-for-node4':
         flags:
 ```
 
+在node1，不再保护该snapshot:
+```
+[root@node1 ~]# rbd snap unprotect rbd/rbd2-for-node4@snapshot_for_clone
+```
+
+在node1，删除该snapshot：
+```
+[root@node1 ~]# rbd snap rm rbd/rbd2-for-node4@snapshot_for_clone
+```
 
 ###1.8
 
