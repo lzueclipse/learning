@@ -732,6 +732,7 @@ rbd image 'rbd3-for-node4':
 ```
 
 ##2. Ceph 文件系统(CephFS)
+
 CephFS需要用到Metadata Server(MDS)，我们向node2安装MDS。
 
 ```
