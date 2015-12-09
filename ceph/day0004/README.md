@@ -648,7 +648,7 @@ Snapshot是只读的，但COW clone是可写的。
 
 ![图2](https://github.com/lzueclipse/learning/blob/master/ceph/day0004/2.png "图2")
 
-Ceph会保留clone到它parent snapshot的引用关系，也会保护parent snapshot不被删除。
+Ceph会保留clone到它parent snapshot的引用关系，在创建clone前，需要保护parent snapshot不被删除(下面实验会给出命令)。
 
 **Clone和RBD一样，is writable, is resizable, can create new snapshot, can be cloned further!!**
 
@@ -673,6 +673,7 @@ rbd image 'rbd2-for-node4':
         flags:
 
 ```
+
 
 
 ###1.8
