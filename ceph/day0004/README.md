@@ -819,9 +819,27 @@ mount -t ceph node1:6789:/ /mnt/kernel_cephfs -o name=admin,secretfile=/etc/ceph
 192.168.57.101:6789:/ /mnt/kernel_cephfs ceph name=admin,secretfile=/etc/ceph/adminkey,noatime 0 2
 ```
 
-###2.2
-###2.3
-###2.4
+###2.2 以FUSE方式挂载CephFS
+在node4, 安装ceph-fuse:
+```
+[root@node4 ~]# yum install ceph-fuse
+```
+
+在node4，创建挂载目录：
+```
+[root@node4 ~]# mkdir /mnt/fuse_cephfs
+```
+
+挂载，仍然失败：
+**限于目前对Ceph的了解，我没能解决这个问题，导致没有mount成功，随着下面深入的学习，我会找到相关代码来Trouble shooting.**
+```
+[root@node4 ~]# ceph-fuse -m node1:6789 /mnt/fuse_cephfs/
+```
+
+也可以加入/etc/fstab：
+```
+id=admin /mnt/fuse_cephfs fuse.ceph defaults 0 0
+```
 
 ##3.
 ###3.1
