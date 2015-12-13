@@ -850,7 +850,98 @@ Ceph通过RADOS Gateway提供兼容S3和Swift的RESTful API，来访问对象存
 
 ![图3](https://github.com/lzueclipse/learning/blob/master/ceph/day0004/3.png "图3")
 
-###3.1
+###3.1 在node5，安装RADOS gateway
+
+需要安装apache，创建ceph-apache.repo：
+```
+[root@node5 ~]# cat /etc/yum.repos.d/ceph-apache.repo
+[apache2-ceph-noarch]
+name=Apache noarch packages for Ceph
+baseurl=http://gitbuilder.ceph.com/apache2-rpm-centos7-x86_64-basic/ref/master
+enabled=1
+priority=2
+gpgcheck=1
+type=rpm-md
+gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/autobuild.asc
+
+[apache2-ceph-source]
+name=Apache source packages for Ceph
+baseurl=http://gitbuilder.ceph.com/apache2-rpm-centos7-x86_64-basic/ref/master
+enabled=0
+priority=2
+gpgcheck=1
+type=rpm-md
+gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/autobuild.asc
+[root@node5 ~]#
+```
+
+创建ceph-fastcgi.rep:
+```
+
+[root@node5 ~]# cat /etc/yum.repos.d/ceph-fastcgi.repo
+[fastcgi-ceph-basearch]
+name=FastCGI basearch packages for Ceph
+baseurl=http://gitbuilder.ceph.com/mod_fastcgi-rpm-centos7-x86_64-basic/ref/master
+enabled=1
+priority=2
+gpgcheck=1
+type=rpm-md
+gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/autobuild.asc
+
+[fastcgi-ceph-noarch]
+name=FastCGI noarch packages for Ceph
+baseurl=http://gitbuilder.ceph.com/mod_fastcgi-rpm-centos7-x86_64-basic/ref/master
+enabled=1
+priority=2
+gpgcheck=1
+type=rpm-md
+gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/autobuild.asc
+
+[fastcgi-ceph-source]
+name=FastCGI source packages for Ceph
+baseurl=http://gitbuilder.ceph.com/mod_fastcgi-rpm-centos7-x86_64-basic/ref/master
+enabled=0
+priority=2
+gpgcheck=1
+type=rpm-md
+gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/autobuild.asc
+[root@node5 ~]#
+```
+
+创建ceph.repo:
+```
+[root@node5 ~]# cat /etc/yum.repos.d/ceph.repo
+[Ceph]
+name=Ceph packages for $basearch
+baseurl=http://ceph.com/rpm-hammer/el7/$basearch
+enabled=1
+gpgcheck=1
+type=rpm-md
+gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc
+
+[Ceph-noarch]
+name=Ceph noarch packages
+baseurl=http://ceph.com/rpm-hammer/el7/noarch
+enabled=1
+gpgcheck=1
+type=rpm-md
+gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc
+
+[ceph-source]
+name=Ceph source packages
+baseurl=http://ceph.com/rpm-hammer/el7/SRPMS
+enabled=1
+gpgcheck=1
+type=rpm-md
+gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc
+[root@node5 ~]#
+```
+
+安装yum-plugin-priorities:
+```
+```
+
+
 ###3.2
 ###3.3
 ###3.4
