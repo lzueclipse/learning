@@ -841,7 +841,15 @@ mount -t ceph node1:6789:/ /mnt/kernel_cephfs -o name=admin,secretfile=/etc/ceph
 id=admin /mnt/fuse_cephfs fuse.ceph defaults 0 0
 ```
 
-##3.
+##3. Ceph对象存储
+每一个对象，包括了data、metadata、unique identifier。
+
+对象存储不能直接通过文件系统访问，只能通过应用层的API访问。
+
+Ceph通过RADOS Gateway提供兼容S3和Swift的RESTful API，来访问对象存储。
+
+![图3](https://github.com/lzueclipse/learning/blob/master/ceph/day0004/3.png "图3")
+
 ###3.1
 ###3.2
 ###3.3
