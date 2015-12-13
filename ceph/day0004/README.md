@@ -852,65 +852,9 @@ Ceph通过RADOS Gateway提供兼容S3和Swift的RESTful API，来访问对象存
 
 ###3.1 在node5，安装RADOS gateway
 
-需要安装apache，创建ceph-apache.repo：
-```
-[root@node5 ~]# cat /etc/yum.repos.d/ceph-apache.repo
-[apache2-ceph-noarch]
-name=Apache noarch packages for Ceph
-baseurl=http://gitbuilder.ceph.com/apache2-rpm-centos7-x86_64-basic/ref/master
-enabled=1
-priority=2
-gpgcheck=1
-type=rpm-md
-gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/autobuild.asc
-
-[apache2-ceph-source]
-name=Apache source packages for Ceph
-baseurl=http://gitbuilder.ceph.com/apache2-rpm-centos7-x86_64-basic/ref/master
-enabled=0
-priority=2
-gpgcheck=1
-type=rpm-md
-gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/autobuild.asc
-[root@node5 ~]#
-```
-
-创建ceph-fastcgi.rep:
-```
-
-[root@node5 ~]# cat /etc/yum.repos.d/ceph-fastcgi.repo
-[fastcgi-ceph-basearch]
-name=FastCGI basearch packages for Ceph
-baseurl=http://gitbuilder.ceph.com/mod_fastcgi-rpm-centos7-x86_64-basic/ref/master
-enabled=1
-priority=2
-gpgcheck=1
-type=rpm-md
-gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/autobuild.asc
-
-[fastcgi-ceph-noarch]
-name=FastCGI noarch packages for Ceph
-baseurl=http://gitbuilder.ceph.com/mod_fastcgi-rpm-centos7-x86_64-basic/ref/master
-enabled=1
-priority=2
-gpgcheck=1
-type=rpm-md
-gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/autobuild.asc
-
-[fastcgi-ceph-source]
-name=FastCGI source packages for Ceph
-baseurl=http://gitbuilder.ceph.com/mod_fastcgi-rpm-centos7-x86_64-basic/ref/master
-enabled=0
-priority=2
-gpgcheck=1
-type=rpm-md
-gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/autobuild.asc
-[root@node5 ~]#
-```
 
 创建ceph.repo:
 ```
-[root@node5 ~]# cat /etc/yum.repos.d/ceph.repo
 [Ceph]
 name=Ceph packages for $basearch
 baseurl=http://ceph.com/rpm-hammer/el7/$basearch
@@ -934,23 +878,26 @@ enabled=1
 gpgcheck=1
 type=rpm-md
 gpgkey=https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc
-[root@node5 ~]#
 ```
 
 安装yum-plugin-priorities:
 ```
+[root@node5 ~]# yum install yum-plugin-priorities
 ```
+
+总是遇到错误。。。
+
+http://ceph.com/rpm-hammer/rhel7/x86_64/repodata/25aa272195dfdefa4bac820c6c5ae5796031581b4a480001da6f542c243a4ced-primary.sqlite.bz2: [Errno 14] HTTP Error 404 - Not Found 0 B  --:--:-- ETA
+Trying other mirror.
+http://ceph.com/rpm-hammer/rhel7/x86_64/repodata/25aa272195dfdefa4bac820c6c5ae5796031581b4a480001da6f542c243a4ced-primary.sqlite.bz2: [Errno 14] HTTP Error 404 - Not Found
+Trying other mirror.
+
 
 
 ###3.2
 ###3.3
 ###3.4
 
-##4. 
-###4.1
-###4.2
-###4.3
-###4.4
 
 ###参考文献:
 
