@@ -31,4 +31,5 @@ nbftconfig -ls -Me nbu -verbose
 /sys/class/fc_host/host11
            
             
-             
+systool -av -c fc_host | egrep 'port_name|port_type|node_name| speed|fabric'
+
