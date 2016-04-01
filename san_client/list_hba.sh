@@ -10,3 +10,9 @@ do
     [ -e ${SCSI}/fwrev ] && echo -n 'Firmware Version ' && cat ${SCSI}/fwrev;
     [ -e ${SCSI}/lpfc_drvr_version ] && echo -n 'Driver Version ' && cat ${SCSI}/lpfc_drvr_version;
 done
+
+for i in 0; do cat /sys/class/scsi_host/host$i/device/fc_host/host$i/port_name; done
+for i in `seq 12`; do cat /sys/class/scsi_host/host$i/device/fc_host/host$i/port_name; done
+
+
+cat /proc/scsi/scsi
