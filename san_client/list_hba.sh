@@ -16,3 +16,6 @@ for i in `seq 12`; do cat /sys/class/scsi_host/host$i/device/fc_host/host$i/port
 
 
 cat /proc/scsi/scsi
+while read i; do echo $i;echo; sg_inq -i $i; done </tmp/test.txt
+
+#msinfo32 report a.txt
