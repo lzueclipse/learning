@@ -6,7 +6,8 @@ vxlogcfg -a -p 51216 -o 201 -s DebugLevel=6 -s DiagnosticLevel=6
  
 vxlogcfg -l -o default -p NB
 vxlogcfg -a -p 51216 -o ALL -s DebugLevel=0 -s DiagnosticLevel=0
-  
+vxlogcfg -p NB -o 200 -a -s De
+
 vxlogview -o 111
 vxlogview -o 199
 vxlogview -o 200
