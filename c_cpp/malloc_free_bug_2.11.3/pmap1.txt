@@ -1,0 +1,24 @@
+9003: a.out
+START               SIZE     RSS     PSS   DIRTY    SWAP PERM MAPPING
+0000000000400000      4K      4K      4K      0K      0K r-xp /home/robinwan/public_html/a.out
+0000000000600000      4K      4K      4K      4K      0K r--p /home/robinwan/public_html/a.out
+0000000000601000      4K      4K      4K      4K      0K rw-p /home/robinwan/public_html/a.out
+0000000000602000    132K      4K      4K      4K      0K rw-p [heap]
+00007fd5e3671000 262120K      0K      0K      0K      0K ---p [anon]
+00007fd5f366b000   1464K    352K     11K      0K      0K r-xp /lib64/libc-2.11.3.so
+00007fd5f37d9000   2044K      0K      0K      0K      0K ---p /lib64/libc-2.11.3.so
+00007fd5f39d8000     16K     16K     16K     16K      0K r--p /lib64/libc-2.11.3.so
+00007fd5f39dc000      4K      4K      4K      4K      0K rw-p /lib64/libc-2.11.3.so
+00007fd5f39dd000     20K     12K     12K     12K      0K rw-p [anon]
+00007fd5f39e2000    124K    104K      1K      0K      0K r-xp /lib64/ld-2.11.3.so
+00007fd5f3bc4000     12K     12K     12K     12K      0K rw-p [anon]
+00007fd5f3bfd000     12K     12K     12K     12K      0K rw-p [anon]
+00007fd5f3c00000      4K      4K      4K      4K      0K r--p /lib64/ld-2.11.3.so
+00007fd5f3c01000      4K      4K      4K      4K      0K rw-p /lib64/ld-2.11.3.so
+00007fd5f3c02000      4K      4K      4K      4K      0K rw-p [anon]
+00007fffbbb30000    132K      8K      8K      8K      0K rw-p [stack]
+00007fffbbbff000      4K      4K      0K      0K      0K r-xp [vdso]
+ffffffffff600000      4K      0K      0K      0K      0K r-xp [vsyscall]
+Total:           266112K    552K    104K     88K      0K
+
+324K writable-private, 265788K readonly-private, 0K shared, and 552K referenced
