@@ -98,12 +98,6 @@ references EMM_FatServer (FatServerMachineKey)
 on update restrict
 on delete restrict;
 
-alter table EMM_FatServer
-add constraint FK_EMM_FATS_R_MACHINE_EMM_MACH foreign key (FatServerMachineKey)
-references EMM_Machine (MachineKey)
-on update restrict
-on delete restrict;
-
 alter table EMM_FatTargetDevice
 add constraint FK_EMM_FATT_R_FATSERV_EMM_FATS foreign key (FatServerMachineKey)
 references EMM_FatServer (FatServerMachineKey)
