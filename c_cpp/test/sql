@@ -19,7 +19,6 @@ FT_DEVICE_MISSING, 3
 insert into EMM_FatClient values(1, 0, 'client-1', '8.0', 1, 0, localtimestamp, localtimestamp);
 insert into EMM_FatClient values(2, 0, 'client-2', '8.0', 1, 0, localtimestamp, localtimestamp);
 
-
 /********************************************************************/
 create table EMM_FatInitiatorDevice 
 (
@@ -36,6 +35,11 @@ LastModifiedDateTime  timestamp                      not null  ,
 constraint PK_EMM_FATINITIATORDEVICE primary key (FatInitiatorDeviceKey),
 constraint AK_AK_FATINITIATORDEV_EMM_FATI unique (FatClientMachineKey, FatTargetDeviceKey, HBA_Port)
 );
+alter table EMM_FatInitiatorDevice
+add constraint FK_EMM_FATI_R_FATCLIE_EMM_FATC foreign key (FatClientMachineKey)
+references EMM_FatClient (FatClientMachineKey)
+on update restrict
+on delete restrict;
 
 /********************************************************************/
 create table EMM_FatPipe 
@@ -54,6 +58,11 @@ LastModifiedDateTime timestamp                      not null ,
 constraint PK_EMM_FATPIPE primary key (FatPipeKey),
 constraint AK_AK_FATPIPE_EMM_FATP unique (FatServerMachineKey, PipeId)
 );
+alter table EMM_FatPipe
+add constraint FK_EMM_FATP_R_FATSERV_EMM_FATS foreign key (FatServerMachineKey)
+references EMM_FatServer (FatServerMachineKey)
+on update restrict
+on delete restrict;
 
 /********************************************************************/
 create table EMM_FatServer 
@@ -91,6 +100,10 @@ LastModifiedDateTime timestamp                      not null,
 constraint PK_EMM_FATTARGETDEVICE primary key (FatTargetDeviceKey),
 constraint AK_AK_FATTARGETDEVICE_EMM_FATT unique (FatServerMachineKey, Inquiry)
 );
-
+alter table EMM_FatTargetDevice
+add constraint FK_EMM_FATT_R_FATSERV_EMM_FATS foreign key (FatServerMachineKey)
+references EMM_FatServer (FatServerMachineKey)
+on update restrict
+on delete restrict;
 
 
