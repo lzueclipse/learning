@@ -27,39 +27,6 @@ constraint PK_EMM_FATINITIATORDEVICE primary key (FatInitiatorDeviceKey),
 constraint AK_AK_FATINITIATORDEV_EMM_FATI unique (FatClientMachineKey, FatTargetDeviceKey, HBA_Port)
 );
 
-create table EMM_FatPipe 
-(
-FatPipeKey           integer                        not null ,
-FatServerMachineKey  integer                        not null,
-PipeId               integer                        not null,
-FatTargetDeviceKey   integer                        not null default 0, 
-FatInitiatorDeviceKey integer                       not null default 0,
-State                integer                        not null default 0,
-Direction            integer                        not null default 3,
-JobId                varchar(128)                   not null default '',
-JobGroupId           varchar(128)                   not null default '',
-CreatedDateTime      timestamp                      not null ,
-LastModifiedDateTime timestamp                      not null ,
-constraint PK_EMM_FATPIPE primary key (FatPipeKey),
-constraint AK_AK_FATPIPE_EMM_FATP unique (FatServerMachineKey, PipeId)
-);
-
-create table EMM_FatServer 
-(
-FatServerMachineKey  integer                        not null,
-ServiceName          varchar(256)                   not null default '',
-Version              varchar(64)                    not null default '',
-State                integer                        not null default 0,
-PipeLimit            integer                        not null default -1,
-RecommendedPipeLimit int                            not null default -1,
-MaxPipeLimit         integer                        not null default -1,
-MaxLunLimit          integer                        not null default -1,
-MaxPortLimit         integer                        not null default -1,
-CreatedDateTime      timestamp                      not null ,
-LastModifiedDateTime timestamp                      not null ,
-constraint PK_EMM_FATSERVER primary key (FatServerMachineKey)
-);
-
 create table EMM_FatTargetDevice 
 (
 FatTargetDeviceKey   integer                        not null,
@@ -78,6 +45,40 @@ LastModifiedDateTime timestamp                      not null,
 constraint PK_EMM_FATTARGETDEVICE primary key (FatTargetDeviceKey),
 constraint AK_AK_FATTARGETDEVICE_EMM_FATT unique (FatServerMachineKey, Inquiry)
 );
+
+create table EMM_FatServer 
+(
+FatServerMachineKey  integer                        not null,
+ServiceName          varchar(256)                   not null default '',
+Version              varchar(64)                    not null default '',
+State                integer                        not null default 0,
+PipeLimit            integer                        not null default -1,
+RecommendedPipeLimit int                            not null default -1,
+MaxPipeLimit         integer                        not null default -1,
+MaxLunLimit          integer                        not null default -1,
+MaxPortLimit         integer                        not null default -1,
+CreatedDateTime      timestamp                      not null ,
+LastModifiedDateTime timestamp                      not null ,
+constraint PK_EMM_FATSERVER primary key (FatServerMachineKey)
+);
+
+create table EMM_FatPipe 
+(
+FatPipeKey           integer                        not null ,
+FatServerMachineKey  integer                        not null,
+PipeId               integer                        not null,
+FatTargetDeviceKey   integer                        not null default 0, 
+FatInitiatorDeviceKey integer                       not null default 0,
+State                integer                        not null default 0,
+Direction            integer                        not null default 3,
+JobId                varchar(128)                   not null default '',
+JobGroupId           varchar(128)                   not null default '',
+CreatedDateTime      timestamp                      not null ,
+LastModifiedDateTime timestamp                      not null ,
+constraint PK_EMM_FATPIPE primary key (FatPipeKey),
+constraint AK_AK_FATPIPE_EMM_FATP unique (FatServerMachineKey, PipeId)
+);
+
 
 /**********************************************************************************************************************/
 alter table EMM_FatInitiatorDevice
