@@ -1,0 +1,61 @@
+Vagrant.require_version ">= 1.4.3"
+VAGRANTFILE_API_VERSION = "2"
+
+BOX_CENTOS='centos7-standard'
+BOX_CENTOS_URL='http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-1703_01.VirtualBox.box'
+
+client_node1= 'client-node1'
+client_node1_disk2 = '/vms/storage/client-node1/client-node1-disk2.vdi'
+
+server_node1= 'server-node1'
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+##################################### Configuration for client-node1 #####################################################
+
+                 config.vm.define :"client-node1" do |node1|
+                        node1.vm.box = BOX_CENTOS
+                        node1.vm.box_url = BOX_CENTOS_URL
+                        node1.vm.network :private_network, ip: "192.168.40.101"
+                        node1.vm.hostname = client_node1
+                        node1.vm.synced_folder ".", "/vagrant", disabled: true
+			node1.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+                        node1.vm.provision "shell", path: "post-deploy.sh" ,run: "always"
+                        node1.vm.provider "virtualbox" do |v|
+
+                                v.customize ["modifyvm", :id, "--cpus", 4]
+                                v.customize ["modifyvm", :id, "--memory", "8192"]
+                                v.customize ["modifyvm", :id, "--nictype2", "virtio"]
+                                v.name = client_node1
+				v.gui = false
+
+                        end
+
+                end
+
+
+##################################### Configuration for server-node1 #####################################################
+
+ 		config.vm.define :"server-node1" do |node1|
+                        node1.vm.box = BOX_CENTOS
+                        node1.vm.box_url = BOX_CENTOS_URL
+                        node1.vm.network :private_network, ip: "192.168.40.102"
+                        node1.vm.hostname = server_node1
+                        node1.vm.synced_folder ".", "/vagrant", disabled: true
+			node1.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+                        node1.vm.provision "shell", path: "post-deploy.sh",run: "always"
+                        node1.vm.provider "virtualbox" do |v|
+
+                                v.customize ["modifyvm", :id, "--cpus", 4]
+                                v.customize ["modifyvm", :id, "--memory", "8192"]
+                                v.customize ["modifyvm", :id, "--nictype2", "virtio"]
+                                
+                                v.name = server_node1
+				v.gui = false
+
+                        end
+
+                end
+
+#####################################################################################################################################
+end
