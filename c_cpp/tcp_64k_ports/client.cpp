@@ -20,7 +20,6 @@ void showUsage()
     "Usage:  client -s <server IP>  -p <port number> -n <connection number>... \n"
     "  -s <server IP>  = Sever IP address to connect.\n"
     "  -p <port number>  = Server port number to connect.\n"
-    "  -n <connection number>  = Connection number you want.\n"
     );
     exit(0);
 }
@@ -74,22 +73,18 @@ int main(int argc, char **argv)
     int arg_flag = 0;
     char *server_ip;
     int server_port = 0;
-    int conn_num = 0;
     char *reuse_addr;
     
-    if(argc < 4) 
+    if(argc < 3) 
         showUsage();
     
-    while (( arg_flag = getopt(argc, argv, "s:p:n:")) != -1 ) {
+    while (( arg_flag = getopt(argc, argv, "s:p:")) != -1 ) {
         switch (arg_flag) {
         case 's':
             server_ip = optarg;
             break;
         case 'p':
             server_port = atoi(optarg);
-            break;
-        case 'n':
-            conn_num  = atoi(optarg);
             break;
         case ':':   
             fprintf(stderr,
@@ -102,7 +97,7 @@ int main(int argc, char **argv)
     }
     
 
-    for(int i = 0; i < conn_num; i++)
+    while(1)
     {
         if(myconnect(server_ip, server_port) == -1)
         {
