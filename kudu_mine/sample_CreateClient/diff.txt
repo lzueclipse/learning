@@ -1,0 +1,25 @@
+--- sample.cc	2018-03-20 15:55:56.949350501 +0800
++++ /home/ubuntu/kudu-1.6.0/src/kudu/client/samples/sample.cc	2017-12-02 14:26:18.000000000 +0800
+@@ -18,7 +18,6 @@
+ #include <ctime>
+ #include <iostream>
+ #include <sstream>
+-#include <unistd.h>
+ 
+ #include "kudu/client/callbacks.h"
+ #include "kudu/client/client.h"
+@@ -272,13 +271,12 @@
+   const string kTableName = "test_table";
+ 
+   // Enable verbose debugging for the client library.
+-  kudu::client::SetVerboseLogLevel(3);
++  kudu::client::SetVerboseLogLevel(2);
+ 
+   // Create and connect a client.
+   shared_ptr<KuduClient> client;
+   KUDU_CHECK_OK(CreateClient(master_host, &client));
+   KUDU_LOG(INFO) << "Created a client connection";
+-  sleep(7200);
+ 
+   // Disable the verbose logging.
+   kudu::client::SetVerboseLogLevel(0);

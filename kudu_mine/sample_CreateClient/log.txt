@@ -1,0 +1,162 @@
+Running with Kudu client version: kudu 1.6.0 (rev non-git-build)
+Long version info: kudu 1.6.0
+revision non-git-build
+build type DEBUG
+built by ubuntu at 15 Mar 2018 23:19:38 CST on vm16
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/rpc/sasl_common.cc
+ Line number: 215
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Initializing SASL library
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc
+ Line number: 591
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Started thread 1285 - kernel-watchdog:kernel-watcher
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc
+ Line number: 591
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Started thread 1286 - reactor:rpc reactor
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc
+ Line number: 591
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Started thread 1287 - reactor:rpc reactor
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc
+ Line number: 591
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Started thread 1288 - reactor:rpc reactor
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc
+ Line number: 591
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Started thread 1289 - reactor:rpc reactor
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/util/net/net_util.cc
+ Line number: 170
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Resolved address 127.0.0.1:7051 for host/port 127.0.0.1:7051
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc
+ Line number: 857
+ Time: Tue Mar 20 15:56:02 2018
+ Message: client_R003: queueing outbound call RPC call kudu.master.MasterService.ConnectToMaster -> {remote=127.0.0.1:7051, user_credentials={real_user=ubuntu}} to remote 127.0.0.1:7051
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc
+ Line number: 538
+ Time: Tue Mar 20 15:56:02 2018
+ Message: client_R003 FindOrStartConnection: creating new connection for 127.0.0.1:7051
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc
+ Line number: 631
+ Time: Tue Mar 20 15:56:02 2018
+ Message: StartConnect: connect in progress for 127.0.0.1:7051
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc
+ Line number: 591
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Started thread 1291 - thread pool:client-negotiator [worker]
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/rpc/outbound_call.cc
+ Line number: 211
+ Time: Tue Mar 20 15:56:02 2018
+ Message: OutboundCall 0x1997170 (RPC call kudu.master.MasterService.ConnectToMaster -> {remote=127.0.0.1:7051, user_credentials={real_user=ubuntu}}) switching from READY to ON_OUTBOUND_QUEUE
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/rpc/connection.cc
+ Line number: 202
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Queueing transfer: <redacted>
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/rpc/connection.cc
+ Line number: 602
+ Time: Tue Mar 20 15:56:02 2018
+ Message: client connection to 127.0.0.1:7051: writeHandler: revents = 2
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/rpc/outbound_call.cc
+ Line number: 211
+ Time: Tue Mar 20 15:56:02 2018
+ Message: OutboundCall 0x1997170 (RPC call kudu.master.MasterService.ConnectToMaster -> {remote=127.0.0.1:7051, user_credentials={real_user=ubuntu}}) switching from ON_OUTBOUND_QUEUE to SENDING
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/rpc/outbound_call.cc
+ Line number: 211
+ Time: Tue Mar 20 15:56:02 2018
+ Message: OutboundCall 0x1997170 (RPC call kudu.master.MasterService.ConnectToMaster -> {remote=127.0.0.1:7051, user_credentials={real_user=ubuntu}}) switching from SENDING to SENT
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/rpc/connection.cc
+ Line number: 494
+ Time: Tue Mar 20 15:56:02 2018
+ Message: client connection to 127.0.0.1:7051 ReadHandler(revents=1)
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/rpc/connection.cc
+ Line number: 520
+ Time: Tue Mar 20 15:56:02 2018
+ Message: client connection to 127.0.0.1:7051: finished reading 1037 bytes
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/rpc/outbound_call.cc
+ Line number: 211
+ Time: Tue Mar 20 15:56:02 2018
+ Message: OutboundCall 0x1997170 (RPC call kudu.master.MasterService.ConnectToMaster -> {remote=127.0.0.1:7051, user_credentials={real_user=ubuntu}}) switching from SENT to FINISHED_SUCCESS
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/security/tls_context.cc
+ Line number: 237
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Trusting certificate CN = kudu-ipki-ca
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/client/client-internal.cc
+ Line number: 675
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Received and adopted authn token
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/client/client-internal.cc
+ Line number: 569
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Considering host vm16 local
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/util/net/net_util.cc
+ Line number: 170
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Resolved address 172.21.0.16:0 for host/port vm16:0
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/client/client-internal.cc
+ Line number: 581
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Considering host 172.21.0.16 local
+Created a client connection
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/util/threadpool.cc
+ Line number: 614
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Releasing worker thread from pool client-negotiator after 500ms of idle time.
+Received log message from Kudu client library
+ Severity: 0
+ Filename: /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc
+ Line number: 646
+ Time: Tue Mar 20 15:56:02 2018
+ Message: Ended thread 1291 - thread pool:client-negotiator [worker]
