@@ -1,0 +1,1061 @@
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.09900722187012434) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.099000458605587482) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.0990033526904881) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.098979072645306587) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  0x00007f5eef0ca280 in std::__detail::_Prime_rehash_policy::_M_need_rehash(unsigned long, unsigned long, unsigned long) const () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#1  0x00007f5eef455167 in std::_Hashtable<kudu::client::internal::InFlightOp*, kudu::client::internal::InFlightOp*, std::allocator<kudu::client::internal::InFlightOp*>, std::__detail::_Identity, std::equal_to<kudu::client::internal::InFlightOp*>, std::hash<kudu::client::internal::InFlightOp*>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert_unique_node (this=0x21ed3d0, __bkt=386090, __code=86746096, __node=0x52ba420) at /usr/include/c++/5/bits/hashtable.h:1594
+#2  0x00007f5eef454512 in std::_Hashtable<kudu::client::internal::InFlightOp*, kudu::client::internal::InFlightOp*, std::allocator<kudu::client::internal::InFlightOp*>, std::__detail::_Identity, std::equal_to<kudu::client::internal::InFlightOp*>, std::hash<kudu::client::internal::InFlightOp*>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert<kudu::client::internal::InFlightOp* const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<kudu::client::internal::InFlightOp*, false> > > > (this=0x21ed3d0, __v=@0x7ffdce886e10: 0x52ba3f0, __node_gen=...) at /usr/include/c++/5/bits/hashtable.h:1704
+#3  0x00007f5eef4530a5 in std::__detail::_Insert_base<kudu::client::internal::InFlightOp*, kudu::client::internal::InFlightOp*, std::allocator<kudu::client::internal::InFlightOp*>, std::__detail::_Identity, std::equal_to<kudu::client::internal::InFlightOp*>, std::hash<kudu::client::internal::InFlightOp*>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::insert (this=0x21ed3d0, __v=@0x7ffdce886e10: 0x52ba3f0) at /usr/include/c++/5/bits/hashtable_policy.h:715
+#4  0x00007f5eef45094b in std::unordered_set<kudu::client::internal::InFlightOp*, std::hash<kudu::client::internal::InFlightOp*>, std::equal_to<kudu::client::internal::InFlightOp*>, std::allocator<kudu::client::internal::InFlightOp*> >::insert (this=0x21ed3d0, __x=@0x7ffdce886e10: 0x52ba3f0) at /usr/include/c++/5/bits/unordered_set.h:413
+#5  0x00007f5eef44ef29 in InsertIfNotPresent<std::unordered_set<kudu::client::internal::InFlightOp*, std::hash<kudu::client::internal::InFlightOp*>, std::equal_to<kudu::client::internal::InFlightOp*>, std::allocator<kudu::client::internal::InFlightOp*> > > (collection=0x21ed3d0, vt=@0x7ffdce886e10: 0x52ba3f0) at /home/ubuntu/kudu-1.6.0/src/kudu/gutil/map-util.h:376
+#6  0x00007f5eef44cbbc in InsertOrDie<std::unordered_set<kudu::client::internal::InFlightOp*, std::hash<kudu::client::internal::InFlightOp*>, std::equal_to<kudu::client::internal::InFlightOp*>, std::allocator<kudu::client::internal::InFlightOp*> > > (collection=0x21ed3d0, value=@0x7ffdce886e10: 0x52ba3f0) at /home/ubuntu/kudu-1.6.0/src/kudu/gutil/map-util.h:393
+#7  0x00007f5eef445fd8 in kudu::client::internal::Batcher::AddInFlightOp (this=0x21ed380, op=0x52ba3f0) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:618
+#8  0x00007f5eef445a7a in kudu::client::internal::Batcher::Add (this=0x21ed380, write_op=0x52ba380) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:592
+#9  0x00007f5eef4eb6f8 in kudu::client::KuduSession::Data::ApplyWriteOp (this=0x21ed720, write_op=0x52ba380) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:437
+#10 0x00007f5eef45c59b in kudu::client::KuduSession::Apply (this=0x21e8060, write_op=0x52ba380) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:978
+#11 0x000000000040ce77 in InsertRows (table=std::tr1::shared_ptr (count 266249, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:146
+#12 0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.099790763109922409) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.099781186087056994) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.099770330125465989) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.0998029550537467) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  0x00007ffdce89abdf in clock_gettime ()
+#1  0x00007f5eeeb48876 in __GI___clock_gettime (clock_id=1, tp=0x7ffdce886df0) at ../sysdeps/unix/clock_gettime.c:115
+#2  0x00007f5eef688cc9 in kudu::MonoTime::Now () at /home/ubuntu/kudu-1.6.0/src/kudu/util/monotime.cc:175
+#3  0x00007f5eef44576e in kudu::client::internal::Batcher::ComputeDeadlineUnlocked (this=0x21ed380) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:557
+#4  0x00007f5eef445bd9 in kudu::client::internal::Batcher::Add (this=0x21ed380, write_op=0x6807300) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:598
+#5  0x00007f5eef4eb6f8 in kudu::client::KuduSession::Data::ApplyWriteOp (this=0x21ed720, write_op=0x6807300) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:437
+#6  0x00007f5eef45c59b in kudu::client::KuduSession::Apply (this=0x21e8060, write_op=0x6807300) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:978
+#7  0x000000000040ce77 in InsertRows (table=std::tr1::shared_ptr (count 382579, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:146
+#8  0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.099733908893540502) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.099730941001325846) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.099699437152594328) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.09975943504832685) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  0x00007ffdce89abdf in clock_gettime ()
+#1  0x00007f5eeeb48876 in __GI___clock_gettime (clock_id=1, tp=0x7ffdce886df0) at ../sysdeps/unix/clock_gettime.c:115
+#2  0x00007f5eef688cc9 in kudu::MonoTime::Now () at /home/ubuntu/kudu-1.6.0/src/kudu/util/monotime.cc:175
+#3  0x00007f5eef44576e in kudu::client::internal::Batcher::ComputeDeadlineUnlocked (this=0x21ed380) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:557
+#4  0x00007f5eef445bd9 in kudu::client::internal::Batcher::Add (this=0x21ed380, write_op=0x7dacf00) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:598
+#5  0x00007f5eef4eb6f8 in kudu::client::KuduSession::Data::ApplyWriteOp (this=0x21ed720, write_op=0x7dacf00) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:437
+#6  0x00007f5eef45c59b in kudu::client::KuduSession::Apply (this=0x21e8060, write_op=0x7dacf00) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:978
+#7  0x000000000040ce77 in InsertRows (table=std::tr1::shared_ptr (count 500803, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:146
+#8  0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.099516933085396886) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.099493556190282106) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.099492120090872049) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.099477394949644804) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  0x00007ffdce89abdf in clock_gettime ()
+#1  0x00007f5eeeb48876 in __GI___clock_gettime (clock_id=1, tp=0x7ffdce886df0) at ../sysdeps/unix/clock_gettime.c:115
+#2  0x00007f5eef688cc9 in kudu::MonoTime::Now () at /home/ubuntu/kudu-1.6.0/src/kudu/util/monotime.cc:175
+#3  0x00007f5eef44576e in kudu::client::internal::Batcher::ComputeDeadlineUnlocked (this=0x21ed380) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:557
+#4  0x00007f5eef445bd9 in kudu::client::internal::Batcher::Add (this=0x21ed380, write_op=0x914a6c0) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:598
+#5  0x00007f5eef4eb6f8 in kudu::client::KuduSession::Data::ApplyWriteOp (this=0x21ed720, write_op=0x914a6c0) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:437
+#6  0x00007f5eef45c59b in kudu::client::KuduSession::Apply (this=0x21e8060, write_op=0x914a6c0) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:978
+#7  0x000000000040ce77 in InsertRows (table=std::tr1::shared_ptr (count 607928, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:146
+#8  0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.099930026102811098) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.099961369065567851) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.099955490091815591) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.099958043079823256) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  0x00007ffdce89abdf in clock_gettime ()
+#1  0x00007f5eeeb48876 in __GI___clock_gettime (clock_id=1, tp=0x7ffdce886df0) at ../sysdeps/unix/clock_gettime.c:115
+#2  0x00007f5eef688cc9 in kudu::MonoTime::Now () at /home/ubuntu/kudu-1.6.0/src/kudu/util/monotime.cc:175
+#3  0x00007f5eef44576e in kudu::client::internal::Batcher::ComputeDeadlineUnlocked (this=0x21ed380) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:557
+#4  0x00007f5eef445bd9 in kudu::client::internal::Batcher::Add (this=0x21ed380, write_op=0xa69bc00) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:598
+#5  0x00007f5eef4eb6f8 in kudu::client::KuduSession::Data::ApplyWriteOp (this=0x21ed720, write_op=0xa69bc00) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:437
+#6  0x00007f5eef45c59b in kudu::client::KuduSession::Apply (this=0x21e8060, write_op=0xa69bc00) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:978
+#7  0x000000000040ce77 in InsertRows (table=std::tr1::shared_ptr (count 724351, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:146
+#8  0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.09963194583542645) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.099624817026779056) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.09965470596216619) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.099645924987271428) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  0x00007ffdce89abdf in clock_gettime ()
+#1  0x00007f5eeeb48876 in __GI___clock_gettime (clock_id=1, tp=0x7ffdce886ba0) at ../sysdeps/unix/clock_gettime.c:115
+#2  0x00007f5eef688cc9 in kudu::MonoTime::Now () at /home/ubuntu/kudu-1.6.0/src/kudu/util/monotime.cc:175
+#3  0x00007f5eef53cdd6 in kudu::rpc::RpcController::set_deadline (this=0xbc52028, deadline=...) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/rpc_controller.cc:116
+#4  0x00007f5eef449bec in kudu::rpc::RpcRetrier::RpcRetrier (this=0xbc52008, deadline=..., messenger=<error reading variable: Cannot access memory at address 0x67c7da10df642>) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/rpc.h:117
+#5  0x00007f5eef449d3d in kudu::rpc::Rpc::Rpc (this=0xbc52000, deadline=..., messenger=std::shared_ptr (count 35574656, weak -1) 0x7ffdce886d40) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/rpc.h:184
+#6  0x00007f5eef4ab06f in kudu::client::internal::LookupRpc::LookupRpc(scoped_refptr<kudu::client::internal::MetaCache>, kudu::Callback<void (kudu::Status const&)>, kudu::client::KuduTable const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, scoped_refptr<kudu::client::internal::RemoteTablet>*, kudu::MonoTime const&, std::shared_ptr<kudu::rpc::Messenger>, int, bool, kudu::client::internal::ReplicaController::Visibility) (this=0xbc52000, meta_cache=..., user_cb=..., table=0x21ec690, partition_key="0n\210\316\375\177\000\000\004\000\000\000\000\000\000\000\200\fܬ\000\177\000\000F7O\357\000\000\000\000\350n\210\316\375\177\000\000\000\341$\233\372\344\305\001\262cD\357^\177\000\000\300\037\305\v\000\000\000\000\220\306\036\002", '\000' <repeats 28 times>, "\300o\210\316\375\177\000\000\366\\D\357^\177\000\000\300n\210\316\375\177\000\000@\037\305\v\000\000\000\000\200\323\036\002\000\000\000\000\060p\210\316\375\177", '\000' <repeats 14 times>, "\003\000\000\000\260\037\305\v", '\000' <repeats 20 times>, "S\241h\357^\177\000\000:\366\r\241}|\006\000"..., remote_tablet=0xbc51fc0, deadline=..., messenger=std::shared_ptr (count 35574656, weak -1) 0x7ffdce886e10, max_returned_locations=10, is_exact_lookup=true, replica_visibility=kudu::client::internal::ReplicaController::Visibility::VOTERS) at /home/ubuntu/kudu-1.6.0/src/kudu/client/meta_cache.cc:631
+#7  0x00007f5eef4afc1a in kudu::client::internal::MetaCache::LookupTabletByKey(kudu::client::KuduTable const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, kudu::MonoTime const&, scoped_refptr<kudu::client::internal::RemoteTablet>*, kudu::Callback<void (kudu::Status const&)> const&) (this=0x21e7e30, table=0x21ec690, partition_key="", deadline=..., remote_tablet=0xbc51fc0, callback=...) at /home/ubuntu/kudu-1.6.0/src/kudu/client/meta_cache.cc:1038
+#8  0x00007f5eef445cf6 in kudu::client::internal::Batcher::Add (this=0x21ed380, write_op=0xbc51f40) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:605
+#9  0x00007f5eef4eb6f8 in kudu::client::KuduSession::Data::ApplyWriteOp (this=0x21ed720, write_op=0xbc51f40) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:437
+#10 0x00007f5eef45c59b in kudu::client::KuduSession::Apply (this=0x21e8060, write_op=0xbc51f40) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:978
+#11 0x000000000040ce77 in InsertRows (table=std::tr1::shared_ptr (count 842926, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:146
+#12 0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.099197709234431386) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.099199935095384717) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.099212436936795712) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.099224341101944447) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  0x00007f5eef455047 in std::__detail::_Hash_code_base<kudu::client::internal::InFlightOp*, kudu::client::internal::InFlightOp*, std::__detail::_Identity, std::hash<kudu::client::internal::InFlightOp*>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, false>::_M_extract (this=0x800ea96fef9a651e) at /usr/include/c++/5/bits/hashtable_policy.h:1202
+#1  0x00007f5eef45443d in std::_Hashtable<kudu::client::internal::InFlightOp*, kudu::client::internal::InFlightOp*, std::allocator<kudu::client::internal::InFlightOp*>, std::__detail::_Identity, std::equal_to<kudu::client::internal::InFlightOp*>, std::hash<kudu::client::internal::InFlightOp*>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::_M_insert<kudu::client::internal::InFlightOp* const&, std::__detail::_AllocNode<std::allocator<std::__detail::_Hash_node<kudu::client::internal::InFlightOp*, false> > > > (this=0x21ed3d0, __v=@0x7ffdce886e10: 0xd1eb1f0, __node_gen=...) at /usr/include/c++/5/bits/hashtable.h:1695
+#2  0x00007f5eef4530a5 in std::__detail::_Insert_base<kudu::client::internal::InFlightOp*, kudu::client::internal::InFlightOp*, std::allocator<kudu::client::internal::InFlightOp*>, std::__detail::_Identity, std::equal_to<kudu::client::internal::InFlightOp*>, std::hash<kudu::client::internal::InFlightOp*>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, true, true> >::insert (this=0x21ed3d0, __v=@0x7ffdce886e10: 0xd1eb1f0) at /usr/include/c++/5/bits/hashtable_policy.h:715
+#3  0x00007f5eef45094b in std::unordered_set<kudu::client::internal::InFlightOp*, std::hash<kudu::client::internal::InFlightOp*>, std::equal_to<kudu::client::internal::InFlightOp*>, std::allocator<kudu::client::internal::InFlightOp*> >::insert (this=0x21ed3d0, __x=@0x7ffdce886e10: 0xd1eb1f0) at /usr/include/c++/5/bits/unordered_set.h:413
+#4  0x00007f5eef44ef29 in InsertIfNotPresent<std::unordered_set<kudu::client::internal::InFlightOp*, std::hash<kudu::client::internal::InFlightOp*>, std::equal_to<kudu::client::internal::InFlightOp*>, std::allocator<kudu::client::internal::InFlightOp*> > > (collection=0x21ed3d0, vt=@0x7ffdce886e10: 0xd1eb1f0) at /home/ubuntu/kudu-1.6.0/src/kudu/gutil/map-util.h:376
+#5  0x00007f5eef44cbbc in InsertOrDie<std::unordered_set<kudu::client::internal::InFlightOp*, std::hash<kudu::client::internal::InFlightOp*>, std::equal_to<kudu::client::internal::InFlightOp*>, std::allocator<kudu::client::internal::InFlightOp*> > > (collection=0x21ed3d0, value=@0x7ffdce886e10: 0xd1eb1f0) at /home/ubuntu/kudu-1.6.0/src/kudu/gutil/map-util.h:393
+#6  0x00007f5eef445fd8 in kudu::client::internal::Batcher::AddInFlightOp (this=0x21ed380, op=0xd1eb1f0) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:618
+#7  0x00007f5eef445a7a in kudu::client::internal::Batcher::Add (this=0x21ed380, write_op=0xd1eb180) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:592
+#8  0x00007f5eef4eb6f8 in kudu::client::KuduSession::Data::ApplyWriteOp (this=0x21ed720, write_op=0xd1eb180) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:437
+#9  0x00007f5eef45c59b in kudu::client::KuduSession::Apply (this=0x21e8060, write_op=0xd1eb180) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:978
+#10 0x000000000040ce77 in InsertRows (table=std::tr1::shared_ptr (count 960881, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:146
+#11 0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.099214761983603239) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.09923982503823936) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.099267472047358751) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.09929223801009357) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  0x00007f5eef464756 in kudu::Schema::num_columns (this=0x21eb300) at /home/ubuntu/kudu-1.6.0/src/kudu/common/schema.h:458
+#1  0x00007f5eef5e4951 in kudu::RowOperationsPBEncoder::Add (this=0x7ffdce886cb0, op_type=kudu::RowOperationsPB_Type_INSERT, partial_row=...) at /home/ubuntu/kudu-1.6.0/src/kudu/common/row_operations.cc:118
+#2  0x00007f5eef443782 in kudu::client::internal::WriteRpc::WriteRpc (this=0xd914eb0, batcher=..., replica_picker=..., request_tracker=..., ops=std::vector of length -17591004114718, capacity -8 = {...}, deadline=..., messenger=std::shared_ptr (expired, weak -1) 0x7ffdce886ef0, tablet_id="c22defd263f4469da7cbe5e83d3fb641", propagated_timestamp=0) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:311
+#3  0x00007f5eef44758e in kudu::client::internal::Batcher::FlushBuffer (this=0x21ed380, tablet=0x7f5ed800be50, ops=std::vector of length 999100, capacity 1048576 = {...}) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:774
+#4  0x00007f5eef447276 in kudu::client::internal::Batcher::FlushBuffersIfReady (this=0x21ed380) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:748
+#5  0x00007f5eef4458b2 in kudu::client::internal::Batcher::FlushAsync (this=0x21ed380, cb=0x0) at /home/ubuntu/kudu-1.6.0/src/kudu/client/batcher.cc:580
+#6  0x00007f5eef4eaa9b in kudu::client::KuduSession::Data::FlushCurrentBatcher (this=0x21ed720, watermark=1, cb=0x0) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:294
+#7  0x00007f5eef4ea72a in kudu::client::KuduSession::Data::Flush (this=0x21ed720) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:246
+#8  0x00007f5eef45c4fa in kudu::client::KuduSession::Flush (this=0x21e8060) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:966
+#9  0x000000000040cfae in InsertRows (table=std::tr1::shared_ptr (count 1000001, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:148
+#10 0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.099348842166364193) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.099519916111603379) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.099508161190897226) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.099537939066067338) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  pthread_cond_wait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_wait.S:185
+#1  0x00007f5eef61984a in kudu::ConditionVariable::Wait (this=0x21ed7b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:71
+#2  0x00007f5eef4ea763 in kudu::client::KuduSession::Data::Flush (this=0x21ed720) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:250
+#3  0x00007f5eef45c4fa in kudu::client::KuduSession::Flush (this=0x21e8060) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:966
+#4  0x000000000040cfae in InsertRows (table=std::tr1::shared_ptr (count 999101, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:148
+#5  0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.099502926925197244) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.099658827064558864) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.099671205971390009) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.099683307111263275) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  pthread_cond_wait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_wait.S:185
+#1  0x00007f5eef61984a in kudu::ConditionVariable::Wait (this=0x21ed7b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:71
+#2  0x00007f5eef4ea763 in kudu::client::KuduSession::Data::Flush (this=0x21ed720) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:250
+#3  0x00007f5eef45c4fa in kudu::client::KuduSession::Flush (this=0x21e8060) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:966
+#4  0x000000000040cfae in InsertRows (table=std::tr1::shared_ptr (count 999101, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:148
+#5  0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.099632421042770147) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.099663492990657687) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.099657789105549455) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.099668218055739999) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  pthread_cond_wait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_wait.S:185
+#1  0x00007f5eef61984a in kudu::ConditionVariable::Wait (this=0x21ed7b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:71
+#2  0x00007f5eef4ea763 in kudu::client::KuduSession::Data::Flush (this=0x21ed720) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:250
+#3  0x00007f5eef45c4fa in kudu::client::KuduSession::Flush (this=0x21e8060) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:966
+#4  0x000000000040cfae in InsertRows (table=std::tr1::shared_ptr (count 999101, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:148
+#5  0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.099852644139900804) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.099871102953329682) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.099898133892565966) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.099882779875770211) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  pthread_cond_wait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_wait.S:185
+#1  0x00007f5eef61984a in kudu::ConditionVariable::Wait (this=0x21ed7b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:71
+#2  0x00007f5eef4ea763 in kudu::client::KuduSession::Data::Flush (this=0x21ed720) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:250
+#3  0x00007f5eef45c4fa in kudu::client::KuduSession::Flush (this=0x21e8060) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:966
+#4  0x000000000040cfae in InsertRows (table=std::tr1::shared_ptr (count 999101, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:148
+#5  0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+Thread 6 (Thread 0x7f5ee90bf700 (LWP 22995)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3930, timeout=0.099378529936075211) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3930, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e37d0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e37c8) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ef310, p=0x21e37c8) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ef320, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ef310) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ef308) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ef2b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee90bf700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 5 (Thread 0x7f5ee98c0700 (LWP 22994)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e3000, timeout=0.099411997944116592) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e3000, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2ea0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2e98) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21eee30, p=0x21e2e98) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21eee40, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21eee30) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21eee28) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21eedd0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5ee98c0700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 4 (Thread 0x7f5eea0c1700 (LWP 22993)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e26e0, timeout=0.099406680092215538) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e26e0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e2580, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e2578) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21ee950, p=0x21e2578) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21ee960, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21ee950) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21ee948) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21ee8f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea0c1700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 3 (Thread 0x7f5eea8c2700 (LWP 22992)):
+#0  0x00007f5eeeb3aa13 in epoll_wait () at ../sysdeps/unix/syscall-template.S:84
+#1  0x00007f5eef80b0c4 in epoll_poll (loop=0x21e1a00, timeout=0.09937365585938096) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev_epoll.c:153
+#2  0x00007f5eef80e7a5 in ev_run (loop=0x21e1a00, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/src/libev-4.20/ev.c:3521
+#3  0x00007f5eef52e675 in ev::loop_ref::run (this=0x21e18a0, flags=0) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/ev++.h:211
+#4  0x00007f5eef52aac1 in kudu::rpc::ReactorThread::RunThread (this=0x21e1898) at /home/ubuntu/kudu-1.6.0/src/kudu/rpc/reactor.cc:473
+#5  0x00007f5eef5391b1 in boost::_mfi::mf0<void, kudu::rpc::ReactorThread>::operator() (this=0x21e6350, p=0x21e1898) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#6  0x00007f5eef538978 in boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> >::operator()<boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list0> (this=0x21e6360, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#7  0x00007f5eef537f9e in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >::operator() (this=0x21e6350) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#8  0x00007f5eef536ff4 in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::rpc::ReactorThread>, boost::_bi::list1<boost::_bi::value<kudu::rpc::ReactorThread*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#9  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6348) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#10 0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e62f0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#11 0x00007f5eed7726ba in start_thread (arg=0x7f5eea8c2700) at pthread_create.c:333
+#12 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 2 (Thread 0x7f5eeb0c3700 (LWP 22991)):
+#0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:225
+#1  0x00007f5eef619ac1 in kudu::ConditionVariable::TimedWait (this=0x21e6908, max_time=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:123
+#2  0x00007f5eef65f4fa in kudu::CountDownLatch::WaitFor (this=0x21e68d0, delta=...) at /home/ubuntu/kudu-1.6.0/src/kudu/util/countdown_latch.h:91
+#3  0x00007f5eef65eb31 in kudu::KernelStackWatchdog::RunThread (this=0x21e6830) at /home/ubuntu/kudu-1.6.0/src/kudu/util/kernel_stack_watchdog.cc:133
+#4  0x00007f5eef663823 in boost::_mfi::mf0<void, kudu::KernelStackWatchdog>::operator() (this=0x21e6b40, p=0x21e6830) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/mem_fn_template.hpp:49
+#5  0x00007f5eef66332e in boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> >::operator()<boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list0> (this=0x21e6b50, f=..., a=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:259
+#6  0x00007f5eef662e30 in boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >::operator() (this=0x21e6b40) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/bind/bind.hpp:1222
+#7  0x00007f5eef6629ab in boost::detail::function::void_function_obj_invoker0<boost::_bi::bind_t<void, boost::_mfi::mf0<void, kudu::KernelStackWatchdog>, boost::_bi::list1<boost::_bi::value<kudu::KernelStackWatchdog*> > >, void>::invoke (function_obj_ptr=...) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:159
+#8  0x00007f5eef57f74b in boost::function0<void>::operator() (this=0x21e6b38) at /home/ubuntu/kudu-1.6.0/thirdparty/installed/uninstrumented/include/boost/function/function_template.hpp:771
+#9  0x00007f5eef6c2504 in kudu::Thread::SuperviseThread (arg=0x21e6ae0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/thread.cc:624
+#10 0x00007f5eed7726ba in start_thread (arg=0x7f5eeb0c3700) at pthread_create.c:333
+#11 0x00007f5eeeb3a41d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+Thread 1 (Thread 0x7f5ef00317c0 (LWP 22990)):
+#0  pthread_cond_wait@@GLIBC_2.3.2 () at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_wait.S:185
+#1  0x00007f5eef61984a in kudu::ConditionVariable::Wait (this=0x21ed7b0) at /home/ubuntu/kudu-1.6.0/src/kudu/util/condition_variable.cc:71
+#2  0x00007f5eef4ea763 in kudu::client::KuduSession::Data::Flush (this=0x21ed720) at /home/ubuntu/kudu-1.6.0/src/kudu/client/session-internal.cc:250
+#3  0x00007f5eef45c4fa in kudu::client::KuduSession::Flush (this=0x21e8060) at /home/ubuntu/kudu-1.6.0/src/kudu/client/client.cc:966
+#4  0x000000000040cfae in InsertRows (table=std::tr1::shared_ptr (count 999101, weak 1) 0x21ec690, num_rows=1000000) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:148
+#5  0x000000000040e5a5 in main (argc=2, argv=0x7ffdce887998) at /tmp/client_alt_root/usr/local/share/doc/kuduClient/samples/sample.cc:307
+******************************************************************************************************
+******************************************************************************************************
+******************************************************************************************************
+******************************************************************************************************
+******************************************************************************************************
+******************************************************************************************************
+******************************************************************************************************
+******************************************************************************************************
+******************************************************************************************************
+******************************************************************************************************
+******************************************************************************************************
+******************************************************************************************************
