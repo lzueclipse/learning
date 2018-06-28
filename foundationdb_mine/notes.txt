@@ -1,0 +1,17 @@
+1. docker ps -a
+we can get image ID, container ID
+
+2. docker images
+we can get imags ID
+
+3. docker start/stop <container ID>
+
+4. docker rm <container ID>
+
+5. docker rmi <image ID>
+
+6. docker run -it -v '/root/foundationdb:/foundationdb' <image ID> /bin/bash
+
+7. docker exec -it <container ID> /bin/bash
+
+8. docker build --no-cache .
